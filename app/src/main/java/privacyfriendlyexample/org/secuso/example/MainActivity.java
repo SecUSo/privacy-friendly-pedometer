@@ -3,11 +3,13 @@ package privacyfriendlyexample.org.secuso.example;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActionBarActivity {
 
     private ListView drawerList;
     private DrawerLayout drawerLayout;
@@ -54,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.listview_item_row, drawerItem);
         drawerList.setAdapter(adapter);
+
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, new SampleFragment(), "SampleFragment");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     private void addDrawerItems() {
@@ -133,16 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (position) {
             case 0:
-                //fragment = new EnterPinFragment();
-                break;
-            case 1:
-                //fragment = new NumpadFragment();
-                break;
-            case 2:
                 //fragment = new HelpFragment();
                 break;
-            case 3:
-                //fragment = new AboutFragment();
+            case 1:
+                fragment = new AboutFragment();
                 break;
             default:
                 break;

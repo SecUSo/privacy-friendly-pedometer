@@ -140,7 +140,7 @@ public class MainActivity extends ActionBarActivity {
 
         switch (position) {
             case 0:
-                //fragment = new HelpFragment();
+                fragment = new HelpFragment();
                 break;
             case 1:
                 fragment = new AboutFragment();

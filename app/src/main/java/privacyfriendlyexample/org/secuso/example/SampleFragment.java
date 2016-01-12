@@ -18,7 +18,7 @@ public class SampleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_sample, container, false);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.action_about);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.action_main);
         container.removeAllViews();
         return rootView;
     }

@@ -17,7 +17,7 @@ Target SDK: 23
 
 ## License
 
-Privacy Friendly App example is licensed under the GPLv3.
+Privacy Friendly App example is licensed under the GPLv3. The icons used in the nagivation drawer are licensed under the CC BY 2.5 (http://creativecommons.org/licenses/by/2.5/)
 
 
 

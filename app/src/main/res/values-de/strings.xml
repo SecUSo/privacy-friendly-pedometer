@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_affiliation">In Zusammenarbeit mit</string>
+    <string name="about_author">Autor: Tobias Neidig</string>
+    <string name="action_about">Über</string>
+    <string name="action_help">Hilfe</string>
+    <string name="action_main">Start</string>
+    <string name="action_navigation">Navigation</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="drawer_close">Navigation schließen</string>
+    <string name="drawer_open">Navigation öffnen</string>
+    <string name="hello_world">Hallo Welt</string>
+    <string name="more_info">Mehr Informationen unter:</string>
+    <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
+    <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/de/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
+    <string name="version_number">Version 1.0</string>
+    <string name="app_name">Step Counter</string>
+    <string name="app_name_long">Privacy Friendly Step Counter</string>
+</resources>

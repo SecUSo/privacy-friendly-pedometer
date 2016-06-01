@@ -1,4 +1,4 @@
-package privacyfriendlyexample.org.secuso.example;
+package org.secuso.privacyfriendlystepcounter;
 
 /**
  * Created by yonjuni on 12.01.16.

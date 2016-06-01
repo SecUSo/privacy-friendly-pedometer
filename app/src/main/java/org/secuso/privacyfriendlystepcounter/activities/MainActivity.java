@@ -1,18 +1,21 @@
-package privacyfriendlyexample.org.secuso.example;
+package org.secuso.privacyfriendlystepcounter.activities;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +28,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity {
+import org.secuso.privacyfriendlystepcounter.ObjectDrawerItem;
+import org.secuso.privacyfriendlystepcounter.fragments.AboutFragment;
+import org.secuso.privacyfriendlystepcounter.fragments.HelpFragment;
+import org.secuso.privacyfriendlystepcounter.fragments.MainFragment;
+
+import privacyfriendlyexample.org.secuso.example.R;
+
+public class MainActivity extends AppCompatActivity {
+
+    public static final String LOG_TAG = MainActivity.class.toString();
 
     private ListView drawerList;
     private DrawerLayout drawerLayout;
@@ -38,9 +50,11 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.app_name);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#024265")));
+        if(actionBar != null) {
+            actionBar.setTitle(R.string.app_name);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#024265")));
+        }
 
         drawerList = (ListView) findViewById(R.id.navList);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,9 +72,10 @@ public class MainActivity extends ActionBarActivity {
         drawerList.setAdapter(adapter);
 
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content_frame, new SampleFragment(), "SampleFragment");
+        fragmentTransaction.replace(R.id.content_frame, new MainFragment(), "MainFragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+        Log.i(LOG_TAG, "MainActivity initialized");
     }
 
     private void addDrawerItems() {
@@ -77,14 +92,18 @@ public class MainActivity extends ActionBarActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle(R.string.action_navigation);
+                if(getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.action_navigation);
+                }
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(activityTitle);
+                if(getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(activityTitle);
+                }
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };

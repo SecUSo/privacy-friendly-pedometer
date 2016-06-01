@@ -1,115 +1,75 @@
 package org.secuso.privacyfriendlystepcounter.activities;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import org.secuso.privacyfriendlystepcounter.ObjectDrawerItem;
 import org.secuso.privacyfriendlystepcounter.fragments.AboutFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.HelpFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.MainFragment;
 
 import privacyfriendlyexample.org.secuso.example.R;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Main view incl. navigation drawer and fragments
+ *
+ * @author Tobias Neidig
+ * @version 20160601
+ */
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String LOG_TAG = MainActivity.class.toString();
 
-    private ListView drawerList;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
-    private String activityTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set toolbar as actionbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // init actionbar
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setTitle(R.string.app_name);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#024265")));
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
         }
 
-        drawerList = (ListView) findViewById(R.id.navList);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        activityTitle = getTitle().toString();
+        // init navigation drawer
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        drawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
 
-        addDrawerItems();
-        setupDrawer();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_main);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
 
-        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[2];
-
-        drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_action_help, getString(R.string.action_help), "");
-        drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_action_about, getString(R.string.action_about), "");
-
-        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.listview_item_row, drawerItem);
-        drawerList.setAdapter(adapter);
-
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        // Load first view
+        final android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, new MainFragment(), "MainFragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         Log.i(LOG_TAG, "MainActivity initialized");
-    }
-
-    private void addDrawerItems() {
-        String[] mNavigationDrawerItemTitles = {getString(R.string.action_help), getString(R.string.action_about)};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mNavigationDrawerItemTitles);
-        drawerList.setAdapter(adapter);
-
-        drawerList.setOnItemClickListener(new DrawerItemClickListener());
-    }
-
-    private void setupDrawer() {
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                if(getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(R.string.action_navigation);
-                }
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                if(getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(activityTitle);
-                }
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        drawerToggle.setDrawerIndicatorEnabled(true);
-        drawerLayout.setDrawerListener(drawerToggle);
     }
 
     @Override
@@ -125,10 +85,8 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         //Remove comment in case menu on the right is needed
         // getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -137,84 +95,39 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
     }
 
-    private void selectItem(int position) {
-
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // handle the clicks on navigation drawer items
         Fragment fragment = null;
+        int id = item.getItemId();
 
-        switch (position) {
-            case 0:
+        switch (id) {
+            case R.id.menu_home:
+                fragment = new MainFragment();
+                break;
+            case R.id.menu_training:
+                break;
+            case R.id.menu_settings:
+                break;
+            case R.id.menu_help:
                 fragment = new HelpFragment();
                 break;
-            case 1:
+            case R.id.menu_about:
                 fragment = new AboutFragment();
                 break;
-            default:
-                break;
         }
-
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
-
-            drawerList.setItemChecked(position, true);
-            drawerList.setSelection(position);
-            drawerLayout.closeDrawer(drawerList);
-
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
-    }
 
-    public class DrawerItemCustomAdapter extends ArrayAdapter<ObjectDrawerItem> {
-
-        Context mContext;
-        int layoutResourceId;
-        ObjectDrawerItem data[] = null;
-
-        public DrawerItemCustomAdapter(Context mContext, int layoutResourceId, ObjectDrawerItem[] data) {
-
-            super(mContext, layoutResourceId, data);
-            this.layoutResourceId = layoutResourceId;
-            this.mContext = mContext;
-            this.data = data;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View listItem = convertView;
-
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            listItem = inflater.inflate(layoutResourceId, parent, false);
-
-            ImageView imageViewIcon = (ImageView) listItem.findViewById(R.id.imageViewIcon);
-            TextView textViewName = (TextView) listItem.findViewById(R.id.textViewName);
-            TextView textViewDescription = (TextView) listItem.findViewById(R.id.textViewDescription);
-
-            ObjectDrawerItem folder = data[position];
-
-            imageViewIcon.setImageResource(folder.icon);
-            textViewName.setText(folder.name);
-            textViewDescription.setText(folder.description);
-
-            return listItem;
-        }
-
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return fragment != null;
     }
 }

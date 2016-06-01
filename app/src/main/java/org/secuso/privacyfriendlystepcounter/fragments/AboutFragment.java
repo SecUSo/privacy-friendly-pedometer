@@ -1,7 +1,7 @@
 package org.secuso.privacyfriendlystepcounter.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import privacyfriendlyexample.org.secuso.example.R;
  * @author Tobias Neidig
  * @version 20160601
  */
-public class AboutFragment extends Fragment{
+public class AboutFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

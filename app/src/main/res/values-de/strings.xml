@@ -4,9 +4,10 @@
     <string name="about_author">Autor: Tobias Neidig</string>
     <string name="action_about">Über</string>
     <string name="action_help">Hilfe</string>
-    <string name="action_main">Start</string>
+    <string name="action_main">Übersicht</string>
     <string name="action_navigation">Navigation</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="action_training">Training</string>
     <string name="drawer_close">Navigation schließen</string>
     <string name="drawer_open">Navigation öffnen</string>
     <string name="hello_world">Hallo Welt</string>

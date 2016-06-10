@@ -17,4 +17,7 @@
     <string name="version_number">Version 1.0</string>
     <string name="app_name">Step Counter</string>
     <string name="app_name_long">Privacy Friendly Step Counter</string>
+    <string name="month">Monat</string>
+    <string name="day">Tag</string>
+    <string name="week">Woche</string>
 </resources>

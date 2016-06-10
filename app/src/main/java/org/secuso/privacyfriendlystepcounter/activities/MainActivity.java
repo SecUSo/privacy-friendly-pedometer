@@ -17,8 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.secuso.privacyfriendlystepcounter.fragments.AboutFragment;
+import org.secuso.privacyfriendlystepcounter.fragments.DailyReportFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.HelpFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.MainFragment;
+import org.secuso.privacyfriendlystepcounter.fragments.MonthlyReportFragment;
+import org.secuso.privacyfriendlystepcounter.fragments.WeeklyReportFragment;
 
 import privacyfriendlyexample.org.secuso.example.R;
 
@@ -28,7 +31,7 @@ import privacyfriendlyexample.org.secuso.example.R;
  * @author Tobias Neidig
  * @version 20160601
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DailyReportFragment.OnFragmentInteractionListener, WeeklyReportFragment.OnFragmentInteractionListener, MonthlyReportFragment.OnFragmentInteractionListener  {
 
     public static final String LOG_TAG = MainActivity.class.toString();
 

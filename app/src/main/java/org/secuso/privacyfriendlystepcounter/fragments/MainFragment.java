@@ -1,12 +1,19 @@
 package org.secuso.privacyfriendlystepcounter.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import privacyfriendlyexample.org.secuso.example.R;
 
@@ -21,12 +28,59 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setSubtitle(R.string.action_main);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
         container.removeAllViews();
-        return rootView;
+
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        return view;
+    }
+
+
+    private void setupViewPager(ViewPager viewPager) {
+        new ViewPagerAdapter(null);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(DailyReportFragment.newInstance(), getString(R.string.day));
+        adapter.addFragment(WeeklyReportFragment.newInstance(), getString(R.string.week));
+        adapter.addFragment(MonthlyReportFragment.newInstance(), getString(R.string.month));
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

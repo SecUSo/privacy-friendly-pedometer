@@ -1,0 +1,135 @@
+package org.secuso.privacyfriendlystepcounter.fragments;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import org.secuso.privacyfriendlystepcounter.adapters.ReportAdapter;
+import org.secuso.privacyfriendlystepcounter.models.ActivityChart;
+import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import privacyfriendlyexample.org.secuso.example.R;
+
+/**
+ * Report-fragment for one specific day
+ *
+ * Activities that contain this fragment must implement the
+ * {@link DailyReportFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link DailyReportFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ *
+ * @author Tobias Neidig
+ * @version 20160606
+ */
+public class DailyReportFragment extends Fragment {
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    private OnFragmentInteractionListener mListener;
+
+    public DailyReportFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of DailyReportFragment.
+     */
+    public static DailyReportFragment newInstance() {
+        DailyReportFragment fragment = new DailyReportFragment();
+        Bundle args = new Bundle();
+       // args.putString(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /*if (getArguments() != null) {
+           mParam1 = getArguments().getString(ARG_PARAM1);
+        }*/
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+
+        // specify an adapter
+        // using sample data.
+        Map<String, Integer> data = new LinkedHashMap<>();
+        data.put("01", 0);
+        data.put("08", 100);
+        data.put("09", 300);
+        data.put("10", 342);
+        data.put("11", 400);
+        data.put("12", 412);
+        data.put("13", 612);
+        data.put("14", 1012);
+        data.put("15", 2012);
+        data.put("16", 3012);
+        data.put("17", 3800);
+        data.put("18", 4000);
+        data.put("19", 4100);
+        data.put("20", 4200);
+        data.put("24", 4200);
+        mAdapter = new ReportAdapter(new ArrayList<>(Arrays.asList(new Object[]{new ActivitySummary(4200, 42, 420, "06. Juni"), new ActivityChart(data, data, data, "06. Juni")})));
+        mRecyclerView.setAdapter(mAdapter);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     */
+    public interface OnFragmentInteractionListener {
+        // Currently doing nothing here.
+    }
+}

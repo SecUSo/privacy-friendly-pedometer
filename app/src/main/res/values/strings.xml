@@ -23,10 +23,16 @@
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
     <string name="more_info">More information can be found on:</string>
     <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
+
+    <!-- ReportFragment -->
     <string name="month">Month</string>
     <string name="week">Week</string>
     <string name="day">Day</string>
     <string name="steps">Steps</string>
     <string name="calories">kilo calories</string>
     <string name="km">kilometers</string>
+
+    <!-- Preferences -->
+    <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlystepcounter.pref.step_counter_enabled</string>
+    <string name="pref_permanent_notification_enabled" translatable="false">>org.secuso.privacyfriendlystepcounter.pref.permanent_notification_enabled</string>
 </resources>

@@ -22,6 +22,7 @@ import org.secuso.privacyfriendlystepcounter.fragments.HelpFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.MainFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.MonthlyReportFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.WeeklyReportFragment;
+import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
 import privacyfriendlyexample.org.secuso.example.R;
 
@@ -72,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.content_frame, new MainFragment(), "MainFragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+        // Start step detection if enabled and not yet started
+        StepDetectionServiceHelper.startAllIfEnabled(this);
         Log.i(LOG_TAG, "MainActivity initialized");
     }
 

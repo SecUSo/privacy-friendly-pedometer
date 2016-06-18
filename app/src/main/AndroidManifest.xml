@@ -28,6 +28,13 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver android:name="org.secuso.privacyfriendlystepcounter.receivers.OnShutdownBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <!-- this is for some htc devices (and others) -->
+                <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
+            </intent-filter>
+        </receiver>
         <receiver
             android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver"
             android:process=":remote" />
@@ -35,5 +42,4 @@
         <service android:name="org.secuso.privacyfriendlystepcounter.services.AccelerometerStepDetectorService" />
         <service android:name="org.secuso.privacyfriendlystepcounter.services.HardwareStepDetectorService" />
     </application>
-
 </manifest>

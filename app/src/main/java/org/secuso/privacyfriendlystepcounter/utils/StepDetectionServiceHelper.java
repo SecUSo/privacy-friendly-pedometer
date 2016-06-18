@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.secuso.privacyfriendlystepcounter.Factory;
 import org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver;
@@ -19,9 +20,11 @@ import privacyfriendlyexample.org.secuso.example.R;
  * Helper class to start and stop the necessary services
  *
  * @author Tobias Neidig
- * @version 20160614
+ * @version 20160618
  */
 public class StepDetectionServiceHelper {
+
+    private static final String LOG_CLASS = StepDetectionServiceHelper.class.getName();
 
     /**
      * Starts the step detection, persistence service and notification service if they are enabled in settings.
@@ -29,6 +32,7 @@ public class StepDetectionServiceHelper {
      * @param context The application context.
      */
     public static void startAllIfEnabled(Context context) {
+        Log.i(LOG_CLASS, "Started all services");
         // Get user preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isStepDetectionEnabled = sharedPref.getBoolean(context.getString(R.string.pref_step_counter_enabled), true);
@@ -47,6 +51,7 @@ public class StepDetectionServiceHelper {
      * @param context The application context
      */
     public static void startStepDetection(Context context) {
+        Log.i(LOG_CLASS, "Started step detection service.");
         Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
         context.startService(stepDetectorServiceIntent);
     }
@@ -72,5 +77,17 @@ public class StepDetectionServiceHelper {
 
         // Set repeating alarm
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HOUR, sender);
+        Log.i(LOG_CLASS, "Scheduled repeating persistence service at start time " + calendar.toString());
+    }
+
+    /**
+     * Starts the step detection service
+     *
+     * @param context The application context
+     */
+    public static void startPersistenceService(Context context) {
+        Log.i(LOG_CLASS, "Started persistence service.");
+        Intent stepCountPersistenceServiceIntent = new Intent(context, StepCountPersistenceReceiver.class);
+        context.sendBroadcast(stepCountPersistenceServiceIntent);
     }
 }

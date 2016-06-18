@@ -17,6 +17,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
+
 import privacyfriendlyexample.org.secuso.example.R;
 
 /**
@@ -24,7 +26,7 @@ import privacyfriendlyexample.org.secuso.example.R;
  * Does not detect steps itself - the step detection has to be done in the subclasses.
  *
  * @author Tobias Neidig
- * @version 20160522
+ * @version 20160618
  */
 public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -168,11 +170,16 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "Destroying service.");
+        // Unregister sensor listeners
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
+        // Cancel notification
         mNotifyManager.cancel(NOTIFICATION_ID);
+        // Unregister shared preferences listeners
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+        // Force save of step count
+        StepDetectionServiceHelper.startPersistenceService(this);
         super.onDestroy();
     }
 

@@ -35,4 +35,8 @@
     <!-- Preferences -->
     <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlystepcounter.pref.step_counter_enabled</string>
     <string name="pref_permanent_notification_enabled" translatable="false">org.secuso.privacyfriendlystepcounter.pref.permanent_notification_enabled</string>
+    <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlystepcounter.pref.daily_step_goal</string>
+
+    <!-- Notification -->
+    <string name="notification_text">%1$s of %2$s steps walked today.</string>
 </resources>

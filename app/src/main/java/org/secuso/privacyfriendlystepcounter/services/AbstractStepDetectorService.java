@@ -1,15 +1,23 @@
 package org.secuso.privacyfriendlystepcounter.services;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import privacyfriendlyexample.org.secuso.example.R;
 
 /**
  * Generic class for a step detector.
@@ -18,7 +26,7 @@ import android.util.Log;
  * @author Tobias Neidig
  * @version 20160522
  */
-public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener {
+public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Broadcast action identifier for messages broadcasted when new steps were detected
@@ -35,6 +43,20 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
 
     private static final String LOG_TAG = AbstractStepDetectorService.class.getName();
     private final IBinder mBinder = new StepDetectorBinder();
+    /**
+     * The notification id used for permanent step count notification
+     */
+    public static final int NOTIFICATION_ID = 1;
+    private NotificationManager mNotifyManager;
+    private NotificationCompat.Builder mBuilder;
+    /**
+     * Number of steps the user wants to walk every day
+     */
+    private int dailyStepGoal = 0;
+    /**
+     * Number of in-database-saved steps.
+     */
+    private int totalStepsAtLastSave = 0;
 
     /**
      * Number of steps counted since service start
@@ -85,6 +107,30 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
                 .putExtra(EXTENDED_DATA_TOTAL_STEPS, total_steps);
         // Broadcasts the Intent to receivers in this app.
         LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+
+        // Update notification
+        Notification notification = buildNotification(total_steps);
+        mNotifyManager.notify(NOTIFICATION_ID, notification);
+    }
+
+    /**
+     * Builds the permanent step count notification
+     * @param totalStepsSinceLastSave The number of steps since last save
+     * @return the new notification
+     */
+    protected Notification buildNotification(int totalStepsSinceLastSave){
+        int totalSteps = totalStepsSinceLastSave + this.totalStepsAtLastSave;
+
+        mNotifyManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setContentTitle(getString(R.string.app_name))
+                .setContentText(String.format(getString(R.string.notification_text), totalSteps, this.dailyStepGoal))
+                .setSmallIcon(R.drawable.ic_directions_walk_65black_30dp);
+        mBuilder.setProgress(this.dailyStepGoal, totalSteps, false);
+        mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
+        mBuilder.setPriority(NotificationCompat.PRIORITY_MIN);
+        return mBuilder.build();
     }
 
     // has to be implemented by subclasses
@@ -112,6 +158,11 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
+
+        // Get daily goal(s) from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        this.dailyStepGoal = sharedPref.getInt(getString(R.string.pref_daily_step_goal), 10000);
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -119,12 +170,16 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         Log.i(LOG_TAG, "Destroying service.");
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
+        mNotifyManager.cancel(NOTIFICATION_ID);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
         super.onDestroy();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "Starting service.");
+        startForeground(NOTIFICATION_ID, buildNotification(this.total_steps));
         return START_STICKY;
     }
 
@@ -136,5 +191,13 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     @Override
     public void onHandleIntent(Intent intent) {
         // currently doing nothing here.
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        // Detect changes on preferences and update our internal variable
+        if(key.equals(getString(R.string.pref_daily_step_goal))){
+            dailyStepGoal = sharedPreferences.getInt(getString(R.string.pref_daily_step_goal), 10000);
+        }
     }
 }

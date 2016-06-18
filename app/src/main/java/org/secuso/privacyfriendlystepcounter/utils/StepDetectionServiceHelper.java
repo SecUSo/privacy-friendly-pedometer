@@ -6,11 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import org.secuso.privacyfriendlystepcounter.Factory;
 import org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver;
-import org.secuso.privacyfriendlystepcounter.services.StepPermanentNotificationService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +32,6 @@ public class StepDetectionServiceHelper {
         // Get user preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isStepDetectionEnabled = sharedPref.getBoolean(context.getString(R.string.pref_step_counter_enabled), true);
-        boolean isPermanentNotificationEnabled = sharedPref.getBoolean(context.getString(R.string.pref_permanent_notification_enabled), true);
 
         // Start the step detection if enabled
         if (isStepDetectionEnabled) {

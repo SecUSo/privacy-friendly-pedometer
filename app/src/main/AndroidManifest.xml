@@ -35,6 +35,11 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
             </intent-filter>
         </receiver>
+        <receiver android:name="org.secuso.privacyfriendlystepcounter.receivers.OnPackageReplacedBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
         <receiver
             android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver"
             android:process=":remote" />

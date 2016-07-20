@@ -106,11 +106,13 @@ public class DailyReportFragment extends Fragment {
            mParam1 = getArguments().getString(ARG_PARAM1);
         }*/
         // register for steps-saved-event
-        day = Calendar.getInstance();
+        day = Calendar.getInstance(); // TODO let the user choose the day
+        // subscribe to onStepsSaved and onStepsDetected broadcasts
         IntentFilter filterRefreshUpdate = new IntentFilter();
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+        // Bind to stepDetector if today is shown
         if(isTodayShown()){
             Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
             getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
@@ -125,8 +127,7 @@ public class DailyReportFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
-
-
+        // Generate the reports
         generateReports(false);
 
         mAdapter = new ReportAdapter(reports);
@@ -160,19 +161,34 @@ public class DailyReportFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     *
+     * @return is the day which is currently shown today?
+     */
     private boolean isTodayShown(){
         return (Calendar.getInstance().get(Calendar.YEAR) == day.get(Calendar.YEAR) &&
                 Calendar.getInstance().get(Calendar.MONTH) == day.get(Calendar.MONTH) &&
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == day.get(Calendar.DAY_OF_MONTH));
     }
 
+    /**
+     * Generates the report objects and adds them to the recycler view adapter.
+     * The following reports will be generated:
+     *      * ActivitySummary
+     *      * ActivityChart
+     * If one of these reports does not exist it will be created and added at the end of view.
+     *
+     * @param updated determines if the method is called because of an update of current steps.
+     *                If set to true and another day than today is shown the call will be ignored.
+     */
     private void generateReports(boolean updated){
         Log.i(LOG_TAG, "Generating reports");
         if(!this.isTodayShown() && updated){
             // the day shown is not today
             return;
         }
-        List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(Calendar.getInstance(), getContext());
+        // Get all step counts for this day.
+        List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(day, getContext());
         int stepCount = 0;
         double distance = 0;
         int calories = 0;
@@ -194,6 +210,7 @@ public class DailyReportFragment extends Fragment {
         Map<String, Double> caloriesData = new LinkedHashMap<>();
         WalkingMode wm = null;
         int hour = -1;
+
         // fill hours without info
         int e;
         if(stepCounts.size() > 0){
@@ -214,6 +231,7 @@ public class DailyReportFragment extends Fragment {
             s.setEndTime(m.getTimeInMillis());
             stepCounts.add(h, s);
         }
+        // Create report data
         SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm",getResources().getConfiguration().locale);
         for(StepCount s : stepCounts){
             Calendar end = Calendar.getInstance();
@@ -232,17 +250,6 @@ public class DailyReportFragment extends Fragment {
                 caloriesData.put(formatHourMinute.format(end.getTime()), (double) calories);
             }
         }
-        if(this.isTodayShown() && stepCounts.size() > 0){
-            StepCount s = stepCounts.get(stepCounts.size() - 1);
-            Calendar end = Calendar.getInstance();
-            end.setTimeInMillis(s.getEndTime());
-            if(s.getWalkingMode() != wm || end.get(Calendar.HOUR_OF_DAY) != hour){
-                // create new field
-                stepData.put(formatHourMinute.format(end.getTime()), (double) stepCount);
-                distanceData.put(formatHourMinute.format(end.getTime()), distance);
-                caloriesData.put(formatHourMinute.format(end.getTime()), (double) calories);
-            }
-        }
 
         // fill hours without info
         if(stepCounts.size() > 0){
@@ -251,13 +258,15 @@ public class DailyReportFragment extends Fragment {
             e = end.get(Calendar.HOUR_OF_DAY);
             for(int h = e + 1; h < 24; h++){
                 stepData.put(h + ":00", null);
-                distanceData.put(h + ":00", distance);
-                caloriesData.put(h + ":00", (double) calories);
+                distanceData.put(h + ":00", null);
+                caloriesData.put(h + ":00", null);
             }
         }
 
         distance /= 1000; // TODO Transform distance to km
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd. MMMM", getResources().getConfiguration().locale);
+
+        // create view models
         if(activitySummary == null) {
             activitySummary = new ActivitySummary(stepCount, distance, calories, simpleDateFormat.format(day.getTime()));
             reports.add(activitySummary);

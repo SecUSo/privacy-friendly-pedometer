@@ -63,6 +63,7 @@ public class StepCountPersistenceHelper {
                 StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 null,
                 values);
+        db.close();
         // reset step count
         myBinder.resetStepCount();
         Log.i(LOG_CLASS, "Stored " + stepCountSinceLastSave + " steps (id=" + newRowId + ")");
@@ -141,6 +142,7 @@ public class StepCountPersistenceHelper {
             sum += s.getStepCount();
         }
         c.close();
+        db.close();
         return steps;
     }
 

@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -17,7 +18,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
+
+import java.util.Calendar;
 
 import privacyfriendlyexample.org.secuso.example.R;
 
@@ -45,6 +49,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
 
     private static final String LOG_TAG = AbstractStepDetectorService.class.getName();
     private final IBinder mBinder = new StepDetectorBinder();
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     /**
      * The notification id used for permanent step count notification
      */
@@ -88,6 +93,23 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         public void resetStepCount() { total_steps = 0; }
     }
 
+    public class BroadcastReceiver extends android.content.BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent == null){
+                Log.w(LOG_TAG, "Received intent which is null.");
+                return;
+            }
+            switch(intent.getAction()){
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
+                    // Steps were saved, reload step count from database
+                    getStepsAtLastSave();
+                    break;
+                default:
+            }
+        }
+    }
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -171,6 +193,11 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         this.dailyStepGoal = sharedPref.getInt(getString(R.string.pref_daily_step_goal), 10000);
         sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+        // register for steps-saved-event
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED));
+        // load step count from database
+        getStepsAtLastSave();
     }
 
     @Override
@@ -212,5 +239,12 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         if(key.equals(getString(R.string.pref_daily_step_goal))){
             dailyStepGoal = sharedPreferences.getInt(getString(R.string.pref_daily_step_goal), 10000);
         }
+    }
+
+    /**
+     * Fetches the step count for this day from database
+     */
+    private void getStepsAtLastSave(){
+        totalStepsAtLastSave = StepCountPersistenceHelper.getStepCountForDay(Calendar.getInstance(), getApplicationContext());
     }
 }

@@ -77,9 +77,15 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
          *
          * @return Step count since service start
          */
-        public int stepsSinceStartup() {
+        public int stepsSinceLastSave() {
             return total_steps;
         }
+
+        /**
+         * Resets the step count since last save
+         * Is usually called when we saved the steps.
+         */
+        public void resetStepCount() { total_steps = 0; }
     }
 
     /**

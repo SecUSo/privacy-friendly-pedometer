@@ -6,7 +6,7 @@
     <uses-feature android:name="android.hardware.sensor.stepcounter" />
     <uses-feature android:name="android.hardware.sensor.stepdetector" />
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -41,10 +41,12 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver"
-            android:process=":remote" />
+            android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver"/>
 
         <service android:name="org.secuso.privacyfriendlystepcounter.services.AccelerometerStepDetectorService" />
-        <service android:name="org.secuso.privacyfriendlystepcounter.services.HardwareStepDetectorService" />
+        <service
+            android:name="org.secuso.privacyfriendlystepcounter.services.HardwareStepDetectorService"
+            android:stopWithTask="false" />
     </application>
+
 </manifest>

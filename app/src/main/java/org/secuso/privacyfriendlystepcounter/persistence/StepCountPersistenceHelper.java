@@ -95,6 +95,25 @@ public class StepCountPersistenceHelper {
     }
 
     /**
+     * Get the step count models for the given day
+     * @param calendar The day
+     * @param context The application context
+     * @return the step count models for the day
+     */
+    public static List<StepCount> getStepCountsForDay(Calendar calendar, Context context) {
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        long start_time = calendar.getTimeInMillis();
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        long end_time = calendar.getTimeInMillis();
+        return StepCountPersistenceHelper.getStepCountsForInterval(start_time, end_time, context);
+    }
+
+    /**
      * Returns the stepCount models for the steps walked in the given interval.
      * @param start_time The start time
      * @param end_time The end time

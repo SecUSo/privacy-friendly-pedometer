@@ -76,10 +76,10 @@ public class WeeklyReportFragment extends Fragment {
 
         // specify an adapter
         // using sample data.
-        Map<String, Integer> data = new LinkedHashMap<>();
+        Map<String, Double> data = new LinkedHashMap<>();
         String[] days = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
         for(int i = 1; i <= 7; i ++){
-            data.put(days[i-1], 4200*i);
+            data.put(days[i-1], (double) 4200*i);
         }
         mAdapter = new ReportAdapter(new ArrayList<>(Arrays.asList(new Object[]{new ActivitySummary(4200*7, 42*7, 420*7, "06. - 12. Juni"), new ActivityChart(data, data, data, "06. - 12. Juni")})));
         mRecyclerView.setAdapter(mAdapter);

@@ -42,6 +42,26 @@ public class StepCount {
         this.walkingMode = walkingMode;
     }
 
+    /**
+     * Gets the distance walked in this interval.
+     *
+     * @return The distance in meters
+     */
+    public double getDistance(){
+        if(getWalkingMode() != null) {
+            return getStepCount() * getWalkingMode().getStepLength();
+        }else{
+            return 0;
+        }
+    }
+
+    /**
+     * Gets the calories
+     * @return the calories in cal
+     */
+    public double getCalories(){
+        return 0; // TODO implement
+    }
     @Override
     public String toString() {
         return "StepCount{" +

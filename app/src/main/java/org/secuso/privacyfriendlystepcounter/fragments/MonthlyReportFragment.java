@@ -76,9 +76,9 @@ public class MonthlyReportFragment extends Fragment {
 
         // specify an adapter
         // using sample data.
-        Map<String, Integer> data = new LinkedHashMap<>();
+        Map<String, Double> data = new LinkedHashMap<>();
         for(int i = 1; i <= 30; i ++){
-            data.put(String.valueOf(i), 4200*i);
+            data.put(String.valueOf(i), (double) 4200*i);
         }
         mAdapter = new ReportAdapter(new ArrayList<>(Arrays.asList(new Object[]{new ActivitySummary(4200*30, 42*30, 420*30, "Juni 2016"), new ActivityChart(data, data, data, "Juni 2016")})));
         mRecyclerView.setAdapter(mAdapter);

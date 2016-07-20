@@ -7,11 +7,11 @@ import java.util.Map;
  */
 public class ActivityChart {
     private String title;
-    private Map<String, Integer> steps;
-    private Map<String, Integer> distance;
-    private Map<String, Integer> calories;
+    private Map<String, Double> steps;
+    private Map<String, Double> distance;
+    private Map<String, Double> calories;
 
-    public ActivityChart(Map<String, Integer> steps, Map<String, Integer> distance, Map<String, Integer> calories, String title) {
+    public ActivityChart(Map<String, Double> steps, Map<String, Double> distance, Map<String, Double> calories, String title) {
         this.steps = steps;
         this.title = title;
         this.distance = distance;
@@ -26,27 +26,27 @@ public class ActivityChart {
         this.title = title;
     }
 
-    public Map<String, Integer> getSteps() {
+    public Map<String, Double> getSteps() {
         return steps;
     }
 
-    public void setSteps(Map<String, Integer> steps) {
+    public void setSteps(Map<String, Double> steps) {
         this.steps = steps;
     }
 
-    public Map<String, Integer> getDistance() {
+    public Map<String, Double> getDistance() {
         return distance;
     }
 
-    public void setDistance(Map<String, Integer> distance) {
+    public void setDistance(Map<String, Double> distance) {
         this.distance = distance;
     }
 
-    public Map<String, Integer> getCalories() {
+    public Map<String, Double> getCalories() {
         return calories;
     }
 
-    public void setCalories(Map<String, Integer> calories) {
+    public void setCalories(Map<String, Double> calories) {
         this.calories = calories;
     }
 }

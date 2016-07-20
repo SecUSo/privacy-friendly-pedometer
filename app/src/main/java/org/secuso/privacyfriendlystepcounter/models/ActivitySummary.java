@@ -5,15 +5,15 @@ package org.secuso.privacyfriendlystepcounter.models;
  */
 public class ActivitySummary {
     private int steps;
-    private int distance;
+    private double distance;
     private int calories;
     private String title;
 
-    public ActivitySummary(int steps, int distance, int calories) {
+    public ActivitySummary(int steps, double distance, int calories) {
         this(steps, distance, calories, "");
     }
 
-    public ActivitySummary(int steps, int distance, int calories, String title) {
+    public ActivitySummary(int steps, double distance, int calories, String title) {
         this.steps = steps;
         this.distance = distance;
         this.calories = calories;
@@ -28,11 +28,11 @@ public class ActivitySummary {
         this.steps = steps;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

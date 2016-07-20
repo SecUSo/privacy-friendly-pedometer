@@ -27,7 +27,7 @@ import privacyfriendlyexample.org.secuso.example.R;
  * This adapter is used for ReportView.
  *
  * @author Tobias Neidig
- * @version 20160606
+ * @version 20160720
  */
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private List<Object> mItems;
@@ -78,9 +78,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 ArrayList<Entry> chartEntries = new ArrayList<>();
                 ArrayList<String> chartXValues = new ArrayList<>();
                 int i = 0;
-                for(Map.Entry<String, Integer> dataEntry : chartData.getSteps().entrySet()){
-                    Entry chartEntry = new Entry(dataEntry.getValue(), i++);
-                    chartEntries.add(chartEntry);
+                for(Map.Entry<String, Double> dataEntry : chartData.getSteps().entrySet()){
+                    if(dataEntry.getValue() != null) {
+                        Entry chartEntry = new Entry(dataEntry.getValue().floatValue(), i++);
+                        chartEntries.add(chartEntry);
+                    }
                     chartXValues.add(dataEntry.getKey());
                 }
                 LineDataSet chartLineDataSet = new LineDataSet(chartEntries, "Schritte");

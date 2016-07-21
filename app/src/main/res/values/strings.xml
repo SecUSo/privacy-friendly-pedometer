@@ -39,4 +39,7 @@
 
     <!-- Notification -->
     <string name="notification_text">%1$s of %2$s steps walked today.</string>
+    <string name="action_calories">Calories</string>
+    <string name="action_distance">Distance</string>
+    <string name="action_steps">Steps</string>
 </resources>

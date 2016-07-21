@@ -46,11 +46,11 @@ import privacyfriendlyexample.org.secuso.example.R;
  * @author Tobias Neidig
  * @version 20160606
  */
-public class DailyReportFragment extends Fragment {
+public class DailyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener {
     public static String LOG_TAG = DailyReportFragment.class.getName();
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ReportAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private OnFragmentInteractionListener mListener;
@@ -131,6 +131,7 @@ public class DailyReportFragment extends Fragment {
         generateReports(false);
 
         mAdapter = new ReportAdapter(reports);
+        mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
         // use a linear layout manager
@@ -279,6 +280,7 @@ public class DailyReportFragment extends Fragment {
 
         if(activityChart == null) {
             activityChart = new ActivityChart(stepData, distanceData, caloriesData, simpleDateFormat.format(day.getTime()));
+            activityChart.setDisplayedDataType(ActivityChart.DataType.STEPS);
             reports.add(activityChart);
         }else{
             activityChart.setSteps(stepData);
@@ -322,4 +324,24 @@ public class DailyReportFragment extends Fragment {
             generateReports(true);
         }
     };
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
+
+    @Override
+    public void onActivityChartDataTypeClicked(ActivityChart.DataType newDataType) {
+        Log.i(LOG_TAG, "Changing  displayed data type to " + newDataType.toString());
+        if(this.activityChart == null){
+            return;
+        }
+        if(this.activityChart.getDisplayedDataType() == newDataType) {
+            return;
+        }
+        this.activityChart.setDisplayedDataType(newDataType);
+        if(this.mAdapter != null){
+            this.mAdapter.notifyItemChanged(this.reports.indexOf(this.activityChart));
+        }
+    }
 }

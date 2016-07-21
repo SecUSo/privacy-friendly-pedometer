@@ -6,10 +6,14 @@ import java.util.Map;
  * Created by tobias on 06.06.16.
  */
 public class ActivityChart {
+    public enum DataType{
+        STEPS, DISTANCE, CALORIES
+    }
     private String title;
     private Map<String, Double> steps;
     private Map<String, Double> distance;
     private Map<String, Double> calories;
+    private DataType displayedDataType;
 
     public ActivityChart(Map<String, Double> steps, Map<String, Double> distance, Map<String, Double> calories, String title) {
         this.steps = steps;
@@ -48,5 +52,13 @@ public class ActivityChart {
 
     public void setCalories(Map<String, Double> calories) {
         this.calories = calories;
+    }
+
+    public DataType getDisplayedDataType() {
+        return displayedDataType;
+    }
+
+    public void setDisplayedDataType(DataType displayedDataType) {
+        this.displayedDataType = displayedDataType;
     }
 }

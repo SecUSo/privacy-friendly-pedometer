@@ -193,8 +193,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
      */
     private void generateReports(boolean updated){
         Log.i(LOG_TAG, "Generating reports");
-        if(!this.isTodayShown() && updated){
-            // the day shown is not today
+        if(!this.isTodayShown() && updated || isDetached()){
+            // the day shown is not today or is detached
             return;
         }
         // Get all step counts for this day.

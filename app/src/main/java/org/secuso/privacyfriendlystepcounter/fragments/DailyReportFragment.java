@@ -193,7 +193,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
      */
     private void generateReports(boolean updated){
         Log.i(LOG_TAG, "Generating reports");
-        if(!this.isTodayShown() && updated || isDetached()){
+        if(!this.isTodayShown() && updated || isDetached() || getContext() == null){
             // the day shown is not today or is detached
             return;
         }

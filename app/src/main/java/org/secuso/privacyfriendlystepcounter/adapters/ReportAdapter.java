@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -155,6 +156,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         void onItemClick(View view, int position);
 
         void onActivityChartDataTypeClicked(ActivityChart.DataType newDataType);
+
+        void setActivityChartDataTypeChecked(Menu popup);
     }
 
     // Provide a reference to the views for each data item
@@ -211,12 +214,17 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.menu_card_activity_summary, popup.getMenu());
             popup.setOnMenuItemClickListener(this);
+            if (mItemClickListener != null) {
+                mItemClickListener.setActivityChartDataTypeChecked(popup.getMenu());
+            }
             popup.show();
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             ActivityChart.DataType dataType;
+            item.setChecked(!item.isChecked());
+
             switch (item.getItemId()) {
                 case R.id.menu_steps:
                     dataType = ActivityChart.DataType.STEPS;
@@ -237,7 +245,5 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 return false;
             }
         }
-
-
     }
 }

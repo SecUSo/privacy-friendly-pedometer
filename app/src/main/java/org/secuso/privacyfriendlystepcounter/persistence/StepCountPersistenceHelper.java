@@ -122,6 +122,10 @@ public class StepCountPersistenceHelper {
      * @return The @{see StepCount}-Models between start and end time
      */
     public static List<StepCount> getStepCountsForInterval(long start_time, long end_time, Context context) {
+        if(context == null){
+            Log.e(LOG_CLASS, "Cannot get step count - context is null");
+            return new ArrayList<>();
+        }
         StepCountDbHelper dbHelper = new StepCountDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.query(StepCountDbHelper.StepCountEntry.TABLE_NAME,

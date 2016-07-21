@@ -162,6 +162,14 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         mListener = null;
     }
 
+    @Override
+    public void onDestroy(){
+        if(this.isTodayShown() && mServiceConnection != null){
+            getContext().unbindService(mServiceConnection);
+        }
+        super.onDestroy();
+    }
+
     /**
      *
      * @return is the day which is currently shown today?

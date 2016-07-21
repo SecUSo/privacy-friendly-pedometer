@@ -1,6 +1,7 @@
 package org.secuso.privacyfriendlystepcounter.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -85,19 +86,24 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 ArrayList<String> chartXValues = new ArrayList<>();
                 int i = 0;
                 Map<String, Double> dataMap;
+                String label;
                 if (chartData.getDisplayedDataType() == null) {
                     dataMap = chartData.getSteps();
+                    label = chartViewHolder.context.getString(R.string.steps);
                 } else {
                     switch (chartData.getDisplayedDataType()) {
                         case DISTANCE:
                             dataMap = chartData.getDistance();
+                            label = chartViewHolder.context.getString(R.string.action_distance);
                             break;
                         case CALORIES:
                             dataMap = chartData.getCalories();
+                            label = chartViewHolder.context.getString(R.string.calories);
                             break;
                         case STEPS:
                         default:
                             dataMap = chartData.getSteps();
+                            label = chartViewHolder.context.getString(R.string.steps);
                             break;
                     }
                 }
@@ -109,8 +115,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     }
                     chartXValues.add(dataEntry.getKey());
                 }
-                LineDataSet chartLineDataSet = new LineDataSet(chartEntries, "Schritte");
+                LineDataSet chartLineDataSet = new LineDataSet(chartEntries, label);
                 chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                chartLineDataSet.setLineWidth(3);
+                chartLineDataSet.setCircleRadius(3.5f);
+                chartLineDataSet.setCircleHoleRadius(0);
+                chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorPrimary), 200);
+                chartLineDataSet.setCircleColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorPrimary));
+
                 ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                 dataSets.add(chartLineDataSet);
                 LineData data = new LineData(chartXValues, dataSets);
@@ -200,6 +212,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mChart = (LineChart) itemView.findViewById(R.id.chart);
             mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
             mChart.getAxisRight().setEnabled(false);
+            mChart.setTouchEnabled(false);
+            mChart.setDoubleTapToZoomEnabled(false);
+            mChart.setPinchZoom(false);
+            mChart.setDescription("");
             mMenuButton = (ImageButton) itemView.findViewById(R.id.periodMoreButton);
             mMenuButton.setOnClickListener(new View.OnClickListener() {
                 @Override

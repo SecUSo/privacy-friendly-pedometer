@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Load first view
         final android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, new MainFragment(), "MainFragment");
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
         // Start step detection if enabled and not yet started

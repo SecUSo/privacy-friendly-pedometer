@@ -3,7 +3,6 @@ package org.secuso.privacyfriendlystepcounter.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -120,6 +119,17 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -172,7 +182,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), PreferencesActivity.class));
+                this.getActivity().onBackPressed();
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -203,7 +213,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), PreferencesActivity.class));
+                this.getActivity().onBackPressed();
                 return true;
             }
             return super.onOptionsItemSelected(item);

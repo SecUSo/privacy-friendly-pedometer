@@ -1,9 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,8 +11,13 @@
         <item name="android:textAppearanceLargePopupMenu">@style/popupMenuTextAppearanceSmall</item>
         <item name="textAppearanceSmallPopupMenu">@style/popupMenuTextAppearanceLarge</item>
         <item name="android:textAppearanceSmallPopupMenu">@style/popupMenuTextAppearanceLarge</item>
+    </style>
 
+    <style name="AppTheme" parent="AppTheme.Base"></style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="actionMenuTextColor">@color/black</item>
         <item name="android:textColorSecondary">@color/white</item>
@@ -29,6 +32,7 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:textSize">24sp</item>
     </style>
+
     <style name="CardViewSubTitle" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -38,12 +42,14 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="CardViewBody">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_margin">16dp</item>
         <item name="android:layout_marginBottom">24dp</item>
     </style>
+
     <style name="SimpleImageButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -55,11 +61,17 @@
     <style name="popupMenuTextAppearanceSmall" parent="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="popupMenuTextAppearanceLarge" parent="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large">
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="PopupMenuStyle" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="PreferencesTheme" parent="AppTheme">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorSecondary">@color/darkgrey</item>
     </style>
 </resources>

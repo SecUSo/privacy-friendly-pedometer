@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlystepcounter.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -119,7 +120,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_training:
                 break;
             case R.id.menu_settings:
-                break;
+                Intent intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.menu_help:
                 fragment = new HelpFragment();
                 break;

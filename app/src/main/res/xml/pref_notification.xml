@@ -1,0 +1,46 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_group_title_permanent_notification">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_notification_permanent_show_steps"
+            android:title="@string/pref_title_notification_permanent_show_steps"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_notification_permanent_show_distance"
+            android:title="@string/pref_title_notification_permanent_show_distance"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_notification_permanent_show_calories"
+            android:title="@string/pref_title_notification_permanent_show_calories"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_group_title_motivation_alert">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_notification_motivation_alert_enabled"
+            android:title="@string/pref_title_notification_motivation_alert_enabled"/>
+        <!-- default is 18:00 -->
+        <org.secuso.privacyfriendlystepcounter.preferences.TimePreference
+            android:defaultValue="64800000"
+            android:key="@string/pref_notification_motivation_alert_time"
+            android:title="@string/pref_title_notification_motivation_alert_time" />
+        <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+             dismiss it. -->
+        <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/pref_keys_notification_motivation_alert_criterion"
+            android:entryValues="@array/pref_values_notification_motivation_alert_criterion"
+            android:key="@string/pref_notification_motivation_alert_criterion"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_notification_motivation_alert_criterion" />
+
+        <Preference android:title="@string/pref_title_notification_motivation_alert_texts">
+            <intent
+                android:targetPackage="org.secuso.privacyfriendlystepcounter"
+                android:targetClass="org.secuso.privacyfriendlystepcounter.activities.MainActivity" />
+            <!-- TODO set correct activity -->
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

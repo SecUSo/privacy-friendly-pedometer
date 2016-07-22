@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlystepcounter.services;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -18,10 +19,13 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import org.secuso.privacyfriendlystepcounter.activities.MainActivity;
+import org.secuso.privacyfriendlystepcounter.models.StepCount;
 import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
 import java.util.Calendar;
+import java.util.List;
 
 import privacyfriendlyexample.org.secuso.example.R;
 
@@ -30,7 +34,7 @@ import privacyfriendlyexample.org.secuso.example.R;
  * Does not detect steps itself - the step detection has to be done in the subclasses.
  *
  * @author Tobias Neidig
- * @version 20160618
+ * @version 20160721
  */
 public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -55,7 +59,6 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      */
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotifyManager;
-    private NotificationCompat.Builder mBuilder;
     /**
      * Number of steps the user wants to walk every day
      */
@@ -64,6 +67,14 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      * Number of in-database-saved steps.
      */
     private int totalStepsAtLastSave = 0;
+    /**
+     * Number of in-database-saved calories;
+     */
+    private double totalCaloriesAtLastSave = 0;
+    /**
+     * Distance of in-database-saved steps
+     */
+    private double totalDistanceAtLastSave = 0;
 
     /**
      * Number of steps counted since service start
@@ -139,24 +150,47 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
 
         // Update notification
-        Notification notification = buildNotification(total_steps);
-        mNotifyManager.notify(NOTIFICATION_ID, notification);
+        updateNotification();
     }
 
     /**
      * Builds the permanent step count notification
-     * @param totalStepsSinceLastSave The number of steps since last save
+     * @param additionalStepCount The number of steps since last save
      * @return the new notification
      */
-    protected Notification buildNotification(int totalStepsSinceLastSave){
-        int totalSteps = totalStepsSinceLastSave + this.totalStepsAtLastSave;
-
+    protected Notification buildNotification(StepCount additionalStepCount){
+        int totalSteps = this.totalStepsAtLastSave + additionalStepCount.getStepCount();
+        double totalDistance = this.totalDistanceAtLastSave + additionalStepCount.getDistance();
+        double totalCalories = this.totalCaloriesAtLastSave + additionalStepCount.getCalories();
+        // Get user preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showSteps = sharedPref.getBoolean(this.getString(R.string.pref_notification_permanent_show_steps), true);
+        boolean showDistance = sharedPref.getBoolean(this.getString(R.string.pref_notification_permanent_show_distance), false);
+        boolean showCalories = sharedPref.getBoolean(this.getString(R.string.pref_notification_permanent_show_calories), false);
+        String message = "";
+        if(showSteps){
+            message = String.format(getString(R.string.notification_text_steps), totalSteps, this.dailyStepGoal);
+        }
+        if(showDistance){
+            message += (!message.isEmpty()) ? "\n" : "";
+            message += String.format(getString(R.string.notification_text_distance), totalDistance / 1000);
+        }
+        if(showCalories){
+            message += (!message.isEmpty()) ? "\n" : "";
+            message += String.format(getString(R.string.notification_text_calories), totalCalories);
+        }
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mNotifyManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setContentTitle(getString(R.string.app_name))
-                .setContentText(String.format(getString(R.string.notification_text), totalSteps, this.dailyStepGoal))
+                .setContentText(message)
+                .setTicker(message)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(getString(R.string.app_name)))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setSmallIcon(R.drawable.ic_directions_walk_65black_30dp);
+        mBuilder.setContentIntent(pIntent);
         mBuilder.setProgress(this.dailyStepGoal, totalSteps, false);
         mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
         mBuilder.setPriority(NotificationCompat.PRIORITY_MIN);
@@ -219,7 +253,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "Starting service.");
-        startForeground(NOTIFICATION_ID, buildNotification(this.total_steps));
+        startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
         return START_STICKY;
     }
 
@@ -238,6 +272,10 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         // Detect changes on preferences and update our internal variable
         if(key.equals(getString(R.string.pref_daily_step_goal))){
             dailyStepGoal = sharedPreferences.getInt(getString(R.string.pref_daily_step_goal), 10000);
+        }else if(key.equals(getString(R.string.pref_notification_permanent_show_steps)) ||
+                key.equals(getString(R.string.pref_notification_permanent_show_distance)) ||
+                key.equals(getString(R.string.pref_notification_permanent_show_calories))){
+            updateNotification();
         }
     }
 
@@ -245,6 +283,33 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      * Fetches the step count for this day from database
      */
     private void getStepsAtLastSave(){
-        totalStepsAtLastSave = StepCountPersistenceHelper.getStepCountForDay(Calendar.getInstance(), getApplicationContext());
+        List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(Calendar.getInstance(), getApplicationContext());
+        totalStepsAtLastSave = 0;
+        totalDistanceAtLastSave = 0;
+        totalCaloriesAtLastSave = 0;
+        for (StepCount stepCount : stepCounts) {
+            totalStepsAtLastSave += stepCount.getStepCount();
+            totalDistanceAtLastSave += stepCount.getDistance();
+            totalCaloriesAtLastSave += stepCount.getCalories();
+        }
+    }
+
+    /**
+     * Transforms the current total_steps (total steps since last save) in an @{see StepCount} object
+     * @return total_steps since last save as stepCount object
+     */
+    private StepCount stepCountFromTotalSteps(){
+        StepCount stepCount = new StepCount();
+        stepCount.setStepCount(total_steps);
+        stepCount.setWalkingMode(null); // TODO use current walking mode
+        return stepCount;
+    }
+
+    /**
+     * Updates or creates the progress notification
+     */
+    private void updateNotification(){
+        Notification notification = buildNotification(this.stepCountFromTotalSteps());
+        mNotifyManager.notify(NOTIFICATION_ID, notification);
     }
 }

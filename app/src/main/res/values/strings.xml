@@ -115,4 +115,17 @@
     <string name="action_distance">Distance</string>
     <string name="action_steps">Steps</string>
     <string name="set">Set</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Come on, it\'s time to walk!</item>
+    </string-array>
+    <string name="motivation_alert_empty">Set custom alert messages when the achievement of your daily step goal is in danger.\n\nThere will be no alert if no message exists.</string>
+    <string name="motivation_alert_input_title">Set motivation alert message</string>
+    <string name="motivation_alert_input_message">Set your own custom motivation alert. The app notifies you with one of your texts randomly.</string>
+    <string name="motivation_alert_input_empty">Empty motivation alerts are useless, aren\'t they?</string>
+    <string name="activity_title_motivation_alerts">Motivation alerts</string>
 </resources>

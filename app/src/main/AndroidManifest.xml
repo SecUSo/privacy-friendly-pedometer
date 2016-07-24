@@ -31,6 +31,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlystepcounter.activities.MainActivity" />
         </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlystepcounter.activities.MotivationAlertTextsActivity"
+            android:label="@string/activity_title_motivation_alerts"
+            android:parentActivityName="org.secuso.privacyfriendlystepcounter.activities.PreferencesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlystepcounter.activities.PreferencesActivity" />
+        </activity>
+
 
         <receiver android:name="org.secuso.privacyfriendlystepcounter.receivers.OnBootCompletedBroadcastReceiver">
             <intent-filter>
@@ -49,8 +58,7 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver"/>
+        <receiver android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver" />
 
         <service android:name="org.secuso.privacyfriendlystepcounter.services.AccelerometerStepDetectorService" />
         <service

@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlystepcounter.Factory;
+import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.adapters.ReportAdapter;
-import org.secuso.privacyfriendlystepcounter.models.ActivityChart;
+import org.secuso.privacyfriendlystepcounter.models.ActivityChartDataSet;
+import org.secuso.privacyfriendlystepcounter.models.ActivityDayChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 import org.secuso.privacyfriendlystepcounter.models.StepCount;
 import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
@@ -34,11 +38,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.secuso.privacyfriendlystepcounter.R;
-
 /**
  * Report-fragment for one specific day
- *
+ * <p/>
  * Activities that contain this fragment must implement the
  * {@link DailyReportFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
@@ -50,38 +52,29 @@ import org.secuso.privacyfriendlystepcounter.R;
  */
 public class DailyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener {
     public static String LOG_TAG = DailyReportFragment.class.getName();
-
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private RecyclerView mRecyclerView;
     private ReportAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
     private OnFragmentInteractionListener mListener;
-
-    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private ActivitySummary activitySummary;
-    private ActivityChart activityChart;
+    private ActivityDayChart activityChart;
     private List<Object> reports = new ArrayList<>();
     private Calendar day;
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
-
-    public class BroadcastReceiver extends android.content.BroadcastReceiver {
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent == null){
-                Log.w(LOG_TAG, "Received intent which is null.");
-                return;
-            }
-            switch(intent.getAction()){
-                case AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED:
-                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
-                    // Steps were saved, reload step count from database
-                    generateReports(true);
-                    break;
-                default:
-            }
+        public void onServiceDisconnected(ComponentName name) {
+            myBinder = null;
         }
-    }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            myBinder = (AbstractStepDetectorService.StepDetectorBinder) service;
+            generateReports(true);
+        }
+    };
 
     public DailyReportFragment() {
         // Required empty public constructor
@@ -96,7 +89,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     public static DailyReportFragment newInstance() {
         DailyReportFragment fragment = new DailyReportFragment();
         Bundle args = new Bundle();
-       // args.putString(ARG_PARAM1, param1);
+        // args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -115,7 +108,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
         // Bind to stepDetector if today is shown
-        if(isTodayShown()){
+        if (isTodayShown()) {
             Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
             getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         }
@@ -165,18 +158,17 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     }
 
     @Override
-    public void onDestroy(){
-        if(this.isTodayShown() && mServiceConnection != null){
+    public void onDestroy() {
+        if (this.isTodayShown() && mServiceConnection != null) {
             getContext().unbindService(mServiceConnection);
         }
         super.onDestroy();
     }
 
     /**
-     *
      * @return is the day which is currently shown today?
      */
-    private boolean isTodayShown(){
+    private boolean isTodayShown() {
         return (Calendar.getInstance().get(Calendar.YEAR) == day.get(Calendar.YEAR) &&
                 Calendar.getInstance().get(Calendar.MONTH) == day.get(Calendar.MONTH) &&
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == day.get(Calendar.DAY_OF_MONTH));
@@ -185,16 +177,16 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     /**
      * Generates the report objects and adds them to the recycler view adapter.
      * The following reports will be generated:
-     *      * ActivitySummary
-     *      * ActivityChart
+     * * ActivitySummary
+     * * ActivityChart
      * If one of these reports does not exist it will be created and added at the end of view.
      *
      * @param updated determines if the method is called because of an update of current steps.
      *                If set to true and another day than today is shown the call will be ignored.
      */
-    private void generateReports(boolean updated){
+    private void generateReports(boolean updated) {
         Log.i(LOG_TAG, "Generating reports");
-        if(!this.isTodayShown() && updated || isDetached() || getContext() == null){
+        if (!this.isTodayShown() && updated || isDetached() || getContext() == null) {
             // the day shown is not today or is detached
             return;
         }
@@ -203,12 +195,12 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         int stepCount = 0;
         double distance = 0;
         int calories = 0;
-        if(this.isTodayShown() && myBinder != null){
+        if (this.isTodayShown() && myBinder != null) {
             // Today is shown. Add the steps which are not in database.
             StepCount s = new StepCount();
-            if(stepCounts.size() > 0) {
-                s.setStartTime(stepCounts.get(stepCounts.size()-1).getEndTime());
-            }else{
+            if (stepCounts.size() > 0) {
+                s.setStartTime(stepCounts.get(stepCounts.size() - 1).getEndTime());
+            } else {
                 s.setStartTime(day.getTimeInMillis());
             }
             s.setEndTime(Calendar.getInstance().getTimeInMillis()); // now
@@ -216,23 +208,23 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getContext())); // add current walking mode
             stepCounts.add(s);
         }
-        Map<String, Double> stepData = new LinkedHashMap<>();
-        Map<String, Double> distanceData = new LinkedHashMap<>();
-        Map<String, Double> caloriesData = new LinkedHashMap<>();
+        Map<String, ActivityChartDataSet> stepData = new LinkedHashMap<>();
+        Map<String, ActivityChartDataSet> distanceData = new LinkedHashMap<>();
+        Map<String, ActivityChartDataSet> caloriesData = new LinkedHashMap<>();
         WalkingMode wm = null;
         int hour = -1;
 
         // fill hours without info
         int e;
-        if(stepCounts.size() > 0){
+        if (stepCounts.size() > 0) {
             Calendar end = Calendar.getInstance();
             end.setTimeInMillis(stepCounts.get(0).getEndTime());
             e = end.get(Calendar.HOUR_OF_DAY);
-        }else{
+        } else {
             e = 24;
         }
 
-        for(int h = 0; h < e; h++){
+        for (int h = 0; h < e; h++) {
             StepCount s = new StepCount();
             Calendar m = day;
             m.set(Calendar.HOUR_OF_DAY, h);
@@ -243,8 +235,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             stepCounts.add(h, s);
         }
         // Create report data
-        SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm",getResources().getConfiguration().locale);
-        for(StepCount s : stepCounts){
+        SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm", getResources().getConfiguration().locale);
+        for (StepCount s : stepCounts) {
             Calendar end = Calendar.getInstance();
             end.setTimeInMillis(s.getEndTime());
 
@@ -252,22 +244,24 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             distance += s.getDistance();
             calories += s.getCalories();
 
-            if(s.getWalkingMode() != wm || end.get(Calendar.HOUR_OF_DAY) != hour || stepCounts.indexOf(s) == stepCounts.size() - 1){
+            if (s.getWalkingMode() == null && wm != null || s.getWalkingMode() != null && wm == null ||
+                    s.getWalkingMode() != null && wm != null && s.getWalkingMode().getId() != wm.getId() ||
+                    end.get(Calendar.HOUR_OF_DAY) != hour || stepCounts.indexOf(s) == stepCounts.size() - 1) {
                 // create new field
                 wm = s.getWalkingMode();
                 hour = end.get(Calendar.HOUR_OF_DAY);
-                stepData.put(formatHourMinute.format(end.getTime()), (double) stepCount);
-                distanceData.put(formatHourMinute.format(end.getTime()), distance);
-                caloriesData.put(formatHourMinute.format(end.getTime()), (double) calories);
+                stepData.put(formatHourMinute.format(end.getTime()), new ActivityChartDataSet(stepCount, s));
+                distanceData.put(formatHourMinute.format(end.getTime()), new ActivityChartDataSet(distance, s));
+                caloriesData.put(formatHourMinute.format(end.getTime()), new ActivityChartDataSet(calories, s));
             }
         }
 
         // fill hours without info
-        if(stepCounts.size() > 0){
+        if (stepCounts.size() > 0) {
             Calendar end = Calendar.getInstance();
             end.setTimeInMillis(stepCounts.get(stepCounts.size() - 1).getEndTime());
             e = end.get(Calendar.HOUR_OF_DAY);
-            for(int h = e + 1; h < 24; h++){
+            for (int h = e + 1; h < 24; h++) {
                 stepData.put(h + ":00", null);
                 distanceData.put(h + ":00", null);
                 caloriesData.put(h + ":00", null);
@@ -278,36 +272,80 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd. MMMM", getResources().getConfiguration().locale);
 
         // create view models
-        if(activitySummary == null) {
+        if (activitySummary == null) {
             activitySummary = new ActivitySummary(stepCount, distance, calories, simpleDateFormat.format(day.getTime()));
             reports.add(activitySummary);
-        }else{
+        } else {
             activitySummary.setSteps(stepCount);
             activitySummary.setDistance(distance);
             activitySummary.setCalories(calories);
-            activitySummary.setTitle( simpleDateFormat.format(day.getTime()));
+            activitySummary.setTitle(simpleDateFormat.format(day.getTime()));
         }
 
-        if(activityChart == null) {
-            activityChart = new ActivityChart(stepData, distanceData, caloriesData, simpleDateFormat.format(day.getTime()));
-            activityChart.setDisplayedDataType(ActivityChart.DataType.STEPS);
+        if (activityChart == null) {
+            activityChart = new ActivityDayChart(stepData, distanceData, caloriesData, simpleDateFormat.format(day.getTime()));
+            activityChart.setDisplayedDataType(ActivityDayChart.DataType.STEPS);
             reports.add(activityChart);
-        }else{
+        } else {
             activityChart.setSteps(stepData);
             activityChart.setDistance(distanceData);
             activityChart.setCalories(caloriesData);
-            activityChart.setTitle( simpleDateFormat.format(day.getTime()));
+            activityChart.setTitle(simpleDateFormat.format(day.getTime()));
         }
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
+        activityChart.setGoal(Integer.valueOf(d));
 
 
         // notify ui
-        if(mAdapter != null) {
+        if (mAdapter != null) {
             mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
 
             mAdapter.notifyItemChanged(reports.indexOf(activityChart));
             mAdapter.notifyDataSetChanged();
-        }else{
+        } else {
             Log.w(LOG_TAG, "Cannot inform adapter for changes.");
+        }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
+
+    @Override
+    public void onActivityChartDataTypeClicked(ActivityDayChart.DataType newDataType) {
+        Log.i(LOG_TAG, "Changing  displayed data type to " + newDataType.toString());
+        if (this.activityChart == null) {
+            return;
+        }
+        if (this.activityChart.getDisplayedDataType() == newDataType) {
+            return;
+        }
+        this.activityChart.setDisplayedDataType(newDataType);
+        if (this.mAdapter != null) {
+            this.mAdapter.notifyItemChanged(this.reports.indexOf(this.activityChart));
+        }
+    }
+
+    @Override
+    public void setActivityChartDataTypeChecked(Menu menu) {
+        if (this.activityChart == null) {
+            return;
+        }
+        if (this.activityChart.getDisplayedDataType() == null) {
+            menu.findItem(R.id.menu_steps).setChecked(true);
+        }
+        switch (this.activityChart.getDisplayedDataType()) {
+            case DISTANCE:
+                menu.findItem(R.id.menu_distance).setChecked(true);
+                break;
+            case CALORIES:
+                menu.findItem(R.id.menu_calories).setChecked(true);
+                break;
+            case STEPS:
+            default:
+                menu.findItem(R.id.menu_steps).setChecked(true);
         }
     }
 
@@ -321,58 +359,23 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         // Currently doing nothing here.
     }
 
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    public class BroadcastReceiver extends android.content.BroadcastReceiver {
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
-            myBinder = null;
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            myBinder = (AbstractStepDetectorService.StepDetectorBinder) service;
-            generateReports(true);
-        }
-    };
-
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
-
-    @Override
-    public void onActivityChartDataTypeClicked(ActivityChart.DataType newDataType) {
-        Log.i(LOG_TAG, "Changing  displayed data type to " + newDataType.toString());
-        if(this.activityChart == null){
-            return;
-        }
-        if(this.activityChart.getDisplayedDataType() == newDataType) {
-            return;
-        }
-        this.activityChart.setDisplayedDataType(newDataType);
-        if(this.mAdapter != null){
-            this.mAdapter.notifyItemChanged(this.reports.indexOf(this.activityChart));
-        }
-    }
-
-    @Override
-    public void setActivityChartDataTypeChecked(Menu menu) {
-        if(this.activityChart == null){
-            return;
-        }
-        if(this.activityChart.getDisplayedDataType() == null){
-            menu.findItem(R.id.menu_steps).setChecked(true);
-        }
-        switch(this.activityChart.getDisplayedDataType()){
-            case DISTANCE:
-                menu.findItem(R.id.menu_distance).setChecked(true);
-                break;
-            case CALORIES:
-                menu.findItem(R.id.menu_calories).setChecked(true);
-                break;
-            case STEPS:
-            default:
-                menu.findItem(R.id.menu_steps).setChecked(true);
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null) {
+                Log.w(LOG_TAG, "Received intent which is null.");
+                return;
+            }
+            switch (intent.getAction()) {
+                case AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED:
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
+                case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:
+                    // Steps were saved, reload step count from database
+                    generateReports(true);
+                    break;
+                default:
+            }
         }
     }
 }

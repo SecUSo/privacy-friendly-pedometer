@@ -3,18 +3,18 @@ package org.secuso.privacyfriendlystepcounter.models;
 import java.util.Map;
 
 /**
- * Created by tobias on 06.06.16.
+ * Activity day chart model
+ *
+ * @author Tobias Neidig
+ * @version 20160726
  */
 public class ActivityDayChart {
-    public enum DataType{
-        STEPS, DISTANCE, CALORIES
-    }
     private String title;
     private Map<String, ActivityChartDataSet> steps;
     private Map<String, ActivityChartDataSet> distance;
     private Map<String, ActivityChartDataSet> calories;
     private DataType displayedDataType;
-
+    private int goal;
     public ActivityDayChart(Map<String, ActivityChartDataSet> steps, Map<String, ActivityChartDataSet> distance, Map<String, ActivityChartDataSet> calories, String title) {
         this.steps = steps;
         this.title = title;
@@ -60,5 +60,17 @@ public class ActivityDayChart {
 
     public void setDisplayedDataType(DataType displayedDataType) {
         this.displayedDataType = displayedDataType;
+    }
+
+    public int getGoal() {
+        return goal;
+    }
+
+    public void setGoal(int goal) {
+        this.goal = goal;
+    }
+
+    public enum DataType {
+        STEPS, DISTANCE, CALORIES
     }
 }

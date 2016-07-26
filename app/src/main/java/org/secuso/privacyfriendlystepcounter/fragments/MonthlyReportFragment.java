@@ -9,20 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.adapters.ReportAdapter;
-import org.secuso.privacyfriendlystepcounter.models.ActivityChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Report-fragment for one specific day
- *
+ * <p/>
  * Activities that contain this fragment must implement the
  * {@link MonthlyReportFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
@@ -76,11 +72,7 @@ public class MonthlyReportFragment extends Fragment {
 
         // specify an adapter
         // using sample data.
-        Map<String, Double> data = new LinkedHashMap<>();
-        for(int i = 1; i <= 30; i ++){
-            data.put(String.valueOf(i), (double) 4200*i);
-        }
-        mAdapter = new ReportAdapter(new ArrayList<>(Arrays.asList(new Object[]{new ActivitySummary(4200*30, 42*30, 420*30, "Juni 2016"), new ActivityChart(data, data, data, "Juni 2016")})));
+        mAdapter = new ReportAdapter(new ArrayList<>(Arrays.asList(new Object[]{new ActivitySummary(4200 * 30, 42 * 30, 420 * 30, "Juni 2016")})));
         mRecyclerView.setAdapter(mAdapter);
 
         // use a linear layout manager

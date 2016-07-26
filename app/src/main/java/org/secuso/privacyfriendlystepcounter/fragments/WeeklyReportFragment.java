@@ -9,20 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.adapters.ReportAdapter;
-import org.secuso.privacyfriendlystepcounter.models.ActivityChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Report-fragment for one specific day
- *
+ * <p/>
  * Activities that contain this fragment must implement the
  * {@link WeeklyReportFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
@@ -76,12 +72,7 @@ public class WeeklyReportFragment extends Fragment {
 
         // specify an adapter
         // using sample data.
-        Map<String, Double> data = new LinkedHashMap<>();
-        String[] days = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
-        for(int i = 1; i <= 7; i ++){
-            data.put(days[i-1], (double) 4200*i);
-        }
-        mAdapter = new ReportAdapter(new ArrayList<>(Arrays.asList(new Object[]{new ActivitySummary(4200*7, 42*7, 420*7, "06. - 12. Juni"), new ActivityChart(data, data, data, "06. - 12. Juni")})));
+        mAdapter = new ReportAdapter(new ArrayList<>(Arrays.asList(new Object[]{new ActivitySummary(4200 * 7, 42 * 7, 420 * 7, "06. - 12. Juni")})));
         mRecyclerView.setAdapter(mAdapter);
 
         // use a linear layout manager
@@ -115,7 +106,7 @@ public class WeeklyReportFragment extends Fragment {
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
+     * to the activity and potentially other fragments cotained in that
      * activity.
      */
     public interface OnFragmentInteractionListener {

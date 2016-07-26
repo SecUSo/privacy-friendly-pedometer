@@ -60,7 +60,7 @@ public class StepCount {
      * @return the calories in cal
      */
     public double getCalories(){
-        return 0; // TODO implement
+        return 0.44 * getStepCount(); // TODO implement
     }
     @Override
     public String toString() {

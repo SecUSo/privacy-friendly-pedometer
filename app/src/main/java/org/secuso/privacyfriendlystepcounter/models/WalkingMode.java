@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import org.secuso.privacyfriendlystepcounter.persistence.WalkingModeDbHelper;
+import org.secuso.privacyfriendlystepcounter.utils.ColorUtil;
 
 /**
  * A walking mode has a user defined name and a custom step length.
@@ -16,6 +17,17 @@ public class WalkingMode {
     private double stepFrequency;
     private boolean is_active;
     private boolean is_deleted;
+
+    public static WalkingMode from(Cursor c) {
+        WalkingMode alarmItem = new WalkingMode();
+        alarmItem.setId(c.getLong(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry._ID)));
+        alarmItem.setName(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME)));
+        alarmItem.setStepLength(c.getInt(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE)));
+        alarmItem.setStepFrequency(c.getInt(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY)));
+        alarmItem.setIsActive(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE))));
+        alarmItem.setIsDeleted(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED))));
+        return alarmItem;
+    }
 
     public long getId() {
         return id;
@@ -65,18 +77,7 @@ public class WalkingMode {
         this.is_deleted = is_deleted;
     }
 
-    public static WalkingMode from(Cursor c){
-        WalkingMode alarmItem = new WalkingMode();
-        alarmItem.setId(c.getLong(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry._ID)));
-        alarmItem.setName(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME)));
-        alarmItem.setStepLength(c.getInt(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE)));
-        alarmItem.setStepFrequency(c.getInt(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY)));
-        alarmItem.setIsActive(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE))));
-        alarmItem.setIsDeleted(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED))));
-        return alarmItem;
-    }
-
-    public ContentValues toContentValues(){
+    public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
         values.put(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME, this.getName());
         values.put(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE, this.getStepLength());
@@ -94,4 +95,13 @@ public class WalkingMode {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+
+    /**
+     * @return the walking-mode-specific color
+     */
+    public int getColor() {
+        return ColorUtil.getMaterialColor(this.getId() + this.getName());
+    }
+
 }

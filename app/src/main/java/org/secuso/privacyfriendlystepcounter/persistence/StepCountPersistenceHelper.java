@@ -146,7 +146,7 @@ public class StepCountPersistenceHelper {
             s.setStartTime(start);
             s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
             s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT)));
-            s.setWalkingMode(null); // TODO implement walking mode
+            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)), context));
             steps.add(s);
             start = s.getEndTime();
             sum += s.getStepCount();

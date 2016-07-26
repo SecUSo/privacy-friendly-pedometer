@@ -22,6 +22,7 @@ import android.util.Log;
 import org.secuso.privacyfriendlystepcounter.activities.MainActivity;
 import org.secuso.privacyfriendlystepcounter.models.StepCount;
 import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
 import java.util.Calendar;
@@ -301,7 +302,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     private StepCount stepCountFromTotalSteps(){
         StepCount stepCount = new StepCount();
         stepCount.setStepCount(total_steps);
-        stepCount.setWalkingMode(null); // TODO use current walking mode
+        stepCount.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getApplicationContext())); // use current walking mode
         return stepCount;
     }
 

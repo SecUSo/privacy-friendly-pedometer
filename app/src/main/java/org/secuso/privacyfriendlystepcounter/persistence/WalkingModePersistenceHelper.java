@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
@@ -31,13 +30,14 @@ public class WalkingModePersistenceHelper {
 
     /**
      * Gets all not deleted walking modes from database
+     *
      * @param context The application context
      * @return a list of walking modes
      */
     public static List<WalkingMode> getAllItems(Context context) {
         Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED + " = ?", new String[]{String.valueOf(false)}, context);
         List<WalkingMode> walkingModes = new ArrayList<>();
-        while(c.moveToNext()){
+        while (c.moveToNext()) {
             walkingModes.add(WalkingMode.from(c));
         }
         c.close();
@@ -46,44 +46,53 @@ public class WalkingModePersistenceHelper {
 
     /**
      * Gets the specific walking mode
-     * @param id the id of the walking mode
+     *
+     * @param id      the id of the walking mode
      * @param context The application context
      * @return the requested walking mode or null
      */
     public static WalkingMode getItem(long id, Context context) {
         Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry._ID + " = ?", new String[]{String.valueOf(id)}, context);
-        if(c.getCount() == 0){
-            return null;
-        }else{
-            c.moveToFirst();
-            return WalkingMode.from(c);
+        WalkingMode walkingMode;
+        try {
+            if (c.getCount() == 0) {
+                walkingMode = null;
+            } else {
+                c.moveToFirst();
+                walkingMode = WalkingMode.from(c);
+            }
+        } catch (Exception e) {
+            walkingMode = null;
         }
+        c.close();
+        return walkingMode;
     }
 
     /**
      * Stores the given walking mode to database.
      * If id is set, the walking mode will be updated else it will be created
-     * @param item the walking mode to store
+     *
+     * @param item    the walking mode to store
      * @param context The application context
      * @return the saved walking mode (with correct id)
      */
     public static WalkingMode save(WalkingMode item, Context context) {
-        if(item == null){
+        if (item == null) {
             return null;
         }
-        if(item.getId() <= 0){
+        if (item.getId() <= 0) {
             long insertedId = insert(item, context);
-            if(insertedId == -1){
+            if (insertedId == -1) {
                 return null;
-            }else{
+            } else {
                 item.setId(insertedId);
                 return item;
             }
-        }else{
+        } else {
             int affectedRows = update(item, context);
-            if(affectedRows == 0){
+            if (affectedRows == 0) {
                 return null;
-            }else{
+            } else {
                 return item;
             }
         }
@@ -91,13 +100,14 @@ public class WalkingModePersistenceHelper {
 
     /**
      * Deletes the given walking mode from database
-     * @param item the item to delete
+     *
+     * @param item    the item to delete
      * @param context The application context
      * @return true if deletion was successful else false
      */
     public static boolean delete(WalkingMode item, Context context) {
         WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
-        if(item == null || item.getId() <= 0){
+        if (item == null || item.getId() <= 0) {
             return false;
         }
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -110,12 +120,12 @@ public class WalkingModePersistenceHelper {
      * Soft deletes the item.
      * The item will be present via @{see #getItem()} but not in @{see #getAllItems()}.
      *
-     * @param item The item to soft delete
+     * @param item    The item to soft delete
      * @param context The application context
      * @return true if soft deletion was successful else false
      */
     public static boolean softDelete(WalkingMode item, Context context) {
-        if(item == null || item.getId() <= 0){
+        if (item == null || item.getId() <= 0) {
             return false;
         }
         item.setIsDeleted(true);
@@ -124,20 +134,21 @@ public class WalkingModePersistenceHelper {
 
     /**
      * Sets the given walking mode to the active one
-     * @param mode the walking mode to activate
+     *
+     * @param mode    the walking mode to activate
      * @param context The application context
      * @return true if active mode changed to given one
      */
-    public static boolean setActiveMode(WalkingMode mode, Context context){
+    public static boolean setActiveMode(WalkingMode mode, Context context) {
         Log.i(LOG_CLASS, "Changing active mode to " + mode.getName());
-        if(mode.isActive()){
+        if (mode.isActive()) {
             // Already active
             Log.i(LOG_CLASS, "Skipping active mode change");
             return true;
         }
         WalkingMode currentActiveMode = getActiveMode(context);
 
-        if(currentActiveMode != null){
+        if (currentActiveMode != null) {
             currentActiveMode.setIsActive(false);
             save(currentActiveMode, context);
         }
@@ -146,7 +157,7 @@ public class WalkingModePersistenceHelper {
         // broadcast the event
         Intent localIntent = new Intent(BROADCAST_ACTION_WALKING_MODE_CHANGED);
         localIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        if(currentActiveMode != null) {
+        if (currentActiveMode != null) {
             localIntent.putExtra(BROADCAST_EXTRA_OLD_WALKING_MODE, currentActiveMode.getId());
         }
         localIntent.putExtra(BROADCAST_EXTRA_NEW_WALKING_MODE, mode.getId());
@@ -157,42 +168,55 @@ public class WalkingModePersistenceHelper {
 
     /**
      * Gets the currently active walking mode
+     *
      * @param context The application context
      * @return The walking mode with active-flag set
      */
-    public static WalkingMode getActiveMode(Context context){
+    public static WalkingMode getActiveMode(Context context) {
         Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE + " = ?", new String[]{String.valueOf(true)}, context);
-        if(c.getCount() == 0){
-            return null;
-        }else{
-            c.moveToFirst();
-            return WalkingMode.from(c);
+        WalkingMode walkingMode;
+        try {
+            if (c.getCount() == 0) {
+                walkingMode = null;
+            } else {
+                c.moveToFirst();
+                walkingMode = WalkingMode.from(c);
+            }
+        }catch(Exception e){
+            walkingMode = null;
         }
+        c.close();
+        return walkingMode;
     }
 
     /**
      * Inserts the given walking mode as new entry.
-     * @param item The walking mode which should be stored
+     *
+     * @param item    The walking mode which should be stored
      * @param context The application context
      * @return the inserted id
      */
-    protected static long insert(WalkingMode item, Context context){
+    protected static long insert(WalkingMode item, Context context) {
         WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = item.toContentValues();
-        return db.insert(
+        long insertedId = db.insert(
                 WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
                 null,
                 values);
+        //db.close();
+        //dbHelper.close();
+        return insertedId;
     }
 
     /**
      * Updates the given walking mode in database
-     * @param item The walking mode to update
+     *
+     * @param item    The walking mode to update
      * @param context The application context
      * @return the number of rows affected
      */
-    protected static int update(WalkingMode item, Context context){
+    protected static int update(WalkingMode item, Context context) {
         WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -201,21 +225,25 @@ public class WalkingModePersistenceHelper {
         String selection = WalkingModeDbHelper.WalkingModeEntry._ID + " = ?";
         String[] selectionArgs = {String.valueOf(item.getId())};
 
-        return db.update(
+        int rowsAffected = db.update(
                 WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
+        //db.close();
+        //dbHelper.close();
+        return rowsAffected;
     }
 
     /**
      * Gets the database cursor for given selection arguments.
-     * @param selection The selection query
+     *
+     * @param selection     The selection query
      * @param selectionArgs The arguments for selection query
-     * @param context The application context
+     * @param context       The application context
      * @return the database cursor
      */
-    protected static Cursor getCursor(String selection, String[] selectionArgs, Context context){
+    protected static Cursor getCursor(String selection, String[] selectionArgs, Context context) {
         WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 

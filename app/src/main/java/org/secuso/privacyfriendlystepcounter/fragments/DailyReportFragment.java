@@ -24,6 +24,7 @@ import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 import org.secuso.privacyfriendlystepcounter.models.StepCount;
 import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorService;
 
 import java.text.SimpleDateFormat;
@@ -212,7 +213,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             }
             s.setEndTime(Calendar.getInstance().getTimeInMillis()); // now
             s.setStepCount(myBinder.stepsSinceLastSave());
-            s.setWalkingMode(null); // TODO add current walking mode
+            s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getContext())); // add current walking mode
             stepCounts.add(s);
         }
         Map<String, Double> stepData = new LinkedHashMap<>();

@@ -14,9 +14,8 @@
         android:icon="@drawable/ic_walk_black_24dp"
         android:title="@string/pref_header_walking_modes">
         <intent
-            android:targetClass="org.secuso.privacyfriendlystepcounter.activities.MainActivity"
+            android:targetClass="org.secuso.privacyfriendlystepcounter.activities.WalkingModesActivity"
             android:targetPackage="org.secuso.privacyfriendlystepcounter" />
-        <!-- TODO set correct activity -->
     </header>
 
 </preference-headers>

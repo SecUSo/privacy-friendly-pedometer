@@ -39,7 +39,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlystepcounter.activities.PreferencesActivity" />
         </activity>
-
+        <activity
+            android:name="org.secuso.privacyfriendlystepcounter.activities.WalkingModesActivity"
+            android:label="@string/activity_title_walking_modes"
+            android:parentActivityName="org.secuso.privacyfriendlystepcounter.activities.PreferencesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlystepcounter.activities.PreferencesActivity" />
+        </activity>
 
         <receiver android:name="org.secuso.privacyfriendlystepcounter.receivers.OnBootCompletedBroadcastReceiver">
             <intent-filter>

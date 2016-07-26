@@ -25,6 +25,8 @@ public class WalkingModePersistenceHelper {
      * Broadcast action identifier for messages broadcast when walking mode changed
      */
     public static final String BROADCAST_ACTION_WALKING_MODE_CHANGED = "org.secuso.privacyfriendlystepcounter.WALKING_MODE_CHANGED";
+    public static final String BROADCAST_EXTRA_OLD_WALKING_MODE = "org.secuso.privacyfriendlystepcounter.EXTRA_OLD_WALKING_MODE";
+    public static final String BROADCAST_EXTRA_NEW_WALKING_MODE = "org.secuso.privacyfriendlystepcounter.EXTRA_NEW_WALKING_MODE";
     public static final String LOG_CLASS = WalkingModePersistenceHelper.class.getName();
 
     /**
@@ -144,6 +146,10 @@ public class WalkingModePersistenceHelper {
         // broadcast the event
         Intent localIntent = new Intent(BROADCAST_ACTION_WALKING_MODE_CHANGED);
         localIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        if(currentActiveMode != null) {
+            localIntent.putExtra(BROADCAST_EXTRA_OLD_WALKING_MODE, currentActiveMode.getId());
+        }
+        localIntent.putExtra(BROADCAST_EXTRA_NEW_WALKING_MODE, mode.getId());
         // Broadcasts the Intent to receivers in this app.
         context.sendBroadcast(localIntent);
         return success;

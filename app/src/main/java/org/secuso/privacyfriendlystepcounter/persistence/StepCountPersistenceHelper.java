@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlystepcounter.models.StepCount;
+import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorService;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class StepCountPersistenceHelper {
      * @param context       The application context
      * @return true if save was successful else false.
      */
-    public static boolean storeStepCounts(IBinder serviceBinder, Context context) {
+    public static boolean storeStepCounts(IBinder serviceBinder, Context context, WalkingMode walkingMode) {
         if (serviceBinder == null) {
             Log.e(LOG_CLASS, "Cannot store step count because service binder is null.");
             return false;
@@ -51,10 +52,15 @@ public class StepCountPersistenceHelper {
         // Gets the data repository in write mode
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        // Get current walking mode
+        long walkingModeId = -1;
+        if(walkingMode != null){
+            walkingModeId = walkingMode.getId();
+        }
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCountSinceLastSave);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, 1); // TODO set walking mode
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, walkingModeId);
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, new Date().getTime());
 
         // Insert the new row, returning the primary key value of the new row
@@ -66,7 +72,7 @@ public class StepCountPersistenceHelper {
         db.close();
         // reset step count
         myBinder.resetStepCount();
-        Log.i(LOG_CLASS, "Stored " + stepCountSinceLastSave + " steps (id=" + newRowId + ")");
+        Log.i(LOG_CLASS, "Stored " + stepCountSinceLastSave + " steps (id=" + newRowId + ") for mode id=" + walkingModeId);
 
         // broadcast the event
         Intent localIntent = new Intent(BROADCAST_ACTION_STEPS_SAVED);

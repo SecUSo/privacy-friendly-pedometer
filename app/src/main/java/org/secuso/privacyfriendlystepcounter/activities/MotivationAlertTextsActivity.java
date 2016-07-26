@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * This activity allows the user to manage the motivation texts.

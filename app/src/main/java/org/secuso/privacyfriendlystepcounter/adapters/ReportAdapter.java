@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * This adapter is used for ReportView.

@@ -16,7 +16,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

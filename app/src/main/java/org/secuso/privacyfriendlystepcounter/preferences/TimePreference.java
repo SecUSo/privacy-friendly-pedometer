@@ -11,7 +11,7 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * TimePreferences can be used as preference dialog to allow user to pick a time in hour:minute

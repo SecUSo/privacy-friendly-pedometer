@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Displays the about-page.

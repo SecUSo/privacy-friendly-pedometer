@@ -27,7 +27,7 @@ import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 import java.util.Calendar;
 import java.util.List;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Generic class for a step detector.

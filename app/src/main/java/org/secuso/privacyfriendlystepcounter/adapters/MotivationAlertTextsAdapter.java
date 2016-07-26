@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * This adapter is used for motivation-alert texts.

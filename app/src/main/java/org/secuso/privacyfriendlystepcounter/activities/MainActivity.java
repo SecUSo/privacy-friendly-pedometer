@@ -25,7 +25,7 @@ import org.secuso.privacyfriendlystepcounter.fragments.MonthlyReportFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.WeeklyReportFragment;
 import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Main view incl. navigation drawer and fragments

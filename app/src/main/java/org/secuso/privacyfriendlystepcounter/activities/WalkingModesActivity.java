@@ -22,7 +22,7 @@ import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceH
 import java.util.ArrayList;
 import java.util.List;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * This activity allows the user to manage the walking modes.

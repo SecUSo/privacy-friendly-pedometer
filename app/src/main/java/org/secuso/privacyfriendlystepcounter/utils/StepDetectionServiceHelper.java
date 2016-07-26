@@ -14,7 +14,7 @@ import org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceRecei
 import java.util.Calendar;
 import java.util.Date;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Helper class to start and stop the necessary services

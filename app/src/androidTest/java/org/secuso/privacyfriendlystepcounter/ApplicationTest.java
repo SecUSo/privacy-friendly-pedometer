@@ -1,4 +1,4 @@
-package privacyfriendlyexample.org.secuso.example;
+package org.secuso.privacyfriendlystepcounter;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

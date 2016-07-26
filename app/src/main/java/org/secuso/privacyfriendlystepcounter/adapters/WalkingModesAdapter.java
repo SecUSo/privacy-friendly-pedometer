@@ -15,7 +15,7 @@ import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 
 import java.util.List;
 
-import privacyfriendlyexample.org.secuso.example.R;
+import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * This adapter is used for walking modes.

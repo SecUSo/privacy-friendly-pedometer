@@ -5,17 +5,17 @@ import java.util.Map;
 /**
  * Created by tobias on 06.06.16.
  */
-public class ActivityChart {
+public class ActivityDayChart {
     public enum DataType{
         STEPS, DISTANCE, CALORIES
     }
     private String title;
-    private Map<String, Double> steps;
-    private Map<String, Double> distance;
-    private Map<String, Double> calories;
+    private Map<String, ActivityChartDataSet> steps;
+    private Map<String, ActivityChartDataSet> distance;
+    private Map<String, ActivityChartDataSet> calories;
     private DataType displayedDataType;
 
-    public ActivityChart(Map<String, Double> steps, Map<String, Double> distance, Map<String, Double> calories, String title) {
+    public ActivityDayChart(Map<String, ActivityChartDataSet> steps, Map<String, ActivityChartDataSet> distance, Map<String, ActivityChartDataSet> calories, String title) {
         this.steps = steps;
         this.title = title;
         this.distance = distance;
@@ -30,27 +30,27 @@ public class ActivityChart {
         this.title = title;
     }
 
-    public Map<String, Double> getSteps() {
+    public Map<String, ActivityChartDataSet> getSteps() {
         return steps;
     }
 
-    public void setSteps(Map<String, Double> steps) {
+    public void setSteps(Map<String, ActivityChartDataSet> steps) {
         this.steps = steps;
     }
 
-    public Map<String, Double> getDistance() {
+    public Map<String, ActivityChartDataSet> getDistance() {
         return distance;
     }
 
-    public void setDistance(Map<String, Double> distance) {
+    public void setDistance(Map<String, ActivityChartDataSet> distance) {
         this.distance = distance;
     }
 
-    public Map<String, Double> getCalories() {
+    public Map<String, ActivityChartDataSet> getCalories() {
         return calories;
     }
 
-    public void setCalories(Map<String, Double> calories) {
+    public void setCalories(Map<String, ActivityChartDataSet> calories) {
         this.calories = calories;
     }
 

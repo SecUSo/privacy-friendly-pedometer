@@ -14,7 +14,7 @@
     <string name="more_info">Mehr Informationen unter:</string>
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
     <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/de/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
-    <string name="version_number">Version 1.0</string>
+    <string name="version_number">Version %1$s (%2$s)</string>
     <string name="app_name">Step Counter</string>
     <string name="app_name_long">Privacy Friendly Step Counter</string>
     <string name="month">Monat</string>

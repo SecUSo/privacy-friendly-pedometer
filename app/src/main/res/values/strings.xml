@@ -17,7 +17,7 @@
     <string name="action_training">Training</string>
 
     <!-- AboutFragment-->
-    <string name="version_number">Version 1.0</string>
+    <string name="version_number">Version %1$s (%2$s)</string>
     <string name="about_author">Author: Tobias Neidig</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>

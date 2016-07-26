@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import org.secuso.privacyfriendlystepcounter.BuildConfig;
 import org.secuso.privacyfriendlystepcounter.R;
 
 /**
@@ -25,6 +27,8 @@ public class AboutFragment extends Fragment {
         if (actionBar != null) {
             actionBar.setSubtitle(R.string.action_about);
         }
+        TextView versionTextView = (TextView) rootView.findViewById(R.id.textFieldVersion);
+        versionTextView.setText(String.format(getString(R.string.version_number), BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
         container.removeAllViews();
         return rootView;
     }

@@ -226,7 +226,8 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
 
         // Get daily goal(s) from preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        this.dailyStepGoal = sharedPref.getInt(getString(R.string.pref_daily_step_goal), 10000);
+        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
+        this.dailyStepGoal = Integer.parseInt(d);
         sharedPref.registerOnSharedPreferenceChangeListener(this);
 
         // register for steps-saved-event
@@ -272,7 +273,8 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // Detect changes on preferences and update our internal variable
         if(key.equals(getString(R.string.pref_daily_step_goal))){
-            dailyStepGoal = sharedPreferences.getInt(getString(R.string.pref_daily_step_goal), 10000);
+            dailyStepGoal = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_daily_step_goal), "10000"));
+            updateNotification();
         }else if(key.equals(getString(R.string.pref_notification_permanent_show_steps)) ||
                 key.equals(getString(R.string.pref_notification_permanent_show_distance)) ||
                 key.equals(getString(R.string.pref_notification_permanent_show_calories))){

@@ -23,6 +23,14 @@
     <PreferenceCategory
         android:title="@string/pref_group_title_personal_settings">
         <EditTextPreference
+            android:defaultValue="@string/pref_default_daily_step_goal"
+            android:inputType="number"
+            android:key="@string/pref_daily_step_goal"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_title_daily_step_goal" />
+        <EditTextPreference
             android:defaultValue="@string/pref_default_weight"
             android:inputType="numberDecimal"
             android:key="@string/pref_weight"

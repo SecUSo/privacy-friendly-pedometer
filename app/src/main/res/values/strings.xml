@@ -142,4 +142,6 @@
     <string name="walking_mode_input_empty">Name and step length are required. Please fill in!</string>
     <string name="hint_walking_mode_name">Name</string>
     <string name="hint_walking_mode_step_length">Step length</string>
+    <string name="pref_default_daily_step_goal">10000</string>
+    <string name="pref_title_daily_step_goal">Personal daily step goal</string>
 </resources>

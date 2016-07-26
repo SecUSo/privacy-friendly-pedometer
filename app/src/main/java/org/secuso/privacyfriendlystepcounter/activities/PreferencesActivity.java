@@ -174,6 +174,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_length)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_daily_step_goal)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_weight)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_gender)));
         }

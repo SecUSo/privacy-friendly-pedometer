@@ -28,6 +28,8 @@ public class WalkingModePersistenceHelper {
     public static final String BROADCAST_EXTRA_NEW_WALKING_MODE = "org.secuso.privacyfriendlystepcounter.EXTRA_NEW_WALKING_MODE";
     public static final String LOG_CLASS = WalkingModePersistenceHelper.class.getName();
 
+    private static SQLiteDatabase db = null;
+
     /**
      * Gets all not deleted walking modes from database
      *
@@ -37,6 +39,9 @@ public class WalkingModePersistenceHelper {
     public static List<WalkingMode> getAllItems(Context context) {
         Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED + " = ?", new String[]{String.valueOf(false)}, context);
         List<WalkingMode> walkingModes = new ArrayList<>();
+        if (c == null) {
+            return walkingModes;
+        }
         while (c.moveToNext()) {
             walkingModes.add(WalkingMode.from(c));
         }
@@ -53,17 +58,17 @@ public class WalkingModePersistenceHelper {
      */
     public static WalkingMode getItem(long id, Context context) {
         Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry._ID + " = ?", new String[]{String.valueOf(id)}, context);
-        WalkingMode walkingMode;
-        try {
-            if (c.getCount() == 0) {
-                walkingMode = null;
-            } else {
-                c.moveToFirst();
-                walkingMode = WalkingMode.from(c);
-            }
-        } catch (Exception e) {
-            walkingMode = null;
+        WalkingMode walkingMode = null;
+        if (c == null) {
+            return null;
         }
+        if (c.getCount() == 0) {
+            walkingMode = null;
+        } else {
+            c.moveToFirst();
+            walkingMode = WalkingMode.from(c);
+        }
+
         c.close();
         return walkingMode;
     }
@@ -106,14 +111,12 @@ public class WalkingModePersistenceHelper {
      * @return true if deletion was successful else false
      */
     public static boolean delete(WalkingMode item, Context context) {
-        WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
         if (item == null || item.getId() <= 0) {
             return false;
         }
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selection = WalkingModeDbHelper.WalkingModeEntry._ID + " = ?";
         String[] selectionArgs = {String.valueOf(item.getId())};
-        return (0 != db.delete(WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME, selection, selectionArgs));
+        return (0 != getDB(context).delete(WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME, selection, selectionArgs));
     }
 
     /**
@@ -175,15 +178,11 @@ public class WalkingModePersistenceHelper {
     public static WalkingMode getActiveMode(Context context) {
         Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE + " = ?", new String[]{String.valueOf(true)}, context);
         WalkingMode walkingMode;
-        try {
-            if (c.getCount() == 0) {
-                walkingMode = null;
-            } else {
-                c.moveToFirst();
-                walkingMode = WalkingMode.from(c);
-            }
-        }catch(Exception e){
+        if (c.getCount() == 0) {
             walkingMode = null;
+        } else {
+            c.moveToFirst();
+            walkingMode = WalkingMode.from(c);
         }
         c.close();
         return walkingMode;
@@ -197,10 +196,8 @@ public class WalkingModePersistenceHelper {
      * @return the inserted id
      */
     protected static long insert(WalkingMode item, Context context) {
-        WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = item.toContentValues();
-        long insertedId = db.insert(
+        long insertedId = getDB(context).insert(
                 WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
                 null,
                 values);
@@ -217,21 +214,16 @@ public class WalkingModePersistenceHelper {
      * @return the number of rows affected
      */
     protected static int update(WalkingMode item, Context context) {
-        WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         ContentValues values = item.toContentValues();
 
         String selection = WalkingModeDbHelper.WalkingModeEntry._ID + " = ?";
         String[] selectionArgs = {String.valueOf(item.getId())};
 
-        int rowsAffected = db.update(
+        int rowsAffected = getDB(context).update(
                 WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
-        //db.close();
-        //dbHelper.close();
         return rowsAffected;
     }
 
@@ -244,9 +236,6 @@ public class WalkingModePersistenceHelper {
      * @return the database cursor
      */
     protected static Cursor getCursor(String selection, String[] selectionArgs, Context context) {
-        WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
@@ -262,7 +251,7 @@ public class WalkingModePersistenceHelper {
         String sortOrder =
                 WalkingModeDbHelper.WalkingModeEntry._ID + " ASC";
 
-        return db.query(
+        return getDB(context).query(
                 WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,  // The table to query
                 projection,                                            // The columns to return
                 selection,                                // The columns for the WHERE clause
@@ -271,5 +260,20 @@ public class WalkingModePersistenceHelper {
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order
         );
+    }
+
+
+    /**
+     * Returns the writable database
+     *
+     * @param context The application context
+     * @return a writable database object
+     */
+    protected static SQLiteDatabase getDB(Context context) {
+        if (WalkingModePersistenceHelper.db == null) {
+            WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
+            WalkingModePersistenceHelper.db = dbHelper.getWritableDatabase();
+        }
+        return WalkingModePersistenceHelper.db;
     }
 }

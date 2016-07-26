@@ -25,12 +25,13 @@ import java.util.List;
  * @version 20160720
  */
 public class StepCountPersistenceHelper {
+
     /**
      * Broadcast action identifier for messages broadcast when step count was saved
      */
     public static final String BROADCAST_ACTION_STEPS_SAVED = "org.secuso.privacyfriendlystepcounter.STEPS_SAVED";
-
     public static String LOG_CLASS = StepCountPersistenceHelper.class.getName();
+    private static SQLiteDatabase db = null;
 
     /**
      * Stores the current step count to database and resets the step counter in step-detector
@@ -48,13 +49,9 @@ public class StepCountPersistenceHelper {
         // Get the steps since last save
         int stepCountSinceLastSave = myBinder.stepsSinceLastSave();
 
-        StepCountDbHelper dbHelper = new StepCountDbHelper(context);
-        // Gets the data repository in write mode
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         // Get current walking mode
         long walkingModeId = -1;
-        if(walkingMode != null){
+        if (walkingMode != null) {
             walkingModeId = walkingMode.getId();
         }
         // Create a new map of values, where column names are the keys
@@ -65,11 +62,10 @@ public class StepCountPersistenceHelper {
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
-        newRowId = db.insert(
+        newRowId = getDB(context).insert(
                 StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 null,
                 values);
-        db.close();
         // reset step count
         myBinder.resetStepCount();
         Log.i(LOG_CLASS, "Stored " + stepCountSinceLastSave + " steps (id=" + newRowId + ") for mode id=" + walkingModeId);
@@ -84,8 +80,9 @@ public class StepCountPersistenceHelper {
 
     /**
      * Get the number of steps for the given day
+     *
      * @param calendar The day
-     * @param context The application context
+     * @param context  The application context
      * @return the number of steps
      */
     public static int getStepCountForDay(Calendar calendar, Context context) {
@@ -103,8 +100,9 @@ public class StepCountPersistenceHelper {
 
     /**
      * Get the step count models for the given day
+     *
      * @param calendar The day
-     * @param context The application context
+     * @param context  The application context
      * @return the step count models for the day
      */
     public static List<StepCount> getStepCountsForDay(Calendar calendar, Context context) {
@@ -122,52 +120,67 @@ public class StepCountPersistenceHelper {
 
     /**
      * Returns the stepCount models for the steps walked in the given interval.
+     *
      * @param start_time The start time
-     * @param end_time The end time
-     * @param context The application context
+     * @param end_time   The end time
+     * @param context    The application context
      * @return The @{see StepCount}-Models between start and end time
      */
     public static List<StepCount> getStepCountsForInterval(long start_time, long end_time, Context context) {
-        if(context == null){
+        if (context == null) {
             Log.e(LOG_CLASS, "Cannot get step count - context is null");
             return new ArrayList<>();
         }
-        StepCountDbHelper dbHelper = new StepCountDbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
+        Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE},
                 StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " >= ? AND " + StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " <= ?", new String[]{String.valueOf(start_time),
                         String.valueOf(end_time)}, null, null, null);
         List<StepCount> steps = new ArrayList<>();
         long start = start_time;
         int sum = 0;
-        while(c.moveToNext()){
+        while (c.moveToNext()) {
             StepCount s = new StepCount();
             s.setStartTime(start);
             s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
             s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT)));
-            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)), context));
+            Log.w("ASDF", "Getting walking mode " + c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)));
+            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)), context));
             steps.add(s);
             start = s.getEndTime();
             sum += s.getStepCount();
         }
         c.close();
-        db.close();
         return steps;
+
     }
 
     /**
      * Returns the number of steps walked in the given time interval
+     *
      * @param start_time The start time
-     * @param end_time The end time
-     * @param context The application context
+     * @param end_time   The end time
+     * @param context    The application context
      * @return Number of steps between start and end time
      */
-    public static int getStepCountForInterval(long start_time, long end_time, Context context){
+    public static int getStepCountForInterval(long start_time, long end_time, Context context) {
         int steps = 0;
-        for(StepCount s : getStepCountsForInterval(start_time, end_time, context)){
+        for (StepCount s : getStepCountsForInterval(start_time, end_time, context)) {
             steps += s.getStepCount();
         }
         return steps;
+    }
+
+    /**
+     * Returns the writable database
+     *
+     * @param context The application context
+     * @return a writable database object
+     */
+    protected static SQLiteDatabase getDB(Context context) {
+        if (StepCountPersistenceHelper.db == null) {
+            StepCountDbHelper dbHelper = new StepCountDbHelper(context);
+            StepCountPersistenceHelper.db = dbHelper.getWritableDatabase();
+        }
+        return StepCountPersistenceHelper.db;
     }
 }

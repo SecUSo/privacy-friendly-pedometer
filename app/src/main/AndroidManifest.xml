@@ -65,7 +65,11 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver" />
+        <receiver android:name="org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver" android:exported="false" android:enabled="true">
+            <intent-filter>
+                <action android:name="org.secuso.privacyfriendlystepcounter.WALKING_MODE_CHANGED" />
+            </intent-filter>
+        </receiver>
 
         <service android:name="org.secuso.privacyfriendlystepcounter.services.AccelerometerStepDetectorService" />
         <service

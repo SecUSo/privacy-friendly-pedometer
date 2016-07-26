@@ -2,8 +2,11 @@ package org.secuso.privacyfriendlystepcounter.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 
@@ -17,6 +20,12 @@ import java.util.List;
  * @version 20160726
  */
 public class WalkingModePersistenceHelper {
+
+    /**
+     * Broadcast action identifier for messages broadcast when walking mode changed
+     */
+    public static final String BROADCAST_ACTION_WALKING_MODE_CHANGED = "org.secuso.privacyfriendlystepcounter.WALKING_MODE_CHANGED";
+    public static final String LOG_CLASS = WalkingModePersistenceHelper.class.getName();
 
     /**
      * Gets all not deleted walking modes from database
@@ -118,13 +127,26 @@ public class WalkingModePersistenceHelper {
      * @return true if active mode changed to given one
      */
     public static boolean setActiveMode(WalkingMode mode, Context context){
+        Log.i(LOG_CLASS, "Changing active mode to " + mode.getName());
+        if(mode.isActive()){
+            // Already active
+            Log.i(LOG_CLASS, "Skipping active mode change");
+            return true;
+        }
         WalkingMode currentActiveMode = getActiveMode(context);
+
         if(currentActiveMode != null){
             currentActiveMode.setIsActive(false);
             save(currentActiveMode, context);
         }
         mode.setIsActive(true);
-        return save(mode, context).isActive();
+        boolean success = save(mode, context).isActive();
+        // broadcast the event
+        Intent localIntent = new Intent(BROADCAST_ACTION_WALKING_MODE_CHANGED);
+        localIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        // Broadcasts the Intent to receivers in this app.
+        context.sendBroadcast(localIntent);
+        return success;
     }
 
     /**

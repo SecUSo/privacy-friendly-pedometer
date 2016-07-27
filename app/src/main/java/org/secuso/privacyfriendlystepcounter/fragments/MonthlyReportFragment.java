@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -180,75 +181,81 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
             // the day shown is not today or is detached
             return;
         }
-        // Get all step counts for this day.
-        day.set(Calendar.DAY_OF_MONTH, 1);
-        Calendar start = (Calendar) day.clone();
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM", getResources().getConfiguration().locale);
-        Map<String, Double> stepData = new LinkedHashMap<>();
-        Map<String, Double> distanceData = new LinkedHashMap<>();
-        Map<String, Double> caloriesData = new LinkedHashMap<>();
-        int totalSteps = 0;
-        double totalDistance = 0;
-        int totalCalories = 0;
-        for (int i = 0; i <= day.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-            List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, getContext());
-            // TODO add current steps if today is shown
-            int steps = 0;
-            double distance = 0;
-            int calories = 0;
-            for (StepCount stepCount : stepCounts) {
-                steps += stepCount.getStepCount();
-                distance += (stepCount.getDistance()) / 1000; // convert from m to km
-                calories += stepCount.getCalories();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                // Get all step counts for this day.
+                day.set(Calendar.DAY_OF_MONTH, 1);
+                Calendar start = (Calendar) day.clone();
+                SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM", getResources().getConfiguration().locale);
+                Map<String, Double> stepData = new LinkedHashMap<>();
+                Map<String, Double> distanceData = new LinkedHashMap<>();
+                Map<String, Double> caloriesData = new LinkedHashMap<>();
+                int totalSteps = 0;
+                double totalDistance = 0;
+                int totalCalories = 0;
+                for (int i = 0; i <= day.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+                    List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, getContext());
+                    // TODO add current steps if today is shown
+                    int steps = 0;
+                    double distance = 0;
+                    int calories = 0;
+                    for (StepCount stepCount : stepCounts) {
+                        steps += stepCount.getStepCount();
+                        distance += (stepCount.getDistance()) / 1000; // convert from m to km
+                        calories += stepCount.getCalories();
+                    }
+                    stepData.put(formatDate.format(start.getTime()), (double) steps);
+                    distanceData.put(formatDate.format(start.getTime()), distance);
+                    caloriesData.put(formatDate.format(start.getTime()), (double) calories);
+                    totalSteps += steps;
+                    totalDistance += distance;
+                    totalCalories += calories;
+                    if (i != day.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+                        start.add(Calendar.DAY_OF_MONTH, 1);
+                    }
+                }
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM yy", getResources().getConfiguration().locale);
+                String title = simpleDateFormat.format(day.getTime());
+
+                // create view models
+                if (activitySummary == null) {
+                    activitySummary = new ActivitySummary(totalSteps, totalDistance, totalCalories, title);
+                    reports.add(activitySummary);
+                } else {
+                    activitySummary.setSteps(totalSteps);
+                    activitySummary.setDistance(totalDistance);
+                    activitySummary.setCalories(totalCalories);
+                    activitySummary.setTitle(title);
+                }
+
+
+                if (activityChart == null) {
+                    activityChart = new ActivityChart(stepData, distanceData, caloriesData, title);
+                    activityChart.setDisplayedDataType(ActivityDayChart.DataType.STEPS);
+                    reports.add(activityChart);
+                } else {
+                    activityChart.setSteps(stepData);
+                    activityChart.setDistance(distanceData);
+                    activityChart.setCalories(caloriesData);
+                    activityChart.setTitle(title);
+                }
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
+                activityChart.setGoal(Integer.valueOf(d));
+
+                // notify ui
+                if (mAdapter != null) {
+                    mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
+                    mAdapter.notifyItemChanged(reports.indexOf(activityChart));
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    Log.w(LOG_TAG, "Cannot inform adapter for changes.");
+                }
             }
-            stepData.put(formatDate.format(start.getTime()), (double) steps);
-            distanceData.put(formatDate.format(start.getTime()), distance);
-            caloriesData.put(formatDate.format(start.getTime()), (double) calories);
-            totalSteps += steps;
-            totalDistance += distance;
-            totalCalories += calories;
-            if (i != day.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-                start.add(Calendar.DAY_OF_MONTH, 1);
-            }
-        }
+        });
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM yy", getResources().getConfiguration().locale);
-        String title = simpleDateFormat.format(day.getTime());
-
-        // create view models
-        if (activitySummary == null) {
-            activitySummary = new ActivitySummary(totalSteps, totalDistance, totalCalories, title);
-            reports.add(activitySummary);
-        } else {
-            activitySummary.setSteps(totalSteps);
-            activitySummary.setDistance(totalDistance);
-            activitySummary.setCalories(totalCalories);
-            activitySummary.setTitle(title);
-        }
-
-
-        if (activityChart == null) {
-            activityChart = new ActivityChart(stepData, distanceData, caloriesData, title);
-            activityChart.setDisplayedDataType(ActivityDayChart.DataType.STEPS);
-            reports.add(activityChart);
-        } else {
-            activityChart.setSteps(stepData);
-            activityChart.setDistance(distanceData);
-            activityChart.setCalories(caloriesData);
-            activityChart.setTitle(title);
-        }
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
-        activityChart.setGoal(Integer.valueOf(d));
-
-        // notify ui
-        if (mAdapter != null) {
-            mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
-            mAdapter.notifyItemChanged(reports.indexOf(activityChart));
-            mAdapter.notifyDataSetChanged();
-        } else {
-            Log.w(LOG_TAG, "Cannot inform adapter for changes.");
-        }
     }
 
     @Override

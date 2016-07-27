@@ -5,8 +5,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,7 @@ import android.widget.DatePicker;
 import org.secuso.privacyfriendlystepcounter.Factory;
 import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.adapters.ReportAdapter;
+import org.secuso.privacyfriendlystepcounter.models.ActivityChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivityDayChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 import org.secuso.privacyfriendlystepcounter.models.StepCount;
@@ -28,9 +31,8 @@ import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorServic
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +57,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
 
     private Calendar day;
     private ActivitySummary activitySummary;
-    private ActivityDayChart activityChart;
+    private ActivityChart activityChart;
     private List<Object> reports = new ArrayList<>();
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
@@ -151,10 +153,15 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
      * @return is the day which is currently shown today?
      */
     private boolean isTodayShown() {
-        // TODO update to week
-        return (Calendar.getInstance().get(Calendar.YEAR) == day.get(Calendar.YEAR) &&
-                Calendar.getInstance().get(Calendar.MONTH) == day.get(Calendar.MONTH) &&
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == day.get(Calendar.DAY_OF_MONTH));
+        Calendar start = (Calendar) day.clone();
+        start.set(Calendar.DAY_OF_MONTH, 1);
+        start.set(Calendar.MILLISECOND, 0);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        Calendar end = (Calendar) start.clone();
+        end.add(Calendar.MONTH, 1);
+        return (start.before(day) || start.equals(day)) && end.after(day);
     }
 
     /**
@@ -177,36 +184,35 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         day.set(Calendar.DAY_OF_MONTH, 1);
         Calendar start = (Calendar) day.clone();
         SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM", getResources().getConfiguration().locale);
-        Map<String, Double> stepMap = new HashMap<>();
-        Map<String, Double> distanceMap = new HashMap<>();
-        Map<String, Double> caloriesMap = new HashMap<>();
+        Map<String, Double> stepData = new LinkedHashMap<>();
+        Map<String, Double> distanceData = new LinkedHashMap<>();
+        Map<String, Double> caloriesData = new LinkedHashMap<>();
         int totalSteps = 0;
         double totalDistance = 0;
         int totalCalories = 0;
-        for(int i = 0; i <= day.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
+        for (int i = 0; i <= day.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, getContext());
-            // TODO add current steps if today
+            // TODO add current steps if today is shown
             int steps = 0;
             double distance = 0;
             int calories = 0;
-            for(StepCount stepCount : stepCounts){
+            for (StepCount stepCount : stepCounts) {
                 steps += stepCount.getStepCount();
-                distance += (stepCount.getDistance())/1000; // convert from m to km
+                distance += (stepCount.getDistance()) / 1000; // convert from m to km
                 calories += stepCount.getCalories();
             }
-            stepMap.put(formatDate.format(start.getTime()), (double) steps);
-            distanceMap.put(formatDate.format(start.getTime()), distance);
-            caloriesMap.put(formatDate.format(start.getTime()), (double) calories);
+            stepData.put(formatDate.format(start.getTime()), (double) steps);
+            distanceData.put(formatDate.format(start.getTime()), distance);
+            caloriesData.put(formatDate.format(start.getTime()), (double) calories);
             totalSteps += steps;
             totalDistance += distance;
             totalCalories += calories;
-            if(i != day.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+            if (i != day.getActualMaximum(Calendar.DAY_OF_MONTH)) {
                 start.add(Calendar.DAY_OF_MONTH, 1);
             }
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM yy", getResources().getConfiguration().locale);
-
         String title = simpleDateFormat.format(day.getTime());
 
         // create view models
@@ -219,26 +225,26 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
             activitySummary.setCalories(totalCalories);
             activitySummary.setTitle(title);
         }
-/*
+
+
         if (activityChart == null) {
-            activityChart = new ActivityDayChart(stepData, distanceData, caloriesData, simpleDateFormat.format(day.getTime()));
+            activityChart = new ActivityChart(stepData, distanceData, caloriesData, title);
             activityChart.setDisplayedDataType(ActivityDayChart.DataType.STEPS);
             reports.add(activityChart);
         } else {
             activityChart.setSteps(stepData);
             activityChart.setDistance(distanceData);
             activityChart.setCalories(caloriesData);
-            activityChart.setTitle(simpleDateFormat.format(day.getTime()));
+            activityChart.setTitle(title);
         }
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
         activityChart.setGoal(Integer.valueOf(d));
-*/
 
         // notify ui
         if (mAdapter != null) {
             mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
-            //mAdapter.notifyItemChanged(reports.indexOf(activityChart));
+            mAdapter.notifyItemChanged(reports.indexOf(activityChart));
             mAdapter.notifyDataSetChanged();
         } else {
             Log.w(LOG_TAG, "Cannot inform adapter for changes.");
@@ -247,12 +253,38 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
 
     @Override
     public void onActivityChartDataTypeClicked(ActivityDayChart.DataType newDataType) {
-
+        Log.i(LOG_TAG, "Changing  displayed data type to " + newDataType.toString());
+        if (this.activityChart == null) {
+            return;
+        }
+        if (this.activityChart.getDisplayedDataType() == newDataType) {
+            return;
+        }
+        this.activityChart.setDisplayedDataType(newDataType);
+        if (this.mAdapter != null) {
+            this.mAdapter.notifyItemChanged(this.reports.indexOf(this.activityChart));
+        }
     }
 
     @Override
-    public void setActivityChartDataTypeChecked(Menu popup) {
-
+    public void setActivityChartDataTypeChecked(Menu menu) {
+        if (this.activityChart == null) {
+            return;
+        }
+        if (this.activityChart.getDisplayedDataType() == null) {
+            menu.findItem(R.id.menu_steps).setChecked(true);
+        }
+        switch (this.activityChart.getDisplayedDataType()) {
+            case DISTANCE:
+                menu.findItem(R.id.menu_distance).setChecked(true);
+                break;
+            case CALORIES:
+                menu.findItem(R.id.menu_calories).setChecked(true);
+                break;
+            case STEPS:
+            default:
+                menu.findItem(R.id.menu_steps).setChecked(true);
+        }
     }
 
     @Override

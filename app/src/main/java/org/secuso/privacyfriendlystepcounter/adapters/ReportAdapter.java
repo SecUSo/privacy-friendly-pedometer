@@ -13,22 +13,27 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.secuso.privacyfriendlystepcounter.R;
+import org.secuso.privacyfriendlystepcounter.models.ActivityChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivityChartDataSet;
 import org.secuso.privacyfriendlystepcounter.models.ActivityDayChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +66,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         View v;
         ViewHolder vh;
         switch (viewType) {
+            case TYPE_CHART:
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_activity_bar_chart, parent, false);
+                vh = new CombinedChartViewHolder(v);
+                break;
             case TYPE_DAY_CHART:
                 v = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.card_activity_chart, parent, false);
@@ -81,6 +91,63 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case TYPE_CHART:
+                ActivityChart barChartData = (ActivityChart) mItems.get(position);
+                CombinedChartViewHolder barChartViewHolder = (CombinedChartViewHolder) holder;
+                barChartViewHolder.mTitleTextView.setText(barChartData.getTitle());
+                int barChartI = 0;
+                ArrayList<String> barChartXValues = new ArrayList<>();
+                Map<String, Double> barChartDataMap;
+                String barChartLabel;
+                if (barChartData.getDisplayedDataType() == null) {
+                    barChartDataMap = barChartData.getSteps();
+                    barChartLabel = barChartViewHolder.context.getString(R.string.steps);
+                } else {
+                    switch (barChartData.getDisplayedDataType()) {
+                        case DISTANCE:
+                            barChartDataMap = barChartData.getDistance();
+                            barChartLabel = barChartViewHolder.context.getString(R.string.action_distance);
+                            break;
+                        case CALORIES:
+                            barChartDataMap = barChartData.getCalories();
+                            barChartLabel = barChartViewHolder.context.getString(R.string.calories);
+                            break;
+                        case STEPS:
+                        default:
+                            barChartDataMap = barChartData.getSteps();
+                            barChartLabel = barChartViewHolder.context.getString(R.string.steps);
+                            break;
+                    }
+                }
+                List<BarEntry> dataEntries = new ArrayList<>();
+                for (Map.Entry<String, Double> dataEntry : barChartDataMap.entrySet()) {
+                    barChartXValues.add(barChartI, dataEntry.getKey());
+                    if (dataEntry.getValue() != null) {
+                        dataEntries.add(new BarEntry(dataEntry.getValue().floatValue(), barChartI));
+                    }
+                    barChartI++;
+                }
+                BarDataSet barDataSet = new BarDataSet(dataEntries, barChartLabel);
+                ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+                // add daily step goal
+                if (barChartXValues.size() > 0 && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
+                    Entry start = new Entry(barChartData.getGoal(), 0);
+                    Entry end = new Entry(barChartData.getGoal(), barChartXValues.size() - 1);
+                    LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), barChartViewHolder.context.getString(R.string.pref_title_daily_step_goal));
+                    chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                    chartLineDataSet.setLineWidth(1);
+                    chartLineDataSet.setCircleRadius(0);
+                    chartLineDataSet.setCircleHoleRadius(0);
+                    chartLineDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.colorAccent), 200);
+                    chartLineDataSet.setDrawValues(false);
+                    lineDataSets.add(chartLineDataSet);
+                }
+                CombinedData barData = new CombinedData();
+                barData.setData(new BarData(barChartXValues, barDataSet));
+                barData.setData(new LineData(barChartXValues, lineDataSets));
+                barData.setXVals(barChartXValues);
+                barDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.colorPrimary));
+                barChartViewHolder.mChart.setData(barData);
+                barChartViewHolder.mChart.invalidate();
                 break;
             case TYPE_DAY_CHART:
                 ActivityDayChart chartData = (ActivityDayChart) mItems.get(position);
@@ -196,6 +263,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             return TYPE_DAY_CHART;
         } else if (item instanceof ActivitySummary) {
             return TYPE_SUMMARY;
+        } else if (item instanceof ActivityChart) {
+            return TYPE_CHART;
         } else {
             return -1;
         }
@@ -272,24 +341,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         }
     }
 
-    public class ChartViewHolder extends ViewHolder implements PopupMenu.OnMenuItemClickListener {
+    public abstract class AbstractChartViewHolder extends ViewHolder implements PopupMenu.OnMenuItemClickListener {
 
         public TextView mTitleTextView;
-        public LineChart mChart;
         public ImageButton mMenuButton;
         public Context context;
 
-        public ChartViewHolder(View itemView) {
+        public AbstractChartViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
             mTitleTextView = (TextView) itemView.findViewById(R.id.period);
-            mChart = (LineChart) itemView.findViewById(R.id.chart);
-            mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-            mChart.getAxisRight().setEnabled(false);
-            mChart.setTouchEnabled(false);
-            mChart.setDoubleTapToZoomEnabled(false);
-            mChart.setPinchZoom(false);
-            mChart.setDescription("");
             mMenuButton = (ImageButton) itemView.findViewById(R.id.periodMoreButton);
             mMenuButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -334,6 +395,39 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             } else {
                 return false;
             }
+        }
+    }
+
+    public class ChartViewHolder extends AbstractChartViewHolder {
+        public LineChart mChart;
+
+        public ChartViewHolder(View itemView) {
+            super(itemView);
+            mChart = (LineChart) itemView.findViewById(R.id.chart);
+            mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            mChart.getAxisRight().setEnabled(false);
+            mChart.setTouchEnabled(false);
+            mChart.setDoubleTapToZoomEnabled(false);
+            mChart.setPinchZoom(false);
+            mChart.setDescription("");
+        }
+    }
+
+    public class CombinedChartViewHolder extends AbstractChartViewHolder {
+        public CombinedChart mChart;
+
+        public CombinedChartViewHolder(View itemView) {
+            super(itemView);
+            mChart = (CombinedChart) itemView.findViewById(R.id.chart);
+            mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            mChart.getAxisRight().setEnabled(false);
+            mChart.setTouchEnabled(false);
+            mChart.setDoubleTapToZoomEnabled(false);
+            mChart.setPinchZoom(false);
+            mChart.setDescription("");
+            mChart.setDrawOrder(new CombinedChart.DrawOrder[]{
+                    CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.BUBBLE, CombinedChart.DrawOrder.CANDLE, CombinedChart.DrawOrder.LINE, CombinedChart.DrawOrder.SCATTER
+            });
         }
     }
 }

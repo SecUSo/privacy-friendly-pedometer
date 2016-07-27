@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlystepcounter.fragments;
 
+import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import org.secuso.privacyfriendlystepcounter.Factory;
 import org.secuso.privacyfriendlystepcounter.R;
@@ -48,14 +50,12 @@ import java.util.Map;
  * create an instance of this fragment.
  *
  * @author Tobias Neidig
- * @version 20160606
+ * @version 20160727
  */
 public class DailyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener {
     public static String LOG_TAG = DailyReportFragment.class.getName();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
-    private RecyclerView mRecyclerView;
     private ReportAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private OnFragmentInteractionListener mListener;
     private ActivitySummary activitySummary;
     private ActivityDayChart activityChart;
@@ -101,7 +101,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
            mParam1 = getArguments().getString(ARG_PARAM1);
         }*/
         // register for steps-saved-event
-        day = Calendar.getInstance(); // TODO let the user choose the day
+        day = Calendar.getInstance();
         // subscribe to onStepsSaved and onStepsDetected broadcasts
         IntentFilter filterRefreshUpdate = new IntentFilter();
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
@@ -120,22 +120,22 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         // Generate the reports
         generateReports(false);
 
         mAdapter = new ReportAdapter(reports);
         mAdapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
 
         return view;
     }
@@ -309,11 +309,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-
-    }
-
-    @Override
     public void onActivityChartDataTypeClicked(ActivityDayChart.DataType newDataType) {
         Log.i(LOG_TAG, "Changing  displayed data type to " + newDataType.toString());
         if (this.activityChart == null) {
@@ -347,6 +342,37 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             default:
                 menu.findItem(R.id.menu_steps).setChecked(true);
         }
+    }
+
+    @Override
+    public void onPrevClicked() {
+        this.day.add(Calendar.DAY_OF_MONTH, -1);
+        this.generateReports(false);
+    }
+
+    @Override
+    public void onNextClicked() {
+        this.day.add(Calendar.DAY_OF_MONTH, 1);
+        this.generateReports(false);
+    }
+
+    @Override
+    public void onTitleClicked() {
+        int year = this.day.get(Calendar.YEAR);
+        int month = this.day.get(Calendar.MONTH);
+        int day = this.day.get(Calendar.DAY_OF_MONTH);
+
+        // Create a new instance of DatePickerDialog and return it
+        DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                DailyReportFragment.this.day.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                DailyReportFragment.this.day.set(Calendar.MONTH, monthOfYear);
+                DailyReportFragment.this.day.set(Calendar.YEAR, year);
+                DailyReportFragment.this.generateReports(false);
+            }
+        }, year, month, day);
+        dialog.show();
     }
 
     /**

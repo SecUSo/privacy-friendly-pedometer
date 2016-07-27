@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlystepcounter.models;
 
+import java.util.Calendar;
+
 /**
  *
  */

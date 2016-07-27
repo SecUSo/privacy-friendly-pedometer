@@ -28,6 +28,7 @@ import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -205,11 +206,15 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-
         void onActivityChartDataTypeClicked(ActivityDayChart.DataType newDataType);
 
         void setActivityChartDataTypeChecked(Menu popup);
+
+        void onPrevClicked();
+
+        void onNextClicked();
+
+        void onTitleClicked();
     }
 
     // Provide a reference to the views for each data item
@@ -228,6 +233,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public TextView mStepsTextView;
         public TextView mDistanceTextView;
         public TextView mCaloriesTextView;
+        public ImageButton mPrevButton;
+        public ImageButton mNextButton;
 
         public SummaryViewHolder(View itemView) {
             super(itemView);
@@ -235,6 +242,33 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mStepsTextView = (TextView) itemView.findViewById(R.id.stepCount);
             mDistanceTextView = (TextView) itemView.findViewById(R.id.distanceCount);
             mCaloriesTextView = (TextView) itemView.findViewById(R.id.calorieCount);
+            mPrevButton = (ImageButton) itemView.findViewById(R.id.prev_btn);
+            mNextButton = (ImageButton) itemView.findViewById(R.id.next_btn);
+
+            mPrevButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onPrevClicked();
+                    }
+                }
+            });
+            mNextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onNextClicked();
+                    }
+                }
+            });
+            mTitleTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onTitleClicked();
+                    }
+                }
+            });
         }
     }
 

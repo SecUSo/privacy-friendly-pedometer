@@ -150,8 +150,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     lastWalkingModeId = walkingModeId;
                     chartXValues.add(dataEntry.getKey());
                 }
-                // add daily goal
-                if (chartXValues.size() > 0) {
+                // add daily step goal
+                if (chartXValues.size() > 0 && chartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
                     Entry start = new Entry(chartData.getGoal(), 0);
                     Entry end = new Entry(chartData.getGoal(), chartXValues.size() - 1);
                     LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");

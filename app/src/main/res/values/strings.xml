@@ -145,5 +145,13 @@
     <string name="walking_mode_input_empty">Name and step length are required. Please fill in!</string>
     <string name="hint_walking_mode_name">Name</string>
     <string name="hint_walking_mode_step_length">Step length</string>
+    <string-array name="pref_default_walking_mode_names">
+        <item>Walking</item>
+        <item>Running</item>
+    </string-array>
+    <string-array name="pref_default_walking_mode_step_lenghts">
+        <item>0.5</item><!-- step length in meters -->
+        <item>0.7</item>
+    </string-array>
 
 </resources>

@@ -4,6 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
+
+import org.secuso.privacyfriendlystepcounter.R;
+import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 
 /**
  * Database helper class for storing walking modes
@@ -29,17 +33,49 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
                     WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY + REAL_TYPE + COMMA_SEP +
                     WalkingModeEntry.COLUMN_NAME_IS_ACTIVE + INTEGER_TYPE + COMMA_SEP +
                     WalkingModeEntry.COLUMN_NAME_IS_DELETED + INTEGER_TYPE +
-            " )";
+                    " )";
+    private static final String LOG_CLASS = WalkingModeDbHelper.class.getName();
+
+    private Context context;
 
     public WalkingModeDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
+
+
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
+        // Insert default walking modes
+        WalkingModePersistenceHelper.setSQLiteDatabase(db);
+        String[] walkingModesNames = context.getResources().getStringArray(R.array.pref_default_walking_mode_names);
+        String[] walkingModesStepLengthStrings = context.getResources().getStringArray(R.array.pref_default_walking_mode_step_lenghts);
+        if (walkingModesStepLengthStrings.length != walkingModesNames.length) {
+            Log.e(LOG_CLASS, "Number of default walking mode step lengths and names have to be the same.");
+            return;
+        }
+        if (walkingModesNames.length == 0) {
+            Log.e(LOG_CLASS, "There are no default walking modes.");
+        }
+        WalkingModePersistenceHelper.setSQLiteDatabase(db);
+        for (int i = 0; i < walkingModesStepLengthStrings.length; i++) {
+            String stepLengthString = walkingModesStepLengthStrings[i];
+            double stepLength = Double.valueOf(stepLengthString);
+            String name = walkingModesNames[i];
+            WalkingMode walkingMode = new WalkingMode();
+            walkingMode.setStepLength(stepLength);
+            walkingMode.setName(name);
+            walkingMode.setIsActive(i == 0);
+            WalkingModePersistenceHelper.save(walkingMode, context);
+            Log.i(LOG_CLASS, "Created default walking mode " + name);
+        }
+        WalkingModePersistenceHelper.setSQLiteDatabase(null);
     }
+
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Fill when upgrading DB
     }
+
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }

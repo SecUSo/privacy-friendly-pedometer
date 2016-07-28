@@ -276,4 +276,8 @@ public class WalkingModePersistenceHelper {
         }
         return WalkingModePersistenceHelper.db;
     }
+
+    public static void setSQLiteDatabase(SQLiteDatabase db){
+        WalkingModePersistenceHelper.db = db;
+    }
 }

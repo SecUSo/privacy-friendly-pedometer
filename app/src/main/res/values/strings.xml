@@ -154,4 +154,15 @@
         <item>0.7</item>
     </string-array>
 
+    <string name="training_overview_empty">It seems like you didn\'t used the training functionality, yet. It\'s time to start your training!</string>
+    <string name="training_input_message" />
+    <string name="training_input_title">Training session</string>
+    <string name="activity_title_training">Training</string>
+    <string name="hint_training_description">Description</string>
+    <string name="hint_training_title">Title</string>
+    <string name="hint_training_feeling">Feeling:</string>
+    <string name="training_card_calories">cal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+
 </resources>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_training_session"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/cardview_default_margin"
+        android:layout_marginLeft="@dimen/cardview_default_margin"
+        android:layout_marginRight="@dimen/cardview_default_margin"
+        card_view:cardCornerRadius="4dp"
+        android:clickable="true"
+        android:background="?selectableItemBackgroundBorderless">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/training_card_title"
+                    style="@style/CardViewPrimaryTitle"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/training_card_steps"
+                    style="@style/CardViewSubTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/training_card_title"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:text="" />
+                <TextView
+                    style="@style/CardViewSubTitle"
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:text="@string/steps"
+                    android:layout_below="@+id/training_card_title"
+                    android:layout_toRightOf="@+id/training_card_steps"
+                    android:layout_toEndOf="@+id/training_card_steps" />
+                <ImageButton
+                    android:id="@+id/training_card_menu"
+                    style="@style/SimpleImageButton"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/training_card_title"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_more_vert_black_24dp" />
+
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                style="@style/CardViewBody"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/training_card_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/distanceIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_transfer_within_a_station_65black_30px" />
+
+                        <TextView
+                            android:id="@+id/training_card_distance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/distanceIcon"
+                            android:layout_toRightOf="@+id/distanceIcon"
+                            android:textColor="@color/darkgrey" />
+
+                        <TextView
+                            android:id="@+id/distanceTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/training_card_distance"
+                            android:layout_marginLeft="1sp"
+                            android:layout_marginStart="1sp"
+                            android:layout_toEndOf="@+id/training_card_distance"
+                            android:layout_toRightOf="@+id/training_card_distance"
+                            android:text="@string/training_card_distance_km"
+                            android:textColor="@color/darkgrey" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/calorieIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_fire_65black_40dp" />
+
+                        <TextView
+                            android:id="@+id/training_card_calories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/calorieIcon"
+                            android:layout_toRightOf="@+id/calorieIcon"
+                            android:text=""
+                            android:textColor="@color/darkgrey" />
+
+                        <TextView
+                            android:id="@+id/calorieTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/training_card_calories"
+                            android:layout_marginLeft="1sp"
+                            android:layout_marginStart="1sp"
+                            android:layout_toEndOf="@+id/training_card_calories"
+                            android:layout_toRightOf="@+id/training_card_calories"
+                            android:text="@string/training_card_calories"
+                            android:textColor="@color/darkgrey" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_clock_grey600_24dp" />
+
+                        <TextView
+                            android:id="@+id/training_card_duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/imageView"
+                            android:layout_toRightOf="@+id/imageView"
+                            android:text=""
+                            android:textColor="@color/darkgrey" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/training_card_duration"
+                            android:layout_marginLeft="1sp"
+                            android:layout_marginStart="1sp"
+                            android:layout_toEndOf="@+id/training_card_duration"
+                            android:layout_toRightOf="@+id/training_card_duration"
+                            android:text="@string/training_card_duration"
+                            android:textColor="@color/darkgrey" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#20000000" />
+
+            <LinearLayout
+                style="@style/CardViewBody"
+                android:orientation="vertical">
+
+                <RatingBar
+                    android:id="@+id/training_card_feeling"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

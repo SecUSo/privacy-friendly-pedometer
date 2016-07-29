@@ -132,6 +132,7 @@
     <string name="motivation_alert_input_message">Set your own custom motivation alert. The app notifies you with one of your texts randomly.</string>
     <string name="motivation_alert_input_empty">Empty motivation alerts are useless, aren\'t they?</string>
     <string name="activity_title_motivation_alerts">Motivation alerts</string>
+    <string name="motivation_alert_notification_title">Step Counter</string>
 
     <!-- walking modes -->
     <string name="activity_title_walking_modes">Walking modes</string>
@@ -167,5 +168,4 @@
     <string name="training_minutes">min</string>
     <string name="training_velocity">km/h</string>
     <string name="training_stop_button">End training now</string>
-
 </resources>

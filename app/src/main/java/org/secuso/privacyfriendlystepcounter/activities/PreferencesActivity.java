@@ -194,6 +194,12 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
 
+        @Override
+        public void onDetach(){
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+            super.onDetach();
+        }
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -214,7 +220,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class NotificationPreferenceFragment extends PreferenceFragment {
+    public static class NotificationPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -227,6 +233,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToLongValue(findPreference(getString(R.string.pref_notification_motivation_alert_time)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_notification_motivation_alert_criterion)));
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            sharedPref.registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
@@ -237,6 +246,29 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        public void onDetach(){
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+            super.onDetach();
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if(isDetached()){
+                return;
+            }
+            // Detect changes on preferences and update our internal variable
+            if (key.equals(getString(R.string.pref_notification_motivation_alert_enabled)) || key.equals(getString(R.string.pref_notification_motivation_alert_time))) {
+                boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_notification_motivation_alert_enabled), true);
+                if(isEnabled){
+                    StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
+                }else{
+                    StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+                }
+            }
         }
     }
 }

@@ -243,7 +243,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 SummaryViewHolder summaryViewHolder = (SummaryViewHolder) holder;
                 summaryViewHolder.mTitleTextView.setText(summaryData.getTitle());
                 summaryViewHolder.mStepsTextView.setText(String.valueOf(summaryData.getSteps()));
-                summaryViewHolder.mDistanceTextView.setText(String.valueOf(summaryData.getDistance()));
+                summaryViewHolder.mDistanceTextView.setText(String.format(summaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", summaryData.getDistance()));
                 summaryViewHolder.mCaloriesTextView.setText(String.valueOf(summaryData.getCalories()));
                 break;
         }

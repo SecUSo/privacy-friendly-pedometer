@@ -67,12 +67,12 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             holder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
         }
         if (holder.mTextViewDistance != null) {
-            holder.mTextViewDistance.setText(String.valueOf(item.getDistance() / 1000)); // TODO
+            holder.mTextViewDistance.setText(String.format(holder.itemView.getResources().getConfiguration().locale, "%.2f",item.getDistance() / 1000)); // TODO
         }
         if (holder.mTextViewCalories != null) {
             holder.mTextViewCalories.setText(String.valueOf(item.getCalories()));
         }
-        String durationText = String.format("%02d:%02d", ((int) (item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
+        String durationText = String.format(holder.itemView.getResources().getConfiguration().locale, "%02d:%02d", ((int) (item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
         if (holder.mTextViewDuration != null) {
             holder.mTextViewDuration.setText(durationText);
         }

@@ -119,14 +119,23 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     }
                 }
                 List<BarEntry> dataEntries = new ArrayList<>();
+                List<BarEntry> dataEntriesReachedDailyGoal = new ArrayList<>();
                 for (Map.Entry<String, Double> dataEntry : barChartDataMap.entrySet()) {
                     barChartXValues.add(barChartI, dataEntry.getKey());
                     if (dataEntry.getValue() != null) {
-                        dataEntries.add(new BarEntry(dataEntry.getValue().floatValue(), barChartI));
+                        // TODO Multibars in Combined charts are not supported yet.
+                        // They will be supported in v3.0 of mpAndroidChart
+                        // This will require a restructure of charts.
+                        /*if(dataEntry.getValue() >= barChartData.getGoal()){
+                            dataEntriesReachedDailyGoal.add(new BarEntry(dataEntry.getValue().floatValue(), barChartI));
+                        }else {*/
+                            dataEntries.add(new BarEntry(dataEntry.getValue().floatValue(), barChartI));
+                        //}
                     }
                     barChartI++;
                 }
                 BarDataSet barDataSet = new BarDataSet(dataEntries, barChartLabel);
+                BarDataSet barDataSetReachedDailyGoal = new BarDataSet(dataEntriesReachedDailyGoal, barChartLabel);
                 ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
                 // add daily step goal
                 if (barChartXValues.size() > 0 && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
@@ -143,9 +152,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 }
                 CombinedData barData = new CombinedData();
                 barData.setData(new BarData(barChartXValues, barDataSet));
+                // barData.setData(new BarData(barChartXValues, barDataSetReachedDailyGoal));
                 barData.setData(new LineData(barChartXValues, lineDataSets));
                 barData.setXVals(barChartXValues);
                 barDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.colorPrimary));
+                barDataSetReachedDailyGoal.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.green));
                 barChartViewHolder.mChart.setData(barData);
                 barChartViewHolder.mChart.invalidate();
                 break;

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,10 @@ public class AboutFragment extends Fragment {
         }
         TextView versionTextView = (TextView) rootView.findViewById(R.id.textFieldVersion);
         versionTextView.setText(String.format(getString(R.string.version_number), BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
+        TextView urlTextView = (TextView) rootView.findViewById(R.id.textViewUrl);
+        urlTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView libTextView = (TextView) rootView.findViewById(R.id.textViewLib);
+        libTextView.setMovementMethod(LinkMovementMethod.getInstance());
         container.removeAllViews();
         return rootView;
     }

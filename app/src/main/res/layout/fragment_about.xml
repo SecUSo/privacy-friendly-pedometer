@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -8,7 +7,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AboutActivity"
     android:weightSum="1">
 
     <LinearLayout
@@ -85,6 +83,16 @@
         android:text="@string/url"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:autoLink="web"/>
+        android:clickable="true"
+        android:linksClickable="true"
+        android:id="@+id/textViewUrl"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about_thrid_party_libs"
+        android:clickable="true"
+        android:linksClickable="true"
+        android:id="@+id/textViewLib"
+        android:layout_marginTop="20dp"/>
 </LinearLayout>

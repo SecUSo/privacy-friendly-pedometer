@@ -22,7 +22,8 @@
     <string name="about_affiliation">In affiliation with</string>
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
     <string name="more_info">More information can be found on:</string>
-    <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
+    <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps"><i>https://www.secuso.org</i></a></string>
+    <string name="about_thrid_party_libs">This app is an <a href="https://github.com/SecUSo/privacy-friendly-health-tracker">open source</a>-application. Feel free to contribute!<br/><br/>The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> licensed under the Apache License, Version 2.0 and icons from <a href="https://design.google.com/icons/index.html">Google Material Icon Set</a> licensed under the Apache License, Version 2.0.</string>
 
     <!-- ReportFragment -->
     <string name="month">Month</string>

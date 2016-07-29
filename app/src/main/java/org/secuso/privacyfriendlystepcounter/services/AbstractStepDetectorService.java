@@ -103,6 +103,10 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
          * Is usually called when we saved the steps.
          */
         public void resetStepCount() { total_steps = 0; }
+
+        public AbstractStepDetectorService getService(){
+            return AbstractStepDetectorService.this;
+        }
     }
 
     public class BroadcastReceiver extends android.content.BroadcastReceiver {
@@ -243,14 +247,18 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
         // Cancel notification
-        mNotifyManager.cancel(NOTIFICATION_ID);
+        if(mNotifyManager != null) {
+            mNotifyManager.cancel(NOTIFICATION_ID);
+        }
         // Unregister shared preferences listeners
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPref.unregisterOnSharedPreferenceChangeListener(this);
         // Force save of step count
-        StepDetectionServiceHelper.startPersistenceService(this);
+       // StepDetectionServiceHelper.startPersistenceService(this);
         super.onDestroy();
     }
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

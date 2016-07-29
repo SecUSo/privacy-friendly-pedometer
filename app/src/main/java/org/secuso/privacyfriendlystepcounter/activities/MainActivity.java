@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new MainFragment();
                 break;
             case R.id.menu_training:
-                Intent trainingIntent = new Intent(this, TrainingActivity.class);
+                Intent trainingIntent = new Intent(this, TrainingOverviewActivity.class);
                 startActivity(trainingIntent);
                 return true;
             case R.id.menu_settings:

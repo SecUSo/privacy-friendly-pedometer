@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlystepcounter.Factory;
+import org.secuso.privacyfriendlystepcounter.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.receivers.StepCountPersistenceReceiver;
 
 import java.util.Calendar;
@@ -33,18 +34,29 @@ public class StepDetectionServiceHelper {
      */
     public static void startAllIfEnabled(Context context) {
         Log.i(LOG_CLASS, "Started all services");
-        // Get user preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean isStepDetectionEnabled = sharedPref.getBoolean(context.getString(R.string.pref_step_counter_enabled), true);
-
-        // Start the step detection if enabled
-        if (isStepDetectionEnabled) {
+        // Start the step detection if enabled or training is active
+        if (isStepDetectionEnabled(context)) {
             StepDetectionServiceHelper.startStepDetection(context);
             // schedule stepCountPersistenceService
             StepDetectionServiceHelper.schedulePersistenceService(context);
         }
     }
 
+    public static void stopAllIfNotRequired(Context context){
+        stopAllIfNotRequired(true, context);
+    }
+
+    public static void stopAllIfNotRequired(boolean forceSave, Context context){
+        // Start the step detection if enabled or training is active
+        if (!isStepDetectionEnabled(context)) {
+            Log.i(LOG_CLASS, "Stopping all services");
+            StepDetectionServiceHelper.stopStepDetection(context);
+            // schedule stepCountPersistenceService
+            StepDetectionServiceHelper.unschedulePersistenceService(forceSave, context);
+        }else{
+            Log.i(LOG_CLASS, "Not stopping services b.c. they are required");
+        }
+    }
     /**
      * Starts the step detection service
      *
@@ -52,8 +64,26 @@ public class StepDetectionServiceHelper {
      */
     public static void startStepDetection(Context context) {
         Log.i(LOG_CLASS, "Started step detection service.");
-        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
-        context.startService(stepDetectorServiceIntent);
+        Intent      stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+            context.getApplicationContext().startService(stepDetectorServiceIntent);
+    }
+
+    /**
+     * Stops the step detection service
+     *
+     * @param context The application context
+     */
+    public static void stopStepDetection(Context context){
+        Log.i(LOG_CLASS, "Stopping step detection service.");
+        boolean success = true;
+        Intent stepDetectorServiceIntent= new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+       // while (success) {
+            success = context.getApplicationContext().stopService(stepDetectorServiceIntent);
+            Log.i(LOG_CLASS, "stopping service: " + success);
+        //}
+        if(!context.getApplicationContext().stopService(stepDetectorServiceIntent)){
+            Log.w(LOG_CLASS, "Stopping of service failed or it is not running.");
+        }
     }
 
     /**
@@ -80,6 +110,18 @@ public class StepDetectionServiceHelper {
         Log.i(LOG_CLASS, "Scheduled repeating persistence service at start time " + calendar.toString());
     }
 
+    // TODO add documentation
+    public static void unschedulePersistenceService(boolean forceSave, Context context){
+        // force save
+        if(forceSave) {
+            startPersistenceService(context);
+        }
+        Intent stepCountPersistenceServiceIntent = new Intent(context, StepCountPersistenceReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 2, stepCountPersistenceServiceIntent, 0);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.cancel(sender);
+    }
+
     /**
      * Starts the step detection service
      *
@@ -89,5 +131,12 @@ public class StepDetectionServiceHelper {
         Log.i(LOG_CLASS, "Started persistence service.");
         Intent stepCountPersistenceServiceIntent = new Intent(context, StepCountPersistenceReceiver.class);
         context.sendBroadcast(stepCountPersistenceServiceIntent);
+    }
+
+    public static boolean isStepDetectionEnabled(Context context) {
+        // Get user preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isStepDetectionEnabled = sharedPref.getBoolean(context.getString(R.string.pref_step_counter_enabled), true);
+        return isStepDetectionEnabled || (TrainingPersistenceHelper.getActiveItem(context) != null);
     }
 }

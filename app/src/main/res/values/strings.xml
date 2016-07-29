@@ -164,5 +164,8 @@
     <string name="training_card_calories">cal</string>
     <string name="training_card_distance_km">km</string>
     <string name="training_card_duration">h</string>
+    <string name="training_minutes">min</string>
+    <string name="training_velocity">km/h</string>
+    <string name="training_stop_button">End training now</string>
 
 </resources>

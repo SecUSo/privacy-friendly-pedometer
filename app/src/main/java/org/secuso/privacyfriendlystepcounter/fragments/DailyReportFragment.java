@@ -32,6 +32,7 @@ import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorService;
+import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,15 +103,10 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         }*/
         // register for steps-saved-event
         day = Calendar.getInstance();
-        // subscribe to onStepsSaved and onStepsDetected broadcasts
-        IntentFilter filterRefreshUpdate = new IntentFilter();
-        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
-        filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+        registerReceivers();
         // Bind to stepDetector if today is shown
-        if (isTodayShown()) {
-            Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
-            getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
         }
     }
 
@@ -149,20 +145,59 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        if(day == null){
+            day = Calendar.getInstance();
+        }
+        if(isTodayShown()){
+            bindService();
+        }
+        registerReceivers();
     }
 
     @Override
     public void onDetach() {
-        super.onDetach();
+        unbindService();
+        unregisterReceivers();
         mListener = null;
+        super.onDetach();
+    }
+
+    @Override
+    public void onPause(){
+        unbindService();
+        unregisterReceivers();
+        super.onPause();
     }
 
     @Override
     public void onDestroy() {
-        if (this.isTodayShown() && mServiceConnection != null) {
-            getContext().unbindService(mServiceConnection);
-        }
+        unbindService();
+        unregisterReceivers();
         super.onDestroy();
+    }
+
+
+    private void registerReceivers(){
+        // subscribe to onStepsSaved and onStepsDetected broadcasts
+        IntentFilter filterRefreshUpdate = new IntentFilter();
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
+        filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+    }
+
+    private void unregisterReceivers(){
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+    }
+    private void bindService(){
+        Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
+        getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void unbindService(){
+        if (this.isTodayShown() && mServiceConnection != null && myBinder != null && myBinder.getService() != null) {
+            getContext().unbindService(mServiceConnection);
+            myBinder = null;
+        }
     }
 
     /**

@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackgroundBorderless"
+    android:clickable="true"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -12,14 +14,155 @@
         android:layout_marginBottom="@dimen/cardview_default_margin"
         android:layout_marginLeft="@dimen/cardview_default_margin"
         android:layout_marginRight="@dimen/cardview_default_margin"
-        card_view:cardCornerRadius="4dp"
-        android:clickable="true"
-        android:background="?selectableItemBackgroundBorderless">
+        card_view:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:id="@+id/card_training_session_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="325dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/training_small_card_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:paddingStart="4dp"
+                            android:singleLine="true"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16sp"
+                            android:transitionName="myname" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/training_small_card_steps"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"
+                                android:textColor="@color/darkgrey" />
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
+                                android:paddingStart="4dp"
+                                android:singleLine="true"
+                                android:text="@string/steps"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="325dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/training_small_card_distance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_toLeftOf="@+id/textView1"
+                                android:layout_toStartOf="@+id/textView1"
+                                android:textColor="@color/darkgrey" />
+
+                            <TextView
+                                android:id="@+id/textView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
+                                android:paddingStart="4dp"
+                                android:singleLine="true"
+                                android:text="@string/training_card_distance_km"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/training_small_card_duration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_toLeftOf="@+id/textView"
+                                android:layout_toStartOf="@+id/textView"
+                                android:textColor="@color/darkgrey" />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
+                                android:paddingStart="4dp"
+                                android:singleLine="true"
+                                android:text="@string/training_card_duration"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/relativeLayout3"
+                android:background="#20000000" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/card_training_session_expanded"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -28,7 +171,8 @@
                 <TextView
                     android:id="@+id/training_card_title"
                     style="@style/CardViewPrimaryTitle"
-                    android:text="" />
+                    android:text=""
+                    android:transitionName="myname" />
 
                 <TextView
                     android:id="@+id/training_card_steps"
@@ -36,20 +180,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/training_card_title"
-                    android:layout_marginRight="0dp"
                     android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
                     android:text="" />
+
                 <TextView
-                    style="@style/CardViewSubTitle"
                     android:id="@+id/textView4"
+                    style="@style/CardViewSubTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/training_card_title"
                     android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
-                    android:text="@string/steps"
-                    android:layout_below="@+id/training_card_title"
+                    android:layout_toEndOf="@+id/training_card_steps"
                     android:layout_toRightOf="@+id/training_card_steps"
-                    android:layout_toEndOf="@+id/training_card_steps" />
+                    android:text="@string/steps" />
+
                 <ImageButton
                     android:id="@+id/training_card_menu"
                     style="@style/SimpleImageButton"
@@ -58,7 +204,6 @@
                     android:layout_alignTop="@+id/training_card_title"
                     android:layout_marginRight="16dp"
                     android:src="@drawable/ic_more_vert_black_24dp" />
-
 
 
             </RelativeLayout>
@@ -159,7 +304,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/imageView"

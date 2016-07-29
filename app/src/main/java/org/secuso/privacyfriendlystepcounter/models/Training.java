@@ -19,8 +19,8 @@ public class Training {
     private double distance;
     private double calories;
     private float feeling;
-    private double start;
-    private double end;
+    private long start;
+    private long end;
 
     public static Training from(Cursor c) {
         Training trainingSession = new Training();
@@ -31,8 +31,8 @@ public class Training {
         trainingSession.setDistance(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DISTANCE)));
         trainingSession.setCalories(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_CALORIES)));
         trainingSession.setFeeling(c.getFloat(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_FEELING)));
-        trainingSession.setStart(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START)));
-        trainingSession.setEnd(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END)));
+        trainingSession.setStart(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START)));
+        trainingSession.setEnd(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END)));
         return trainingSession;
     }
 
@@ -92,27 +92,40 @@ public class Training {
         this.feeling = feeling;
     }
 
-    public double getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(double start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public double getEnd() {
+    public long getEnd() {
         return end;
     }
 
-    public void setEnd(double end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 
     /**
      * Returns the duration in seconds
+     * @return seconds
      */
     public int getDuration(){
-        return (Double.valueOf((this.getEnd() - this.getStart())/1000)).intValue();
+        long end = this.getEnd();
+        if(end == 0){
+            end = Calendar.getInstance().getTimeInMillis();
+        }
+        return (Double.valueOf((end - this.getStart())/1000)).intValue();
+    }
+
+    /**
+     * Returns the velocity in meters per second
+     * @return m/s
+     */
+    public double getVelocity(){
+        return this.getDistance()/this.getDuration();
     }
 
     public ContentValues toContentValues() {

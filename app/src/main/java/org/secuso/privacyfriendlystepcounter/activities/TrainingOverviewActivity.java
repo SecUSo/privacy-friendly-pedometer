@@ -1,6 +1,7 @@
 package org.secuso.privacyfriendlystepcounter.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +24,9 @@ import org.secuso.privacyfriendlystepcounter.models.Training;
 import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 import org.secuso.privacyfriendlystepcounter.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceHelper;
+import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorService;
+import org.secuso.privacyfriendlystepcounter.services.HardwareStepDetectorService;
+import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,8 +55,9 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         setContentView(R.layout.activity_training_overview);
 
         if(TrainingPersistenceHelper.getActiveItem(this) != null){
-            // TODO show current training session if there is one.
+            // show current training session if there is one.
             Log.w(LOG_CLASS, "Found active training session");
+            startTrainingActivity();
         }
 
         mEmptyView = (RelativeLayout) findViewById(R.id.empty_view);
@@ -77,7 +82,8 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         mStartTrainingFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO start new session
+                // start new session
+                startTrainingActivity();
             }
         });
 
@@ -85,8 +91,8 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         // specify the adapter
         mAdapter = new TrainingOverviewAdapter(new ArrayList<Training>());
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setRecyclerView(mRecyclerView);
         showTrainings();
-
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -97,8 +103,14 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         showTrainings();
     }
 
+    protected void startTrainingActivity(){
+        Intent intent = new Intent(this, TrainingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
     /**
-     * Loads and shows the trainigs.
+     * Loads and shows the trainings.
      */
     protected void showTrainings() {
         trainings = TrainingPersistenceHelper.getAllItems(this);

@@ -26,6 +26,14 @@
         <activity
             android:name="org.secuso.privacyfriendlystepcounter.activities.TrainingActivity"
             android:label="@string/activity_title_training"
+            android:parentActivityName="org.secuso.privacyfriendlystepcounter.activities.TrainingOverviewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlystepcounter.activities.TrainingOverviewActivity" />
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlystepcounter.activities.TrainingOverviewActivity"
+            android:label="@string/activity_title_training"
             android:parentActivityName="org.secuso.privacyfriendlystepcounter.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

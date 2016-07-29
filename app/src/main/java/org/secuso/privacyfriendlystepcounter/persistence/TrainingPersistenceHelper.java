@@ -28,13 +28,13 @@ public class TrainingPersistenceHelper {
      * @return a list of training sessions
      */
     public static List<Training> getAllItems(Context context) {
-        Cursor c = getCursor(null, null, context);
+        Cursor c = getCursor(null, null, TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START + " DESC", context);
         List<Training> trainingSessions = new ArrayList<>();
         if (c == null) {
             return trainingSessions;
         }
         while (c.moveToNext()) {
-            trainingSessions.add(trainingSessions.size(), Training.from(c));
+            trainingSessions.add(Training.from(c));
         }
         c.close();
         return trainingSessions;
@@ -170,6 +170,10 @@ public class TrainingPersistenceHelper {
         return rowsAffected;
     }
 
+    protected static Cursor getCursor(String selection, String[] selectionArgs, Context context){
+        return getCursor(selection, selectionArgs, TrainingDbHelper.TrainingSessionEntry._ID + " ASC", context);
+    }
+
     /**
      * Gets the database cursor for given selection arguments.
      *
@@ -178,7 +182,7 @@ public class TrainingPersistenceHelper {
      * @param context       The application context
      * @return the database cursor
      */
-    protected static Cursor getCursor(String selection, String[] selectionArgs, Context context) {
+    protected static Cursor getCursor(String selection, String[] selectionArgs, String sortOrder, Context context) {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
@@ -192,10 +196,6 @@ public class TrainingPersistenceHelper {
                 TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END,
                 TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_FEELING
         };
-
-        // How you want the results sorted in the resulting Cursor
-        String sortOrder =
-                TrainingDbHelper.TrainingSessionEntry._ID + " ASC";
 
         return getDB(context).query(
                 TrainingDbHelper.TrainingSessionEntry.TABLE_NAME,  // The table to query

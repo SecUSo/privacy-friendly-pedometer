@@ -1,15 +1,22 @@
 package org.secuso.privacyfriendlystepcounter.adapters;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlystepcounter.R;
@@ -26,7 +33,8 @@ import java.util.List;
 public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOverviewAdapter.ViewHolder> {
     private List<Training> mItems;
     private OnItemClickListener mItemClickListener;
-
+    private int mExpandedPosition = -1;
+    private RecyclerView recyclerView;
     /**
      * Creates a new Adapter for RecyclerView
      *
@@ -47,7 +55,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Training item = mItems.get(position);
         if (holder.mTextViewName != null) {
             holder.mTextViewName.setText(item.getName());
@@ -59,16 +67,50 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             holder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
         }
         if (holder.mTextViewDistance != null) {
-            holder.mTextViewDistance.setText(String.valueOf(item.getDistance()));
+            holder.mTextViewDistance.setText(String.valueOf(item.getDistance() / 1000)); // TODO
         }
         if (holder.mTextViewCalories != null) {
             holder.mTextViewCalories.setText(String.valueOf(item.getCalories()));
         }
+        String durationText = String.format("%02d:%02d", ((int) (item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
         if (holder.mTextViewDuration != null) {
-            holder.mTextViewDuration.setText(String.format("%02d:%02d", ((int) (item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60)));
+            holder.mTextViewDuration.setText(durationText);
         }
         if (holder.mRatingBarFeeling != null) {
             holder.mRatingBarFeeling.setRating(item.getFeeling());
+        }
+        if (holder.mTextViewSmallSteps != null) {
+            holder.mTextViewSmallSteps.setText(String.valueOf((int) item.getSteps()));
+        }
+        if (holder.mTextViewSmallDuration != null) {
+            holder.mTextViewSmallDuration.setText(durationText);
+        }
+        if (holder.mTextViewSmallDistance != null) {
+            holder.mTextViewSmallDistance.setText(String.valueOf(item.getDistance()/1000)); // TODO
+        }
+        if (holder.mTextViewCalories != null) {
+            holder.mTextViewSmallName.setText(item.getName());
+        }
+
+        if (holder.mRatingBarFeeling != null) {
+            final boolean isExpanded = position == mExpandedPosition;
+            holder.mExpandedLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+            holder.mSmallLayout.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.mCardViewLayout.getLayoutParams();
+            layoutParams.setMargins((isExpanded ? 0 : 8), (isExpanded ? 8 : 0), (isExpanded ? 0 : 8), (isExpanded ? 8 : 0));
+            holder.view.setLayoutParams(layoutParams);
+            holder.mCardViewLayout.setRadius((isExpanded) ? 4 : 0);
+            holder.view.setActivated(isExpanded);
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mExpandedPosition = isExpanded ? -1 : holder.getAdapterPosition();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        TransitionManager.beginDelayedTransition(recyclerView);
+                    }
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 
@@ -89,6 +131,10 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;
+    }
+
+    public void setRecyclerView(RecyclerView recyclerView){
+        this.recyclerView = recyclerView;
     }
 
     public interface OnItemClickListener {
@@ -112,17 +158,31 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
         public TextView mTextViewDuration;
         public ImageButton mImageButton;
         public RatingBar mRatingBarFeeling;
-        private View view;
+        public TextView mTextViewSmallSteps;
+        public TextView mTextViewSmallDuration;
+        public TextView mTextViewSmallDistance;
+        public TextView mTextViewSmallName;
+        public RelativeLayout mSmallLayout;
+        public LinearLayout mExpandedLayout;
+        public View view;
+        public CardView mCardViewLayout;
 
         public ViewHolder(View v) {
             super(v);
             view = v;
+            mCardViewLayout = (CardView) v.findViewById(R.id.card_training_session);
+            mSmallLayout = (RelativeLayout) v.findViewById(R.id.card_training_session_small);
+            mExpandedLayout = (LinearLayout) v.findViewById(R.id.card_training_session_expanded);
             mTextViewName = (TextView) v.findViewById(R.id.training_card_title);
             mTextViewDescription = (TextView) v.findViewById(R.id.training_card_description);
             mTextViewSteps = (TextView) v.findViewById(R.id.training_card_steps);
             mTextViewDistance = (TextView) v.findViewById(R.id.training_card_distance);
             mTextViewCalories = (TextView) v.findViewById(R.id.training_card_calories);
             mTextViewDuration = (TextView) v.findViewById(R.id.training_card_duration);
+            mTextViewSmallSteps = (TextView) v.findViewById(R.id.training_small_card_steps);;
+            mTextViewSmallDuration = (TextView) v.findViewById(R.id.training_small_card_duration);;
+            mTextViewSmallDistance = (TextView) v.findViewById(R.id.training_small_card_distance);;
+            mTextViewSmallName = (TextView) v.findViewById(R.id.training_small_card_name);;
             mRatingBarFeeling = (RatingBar) v.findViewById(R.id.training_card_feeling);
             mImageButton = (ImageButton) v.findViewById(R.id.training_card_menu);
             mImageButton.setOnClickListener(this);

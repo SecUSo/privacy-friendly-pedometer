@@ -29,6 +29,7 @@ import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
 import org.secuso.privacyfriendlystepcounter.models.StepCount;
 import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorService;
+import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -127,9 +128,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         mRecyclerView.setHasFixedSize(true);
 
         // Bind to stepDetector if today is shown
-        if (isTodayShown()) {
-            Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
-            getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
         }
 
         return view;
@@ -146,10 +146,38 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         }
     }
 
+
     @Override
     public void onDetach() {
-        super.onDetach();
+        unbindService();
         mListener = null;
+        super.onDetach();
+    }
+
+    @Override
+    public void onPause(){
+        unbindService();
+        super.onPause();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        unbindService();
+        super.onDestroy();
+    }
+
+
+    private void bindService(){
+        Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
+        getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void unbindService(){
+        if (this.isTodayShown() && mServiceConnection != null && myBinder != null && myBinder.getService() != null) {
+            getContext().unbindService(mServiceConnection);
+            myBinder = null;
+        }
     }
 
     /**

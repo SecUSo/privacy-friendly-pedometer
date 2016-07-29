@@ -12,6 +12,7 @@ import org.secuso.privacyfriendlystepcounter.Factory;
 import org.secuso.privacyfriendlystepcounter.models.WalkingMode;
 import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceHelper;
+import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
 /**
  * Stores the current step count in database.
@@ -35,6 +36,8 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             StepCountPersistenceHelper.storeStepCounts(service, context, oldWalkingMode);
+            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
+            context.getApplicationContext().unbindService(mServiceConnection);
         }
     };
 

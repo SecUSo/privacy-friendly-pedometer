@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlystepcounter.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,9 +15,10 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
-import java.util.List;
-
 import org.secuso.privacyfriendlystepcounter.R;
+import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
+
+import java.util.List;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -162,7 +164,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class GeneralPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -177,6 +179,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_daily_step_goal)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_weight)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_gender)));
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            sharedPref.registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
@@ -187,6 +192,20 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            // Detect changes on preferences and update our internal variable
+            if (key.equals(getString(R.string.pref_step_counter_enabled))) {
+              boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_step_counter_enabled), true);
+                if(isEnabled){
+                    StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
+                }else{
+                    StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+                }
+            }
         }
     }
 

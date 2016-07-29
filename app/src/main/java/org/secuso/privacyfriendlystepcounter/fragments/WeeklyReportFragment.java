@@ -232,7 +232,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                     int calories = 0;
                     for (StepCount stepCount : stepCounts) {
                         steps += stepCount.getStepCount();
-                        distance += (stepCount.getDistance()) / 1000; // convert from m to km
+                        distance += stepCount.getDistance();
                         calories += stepCount.getCalories();
                     }
                     stepData.put(formatDate.format(start.getTime()), (double) steps);

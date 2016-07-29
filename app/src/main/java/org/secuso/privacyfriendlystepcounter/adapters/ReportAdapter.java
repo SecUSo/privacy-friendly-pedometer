@@ -31,6 +31,7 @@ import org.secuso.privacyfriendlystepcounter.models.ActivityChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivityChartDataSet;
 import org.secuso.privacyfriendlystepcounter.models.ActivityDayChart;
 import org.secuso.privacyfriendlystepcounter.models.ActivitySummary;
+import org.secuso.privacyfriendlystepcounter.utils.UnitUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,13 +124,17 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 for (Map.Entry<String, Double> dataEntry : barChartDataMap.entrySet()) {
                     barChartXValues.add(barChartI, dataEntry.getKey());
                     if (dataEntry.getValue() != null) {
+                        float val = dataEntry.getValue().floatValue();
+                        if (barChartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
+                            val = Double.valueOf(UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(val), barChartViewHolder.context)).floatValue();
+                        }
                         // TODO Multibars in Combined charts are not supported yet.
                         // They will be supported in v3.0 of mpAndroidChart
                         // This will require a restructure of charts.
                         /*if(dataEntry.getValue() >= barChartData.getGoal()){
-                            dataEntriesReachedDailyGoal.add(new BarEntry(dataEntry.getValue().floatValue(), barChartI));
+                            dataEntriesReachedDailyGoal.add(new BarEntry(val, barChartI));
                         }else {*/
-                            dataEntries.add(new BarEntry(dataEntry.getValue().floatValue(), barChartI));
+                        dataEntries.add(new BarEntry(val, barChartI));
                         //}
                     }
                     barChartI++;
@@ -217,14 +222,18 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     }
                     // add data entry only if not null
                     if (dataEntry.getValue() != null) {
+                        float val = Double.valueOf(dataEntry.getValue().getValue()).floatValue();
+                        if (chartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
+                            val = Double.valueOf(UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(val), chartViewHolder.context)).floatValue();
+                        }
                         Entry chartEntry;
                         if (i > 0 && lastWalkingModeId != walkingModeId) {
                             chartEntry = new Entry(lastValue, i - 1);
                             ((LineDataSet) dataSets.get(dataSets.size() - 1)).getYVals().add(chartEntry);
                         }
-                        chartEntry = new Entry(Double.valueOf(dataEntry.getValue().getValue()).floatValue(), i++);
+                        chartEntry = new Entry(val, i++);
                         ((LineDataSet) dataSets.get(dataSets.size() - 1)).getYVals().add(chartEntry);
-                        lastValue = Double.valueOf(dataEntry.getValue().getValue()).floatValue();
+                        lastValue = val;
                     }
                     lastWalkingModeId = walkingModeId;
                     chartXValues.add(dataEntry.getKey());
@@ -254,8 +263,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 SummaryViewHolder summaryViewHolder = (SummaryViewHolder) holder;
                 summaryViewHolder.mTitleTextView.setText(summaryData.getTitle());
                 summaryViewHolder.mStepsTextView.setText(String.valueOf(summaryData.getSteps()));
-                summaryViewHolder.mDistanceTextView.setText(String.format(summaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", summaryData.getDistance()));
+                summaryViewHolder.mDistanceTextView.setText(String.format(summaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(summaryData.getDistance()), summaryViewHolder.itemView.getContext())));
                 summaryViewHolder.mCaloriesTextView.setText(String.valueOf(summaryData.getCalories()));
+                summaryViewHolder.mDistanceTitleTextView.setText(UnitUtil.usersLengthDescriptionShort(summaryViewHolder.itemView.getContext()));
                 break;
         }
     }
@@ -313,6 +323,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public TextView mStepsTextView;
         public TextView mDistanceTextView;
         public TextView mCaloriesTextView;
+        public TextView mDistanceTitleTextView;
         public ImageButton mPrevButton;
         public ImageButton mNextButton;
 
@@ -322,6 +333,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mStepsTextView = (TextView) itemView.findViewById(R.id.stepCount);
             mDistanceTextView = (TextView) itemView.findViewById(R.id.distanceCount);
             mCaloriesTextView = (TextView) itemView.findViewById(R.id.calorieCount);
+            mDistanceTitleTextView = (TextView) itemView.findViewById(R.id.distanceTitle);
             mPrevButton = (ImageButton) itemView.findViewById(R.id.prev_btn);
             mNextButton = (ImageButton) itemView.findViewById(R.id.next_btn);
 

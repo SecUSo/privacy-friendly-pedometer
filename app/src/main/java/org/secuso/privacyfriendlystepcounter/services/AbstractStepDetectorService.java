@@ -19,16 +19,15 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.activities.MainActivity;
 import org.secuso.privacyfriendlystepcounter.models.StepCount;
 import org.secuso.privacyfriendlystepcounter.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceHelper;
-import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
+import org.secuso.privacyfriendlystepcounter.utils.UnitUtil;
 
 import java.util.Calendar;
 import java.util.List;
-
-import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Generic class for a step detector.
@@ -51,14 +50,13 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      * Extra key for total step count since service start
      */
     public static final String EXTENDED_DATA_TOTAL_STEPS = "org.secuso.privacyfriendlystepcounter.TOTAL_STEPS";
-
-    private static final String LOG_TAG = AbstractStepDetectorService.class.getName();
-    private final IBinder mBinder = new StepDetectorBinder();
-    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     /**
      * The notification id used for permanent step count notification
      */
     public static final int NOTIFICATION_ID = 1;
+    private static final String LOG_TAG = AbstractStepDetectorService.class.getName();
+    private final IBinder mBinder = new StepDetectorBinder();
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private NotificationManager mNotifyManager;
     /**
      * Number of steps the user wants to walk every day
@@ -82,50 +80,6 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      */
     private int total_steps = 0;
 
-    /**
-     * Class used for the client Binder.
-     *
-     * @author Tobias Neidig
-     * @version 20160611
-     */
-    public class StepDetectorBinder extends Binder {
-        /**
-         * Get the number of steps which were taken since service starts.
-         *
-         * @return Step count since service start
-         */
-        public int stepsSinceLastSave() {
-            return total_steps;
-        }
-
-        /**
-         * Resets the step count since last save
-         * Is usually called when we saved the steps.
-         */
-        public void resetStepCount() { total_steps = 0; }
-
-        public AbstractStepDetectorService getService(){
-            return AbstractStepDetectorService.this;
-        }
-    }
-
-    public class BroadcastReceiver extends android.content.BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent == null){
-                Log.w(LOG_TAG, "Received intent which is null.");
-                return;
-            }
-            switch(intent.getAction()){
-                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
-                    // Steps were saved, reload step count from database
-                    getStepsAtLastSave();
-                    break;
-                default:
-            }
-        }
-    }
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -160,10 +114,11 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
 
     /**
      * Builds the permanent step count notification
+     *
      * @param additionalStepCount The number of steps since last save
      * @return the new notification
      */
-    protected Notification buildNotification(StepCount additionalStepCount){
+    protected Notification buildNotification(StepCount additionalStepCount) {
         int totalSteps = this.totalStepsAtLastSave + additionalStepCount.getStepCount();
         double totalDistance = this.totalDistanceAtLastSave + additionalStepCount.getDistance();
         double totalCalories = this.totalCaloriesAtLastSave + additionalStepCount.getCalories();
@@ -173,14 +128,14 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         boolean showDistance = sharedPref.getBoolean(this.getString(R.string.pref_notification_permanent_show_distance), false);
         boolean showCalories = sharedPref.getBoolean(this.getString(R.string.pref_notification_permanent_show_calories), false);
         String message = "";
-        if(showSteps){
+        if (showSteps) {
             message = String.format(getString(R.string.notification_text_steps), totalSteps, this.dailyStepGoal);
         }
-        if(showDistance){
+        if (showDistance) {
             message += (!message.isEmpty()) ? "\n" : "";
-            message += String.format(getString(R.string.notification_text_distance), totalDistance / 1000);
+            message += String.format(getString(R.string.notification_text_distance), UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(totalDistance), this), UnitUtil.usersLengthDescriptionShort(this));
         }
-        if(showCalories){
+        if (showCalories) {
             message += (!message.isEmpty()) ? "\n" : "";
             message += String.format(getString(R.string.notification_text_calories), totalCalories);
         }
@@ -247,18 +202,16 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
         // Cancel notification
-        if(mNotifyManager != null) {
+        if (mNotifyManager != null) {
             mNotifyManager.cancel(NOTIFICATION_ID);
         }
         // Unregister shared preferences listeners
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPref.unregisterOnSharedPreferenceChangeListener(this);
         // Force save of step count
-       // StepDetectionServiceHelper.startPersistenceService(this);
+        // StepDetectionServiceHelper.startPersistenceService(this);
         super.onDestroy();
     }
-
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -280,12 +233,12 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // Detect changes on preferences and update our internal variable
-        if(key.equals(getString(R.string.pref_daily_step_goal))){
+        if (key.equals(getString(R.string.pref_daily_step_goal))) {
             dailyStepGoal = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_daily_step_goal), "10000"));
             updateNotification();
-        }else if(key.equals(getString(R.string.pref_notification_permanent_show_steps)) ||
+        } else if (key.equals(getString(R.string.pref_notification_permanent_show_steps)) ||
                 key.equals(getString(R.string.pref_notification_permanent_show_distance)) ||
-                key.equals(getString(R.string.pref_notification_permanent_show_calories))){
+                key.equals(getString(R.string.pref_notification_permanent_show_calories))) {
             updateNotification();
         }
     }
@@ -293,7 +246,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     /**
      * Fetches the step count for this day from database
      */
-    private void getStepsAtLastSave(){
+    private void getStepsAtLastSave() {
         List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(Calendar.getInstance(), getApplicationContext());
         totalStepsAtLastSave = 0;
         totalDistanceAtLastSave = 0;
@@ -307,9 +260,10 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
 
     /**
      * Transforms the current total_steps (total steps since last save) in an @{see StepCount} object
+     *
      * @return total_steps since last save as stepCount object
      */
-    private StepCount stepCountFromTotalSteps(){
+    private StepCount stepCountFromTotalSteps() {
         StepCount stepCount = new StepCount();
         stepCount.setStepCount(total_steps);
         stepCount.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getApplicationContext())); // use current walking mode
@@ -319,8 +273,55 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     /**
      * Updates or creates the progress notification
      */
-    private void updateNotification(){
+    private void updateNotification() {
         Notification notification = buildNotification(this.stepCountFromTotalSteps());
         mNotifyManager.notify(NOTIFICATION_ID, notification);
+    }
+
+    /**
+     * Class used for the client Binder.
+     *
+     * @author Tobias Neidig
+     * @version 20160611
+     */
+    public class StepDetectorBinder extends Binder {
+        /**
+         * Get the number of steps which were taken since service starts.
+         *
+         * @return Step count since service start
+         */
+        public int stepsSinceLastSave() {
+            return total_steps;
+        }
+
+        /**
+         * Resets the step count since last save
+         * Is usually called when we saved the steps.
+         */
+        public void resetStepCount() {
+            total_steps = 0;
+        }
+
+        public AbstractStepDetectorService getService() {
+            return AbstractStepDetectorService.this;
+        }
+    }
+
+    public class BroadcastReceiver extends android.content.BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null) {
+                Log.w(LOG_TAG, "Received intent which is null.");
+                return;
+            }
+            switch (intent.getAction()) {
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
+                    // Steps were saved, reload step count from database
+                    getStepsAtLastSave();
+                    break;
+                default:
+            }
+        }
     }
 }

@@ -26,6 +26,7 @@ import org.secuso.privacyfriendlystepcounter.persistence.TrainingPersistenceHelp
 import org.secuso.privacyfriendlystepcounter.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
+import org.secuso.privacyfriendlystepcounter.utils.UnitUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,9 +52,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private TextView mTextViewSteps;
     private TextView mTextViewDistance;
+    private TextView mTextViewDistanceTitle;
     private TextView mTextViewCalories;
     private TextView mTextViewDuration;
     private TextView mTextViewVelocity;
+    private TextView mTextViewVelocityTitle;
     private Button mButtonStop;
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
@@ -82,9 +85,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             StepDetectionServiceHelper.startPersistenceService(this);
 
             training = new Training();
-            training.setStart(Calendar.getInstance().getTimeInMillis());
-            // TODO set name to current walking mode + date
-            training.setName(WalkingModePersistenceHelper.getActiveMode(this).getName() + "");
+            Calendar cal = Calendar.getInstance();
+            training.setStart(cal.getTimeInMillis());
+            training.setName(String.format(getResources().getConfiguration().locale, getString(R.string.training_default_title), WalkingModePersistenceHelper.getActiveMode(this).getName(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)));
             training.setDescription("");
             training = TrainingPersistenceHelper.save(training, this);
         }
@@ -92,9 +95,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         mTextViewSteps = (TextView) findViewById(R.id.training_steps);
         mTextViewDistance = (TextView) findViewById(R.id.training_distance);
+        mTextViewDistanceTitle = (TextView) findViewById(R.id.training_distance_title);
         mTextViewCalories = (TextView) findViewById(R.id.training_calories);
         mTextViewDuration = (TextView) findViewById(R.id.training_duration);
         mTextViewVelocity = (TextView) findViewById(R.id.training_velocity);
+        mTextViewVelocityTitle = (TextView) findViewById(R.id.training_velocity_title);
         mButtonStop = (Button) findViewById(R.id.training_stop_button);
         if (mButtonStop != null) {
             mButtonStop.setOnClickListener(this);
@@ -189,7 +194,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         mTextViewSteps.setText(String.valueOf((int)this.training.getSteps()));
-        mTextViewDistance.setText(String.format(getResources().getConfiguration().locale, "%.2f", this.training.getDistance()/1000)); // TODO
+        mTextViewDistance.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(this.training.getDistance()), this)));
+        mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(this));
         mTextViewCalories.setText(String.format(getResources().getConfiguration().locale, "%.2f", this.training.getCalories()));
         int duration = this.training.getDuration();
         int hours = (duration / 3600);
@@ -197,7 +203,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         int seconds = (duration - hours * 3600 - minutes * 60);
         String durationText = String.format(getResources().getConfiguration().locale, "%02d:%02d:%02d", hours, minutes, seconds);
         mTextViewDuration.setText(durationText);
-        mTextViewVelocity.setText(String.valueOf(String.format(getResources().getConfiguration().locale, "%.2f", this.training.getVelocity() * 3.6))); // TODO
+        mTextViewVelocity.setText(String.valueOf(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometersPerHourToUsersVelocityUnit(UnitUtil.metersPerSecondToKilometersPerHour(this.training.getVelocity()), this))));
+        mTextViewVelocityTitle.setText(UnitUtil.usersVelocityDescription(this));
     }
 
     protected void stopTraining() {

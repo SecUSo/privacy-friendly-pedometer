@@ -303,7 +303,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             }
         }
 
-        distance /= 1000; // TODO Transform distance to km
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd. MMMM", getResources().getConfiguration().locale);
 
         // create view models

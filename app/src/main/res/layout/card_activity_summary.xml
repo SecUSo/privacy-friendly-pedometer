@@ -144,7 +144,6 @@
                             android:layout_marginStart="1sp"
                             android:layout_toEndOf="@+id/distanceCount"
                             android:layout_toRightOf="@+id/distanceCount"
-                            android:text="km"
                             android:textColor="@color/darkgrey" />
                     </RelativeLayout>
 
@@ -171,7 +170,6 @@
                             android:layout_marginStart="8dp"
                             android:layout_toEndOf="@+id/calorieIcon"
                             android:layout_toRightOf="@+id/calorieIcon"
-                            android:text="420"
                             android:textColor="@color/darkgrey" />
 
                         <TextView
@@ -183,7 +181,7 @@
                             android:layout_marginStart="1sp"
                             android:layout_toEndOf="@+id/calorieCount"
                             android:layout_toRightOf="@+id/calorieCount"
-                            android:text="cal"
+                            android:text="@string/summary_card_calories"
                             android:textColor="@color/darkgrey" />
                     </RelativeLayout>
                 </LinearLayout>

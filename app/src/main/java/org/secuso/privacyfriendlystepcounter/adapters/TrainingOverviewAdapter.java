@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.models.Training;
+import org.secuso.privacyfriendlystepcounter.utils.UnitUtil;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             holder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
         }
         if (holder.mTextViewDistance != null) {
-            holder.mTextViewDistance.setText(String.format(holder.itemView.getResources().getConfiguration().locale, "%.2f",item.getDistance() / 1000)); // TODO
+            holder.mTextViewDistance.setText(String.format(holder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), holder.itemView.getContext())));
         }
         if (holder.mTextViewCalories != null) {
             holder.mTextViewCalories.setText(String.valueOf(item.getCalories()));
@@ -86,10 +87,16 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             holder.mTextViewSmallDuration.setText(durationText);
         }
         if (holder.mTextViewSmallDistance != null) {
-            holder.mTextViewSmallDistance.setText(String.valueOf(item.getDistance()/1000)); // TODO
+            holder.mTextViewSmallDistance.setText(String.format(holder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), holder.itemView.getContext())));
         }
-        if (holder.mTextViewCalories != null) {
+        if (holder.mTextViewSmallName != null) {
             holder.mTextViewSmallName.setText(item.getName());
+        }
+        if (holder.mTextViewDistanceTitle != null) {
+            holder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(holder.itemView.getContext()));
+        }
+        if (holder.mTextViewSmallDistanceTitle != null) {
+            holder.mTextViewSmallDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(holder.itemView.getContext()));
         }
 
         if (holder.mRatingBarFeeling != null) {
@@ -162,6 +169,10 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
         public TextView mTextViewSmallDuration;
         public TextView mTextViewSmallDistance;
         public TextView mTextViewSmallName;
+
+        public TextView mTextViewDistanceTitle;
+        public TextView mTextViewSmallDistanceTitle;
+
         public RelativeLayout mSmallLayout;
         public LinearLayout mExpandedLayout;
         public View view;
@@ -179,10 +190,12 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             mTextViewDistance = (TextView) v.findViewById(R.id.training_card_distance);
             mTextViewCalories = (TextView) v.findViewById(R.id.training_card_calories);
             mTextViewDuration = (TextView) v.findViewById(R.id.training_card_duration);
-            mTextViewSmallSteps = (TextView) v.findViewById(R.id.training_small_card_steps);;
-            mTextViewSmallDuration = (TextView) v.findViewById(R.id.training_small_card_duration);;
-            mTextViewSmallDistance = (TextView) v.findViewById(R.id.training_small_card_distance);;
-            mTextViewSmallName = (TextView) v.findViewById(R.id.training_small_card_name);;
+            mTextViewSmallSteps = (TextView) v.findViewById(R.id.training_small_card_steps);
+            mTextViewSmallDuration = (TextView) v.findViewById(R.id.training_small_card_duration);
+            mTextViewSmallDistance = (TextView) v.findViewById(R.id.training_small_card_distance);
+            mTextViewSmallName = (TextView) v.findViewById(R.id.training_small_card_name);
+            mTextViewDistanceTitle = (TextView) v.findViewById(R.id.distanceTitle);
+            mTextViewSmallDistanceTitle = (TextView) v.findViewById(R.id.distance_title_small);;
             mRatingBarFeeling = (RatingBar) v.findViewById(R.id.training_card_feeling);
             mImageButton = (ImageButton) v.findViewById(R.id.training_card_menu);
             mImageButton.setOnClickListener(this);

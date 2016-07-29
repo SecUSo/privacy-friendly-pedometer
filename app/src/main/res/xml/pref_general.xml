@@ -39,7 +39,7 @@
             android:singleLine="true"
             android:title="@string/pref_title_weight" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="1|km|kilometers|km/h"
             android:entries="@array/pref_keys_gender"
             android:entryValues="@array/pref_values_gender"
             android:key="@string/pref_gender"

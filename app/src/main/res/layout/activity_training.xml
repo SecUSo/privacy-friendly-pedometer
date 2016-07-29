@@ -101,7 +101,7 @@
                     android:textSize="39sp" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/training_distance_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/training_distance"
@@ -145,7 +145,7 @@
                     android:textSize="39sp" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/training_velocity_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/training_velocity"

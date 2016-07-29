@@ -27,8 +27,7 @@
 
                 <TextView
                     android:id="@+id/period"
-                    style="@style/CardViewPrimaryTitle"
-                    android:text="Schritte" />
+                    style="@style/CardViewPrimaryTitle" />
 
                 <TextView
                     android:id="@+id/periodSubtitle"
@@ -36,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/period"
-                    android:text="Detailübersicht im Zeitverlauf" />
+                    android:text="@string/activity_chart_summary_subtitle" />
 
                 <ImageButton
                     android:id="@+id/periodMoreButton"
@@ -45,6 +44,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@+id/period"
                     android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_more_vert_black_24dp" />
 
             </RelativeLayout>

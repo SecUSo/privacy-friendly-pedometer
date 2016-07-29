@@ -29,9 +29,11 @@
     <string name="week">Week</string>
     <string name="day">Day</string>
     <string name="steps">Steps</string>
-    <string name="calories">kilo calories</string>
+    <string name="calories">calories</string>
     <string name="km">kilometers</string>
     <string name="activity_summary_subtitle">Summary of activities</string>
+    <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
+    <string name="summary_card_calories">cal</string>
 
     <!-- Preferences -->
     <!-- general settings -->
@@ -52,8 +54,8 @@
         <item>miles</item>
     </string-array>
     <string-array name="pref_values_unit_of_length">
-        <item>1</item> <!-- 1km = 1km -->
-        <item>0.621371</item> <!-- 1km = 0.621371 miles -->
+        <item>1|km|kilometers|km/h</item> <!-- 1km = 1km -->
+        <item>0.621371|mi|miles|mph</item> <!-- 1km = 0.621371 miles -->
     </string-array>
 
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlystepcounter.pref.weight</string>
@@ -109,8 +111,8 @@
     <string name="pref_permanent_notification_enabled" translatable="false">org.secuso.privacyfriendlystepcounter.pref.permanent_notification_enabled</string>
     <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlystepcounter.pref.daily_step_goal</string>
     <string name="notification_text_steps">%1$s of %2$s steps walked today.</string>
-    <string name="notification_text_distance">%s km walked today.</string>
-    <string name="notification_text_calories">Burned %s kilocalories today.</string>
+    <string name="notification_text_distance">%1$.2f %2$s walked today.</string>
+    <string name="notification_text_calories">Burned %.2f calories today.</string>
     <!-- /Will be removed on next update -->
 
     <!-- others -->
@@ -168,4 +170,5 @@
     <string name="training_minutes">min</string>
     <string name="training_velocity">km/h</string>
     <string name="training_stop_button">End training now</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
 </resources>

@@ -154,7 +154,8 @@ public class StepDetectionServiceHelper {
         // Get user preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isStepDetectionEnabled = sharedPref.getBoolean(context.getString(R.string.pref_step_counter_enabled), true);
-        return isStepDetectionEnabled || (TrainingPersistenceHelper.getActiveItem(context) != null);
+        boolean isWalkingModeLearningActive = sharedPref.getBoolean(context.getString(R.string.pref_walking_mode_learning_active), false);
+        return isStepDetectionEnabled || (TrainingPersistenceHelper.getActiveItem(context) != null) || isWalkingModeLearningActive;
     }
 
     /**

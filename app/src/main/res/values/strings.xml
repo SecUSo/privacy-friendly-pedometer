@@ -163,6 +163,12 @@
     <string name="walking_mode_at_least_one_is_required">At least one walking mode is required.</string>
     <string name="walking_mode_cannot_delete_active_one">Cannot delete an active walking mode.</string>
     <string name="walking_mode_set_active">Set as active</string>
+    <string name="walking_mode_menu_learn">Learn</string>
+    <string name="walking_mode_learning_distance_description">Distance to walk:</string>
+    <string name="walking_mode_learning_steps_description">Steps walked:</string>
+    <string name="walking_mode_learning_stop">End learning mode</string>
+    <string name="walking_mode_learning_description">The application can learn the distance per step. Please walk the given distance and press end if you finished.</string>
+    <string name="pref_walking_mode_learning_active" translatable="false">org.secuso.privacyfriendlystepcounter.pref.walking_mode_learning_active</string>
     <string name="step_length">Step length:</string>
     <string name="walking_mode_active_ext"> (active)</string>
     <string name="walking_mode_input_empty">Name and step length are required. Please fill in!</string>

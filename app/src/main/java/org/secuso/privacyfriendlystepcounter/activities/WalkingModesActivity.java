@@ -1,6 +1,7 @@
 package org.secuso.privacyfriendlystepcounter.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -226,6 +227,14 @@ public class WalkingModesActivity extends AppCompatActivity implements WalkingMo
     public void onSetActiveClick(View view, int position) {
         WalkingModePersistenceHelper.setActiveMode(walkingModes.get(position), this);
         showWalkingModes();
+    }
+
+    @Override
+    public void onLearnClick(View view, int position) {
+        WalkingMode walkingMode = this.walkingModes.get(position);
+        Intent intent = new Intent(this, WalkingModeLearningActivity.class);
+        intent.putExtra(WalkingModeLearningActivity.EXTRA_WALKING_MODE_ID, walkingMode.getId());
+        startActivity(intent);
     }
 
     @Override

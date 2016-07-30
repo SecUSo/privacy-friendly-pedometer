@@ -58,7 +58,7 @@ public class WalkingModesAdapter extends RecyclerView.Adapter<WalkingModesAdapte
             holder.mTextViewName.setText(text);
         }
         if (holder.mTextViewStepLength != null) {
-            holder.mTextViewStepLength.setText(String.valueOf(item.getStepLength()));
+            holder.mTextViewStepLength.setText(String.format(holder.itemView.getResources().getConfiguration().locale, "%.2f", item.getStepLength()));
         }
     }
 
@@ -85,6 +85,8 @@ public class WalkingModesAdapter extends RecyclerView.Adapter<WalkingModesAdapte
         void onItemClick(View view, int position);
 
         void onSetActiveClick(View view, int position);
+
+        void onLearnClick(View view, int position);
 
         void onEditClick(View view, int position);
 
@@ -142,6 +144,12 @@ public class WalkingModesAdapter extends RecyclerView.Adapter<WalkingModesAdapte
                 case R.id.menu_set_active:
                     if (mItemClickListener != null) {
                         mItemClickListener.onSetActiveClick(view, getLayoutPosition());
+                        return true;
+                    }
+                    break;
+                case R.id.menu_learn:
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onLearnClick(view, getLayoutPosition());
                         return true;
                     }
                     break;

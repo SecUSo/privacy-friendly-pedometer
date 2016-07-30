@@ -6,6 +6,9 @@
             android:title="@string/walking_mode_set_active" />
     </group>
     <item
+        android:id="@+id/menu_learn"
+        android:title="@string/walking_mode_menu_learn"/>
+    <item
         android:id="@+id/menu_edit"
         android:title="@string/edit" />
     <item

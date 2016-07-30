@@ -40,7 +40,7 @@ import java.util.TimerTask;
  * This activity allows the user to manage the training phases.
  *
  * @author Tobias Neidig
- * @version 20160729
+ * @version 20160730
  */
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String LOG_CLASS = TrainingActivity.class.getName();
@@ -57,7 +57,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewDuration;
     private TextView mTextViewVelocity;
     private TextView mTextViewVelocityTitle;
-    private Button mButtonStop;
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -82,14 +81,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         // get current training instance
         training = TrainingPersistenceHelper.getActiveItem(this);
         if (training == null) {
+            // if no training is active, start persistence service
             StepDetectionServiceHelper.startPersistenceService(this);
-
-            training = new Training();
-            Calendar cal = Calendar.getInstance();
-            training.setStart(cal.getTimeInMillis());
-            training.setName(String.format(getResources().getConfiguration().locale, getString(R.string.training_default_title), WalkingModePersistenceHelper.getActiveMode(this).getName(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)));
-            training.setDescription("");
-            training = TrainingPersistenceHelper.save(training, this);
+            // Now wait for steps saved broadcast message and than create a new training session.
+            // We have to wait to ensure, that only the steps since now are counted.
         }
         StepDetectionServiceHelper.startAllIfEnabled(this);
 
@@ -100,9 +95,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTextViewDuration = (TextView) findViewById(R.id.training_duration);
         mTextViewVelocity = (TextView) findViewById(R.id.training_velocity);
         mTextViewVelocityTitle = (TextView) findViewById(R.id.training_velocity_title);
-        mButtonStop = (Button) findViewById(R.id.training_stop_button);
-        if (mButtonStop != null) {
-            mButtonStop.setOnClickListener(this);
+        Button buttonStop = (Button) findViewById(R.id.training_stop_button);
+        if (buttonStop != null) {
+            buttonStop.setOnClickListener(this);
         }
 
         IntentFilter filterRefreshUpdate = new IntentFilter();
@@ -272,6 +267,17 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                     updateView();
                     break;
                 case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
+                    if(training == null){
+                        // no training is active so we create a new session now.
+                        // steps were saved now. This allows us to get the exact step counts this now.
+                        training = new Training();
+                        Calendar cal = Calendar.getInstance();
+                        training.setStart(cal.getTimeInMillis());
+                        training.setName(String.format(getResources().getConfiguration().locale, getString(R.string.training_default_title), WalkingModePersistenceHelper.getActiveMode(TrainingActivity.this).getName(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)));
+                        training.setDescription("");
+                        training = TrainingPersistenceHelper.save(training, TrainingActivity.this);
+                    }
+                    // continue with updating the view
                 case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:
                     getStepCounts();
                     updateData();

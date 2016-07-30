@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/help_overview_heading">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:title=""
+            android:summary="@string/help_intro"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_functionality_heading">
+        <Preference android:title="@string/help_functionality_step_counter"
+            android:summary="@string/help_functionality_step_counter_summary"
+            android:selectable="false"/>
+        <Preference android:title="@string/help_functionality_visualization"
+            android:summary="@string/help_functionality_visualization_summary"
+            android:selectable="false"/>
+        <Preference android:title="@string/help_functionality_notification"
+            android:summary="@string/help_functionality_notification_summary"
+            android:selectable="false"/>
+        <Preference android:title="@string/help_functionality_motivation_alert"
+            android:summary="@string/help_functionality_motivation_alert_summary"
+            android:selectable="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_privacy_heading">
+        <Preference
+            android:summary="@string/help_permission_boot_description"
+            android:title="@string/help_permission_boot_heading"
+            android:selectable="false"/>
+        <Preference
+            android:summary="@string/help_permissions_description"
+            android:title="@string/help_permissions_heading"
+            android:selectable="false"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

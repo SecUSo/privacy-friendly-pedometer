@@ -17,15 +17,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.fragments.AboutFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.DailyReportFragment;
-import org.secuso.privacyfriendlystepcounter.fragments.HelpFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.MainFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.MonthlyReportFragment;
 import org.secuso.privacyfriendlystepcounter.fragments.WeeklyReportFragment;
 import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
-
-import org.secuso.privacyfriendlystepcounter.R;
 
 /**
  * Main view incl. navigation drawer and fragments
@@ -33,7 +31,7 @@ import org.secuso.privacyfriendlystepcounter.R;
  * @author Tobias Neidig
  * @version 20160601
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DailyReportFragment.OnFragmentInteractionListener, WeeklyReportFragment.OnFragmentInteractionListener, MonthlyReportFragment.OnFragmentInteractionListener  {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DailyReportFragment.OnFragmentInteractionListener, WeeklyReportFragment.OnFragmentInteractionListener, MonthlyReportFragment.OnFragmentInteractionListener {
 
     public static final String LOG_TAG = MainActivity.class.toString();
 
@@ -110,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // handle the clicks on navigation drawer items
         Fragment fragment = null;
+        Intent intent = null;
         int id = item.getItemId();
 
         switch (id) {
@@ -117,16 +116,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new MainFragment();
                 break;
             case R.id.menu_training:
-                Intent trainingIntent = new Intent(this, TrainingOverviewActivity.class);
+                Intent trainingIntent = new Intent(this, TrainingActivity.class);
                 startActivity(trainingIntent);
                 return true;
             case R.id.menu_settings:
-                Intent intent = new Intent(this, PreferencesActivity.class);
+                intent = new Intent(this, PreferencesActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.menu_help:
-                fragment = new HelpFragment();
-                break;
+                intent = new Intent(this, PreferencesActivity.class);
+                intent.putExtra(PreferencesActivity.EXTRA_SHOW_FRAGMENT, PreferencesActivity.HelpFragment.class.getName());
+                intent.putExtra(PreferencesActivity.EXTRA_SHOW_FRAGMENT_TITLE, R.string.activity_title_help);
+                startActivity(intent);
+                return true;
             case R.id.menu_about:
                 fragment = new AboutFragment();
                 break;

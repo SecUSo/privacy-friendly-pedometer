@@ -36,6 +36,25 @@
     <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
     <string name="summary_card_calories">cal</string>
 
+    <!-- HelpFragment -->
+    <string name="activity_title_help">Help</string>
+    <string name="help_overview_heading">Overview</string>
+    <string name="help_intro">Welcome to the help page. This app provides you a Privacy Friendly Step Counter. The app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+    <string name="help_functionality_heading">Basic functionality</string>
+    <string name="help_functionality_step_counter">Step Counter</string>
+    <string name="help_functionality_step_counter_summary">The permanent step counter counts your daily steps in background. The steps are count by using the hardware step counter (if any) or the accelerometer sensor data. You can disable the permanent step counter in preferences.</string>
+    <string name="help_functionality_visualization">Visualization</string>
+    <string name="help_functionality_visualization_summary">You can review your daily steps in the daily, weekly or monthly view. In this views you can choose to show the steps or distance you walked or the calories you burned. The distance is calculated based on the step lengths you provided in the walking modes. The calories are calculated based on your personal preferences.</string>
+    <string name="help_functionality_notification">Notification</string>
+    <string name="help_functionality_notification_summary">The app shows you the daily steps, distance and calories in a permanent notification if step counter is enabled. In the preferences you can choose what to display. The notification is necessary to keep the step counter alive. You can disable all notifications in system preferences.</string>
+    <string name="help_functionality_motivation_alert">Motivation alert</string>
+    <string name="help_functionality_motivation_alert_summary">The app can show you motivation alerts if the achievement of your daily step goal is in danger. You can define the criterion, the time of day and the notification texts.</string>
+    <string name="help_privacy_heading">Privacy Info</string>
+    <string name="help_permission_boot_heading">Permission RECEIVE BOOT COMPLETED</string>
+    <string name="help_permission_boot_description">is used to start the step counter and set the notifications at boot time. If RECEIVE BOOT COMPLETED is not granted you have to start the app manually once after boot to activate the app.</string>
+    <string name="help_permissions_heading">Permissions</string>
+    <string name="help_permissions_description">Privacy Friendly Step Counter does not use any privacy-related permissions.</string>
+
     <!-- Preferences -->
     <!-- general settings -->
     <string name="pref_header_general">General</string>

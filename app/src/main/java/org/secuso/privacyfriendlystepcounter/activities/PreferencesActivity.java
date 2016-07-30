@@ -156,7 +156,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || HelpFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -195,7 +196,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         }
 
         @Override
-        public void onDetach(){
+        public void onDetach() {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.unregisterOnSharedPreferenceChangeListener(this);
             super.onDetach();
@@ -205,10 +206,10 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             // Detect changes on preferences and update our internal variable
             if (key.equals(getString(R.string.pref_step_counter_enabled))) {
-              boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_step_counter_enabled), true);
-                if(isEnabled){
+                boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_step_counter_enabled), true);
+                if (isEnabled) {
                     StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
-                }else{
+                } else {
                     StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
                 }
             }
@@ -249,7 +250,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         }
 
         @Override
-        public void onDetach(){
+        public void onDetach() {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.unregisterOnSharedPreferenceChangeListener(this);
             super.onDetach();
@@ -257,18 +258,41 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if(isDetached()){
+            if (isDetached()) {
                 return;
             }
             // Detect changes on preferences and update our internal variable
             if (key.equals(getString(R.string.pref_notification_motivation_alert_enabled)) || key.equals(getString(R.string.pref_notification_motivation_alert_time))) {
                 boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_notification_motivation_alert_enabled), true);
-                if(isEnabled){
+                if (isEnabled) {
                     StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
-                }else{
+                } else {
                     StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
                 }
             }
+        }
+    }
+
+    /**
+     * This fragment shows the help content.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class HelpFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.help);
+            setHasOptionsMenu(false);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                this.getActivity().onBackPressed();
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
         }
     }
 }

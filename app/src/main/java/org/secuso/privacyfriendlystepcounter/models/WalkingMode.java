@@ -22,8 +22,8 @@ public class WalkingMode {
         WalkingMode alarmItem = new WalkingMode();
         alarmItem.setId(c.getLong(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry._ID)));
         alarmItem.setName(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME)));
-        alarmItem.setStepLength(c.getInt(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE)));
-        alarmItem.setStepFrequency(c.getInt(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY)));
+        alarmItem.setStepLength(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE)));
+        alarmItem.setStepFrequency(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY)));
         alarmItem.setIsActive(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE))));
         alarmItem.setIsDeleted(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED))));
         return alarmItem;

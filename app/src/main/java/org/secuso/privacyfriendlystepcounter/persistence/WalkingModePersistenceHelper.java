@@ -197,13 +197,10 @@ public class WalkingModePersistenceHelper {
      */
     protected static long insert(WalkingMode item, Context context) {
         ContentValues values = item.toContentValues();
-        long insertedId = getDB(context).insert(
+        return getDB(context).insert(
                 WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
                 null,
                 values);
-        //db.close();
-        //dbHelper.close();
-        return insertedId;
     }
 
     /**
@@ -219,12 +216,11 @@ public class WalkingModePersistenceHelper {
         String selection = WalkingModeDbHelper.WalkingModeEntry._ID + " = ?";
         String[] selectionArgs = {String.valueOf(item.getId())};
 
-        int rowsAffected = getDB(context).update(
+        return getDB(context).update(
                 WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
-        return rowsAffected;
     }
 
     /**

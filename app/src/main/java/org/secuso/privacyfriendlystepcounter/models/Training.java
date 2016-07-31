@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlystepcounter.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import org.secuso.privacyfriendlystepcounter.adapters.TrainingOverviewAdapter;
 import org.secuso.privacyfriendlystepcounter.persistence.TrainingDbHelper;
 
 import java.util.Calendar;
@@ -21,6 +22,10 @@ public class Training {
     private float feeling;
     private long start;
     private long end;
+    /**
+     * The view type for TrainingOverviewAdapter
+     */
+    private int viewType = TrainingOverviewAdapter.VIEW_TYPE_TRAINING_SESSION;
 
     public static Training from(Cursor c) {
         Training trainingSession = new Training();
@@ -108,6 +113,14 @@ public class Training {
         this.end = end;
     }
 
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
+
     /**
      * Returns the duration in seconds
      * @return seconds
@@ -125,6 +138,9 @@ public class Training {
      * @return m/s
      */
     public double getVelocity(){
+        if(this.getDuration() == 0){
+            return 0;
+        }
         return this.getDistance()/this.getDuration();
     }
 

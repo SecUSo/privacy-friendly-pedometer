@@ -144,6 +144,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="operation_failed">Operation failed</string>
+    <string name="since">since</string>
 
     <!-- motivation alert -->
     <string-array name="pref_default_notification_motivation_alert_messages">

@@ -129,6 +129,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
+        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
+        this.bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         // Force refresh of view.
         this.getStepCounts();
         this.updateView();
@@ -142,7 +144,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         super.onPause();
     }
 
-
+    /**
+     * Gets the step counts which are stored in database
+     */
     protected void getStepCounts() {
         if(this.training == null){
             return;
@@ -150,6 +154,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         this.stepCounts = StepCountPersistenceHelper.getStepCountsForInterval(this.training.getStart(), Calendar.getInstance().getTimeInMillis(), this);
     }
 
+    /**
+     * Updates the data, gets the current step counts from step detector service.
+     * It summaries the step data in stepCount, distance and calories.
+     */
     protected void updateData() {
         if(this.training == null){
             return;
@@ -184,6 +192,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         this.training.setCalories(calories);
     }
 
+    /**
+     * Updates the users view to current training session.
+     */
     protected void updateView() {
         if(this.training == null){
             return;
@@ -202,6 +213,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTextViewVelocityTitle.setText(UnitUtil.usersVelocityDescription(this));
     }
 
+    /**
+     * Stops the training.
+     * Stores the current training session in database.
+     * Redirects to TrainingOverviewActivity.
+     */
     protected void stopTraining() {
         updateData();
         this.training.setEnd(Calendar.getInstance().getTimeInMillis());
@@ -210,7 +226,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             this.mTimer.cancel();
             this.mTimer = null;
         }
-        this.training = null;
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+
         StepDetectionServiceHelper.stopAllIfNotRequired(this);
         Intent intent = new Intent(this, TrainingOverviewActivity.class);
         startActivity(intent);
@@ -273,7 +290,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         training = new Training();
                         Calendar cal = Calendar.getInstance();
                         training.setStart(cal.getTimeInMillis());
-                        training.setName(String.format(getResources().getConfiguration().locale, getString(R.string.training_default_title), WalkingModePersistenceHelper.getActiveMode(TrainingActivity.this).getName(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)));
+                        training.setName(String.format(getResources().getConfiguration().locale, getString(R.string.training_default_title), WalkingModePersistenceHelper.getActiveMode(TrainingActivity.this).getName(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH)));
                         training.setDescription("");
                         training = TrainingPersistenceHelper.save(training, TrainingActivity.this);
                     }

@@ -3,7 +3,6 @@ package org.secuso.privacyfriendlystepcounter.adapters;
 import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
@@ -12,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -23,6 +21,9 @@ import org.secuso.privacyfriendlystepcounter.R;
 import org.secuso.privacyfriendlystepcounter.models.Training;
 import org.secuso.privacyfriendlystepcounter.utils.UnitUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -32,10 +33,14 @@ import java.util.List;
  * @version 20160728
  */
 public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOverviewAdapter.ViewHolder> {
+    public static final int VIEW_TYPE_TRAINING_SESSION = 0;
+    public static final int VIEW_TYPE_MONTH_HEADLINE = 1;
+    public static final int VIEW_TYPE_SUMMARY = 2;
     private List<Training> mItems;
     private OnItemClickListener mItemClickListener;
     private int mExpandedPosition = -1;
     private RecyclerView recyclerView;
+
     /**
      * Creates a new Adapter for RecyclerView
      *
@@ -49,75 +54,135 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
     @Override
     public TrainingOverviewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                  int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_training_session, parent, false);
-        return new ViewHolder(v);
+        View v;
+        ViewHolder vh = null;
+        switch (viewType) {
+            case VIEW_TYPE_SUMMARY:
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_training_summary, parent, false);
+                vh = new TrainingSummaryViewHolder(v);
+                break;
+            case VIEW_TYPE_TRAINING_SESSION:
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_training_session, parent, false);
+                vh = new TrainingSessionViewHolder(v);
+                break;
+            case VIEW_TYPE_MONTH_HEADLINE:
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_training_month_headline, parent, false);
+                vh = new MonthHeadlineViewHolder(v);
+                break;
+        }
+
+        return vh;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Training training = this.mItems.get(position);
+        return training.getViewType();
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Training item = mItems.get(position);
-        if (holder.mTextViewName != null) {
-            holder.mTextViewName.setText(item.getName());
-        }
-        if (holder.mTextViewDescription != null) {
-            holder.mTextViewDescription.setText(item.getDescription());
-        }
-        if (holder.mTextViewSteps != null) {
-            holder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
-        }
-        if (holder.mTextViewDistance != null) {
-            holder.mTextViewDistance.setText(String.format(holder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), holder.itemView.getContext())));
-        }
-        if (holder.mTextViewCalories != null) {
-            holder.mTextViewCalories.setText(String.valueOf(item.getCalories()));
-        }
-        String durationText = String.format(holder.itemView.getResources().getConfiguration().locale, "%02d:%02d", ((int) (item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
-        if (holder.mTextViewDuration != null) {
-            holder.mTextViewDuration.setText(durationText);
-        }
-        if (holder.mRatingBarFeeling != null) {
-            holder.mRatingBarFeeling.setRating(item.getFeeling());
-        }
-        if (holder.mTextViewSmallSteps != null) {
-            holder.mTextViewSmallSteps.setText(String.valueOf((int) item.getSteps()));
-        }
-        if (holder.mTextViewSmallDuration != null) {
-            holder.mTextViewSmallDuration.setText(durationText);
-        }
-        if (holder.mTextViewSmallDistance != null) {
-            holder.mTextViewSmallDistance.setText(String.format(holder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), holder.itemView.getContext())));
-        }
-        if (holder.mTextViewSmallName != null) {
-            holder.mTextViewSmallName.setText(item.getName());
-        }
-        if (holder.mTextViewDistanceTitle != null) {
-            holder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(holder.itemView.getContext()));
-        }
-        if (holder.mTextViewSmallDistanceTitle != null) {
-            holder.mTextViewSmallDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(holder.itemView.getContext()));
-        }
-
-        if (holder.mRatingBarFeeling != null) {
-            final boolean isExpanded = position == mExpandedPosition;
-            holder.mExpandedLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-            holder.mSmallLayout.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.mCardViewLayout.getLayoutParams();
-            layoutParams.setMargins((isExpanded ? 0 : 8), (isExpanded ? 8 : 0), (isExpanded ? 0 : 8), (isExpanded ? 8 : 0));
-            holder.view.setLayoutParams(layoutParams);
-            holder.mCardViewLayout.setRadius((isExpanded) ? 4 : 0);
-            holder.view.setActivated(isExpanded);
-            holder.view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mExpandedPosition = isExpanded ? -1 : holder.getAdapterPosition();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        TransitionManager.beginDelayedTransition(recyclerView);
-                    }
-                    notifyDataSetChanged();
+        switch (getItemViewType(position)) {
+            case VIEW_TYPE_SUMMARY:
+                TrainingSummaryViewHolder trainingSummaryViewHolder = (TrainingSummaryViewHolder) holder;
+                if (trainingSummaryViewHolder.mTextViewSteps != null) {
+                    trainingSummaryViewHolder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
                 }
-            });
+                if (trainingSummaryViewHolder.mTextViewDistance != null) {
+                    trainingSummaryViewHolder.mTextViewDistance.setText(String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSummaryViewHolder.itemView.getContext())));
+                }
+                if (trainingSummaryViewHolder.mTextViewCalories != null) {
+                    trainingSummaryViewHolder.mTextViewCalories.setText(String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", item.getCalories()));
+                }
+                if (trainingSummaryViewHolder.mTextViewDuration != null) {
+                    String durationText = String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%02d:%02d", ((item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
+                    trainingSummaryViewHolder.mTextViewDuration.setText(durationText);
+                }
+                if (trainingSummaryViewHolder.mTextViewDistanceTitle != null) {
+                    trainingSummaryViewHolder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSummaryViewHolder.itemView.getContext()));
+                }
+                if(trainingSummaryViewHolder.mTextViewSince != null){
+                    DateFormat df = new SimpleDateFormat("MMMM yyyy", trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis(item.getStart());
+                    trainingSummaryViewHolder.mTextViewSince.setText(df.format(cal.getTime()));
+                }
+                break;
+            case VIEW_TYPE_MONTH_HEADLINE:
+                MonthHeadlineViewHolder monthHeadlineViewHolder = (MonthHeadlineViewHolder) holder;
+                if (monthHeadlineViewHolder.mTextViewName != null) {
+                    monthHeadlineViewHolder.mTextViewName.setText(item.getName());
+                }
+                break;
+            case VIEW_TYPE_TRAINING_SESSION:
+                final TrainingSessionViewHolder trainingSessionViewHolder = (TrainingSessionViewHolder) holder;
+                if (trainingSessionViewHolder.mTextViewName != null) {
+                    trainingSessionViewHolder.mTextViewName.setText(item.getName());
+                }
+                if (trainingSessionViewHolder.mTextViewDescription != null) {
+                    trainingSessionViewHolder.mTextViewDescription.setText(item.getDescription());
+                }
+                if (trainingSessionViewHolder.mTextViewSteps != null) {
+                    trainingSessionViewHolder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
+                }
+                if (trainingSessionViewHolder.mTextViewDistance != null) {
+                    trainingSessionViewHolder.mTextViewDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
+                }
+                if (trainingSessionViewHolder.mTextViewCalories != null) {
+                    trainingSessionViewHolder.mTextViewCalories.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", item.getCalories()));
+                }
+                String durationText = String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%02d:%02d", ((item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
+                if (trainingSessionViewHolder.mTextViewDuration != null) {
+                    trainingSessionViewHolder.mTextViewDuration.setText(durationText);
+                }
+                if (trainingSessionViewHolder.mRatingBarFeeling != null) {
+                    trainingSessionViewHolder.mRatingBarFeeling.setRating(item.getFeeling());
+                }
+                if (trainingSessionViewHolder.mTextViewSmallSteps != null) {
+                    trainingSessionViewHolder.mTextViewSmallSteps.setText(String.valueOf((int) item.getSteps()));
+                }
+                if (trainingSessionViewHolder.mTextViewSmallDuration != null) {
+                    trainingSessionViewHolder.mTextViewSmallDuration.setText(durationText);
+                }
+                if (trainingSessionViewHolder.mTextViewSmallDistance != null) {
+                    trainingSessionViewHolder.mTextViewSmallDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
+                }
+                if (trainingSessionViewHolder.mTextViewSmallName != null) {
+                    trainingSessionViewHolder.mTextViewSmallName.setText(item.getName());
+                }
+                if (trainingSessionViewHolder.mTextViewDistanceTitle != null) {
+                    trainingSessionViewHolder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
+                }
+                if (trainingSessionViewHolder.mTextViewSmallDistanceTitle != null) {
+                    trainingSessionViewHolder.mTextViewSmallDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
+                }
+
+                if (trainingSessionViewHolder.mRatingBarFeeling != null) {
+                    final boolean isExpanded = position == mExpandedPosition;
+                    trainingSessionViewHolder.mExpandedLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+                    trainingSessionViewHolder.mSmallLayout.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) trainingSessionViewHolder.mCardViewLayout.getLayoutParams();
+                    layoutParams.setMargins((isExpanded ? 0 : 8), (isExpanded ? 8 : 0), (isExpanded ? 0 : 8), (isExpanded ? 8 : 0));
+                    trainingSessionViewHolder.view.setLayoutParams(layoutParams);
+                    trainingSessionViewHolder.mCardViewLayout.setRadius((isExpanded) ? 4 : 0);
+                    trainingSessionViewHolder.view.setActivated(isExpanded);
+                    trainingSessionViewHolder.view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mExpandedPosition = isExpanded ? -1 : trainingSessionViewHolder.getAdapterPosition();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                TransitionManager.beginDelayedTransition(recyclerView);
+                            }
+                            notifyDataSetChanged();
+                        }
+                    });
+                }
+                break;
         }
     }
 
@@ -140,7 +205,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
         this.mItemClickListener = mItemClickListener;
     }
 
-    public void setRecyclerView(RecyclerView recyclerView){
+    public void setRecyclerView(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
     }
 
@@ -152,11 +217,17 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
         void onRemoveClick(View view, int position);
     }
 
+    public abstract class ViewHolder extends RecyclerView.ViewHolder {
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-        // each data item is just a string in this case
+    public class TrainingSessionViewHolder extends ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
         public TextView mTextViewName;
         public TextView mTextViewDescription;
         public TextView mTextViewSteps;
@@ -178,7 +249,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
         public View view;
         public CardView mCardViewLayout;
 
-        public ViewHolder(View v) {
+        public TrainingSessionViewHolder(View v) {
             super(v);
             view = v;
             mCardViewLayout = (CardView) v.findViewById(R.id.card_training_session);
@@ -195,7 +266,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             mTextViewSmallDistance = (TextView) v.findViewById(R.id.training_small_card_distance);
             mTextViewSmallName = (TextView) v.findViewById(R.id.training_small_card_name);
             mTextViewDistanceTitle = (TextView) v.findViewById(R.id.distanceTitle);
-            mTextViewSmallDistanceTitle = (TextView) v.findViewById(R.id.distance_title_small);;
+            mTextViewSmallDistanceTitle = (TextView) v.findViewById(R.id.distance_title_small);
             mRatingBarFeeling = (RatingBar) v.findViewById(R.id.training_card_feeling);
             mImageButton = (ImageButton) v.findViewById(R.id.training_card_menu);
             mImageButton.setOnClickListener(this);
@@ -242,6 +313,35 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                     break;
             }
             return false;
+        }
+    }
+
+    public class MonthHeadlineViewHolder extends ViewHolder {
+        public TextView mTextViewName;
+
+        public MonthHeadlineViewHolder(View v) {
+            super(v);
+            mTextViewName = (TextView) v.findViewById(R.id.training_month_headline);
+        }
+    }
+
+    public class TrainingSummaryViewHolder extends ViewHolder{
+        public TextView mTextViewSteps;
+        public TextView mTextViewDistance;
+        public TextView mTextViewCalories;
+        public TextView mTextViewDuration;
+        public TextView mTextViewDistanceTitle;
+        public TextView mTextViewSince;
+
+        public TrainingSummaryViewHolder(View v) {
+            super(v);
+            mTextViewSteps = (TextView) v.findViewById(R.id.training_card_steps);
+            mTextViewDistance = (TextView) v.findViewById(R.id.training_card_distance);
+            mTextViewCalories = (TextView) v.findViewById(R.id.training_card_calories);
+            mTextViewDuration = (TextView) v.findViewById(R.id.training_card_duration);
+            mTextViewDistanceTitle = (TextView) v.findViewById(R.id.distanceTitle);
+            mTextViewSince = (TextView) v.findViewById(R.id.training_card_since);
+
         }
     }
 }

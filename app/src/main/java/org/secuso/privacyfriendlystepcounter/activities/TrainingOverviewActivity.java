@@ -28,7 +28,10 @@ import org.secuso.privacyfriendlystepcounter.services.AbstractStepDetectorServic
 import org.secuso.privacyfriendlystepcounter.services.HardwareStepDetectorService;
 import org.secuso.privacyfriendlystepcounter.utils.StepDetectionServiceHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,8 +116,48 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
      * Loads and shows the trainings.
      */
     protected void showTrainings() {
-        trainings = TrainingPersistenceHelper.getAllItems(this);
+        // Load training sessions
+        List<Training> trainingsLoadFromDatabase = TrainingPersistenceHelper.getAllItems(this);
+        trainings = new ArrayList<>();
+        int steps = 0;
+        double distance = 0;
+        double duration = 0;
+        double calories = 0;
 
+        // Add month labels
+        Calendar cal = Calendar.getInstance();
+        int month = -1;
+        for(int i = 0; i < trainingsLoadFromDatabase.size(); i++){
+            Training training = trainingsLoadFromDatabase.get(i);
+            cal.setTimeInMillis(training.getStart());
+            if(month != cal.get(Calendar.MONTH)){
+                month = cal.get(Calendar.MONTH);
+                DateFormat df = new SimpleDateFormat("MMMM yyyy", getResources().getConfiguration().locale);
+                // create dummy training entry to display the new month
+                Training monthHeadline = new Training();
+                monthHeadline.setName(df.format(cal.getTime()));
+                monthHeadline.setViewType(TrainingOverviewAdapter.VIEW_TYPE_MONTH_HEADLINE);
+                trainings.add(monthHeadline);
+            }
+            steps += training.getSteps();
+            distance += training.getDistance();
+            duration += training.getDuration();
+            calories += training.getCalories();
+            trainings.add(training);
+        }
+
+        // Add summary
+        Training summary = new Training();
+        summary.setEnd(-1);
+        summary.setViewType(TrainingOverviewAdapter.VIEW_TYPE_SUMMARY);
+        if(trainings.size() > 0) {
+            summary.setStart(trainings.get(trainings.size()-1).getStart());
+            summary.setEnd(summary.getStart() + (Double.valueOf(duration * 1000)).longValue());
+        }
+        summary.setSteps(steps);
+        summary.setDistance(distance);
+        summary.setCalories(calories);
+        trainings.add(0, summary);
         this.mAdapter.setItems(trainings);
         if (trainings.size() == 0) {
             mEmptyView.setVisibility(View.VISIBLE);

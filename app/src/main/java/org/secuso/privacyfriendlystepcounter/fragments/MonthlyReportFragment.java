@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -54,6 +55,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     public static String LOG_TAG = WeeklyReportFragment.class.getName();
 
     private ReportAdapter mAdapter;
+    private RecyclerView mRecyclerView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -61,6 +63,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     private ActivitySummary activitySummary;
     private ActivityChart activityChart;
     private List<Object> reports = new ArrayList<>();
+    private boolean generatingReports;
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -109,7 +112,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
 
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         // specify an adapter
         // using sample data.
@@ -167,12 +170,12 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
 
     private void bindService(){
         Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
-        getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void unbindService(){
         if (this.isTodayShown() && mServiceConnection != null && myBinder != null && myBinder.getService() != null) {
-            getContext().unbindService(mServiceConnection);
+            getActivity().getApplicationContext().unbindService(mServiceConnection);
             myBinder = null;
         }
     }
@@ -204,17 +207,22 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
      */
     private void generateReports(boolean updated) {
         Log.i(LOG_TAG, "Generating reports");
-        if (!this.isTodayShown() && updated || isDetached() || getContext() == null) {
+        if (!this.isTodayShown() && updated || isDetached() || getContext() == null || generatingReports) {
             // the day shown is not today or is detached
             return;
         }
+        generatingReports = true;
+        final Context context = getActivity().getApplicationContext();
+        final Locale locale = context.getResources().getConfiguration().locale;
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 // Get all step counts for this day.
                 day.set(Calendar.DAY_OF_MONTH, 1);
                 Calendar start = (Calendar) day.clone();
-                SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM", getResources().getConfiguration().locale);
+                SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM", locale);
                 Map<String, Double> stepData = new LinkedHashMap<>();
                 Map<String, Double> distanceData = new LinkedHashMap<>();
                 Map<String, Double> caloriesData = new LinkedHashMap<>();
@@ -222,7 +230,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                 double totalDistance = 0;
                 int totalCalories = 0;
                 for (int i = 0; i <= day.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-                    List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, getContext());
+                    List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, context);
                     // TODO add current steps if today is shown
                     int steps = 0;
                     double distance = 0;
@@ -230,7 +238,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                     for (StepCount stepCount : stepCounts) {
                         steps += stepCount.getStepCount();
                         distance += stepCount.getDistance();
-                        calories += stepCount.getCalories(getContext());
+                        calories += stepCount.getCalories(context);
                     }
                     stepData.put(formatDate.format(start.getTime()), (double) steps);
                     distanceData.put(formatDate.format(start.getTime()), distance);
@@ -243,7 +251,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                     }
                 }
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM yy", getResources().getConfiguration().locale);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM yy", locale);
                 String title = simpleDateFormat.format(day.getTime());
 
                 // create view models
@@ -268,18 +276,19 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                     activityChart.setCalories(caloriesData);
                     activityChart.setTitle(title);
                 }
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-                String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
+
+                String d = sharedPref.getString(context.getString(R.string.pref_daily_step_goal), "10000");
                 activityChart.setGoal(Integer.valueOf(d));
 
                 // notify ui
-                if (mAdapter != null) {
+                if (mAdapter != null && mRecyclerView != null && !mRecyclerView.isComputingLayout()) {
                     mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
                     mAdapter.notifyItemChanged(reports.indexOf(activityChart));
                     mAdapter.notifyDataSetChanged();
                 } else {
                     Log.w(LOG_TAG, "Cannot inform adapter for changes.");
                 }
+                generatingReports = false;
             }
         });
 

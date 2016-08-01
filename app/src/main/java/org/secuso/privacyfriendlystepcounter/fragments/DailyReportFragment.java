@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -57,11 +58,13 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     public static String LOG_TAG = DailyReportFragment.class.getName();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private ReportAdapter mAdapter;
+    private RecyclerView mRecyclerView;
     private OnFragmentInteractionListener mListener;
     private ActivitySummary activitySummary;
     private ActivityDayChart activityChart;
     private List<Object> reports = new ArrayList<>();
     private Calendar day;
+    private boolean generatingReports;
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -116,22 +119,22 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         // Generate the reports
         generateReports(false);
 
         mAdapter = new ReportAdapter(reports);
         mAdapter.setOnItemClickListener(this);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         // use a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(true);
 
         return view;
     }
@@ -189,13 +192,15 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
     }
     private void bindService(){
-        Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
-        getContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        if(myBinder == null) {
+            Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
+            getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 
     private void unbindService(){
         if (this.isTodayShown() && mServiceConnection != null && myBinder != null && myBinder.getService() != null) {
-            getContext().unbindService(mServiceConnection);
+            getActivity().getApplicationContext().unbindService(mServiceConnection);
             myBinder = null;
         }
     }
@@ -221,12 +226,16 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
      */
     private void generateReports(boolean updated) {
         Log.i(LOG_TAG, "Generating reports");
-        if (!this.isTodayShown() && updated || isDetached() || getContext() == null) {
+        if (!this.isTodayShown() && updated || isDetached() || getContext() == null || generatingReports) {
             // the day shown is not today or is detached
             return;
         }
+        generatingReports = true;
         // Get all step counts for this day.
-        List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(day, getContext());
+        final Context context = getActivity().getApplicationContext();
+        final Locale locale = context.getResources().getConfiguration().locale;
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(day, context);
         int stepCount = 0;
         double distance = 0;
         int calories = 0;
@@ -240,7 +249,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             }
             s.setEndTime(Calendar.getInstance().getTimeInMillis()); // now
             s.setStepCount(myBinder.stepsSinceLastSave());
-            s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getContext())); // add current walking mode
+            s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context)); // add current walking mode
             stepCounts.add(s);
         }
         Map<String, ActivityChartDataSet> stepData = new LinkedHashMap<>();
@@ -270,14 +279,14 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             stepCounts.add(h, s);
         }
         // Create report data
-        SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm", getResources().getConfiguration().locale);
+        SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm", locale);
         for (StepCount s : stepCounts) {
             Calendar end = Calendar.getInstance();
             end.setTimeInMillis(s.getEndTime());
 
             stepCount += s.getStepCount();
             distance += s.getDistance();
-            calories += s.getCalories(getContext());
+            calories += s.getCalories(context);
 
             if (s.getWalkingMode() == null && wm != null || s.getWalkingMode() != null && wm == null ||
                     s.getWalkingMode() != null && wm != null && s.getWalkingMode().getId() != wm.getId() ||
@@ -303,7 +312,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             }
         }
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd. MMMM", getResources().getConfiguration().locale);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd. MMMM", locale);
 
         // create view models
         if (activitySummary == null) {
@@ -326,13 +335,12 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             activityChart.setCalories(caloriesData);
             activityChart.setTitle(simpleDateFormat.format(day.getTime()));
         }
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
+        String d = sharedPref.getString(context.getString(R.string.pref_daily_step_goal), "10000");
         activityChart.setGoal(Integer.valueOf(d));
 
 
         // notify ui
-        if (mAdapter != null) {
+        if (mAdapter != null && mRecyclerView != null && !mRecyclerView.isComputingLayout()) {
             mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
 
             mAdapter.notifyItemChanged(reports.indexOf(activityChart));
@@ -340,6 +348,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         } else {
             Log.w(LOG_TAG, "Cannot inform adapter for changes.");
         }
+        generatingReports = false;
     }
 
     @Override

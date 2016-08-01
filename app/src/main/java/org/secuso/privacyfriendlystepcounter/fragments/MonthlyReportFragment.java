@@ -230,7 +230,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                     for (StepCount stepCount : stepCounts) {
                         steps += stepCount.getStepCount();
                         distance += stepCount.getDistance();
-                        calories += stepCount.getCalories();
+                        calories += stepCount.getCalories(getContext());
                     }
                     stepData.put(formatDate.format(start.getTime()), (double) steps);
                     distanceData.put(formatDate.format(start.getTime()), distance);

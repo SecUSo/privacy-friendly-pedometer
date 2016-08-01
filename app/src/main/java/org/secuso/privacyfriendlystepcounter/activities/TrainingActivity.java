@@ -185,7 +185,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
             stepCount += s.getStepCount();
             distance += s.getDistance();
-            calories += s.getCalories();
+            calories += s.getCalories(getApplicationContext());
         }
         this.training.setSteps(stepCount);
         this.training.setDistance(distance);

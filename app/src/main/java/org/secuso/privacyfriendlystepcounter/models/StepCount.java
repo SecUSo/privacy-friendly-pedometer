@@ -1,10 +1,24 @@
 package org.secuso.privacyfriendlystepcounter.models;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import org.secuso.privacyfriendlystepcounter.R;
+import org.secuso.privacyfriendlystepcounter.utils.UnitUtil;
+
 /**
  * A step count object represents an interval in which some steps were taken and which walking mode
  * is related to this interval.
  */
 public class StepCount {
+
+    // from https://github.com/bagilevi/android-pedometer/blob/master/src/name/bagi/levente/pedometer/CaloriesNotifier.java
+    private static double METRIC_RUNNING_FACTOR = 1.02784823;
+    private static double METRIC_WALKING_FACTOR = 0.708;
+    private static double METRIC_AVG_FACTOR = (METRIC_RUNNING_FACTOR + METRIC_WALKING_FACTOR) / 2;
+
+
     private int stepCount;
     private long startTime;
     private long endTime;
@@ -59,8 +73,11 @@ public class StepCount {
      * Gets the calories
      * @return the calories in cal
      */
-    public double getCalories(){
-        return 0.44 * getStepCount(); // TODO implement
+    public double getCalories(Context context){
+        // inspired by https://github.com/bagilevi/android-pedometer/blob/master/src/name/bagi/levente/pedometer/CaloriesNotifier.java
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        float bodyWeight = Float.parseFloat(sharedPref.getString(context.getString(R.string.pref_weight),context.getString(R.string.pref_default_weight)));
+        return bodyWeight * METRIC_AVG_FACTOR * UnitUtil.metersToKilometers(getDistance());
     }
     @Override
     public String toString() {

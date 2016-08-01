@@ -233,7 +233,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                     for (StepCount stepCount : stepCounts) {
                         steps += stepCount.getStepCount();
                         distance += stepCount.getDistance();
-                        calories += stepCount.getCalories();
+                        calories += stepCount.getCalories(getContext());
                     }
                     stepData.put(formatDate.format(start.getTime()), (double) steps);
                     distanceData.put(formatDate.format(start.getTime()), distance);

@@ -121,7 +121,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     protected Notification buildNotification(StepCount additionalStepCount) {
         int totalSteps = this.totalStepsAtLastSave + additionalStepCount.getStepCount();
         double totalDistance = this.totalDistanceAtLastSave + additionalStepCount.getDistance();
-        double totalCalories = this.totalCaloriesAtLastSave + additionalStepCount.getCalories();
+        double totalCalories = this.totalCaloriesAtLastSave + additionalStepCount.getCalories(getApplicationContext());
         // Get user preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean showSteps = sharedPref.getBoolean(this.getString(R.string.pref_notification_permanent_show_steps), true);
@@ -254,7 +254,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         for (StepCount stepCount : stepCounts) {
             totalStepsAtLastSave += stepCount.getStepCount();
             totalDistanceAtLastSave += stepCount.getDistance();
-            totalCaloriesAtLastSave += stepCount.getCalories();
+            totalCaloriesAtLastSave += stepCount.getCalories(getApplicationContext());
         }
     }
 

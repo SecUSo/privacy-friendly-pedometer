@@ -277,7 +277,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
 
             stepCount += s.getStepCount();
             distance += s.getDistance();
-            calories += s.getCalories();
+            calories += s.getCalories(getContext());
 
             if (s.getWalkingMode() == null && wm != null || s.getWalkingMode() != null && wm == null ||
                     s.getWalkingMode() != null && wm != null && s.getWalkingMode().getId() != wm.getId() ||

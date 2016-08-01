@@ -109,7 +109,9 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                 if(trainingSummaryViewHolder.mTextViewSince != null){
                     DateFormat df = new SimpleDateFormat("MMMM yyyy", trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale);
                     Calendar cal = Calendar.getInstance();
-                    cal.setTimeInMillis(item.getStart());
+                    if(item.getStart() != 0) {
+                        cal.setTimeInMillis(item.getStart());
+                    }
                     trainingSummaryViewHolder.mTextViewSince.setText(df.format(cal.getTime()));
                 }
                 break;

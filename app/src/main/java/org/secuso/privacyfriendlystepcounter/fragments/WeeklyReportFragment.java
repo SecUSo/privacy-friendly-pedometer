@@ -348,7 +348,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         int day = this.day.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog(getContext(), R.style.AppTheme_DatePickerDialog, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 WeeklyReportFragment.this.day.set(Calendar.DAY_OF_MONTH, dayOfMonth);

@@ -20,7 +20,7 @@
             android:key="@string/pref_notification_motivation_alert_enabled"
             android:title="@string/pref_title_notification_motivation_alert_enabled"/>
         <!-- default is 18:00 -->
-        <org.secuso.privacyfriendlystepcounter.preferences.TimePreference
+        <org.secuso.privacyfriendlyactivitytracker.preferences.TimePreference
             android:defaultValue="64800000"
             android:key="@string/pref_notification_motivation_alert_time"
             android:title="@string/pref_title_notification_motivation_alert_time" />

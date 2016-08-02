@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="org.secuso.privacyfriendlystepcounter.activities.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
 
     <group android:id="@+id/menu_group_general">
         <item android:id="@+id/menu_home" android:title="@string/action_main" android:icon="@drawable/ic_action_home"

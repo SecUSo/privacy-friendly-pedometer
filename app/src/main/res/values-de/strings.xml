@@ -134,4 +134,5 @@
     <string name="help_intro">Willkommen zur Hilfekategorie! Diese App stellt Ihnen einen privatsphärenfreundlichen Schrittzähler zur Verfügung. Die App kann Ihre Schritte im Hintergrund zählen, stellt Ihnen einen Überblick über die zurückgelegten Schritte, Distanzen und verbrannten Kalorien bereit und kann Sie benachrichtigen, wenn das Erreichen Ihres täglichen Activity Tracker in Gefahr ist.</string>
     <string name="help_permission_boot_description">wird verwendet, um den Schrittzähler und die Benachrichtigungen beim Hochfahren des Geräts zu starten. Wenn die Berechtigung nicht gewährt wird, müssen Sie die App nach dem Systemstart einmal manuell starten.</string>
     <string name="help_permissions_description">Der privatsphärefreundliche Activity Tracker nutzt keine sensitiven Berechtigungen.</string>
+    <string name="activity_summary_chart_legend_stepgoal">Schrittziel</string>
 </resources>

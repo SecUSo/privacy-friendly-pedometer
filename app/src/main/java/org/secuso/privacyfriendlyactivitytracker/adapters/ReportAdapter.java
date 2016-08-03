@@ -47,7 +47,7 @@ import java.util.Map;
  * This adapter is used for ReportView.
  *
  * @author Tobias Neidig
- * @version 20160720
+ * @version 20160803
  */
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private static final int TYPE_SUMMARY = 0;
@@ -148,7 +148,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 if (barChartXValues.size() > 0 && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
                     Entry start = new Entry(0, barChartData.getGoal());
                     Entry end = new Entry(barChartXValues.size() - 1, barChartData.getGoal());
-                    LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), barChartViewHolder.context.getString(R.string.pref_title_daily_step_goal));
+                    LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), barChartViewHolder.context.getString(R.string.activity_summary_chart_legend_stepgoal));
                     chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                     chartLineDataSet.setLineWidth(1);
                     chartLineDataSet.setDrawCircles(false);
@@ -173,7 +173,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 chartViewHolder.mTitleTextView.setText(chartData.getTitle());
 
                 final ArrayList<String> chartXValues = new ArrayList<>();
-                //chartXValues.add("");
                 int i = 1;
                 Map<String, ActivityChartDataSet> dataMap;
                 Map<Integer, String> legendValues = new LinkedHashMap<>();
@@ -195,7 +194,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         default:
                             dataMap = chartData.getSteps();
                             label = chartViewHolder.context.getString(R.string.steps);
-                            legendValues.put(ContextCompat.getColor(chartViewHolder.itemView.getContext(), R.color.colorAccent), chartViewHolder.context.getString(R.string.pref_title_daily_step_goal));
+                            legendValues.put(ContextCompat.getColor(chartViewHolder.itemView.getContext(), R.color.colorAccent), chartViewHolder.context.getString(R.string.activity_summary_chart_legend_stepgoal));
                             break;
                     }
                 }

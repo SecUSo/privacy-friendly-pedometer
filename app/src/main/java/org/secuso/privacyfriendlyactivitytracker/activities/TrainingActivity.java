@@ -106,7 +106,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
         // Bind to stepDetector
         Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
-        this.bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         this.getStepCounts();
         this.updateData();
         this.updateView();
@@ -130,7 +130,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     public void onResume() {
         super.onResume();
         Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
-        this.bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         // Force refresh of view.
         this.getStepCounts();
         this.updateView();
@@ -139,9 +139,19 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onPause(){
         if(this.mServiceConnection != null && this.myBinder != null && this.myBinder.isBinderAlive()){
-            this.unbindService(mServiceConnection);
+            getApplicationContext().unbindService(mServiceConnection);
+            myBinder = null;
         }
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy(){
+        if(this.mServiceConnection != null && this.myBinder != null && this.myBinder.isBinderAlive()){
+            getApplicationContext().unbindService(mServiceConnection);
+            myBinder = null;
+        }
+        super.onDestroy();
     }
 
     /**

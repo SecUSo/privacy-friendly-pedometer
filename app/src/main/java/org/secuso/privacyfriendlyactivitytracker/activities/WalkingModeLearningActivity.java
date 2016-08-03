@@ -111,7 +111,7 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
         // Bind to stepDetector
         Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
-        this.bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 
         this.getStepCounts();
         this.updateData();
@@ -129,7 +129,8 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
     @Override
     public void onPause() {
         if (this.mServiceConnection != null && this.myBinder != null && this.myBinder.isBinderAlive()) {
-            this.unbindService(mServiceConnection);
+            getApplicationContext().unbindService(mServiceConnection);
+            myBinder = null;
         }
         super.onPause();
     }

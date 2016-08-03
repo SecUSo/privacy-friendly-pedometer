@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -204,6 +203,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                 float lastValue = 0;
                 float lastWalkingModeId = 0;
+                float maxValue = 0;
                 // Generate data for line data sets
                 for (Map.Entry<String, ActivityChartDataSet> dataEntry : dataMap.entrySet()) {
                     long walkingModeId = 0;
@@ -245,13 +245,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         chartEntry = new Entry(i++, val);
                         ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(chartEntry);
                         lastValue = val;
+                        maxValue = Math.max(maxValue, val);
                     }
                     lastWalkingModeId = walkingModeId;
                     chartXValues.add(dataEntry.getKey());
                 }
                 // add daily step goal
                 if (chartXValues.size() > 0 && chartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
-                    Entry start = new Entry(0, 0);//chartData.getGoal()); // TODO
+                    Entry start = new Entry(0, chartData.getGoal());
                     Entry end = new Entry(chartXValues.size() - 1, chartData.getGoal());
                     LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
                     chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -259,9 +260,20 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     chartLineDataSet.setDrawCircles(false);
                     chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorAccent), 200);
                     chartLineDataSet.setDrawValues(false);
+                    maxValue = Math.max(maxValue, chartData.getGoal());
                     dataSets.add(chartLineDataSet);
                 }
-                // TODO line data not displayed correctly.
+                // Workaround since scaling does not work correctly in MPAndroidChart v3.0.0.0-beta1
+                {
+                    Entry start = new Entry(0, 0);
+                    Entry end = new Entry(chartXValues.size() - 1, maxValue * 1.03f);
+                    LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
+                    chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                    chartLineDataSet.setDrawCircles(false);
+                    chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.transparent), 0);
+                    chartLineDataSet.setDrawValues(false);
+                    dataSets.add(chartLineDataSet);
+                }
                 LineData data = new LineData(dataSets);
                 chartViewHolder.mChart.setData(data);
                 chartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(chartXValues));
@@ -270,6 +282,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 legend.setComputedColors(new ArrayList<Integer>());
                 legend.setComputedLabels(new ArrayList<String>());
                 legend.setCustom(new ArrayList<>(legendValues.keySet()), new ArrayList<>(legendValues.values()));
+                // invalidate
                 chartViewHolder.mChart.invalidate();
                 break;
             case TYPE_SUMMARY:

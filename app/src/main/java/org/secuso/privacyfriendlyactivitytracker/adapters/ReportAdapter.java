@@ -283,6 +283,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 legend.setComputedLabels(new ArrayList<String>());
                 legend.setCustom(new ArrayList<>(legendValues.keySet()), new ArrayList<>(legendValues.values()));
                 // invalidate
+                chartViewHolder.mChart.getData().notifyDataChanged();
+                chartViewHolder.mChart.notifyDataSetChanged();
                 chartViewHolder.mChart.invalidate();
                 break;
             case TYPE_SUMMARY:

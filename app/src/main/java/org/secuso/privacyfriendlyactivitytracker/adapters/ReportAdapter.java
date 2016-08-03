@@ -1,9 +1,11 @@
 package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -24,6 +28,7 @@ import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.AxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -35,6 +40,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,14 +134,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         if (barChartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
                             val = Double.valueOf(UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(val), barChartViewHolder.context)).floatValue();
                         }
-                        // TODO Multibars in Combined charts are not supported yet.
-                        // They will be supported in v3.0 of mpAndroidChart
-                        // This will require a restructure of charts.
-                        /*if(dataEntry.getValue() >= barChartData.getGoal()){
-                            dataEntriesReachedDailyGoal.add(new BarEntry(val, barChartI));
-                        }else {*/
-                        dataEntries.add(new BarEntry(val, barChartI));
-                        //}
+                        if (dataEntry.getValue() >= barChartData.getGoal() && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
+                            dataEntriesReachedDailyGoal.add(new BarEntry(barChartI, val));
+                        } else {
+                            dataEntries.add(new BarEntry(barChartI, val));
+                        }
                     }
                     barChartI++;
                 }
@@ -144,25 +147,25 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
                 // add daily step goal
                 if (barChartXValues.size() > 0 && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
-                    Entry start = new Entry(barChartData.getGoal(), 0);
-                    Entry end = new Entry(barChartData.getGoal(), barChartXValues.size() - 1);
+                    Entry start = new Entry(0, barChartData.getGoal());
+                    Entry end = new Entry(barChartXValues.size() - 1, barChartData.getGoal());
                     LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), barChartViewHolder.context.getString(R.string.pref_title_daily_step_goal));
                     chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                     chartLineDataSet.setLineWidth(1);
-                    chartLineDataSet.setCircleRadius(0);
-                    chartLineDataSet.setCircleHoleRadius(0);
+                    chartLineDataSet.setDrawCircles(false);
                     chartLineDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.colorAccent), 200);
                     chartLineDataSet.setDrawValues(false);
                     lineDataSets.add(chartLineDataSet);
                 }
-                CombinedData barData = new CombinedData();
-                barData.setData(new BarData(barChartXValues, barDataSet));
-                // barData.setData(new BarData(barChartXValues, barDataSetReachedDailyGoal));
-                barData.setData(new LineData(barChartXValues, lineDataSets));
-                barData.setXVals(barChartXValues);
+                CombinedData combinedData = new CombinedData();
+                BarData barData = new BarData(barDataSet, barDataSetReachedDailyGoal);
+                barData.setBarWidth(0.5f);
+                combinedData.setData(barData);
+                combinedData.setData(new LineData(lineDataSets));
                 barDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.colorPrimary));
                 barDataSetReachedDailyGoal.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.green));
-                barChartViewHolder.mChart.setData(barData);
+                barChartViewHolder.mChart.setData(combinedData);
+                barChartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(barChartXValues));
                 barChartViewHolder.mChart.invalidate();
                 break;
             case TYPE_DAY_CHART:
@@ -170,9 +173,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 ChartViewHolder chartViewHolder = (ChartViewHolder) holder;
                 chartViewHolder.mTitleTextView.setText(chartData.getTitle());
 
-                ArrayList<String> chartXValues = new ArrayList<>();
-                int i = 0;
+                final ArrayList<String> chartXValues = new ArrayList<>();
+                //chartXValues.add("");
+                int i = 1;
                 Map<String, ActivityChartDataSet> dataMap;
+                Map<Integer, String> legendValues = new LinkedHashMap<>();
                 String label;
                 if (chartData.getDisplayedDataType() == null) {
                     dataMap = chartData.getSteps();
@@ -191,9 +196,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         default:
                             dataMap = chartData.getSteps();
                             label = chartViewHolder.context.getString(R.string.steps);
+                            legendValues.put(ContextCompat.getColor(chartViewHolder.itemView.getContext(), R.color.colorAccent), chartViewHolder.context.getString(R.string.pref_title_daily_step_goal));
                             break;
                     }
                 }
+                legendValues.put(ContextCompat.getColor(chartViewHolder.itemView.getContext(), R.color.colorPrimary), label);
                 ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                 float lastValue = 0;
                 float lastWalkingModeId = 0;
@@ -209,13 +216,17 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                         chartLineDataSet.setLineWidth(3);
                         chartLineDataSet.setCircleRadius(3.5f);
-                        chartLineDataSet.setCircleHoleRadius(0);
+                        chartLineDataSet.setDrawCircleHole(false);
                         chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorPrimary), 200);
                         chartLineDataSet.setCircleColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorPrimary));
                         if (dataEntry.getValue() != null && dataEntry.getValue().getStepCount() != null && dataEntry.getValue().getStepCount().getWalkingMode() != null) {
-                            chartLineDataSet.setFillColor(dataEntry.getValue().getStepCount().getWalkingMode().getColor());
-                            chartLineDataSet.setFillAlpha(85);
+                            int color = dataEntry.getValue().getStepCount().getWalkingMode().getColor();
+                            int alpha = 85;
+                            int colorWithAlph = Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
+                            chartLineDataSet.setFillColor(color);
+                            chartLineDataSet.setFillAlpha(alpha);
                             chartLineDataSet.setDrawFilled(true);
+                            legendValues.put(colorWithAlph, dataEntry.getValue().getStepCount().getWalkingMode().getName());
                         }
                         chartLineDataSet.setDrawValues(false);
                         dataSets.add(chartLineDataSet);
@@ -228,11 +239,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         }
                         Entry chartEntry;
                         if (i > 0 && lastWalkingModeId != walkingModeId) {
-                            chartEntry = new Entry(lastValue, i - 1);
-                            ((LineDataSet) dataSets.get(dataSets.size() - 1)).getYVals().add(chartEntry);
+                            chartEntry = new Entry(i - 1, lastValue);
+                            ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(chartEntry);
                         }
-                        chartEntry = new Entry(val, i++);
-                        ((LineDataSet) dataSets.get(dataSets.size() - 1)).getYVals().add(chartEntry);
+                        chartEntry = new Entry(i++, val);
+                        ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(chartEntry);
                         lastValue = val;
                     }
                     lastWalkingModeId = walkingModeId;
@@ -240,23 +251,26 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 }
                 // add daily step goal
                 if (chartXValues.size() > 0 && chartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
-                    Entry start = new Entry(chartData.getGoal(), 0);
-                    Entry end = new Entry(chartData.getGoal(), chartXValues.size() - 1);
+                    Entry start = new Entry(0, 0);//chartData.getGoal()); // TODO
+                    Entry end = new Entry(chartXValues.size() - 1, chartData.getGoal());
                     LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
                     chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                     chartLineDataSet.setLineWidth(1);
-                    chartLineDataSet.setCircleRadius(0);
-                    chartLineDataSet.setCircleHoleRadius(0);
+                    chartLineDataSet.setDrawCircles(false);
                     chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorAccent), 200);
                     chartLineDataSet.setDrawValues(false);
                     dataSets.add(chartLineDataSet);
                 }
-
-                LineData data = new LineData(chartXValues, dataSets);
+                // TODO line data not displayed correctly.
+                LineData data = new LineData(dataSets);
                 chartViewHolder.mChart.setData(data);
-                chartViewHolder.mChart.getLegend().setEnabled(false);
+                chartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(chartXValues));
+                // add legend
+                Legend legend = chartViewHolder.mChart.getLegend();
+                legend.setComputedColors(new ArrayList<Integer>());
+                legend.setComputedLabels(new ArrayList<String>());
+                legend.setCustom(new ArrayList<>(legendValues.keySet()), new ArrayList<>(legendValues.values()));
                 chartViewHolder.mChart.invalidate();
-                // TODO add legend
                 break;
             case TYPE_SUMMARY:
                 ActivitySummary summaryData = (ActivitySummary) mItems.get(position);
@@ -451,6 +465,27 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mChart.setDrawOrder(new CombinedChart.DrawOrder[]{
                     CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.BUBBLE, CombinedChart.DrawOrder.CANDLE, CombinedChart.DrawOrder.LINE, CombinedChart.DrawOrder.SCATTER
             });
+        }
+    }
+
+    public class ArrayListAxisValueFormatter implements AxisValueFormatter {
+        private List<String> values;
+
+        public ArrayListAxisValueFormatter(List<String> values) {
+            this.values = values;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            if (this.values.size() <= (int) value || (int) value < 0) {
+                return "--";
+            }
+            return this.values.get((int) value);
+        }
+
+        @Override
+        public int getDecimalDigits() {
+            return -1;
         }
     }
 }

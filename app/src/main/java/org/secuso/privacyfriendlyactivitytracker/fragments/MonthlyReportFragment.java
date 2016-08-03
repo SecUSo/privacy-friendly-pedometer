@@ -101,6 +101,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        day = Calendar.getInstance();
         /*if (getArguments() != null) {
            mParam1 = getArguments().getString(ARG_PARAM1);
         }*/
@@ -116,7 +117,6 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
 
         // specify an adapter
         // using sample data.
-        day = Calendar.getInstance();
         generateReports(false);
         mAdapter = new ReportAdapter(reports);
         mAdapter.setOnItemClickListener(this);

@@ -15,9 +15,123 @@
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
     <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/de/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="version_number">Version %1$s (%2$s)</string>
-    <string name="app_name">Step Counter</string>
-    <string name="app_name_long">Privacy Friendly Step Counter</string>
+    <string name="app_name">Activity Tracker</string>
+    <string name="app_name_long">Privacy Friendly Activity Tracker</string>
     <string name="month">Monat</string>
     <string name="day">Tag</string>
     <string name="week">Woche</string>
+    <string name="action_calories">Kalorien</string>
+    <string name="action_distance">Entfernung</string>
+    <string name="action_steps">Schritte</string>
+    <string name="activity_chart_summary_subtitle">Detaillierte Übersicht aller Aktivitäten</string>
+    <string name="activity_summary_subtitle">Aktivitätenübersicht</string>
+    <string name="activity_title_help">Hilfe</string>
+    <string name="activity_title_motivation_alerts">Motivationsbenachrichtigungen</string>
+    <string name="activity_title_training">Training</string>
+    <string name="activity_title_walking_modes">Laufmodi</string>
+    <string name="calories">Kalorien</string>
+    <string name="delete">Löschen</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="help_functionality_heading">Basisfunktionalität</string>
+    <string name="help_functionality_motivation_alert">Motivationsbenachrichtigungen</string>
+    <string name="help_functionality_notification">Benachrichtigungen</string>
+    <string name="help_functionality_step_counter">Schrittzähler</string>
+    <string name="help_functionality_visualization">Visualisierung</string>
+    <string name="help_overview_heading">Übersicht</string>
+    <string name="help_permission_boot_heading">Berechtigung RECEIVE BOOT COMPLETED</string>
+    <string name="help_permissions_heading">Berechtigungen</string>
+    <string name="help_privacy_heading">Privatsphäreninfo</string>
+    <string name="hint_training_description">Beschreibung</string>
+    <string name="hint_training_feeling">Gefühl:</string>
+    <string name="hint_training_title">Titel</string>
+    <string name="hint_walking_mode_name">Name</string>
+    <string name="hint_walking_mode_step_length">Schrittlänge</string>
+    <string name="km">Kilometer</string>
+    <string name="motivation_alert_notification_title">Schrittzähler</string>
+    <string name="notification_text_calories">%.2f Kalorien verbrannt.</string>
+    <string name="notification_text_distance">%1$.2f %2$s gelaufen.</string>
+    <string name="notification_text_steps">%1$s von %2$s Schritten gelaufen.</string>
+    <string name="operation_failed">Operation fehlgeschlagen.</string>
+    <string name="pref_group_title_general_settings">Allgemeine Einstellungen</string>
+    <string name="pref_group_title_motivation_alert">Motivationsbenachrichtigungen</string>
+    <string name="pref_group_title_permanent_notification">Dauerhafte Benachrichtigungen</string>
+    <string name="pref_group_title_personal_settings">Personalisierung</string>
+    <string name="pref_header_general">Allgemein</string>
+    <string name="pref_header_notifications">Benachrichtigungen</string>
+    <string name="pref_header_walking_modes">Laufmodi</string>
+    <string name="pref_summary_step_counter_enabled">Die App zählt Ihre Schritte im Hintergrund.</string>
+    <string name="pref_title_daily_step_goal">Persönliches tägliches Schrittziel</string>
+    <string name="pref_title_gender">Geschlecht</string>
+    <string name="pref_title_notification_motivation_alert_criterion">Benachrichtigungskriterium</string>
+    <string name="pref_title_notification_motivation_alert_enabled">Aktiviere Motivationsbenachrichtigungen</string>
+    <string name="pref_title_notification_motivation_alert_texts">Motivationstexte</string>
+    <string name="pref_title_notification_motivation_alert_time">Zeitpunkt der Benachrichtigung</string>
+    <string name="pref_title_notification_permanent_show_calories">Zeige Kalorienzahl </string>
+    <string name="pref_title_notification_permanent_show_distance">Zeige täglich zurückgelegte Entfernungen</string>
+    <string name="pref_title_notification_permanent_show_steps">Zeige tägliche Schrittzahl</string>
+    <string name="pref_title_step_counter_enabled">Dauerhafter Schrittzähler</string>
+    <string name="pref_title_unit_of_length">Längeneinheit</string>
+    <string name="pref_title_weight">Gewicht</string>
+    <string name="save">Speichern</string>
+    <string name="set">Übernehmen</string>
+    <string name="since">seit</string>
+    <string name="step_length">Schrittlänge:</string>
+    <string name="steps">Schritte</string>
+    <string name="summary_card_calories">cal</string>
+    <string name="training_card_calories">cal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+    <string name="training_input_message"> </string>
+    <string name="training_input_title">Trainingseinheit</string>
+    <string name="training_minutes">min</string>
+    <string name="training_overview_empty">So wie es aussieht, haben Sie die Trainingsfunktionalität noch nicht verwendet. Legen Sie gleich los!</string>
+    <string name="training_stop_button">Beende Trainingseinheit</string>
+    <string name="training_velocity">km/h</string>
+    <string name="walking_mode_active_ext"> (aktiv)</string>
+    <string name="walking_mode_at_least_one_is_required">Mindestens ein Laufmodi muss vorhanden sein.</string>
+    <string name="walking_mode_cannot_delete_active_one">Ein aktiver Laufmodi kann nicht gelöscht werden.</string>
+    <string name="walking_mode_input_empty">Name und Schrittlänge sind notwendig. Bitte ausfüllen!</string>
+    <string name="walking_mode_input_message">Benutzen Sie Ihre persönliche Laufmodi</string>
+    <string name="walking_mode_input_title">Laufmodi</string>
+    <string name="walking_mode_learning_description">Die Anwendung kann die Schrittlänge automatisch erkennen. Bitte legen Sie die angegebene Distanz zurück und klicken Sie auf beenden, sobald Sie fertig sind.</string>
+    <string name="walking_mode_learning_distance_description">Zu laufende Entfernung:</string>
+    <string name="walking_mode_learning_steps_description">Gelaufene Schritte:</string>
+    <string name="walking_mode_learning_stop">Beende Lernmodus</string>
+    <string name="walking_mode_menu_learn">Lernmodus</string>
+    <string name="walking_mode_set_active">Aktivieren</string>
+    <string name="motivation_alert_input_title">Setze Motivationsbenachrichtiung.</string>
+    <string name="motivation_alert_input_message">Speichern Sie Ihre persönliche Motivationsbenachrichtigung. Die App wählt dann zufällig aus.</string>
+    <string name="motivation_alert_input_empty">Leere Motivationsbenachrichtigungen sind nicht sehr hilfreich, oder?</string>
+    <string name="motivation_alert_empty">Erstellen Sie persönliche Motivationsbenachrichtigungen, die erscheinen, wenn Ihr Tagesziel in Gefahr ist.\n\nEs erscheint keine Benachrichtigung, wenn keine Texte angelegt sind.</string>
+    <string name="about_thrid_party_libs">Dies ist eine <a href="https://github.com/SecUSo/privacy-friendly-health-tracker">OpenSource-App</a>. Gestalten Sie sie mit!<br></br><br></br>Die Anwendung nutzt <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart von Philipp Jahoda</a> lizenziert unter under the Apache License, Version 2.0 und Icons von <a href="https://design.google.com/icons/index.html">Google Material Icon Set</a> lizenziert unter Apache License, Version 2.0.</string>
+
+    <string-array name="pref_keys_unit_of_length">
+        <item>Kilometer</item>
+        <item>Meilen</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_length">
+        <item>1|km|Kilometer|km/h</item> <!-- 1km = 1km -->
+        <item>0.621371|mi|Meilen|mph</item> <!-- 1km = 0.621371 miles -->
+    </string-array>
+    <string-array name="pref_keys_gender">
+        <item>weiblich</item>
+        <item>männlich</item>
+    </string-array>
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>bei weniger als 90% des Tagesziels</item>
+        <item>bei weniger als 70% des Tagesziels</item>
+        <item>bei weniger als 50% des Tagesziels</item>
+    </string-array>
+    <string-array name="pref_default_walking_mode_names">
+        <item>Laufen</item>
+        <item>Rennen</item>
+    </string-array>
+    <string name="help_functionality_motivation_alert_summary">Die App Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr läuft, nicht erreicht zu werden. Sie können die Kriterien, die Uhrzeit und die Texte der Motivationsbenachrichtigung selbst wählen.</string>
+    <string name="help_functionality_notification_summary">Die App zeigt Ihnen Ihre täglich gelaufenen Schritte, die zurückgelegte Distanz und die verbrannten Kalorien in einer permanenten Benachrichtigung an, wenn der Schrittzähler aktiv ist. In den Einstellungen können Sie wählen, welche Daten angzeigt werden sollen. Die Benachrichtigung ist notwendig, um den Schrittzähler am Leben zu erhalten, um die Benachrichtigung verstecken möchten, gehen Sie in die Systemeinstellungen und deaktivieren Sie alle Benachrichtigungen für diese App.</string>
+    <string name="help_functionality_step_counter_summary">Der dauerhafte Schrittzähler zählt Ihre Schritte im Hintergrund. Die Schritte werden mit Hilfe eine (falls vorhandenen) Hardware-Schrittzählers oder den Daten des Beschleunigungssensors gezählt. Sie können den dauerhaften Schrittzähler in den Einstellungen deaktivieren.</string>
+    <string name="help_functionality_visualization_summary">Sie können Ihre zurückgelegten Schritte, die Distanz und die Kalorien in einer Ansicht pro Tag, Woche oder Monat anschauen. Die Distanz wird anhand der Schrittlänge des jeweiligen Laufmodus und die Kalorien an Hand der pesönlichen Einstellungen zu Ihrer Person.</string>
+    <string name="help_intro">Willkommen zur Hilfekategorie! Diese App stellt Ihnen einen privatsphärenfreundlichen Schrittzähler zur Verfügung. Die App kann Ihre Schritte im Hintergrund zählen, stellt Ihnen einen Überblick über die zurückgelegten Schritte, Distanzen und verbrannten Kalorien bereit und kann Sie benachrichtigen, wenn das Erreichen Ihres täglichen Activity Tracker in Gefahr ist.</string>
+    <string name="help_permission_boot_description">wird verwendet, um den Schrittzähler und die Benachrichtigungen beim Hochfahren des Geräts zu starten. Wenn die Berechtigung nicht gewährt wird, müssen Sie die App nach dem Systemstart einmal manuell starten.</string>
+    <string name="help_permissions_description">Der privatsphärefreundliche Activity Tracker nutzt keine sensitiven Berechtigungen.</string>
 </resources>

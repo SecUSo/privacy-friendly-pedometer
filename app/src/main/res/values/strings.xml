@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Step Counter</string>
-    <string name="app_name_long">Privacy Friendly Step Counter</string>
+    <string name="app_name">Activity Tracker</string>
+    <string name="app_name_long">Privacy Friendly Activity Tracker</string>
 
     <string name="hello_world">Hello world!</string>
 
@@ -39,7 +39,7 @@
     <!-- HelpFragment -->
     <string name="activity_title_help">Help</string>
     <string name="help_overview_heading">Overview</string>
-    <string name="help_intro">Welcome to the help page. This app provides you a Privacy Friendly Step Counter. The app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+    <string name="help_intro">Welcome to the help page. This app provides you a Privacy Friendly Activity Tracker. The app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
     <string name="help_functionality_heading">Basic functionality</string>
     <string name="help_functionality_step_counter">Step Counter</string>
     <string name="help_functionality_step_counter_summary">The permanent step counter counts your daily steps in background. The steps are count by using the hardware step counter (if any) or the accelerometer sensor data. You can disable the permanent step counter in preferences.</string>
@@ -53,7 +53,7 @@
     <string name="help_permission_boot_heading">Permission RECEIVE BOOT COMPLETED</string>
     <string name="help_permission_boot_description">is used to start the step counter and set the notifications at boot time. If RECEIVE BOOT COMPLETED is not granted you have to start the app manually once after boot to activate the app.</string>
     <string name="help_permissions_heading">Permissions</string>
-    <string name="help_permissions_description">Privacy Friendly Step Counter does not use any privacy-related permissions.</string>
+    <string name="help_permissions_description">Privacy Friendly Activity Tracker does not use any privacy-related permissions.</string>
 
     <!-- Preferences -->
     <!-- general settings -->
@@ -65,9 +65,9 @@
     <string name="pref_title_step_counter_enabled">Permanent step counter</string>
     <string name="pref_summary_step_counter_enabled">The app counts your steps in background.</string>
 
-    <string name="pref_default_daily_step_goal">10000</string>
+    <string name="pref_default_daily_step_goal" translatable="false">10000</string>
     <string name="pref_title_daily_step_goal">Personal daily step goal</string>
-    <string name="pref_unit_of_length">org.secuso.privacyfriendlystepcounter.pref.unit_of_length</string>
+    <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlystepcounter.pref.unit_of_length</string>
     <string name="pref_title_unit_of_length">Unit of length</string>
     <string-array name="pref_keys_unit_of_length">
         <item>kilometers</item>
@@ -80,9 +80,9 @@
 
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlystepcounter.pref.weight</string>
     <string name="pref_title_weight">Weight</string>
-    <string name="pref_default_weight">65.0</string>
+    <string name="pref_default_weight" translatable="false">65.0</string>
 
-    <string name="pref_gender">org.secuso.privacyfriendlystepcounter.pref.gender</string>
+    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlystepcounter.pref.gender</string>
     <string name="pref_title_gender">Gender</string>
     <string-array name="pref_keys_gender">
         <item>female</item>
@@ -114,9 +114,9 @@
     <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlystepcounter.pref.motivation_alert_criterion</string>
     <string name="pref_title_notification_motivation_alert_criterion">Motivation alert criterion</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>less than 90%% of daily step goal</item>
-        <item>less than 70%% of daily step goal</item>
-        <item>less than 50%% of daily step goal</item>
+        <item>less than 90% of daily step goal</item>
+        <item>less than 70% of daily step goal</item>
+        <item>less than 50% of daily step goal</item>
     </string-array>
     <string-array name="pref_values_notification_motivation_alert_criterion">
         <item>90</item>

@@ -1,6 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="@string/pref_group_title_general_settings">
+        android:title="@string/pref_group_title_general_settings"
+        android:key="@string/pref_group_general_settings">
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_step_counter_enabled"
@@ -18,6 +19,14 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_unit_of_length" />
+        <ListPreference
+            android:defaultValue="0.75"
+            android:entries="@array/pref_keys_accelerometer_threshold"
+            android:entryValues="@array/pref_values_accelerometer_threshold"
+            android:key="@string/pref_accelerometer_threshold"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_accelerometer_threshold" />
     </PreferenceCategory>
 
     <PreferenceCategory

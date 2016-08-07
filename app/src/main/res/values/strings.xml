@@ -92,6 +92,28 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string name="pref_accelerometer_threshold" translatable="false">org.secuso.privacyfriendlystepcounter.pref.accelerometer_threshold</string>
+    <string name="pref_title_accelerometer_threshold">Sensitivity</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>very high</item>
+        <item>higher</item>
+        <item>high</item>
+        <item>normal</item>
+        <item>low</item>
+        <item>lower</item>
+        <item>very low</item>
+    </string-array>
+    <string-array name="pref_values_accelerometer_threshold" translatable="false">
+        <item>0.125</item>
+        <item>0.25</item>
+        <item>0.50</item>
+        <item>0.75</item>
+        <item>1.00</item>
+        <item>1.25</item>
+        <item>1.50</item>
+    </string-array>
+    <string name="pref_group_general_settings" translatable="false">org.secuso.privacyfriendlystepcounter.pref.group.general</string>
+
     <!-- /general settings -->
     <!-- notification settings -->
     <string name="pref_header_notifications">Notifications</string>

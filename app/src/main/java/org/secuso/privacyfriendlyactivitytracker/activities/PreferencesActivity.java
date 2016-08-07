@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
+import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.util.List;
@@ -180,9 +183,19 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_daily_step_goal)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_weight)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_gender)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_accelerometer_threshold)));
+
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+            if (AndroidVersionHelper.supportsStepDetector(getActivity().getPackageManager())) {
+                // hide accelerometer threshold if hardware detection is used.
+                PreferenceScreen screen = getPreferenceScreen();
+                PreferenceCategory generalGroup = (PreferenceCategory) findPreference(getString(R.string.pref_group_general_settings));
+                ListPreference accelerometerThresholdPref = (ListPreference) findPreference(getString(R.string.pref_accelerometer_threshold));
+                generalGroup.removePreference(accelerometerThresholdPref);
+            }
         }
 
         @Override

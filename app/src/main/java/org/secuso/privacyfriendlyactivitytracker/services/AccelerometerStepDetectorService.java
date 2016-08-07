@@ -1,9 +1,13 @@
 package org.secuso.privacyfriendlyactivitytracker.services;
 
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import org.secuso.privacyfriendlyactivitytracker.R;
 
 import java.util.Arrays;
 
@@ -28,8 +32,10 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
     private int mLastStepDeltasIndex = 0;
     private float[] mLastStepAccelerationDeltas = {-1, -1, -1, -1, -1, -1};
     private int mLastStepAccelerationDeltasIndex = 0;
+    private float accelerometerThreshold;
 
     //private float[]
+
     /**
      * Creates an AccelerometerStepDetectorService.
      */
@@ -45,6 +51,13 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
      */
     public AccelerometerStepDetectorService(String name) {
         super(name);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        accelerometerThreshold = Float.parseFloat(sharedPref.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
     }
 
     @Override
@@ -144,11 +157,12 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
 
     /**
      * Determines if this value is significant.
+     *
      * @param val the value to check
-     * @return true if it is significant els false
+     * @return true if it is significant else false
      */
     private boolean isSignificantValue(float val) {
-        return Math.abs(val) > 0.5;
+        return Math.abs(val) > accelerometerThreshold;
     }
 
     /**
@@ -163,6 +177,7 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
 
     /**
      * Determines if the last maximum was great enough
+     *
      * @param diff the current acceleration diff
      * @return true if was great enough else false
      */
@@ -218,5 +233,13 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
     @Override
     public int getSensorType() {
         return Sensor.TYPE_ACCELEROMETER;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        super.onSharedPreferenceChanged(sharedPreferences, key);
+        if (key.equals(getString(R.string.pref_accelerometer_threshold))) {
+            accelerometerThreshold = Float.parseFloat(sharedPreferences.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
+        }
     }
 }

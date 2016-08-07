@@ -14,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -58,6 +59,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     private final IBinder mBinder = new StepDetectorBinder();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private NotificationManager mNotifyManager;
+    private PowerManager.WakeLock mWakeLock;
     /**
      * Number of steps the user wants to walk every day
      */
@@ -198,6 +200,10 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "Destroying service.");
+        if(mWakeLock != null){
+            mWakeLock.release();
+            mWakeLock = null;
+        }
         // Unregister sensor listeners
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
@@ -217,6 +223,12 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "Starting service.");
         startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
+        if(mWakeLock == null) {
+            PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "StepDetectorWakeLock");
+            mWakeLock.acquire();
+        }
+
         return START_STICKY;
     }
 

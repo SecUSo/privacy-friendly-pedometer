@@ -61,13 +61,13 @@
     <string name="pref_group_title_general_settings">General Settings</string>
     <string name="pref_group_title_personal_settings">Personalization</string>
 
-    <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlystepcounter.pref.step_counter_enabled</string>
+    <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.step_counter_enabled</string>
     <string name="pref_title_step_counter_enabled">Permanent step counter</string>
     <string name="pref_summary_step_counter_enabled">The app counts your steps in background.</string>
 
     <string name="pref_default_daily_step_goal" translatable="false">10000</string>
     <string name="pref_title_daily_step_goal">Personal daily step goal</string>
-    <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlystepcounter.pref.unit_of_length</string>
+    <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length</string>
     <string name="pref_title_unit_of_length">Unit of length</string>
     <string-array name="pref_keys_unit_of_length">
         <item>kilometers</item>
@@ -78,11 +78,11 @@
         <item>0.621371|mi|miles|mph</item> <!-- 1km = 0.621371 miles -->
     </string-array>
 
-    <string name="pref_weight" translatable="false">org.secuso.privacyfriendlystepcounter.pref.weight</string>
+    <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Weight</string>
     <string name="pref_default_weight" translatable="false">65.0</string>
 
-    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlystepcounter.pref.gender</string>
+    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.gender</string>
     <string name="pref_title_gender">Gender</string>
     <string-array name="pref_keys_gender">
         <item>female</item>
@@ -92,7 +92,7 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    <string name="pref_accelerometer_threshold" translatable="false">org.secuso.privacyfriendlystepcounter.pref.accelerometer_threshold</string>
+    <string name="pref_accelerometer_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_threshold</string>
     <string name="pref_title_accelerometer_threshold">Sensitivity</string>
     <string-array name="pref_keys_accelerometer_threshold">
         <item>very high</item>
@@ -112,7 +112,7 @@
         <item>1.25</item>
         <item>1.50</item>
     </string-array>
-    <string name="pref_group_general_settings" translatable="false">org.secuso.privacyfriendlystepcounter.pref.group.general</string>
+    <string name="pref_group_general_settings" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.group.general</string>
 
     <!-- /general settings -->
     <!-- notification settings -->
@@ -120,20 +120,20 @@
     <string name="pref_group_title_permanent_notification">Permanent Notification</string>
     <string name="pref_group_title_motivation_alert">Motivation Alert</string>
 
-    <string name="pref_notification_permanent_show_steps" translatable="false">org.secuso.privacyfriendlystepcounter.pref.permanent_notification_show_steps</string>
+    <string name="pref_notification_permanent_show_steps" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_steps</string>
     <string name="pref_title_notification_permanent_show_steps">Show number of steps walked today</string>
-    <string name="pref_notification_permanent_show_distance" translatable="false">org.secuso.privacyfriendlystepcounter.pref.permanent_notification_show_distance</string>
+    <string name="pref_notification_permanent_show_distance" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_distance</string>
     <string name="pref_title_notification_permanent_show_distance">Show distance walked today</string>
-    <string name="pref_notification_permanent_show_calories" translatable="false">org.secuso.privacyfriendlystepcounter.pref.permanent_notification_show_calories</string>
+    <string name="pref_notification_permanent_show_calories" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_calories</string>
     <string name="pref_title_notification_permanent_show_calories">Show number of calories</string>
 
-    <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlystepcounter.pref.motivation_alert_enabled</string>
+    <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_enabled</string>
     <string name="pref_title_notification_motivation_alert_enabled">Enable motivation alert</string>
-    <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlystepcounter.pref.motivation_alert_time</string>
+    <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time</string>
     <string name="pref_title_notification_motivation_alert_time">Motivation alert time</string>
-    <string name="pref_notification_motivation_alert_texts" translatable="false">org.secuso.privacyfriendlystepcounter.pref.motivation_alert_texts</string>
+    <string name="pref_notification_motivation_alert_texts" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts</string>
     <string name="pref_title_notification_motivation_alert_texts">Motivation notification texts</string>
-    <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlystepcounter.pref.motivation_alert_criterion</string>
+    <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
     <string name="pref_title_notification_motivation_alert_criterion">Motivation alert criterion</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
         <item>less than 90% of daily step goal</item>
@@ -150,8 +150,8 @@
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
-    <string name="pref_permanent_notification_enabled" translatable="false">org.secuso.privacyfriendlystepcounter.pref.permanent_notification_enabled</string>
-    <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlystepcounter.pref.daily_step_goal</string>
+    <string name="pref_permanent_notification_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_enabled</string>
+    <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.daily_step_goal</string>
     <string name="notification_text_steps">%1$s of %2$s steps walked today.</string>
     <string name="notification_text_distance">%1$.2f %2$s walked today.</string>
     <string name="notification_text_calories">Burned %.2f calories today.</string>
@@ -191,7 +191,7 @@
     <string name="walking_mode_learning_steps_description">Steps walked:</string>
     <string name="walking_mode_learning_stop">End learning mode</string>
     <string name="walking_mode_learning_description">The application can learn the distance per step. Please walk the given distance and press end if you finished.</string>
-    <string name="pref_walking_mode_learning_active" translatable="false">org.secuso.privacyfriendlystepcounter.pref.walking_mode_learning_active</string>
+    <string name="pref_walking_mode_learning_active" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.walking_mode_learning_active</string>
     <string name="step_length">Step length:</string>
     <string name="walking_mode_active_ext"> (active)</string>
     <string name="walking_mode_input_empty">Name and step length are required. Please fill in!</string>

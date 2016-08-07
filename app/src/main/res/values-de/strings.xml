@@ -127,6 +127,9 @@
         <item>Laufen</item>
         <item>Rennen</item>
     </string-array>
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Los geht\'s! Es ist Zeit eine Runde zu laufen!</item>
+    </string-array>
     <string name="help_functionality_motivation_alert_summary">Die App Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr läuft, nicht erreicht zu werden. Sie können die Kriterien, die Uhrzeit und die Texte der Motivationsbenachrichtigung selbst wählen.</string>
     <string name="help_functionality_notification_summary">Die App zeigt Ihnen Ihre täglich gelaufenen Schritte, die zurückgelegte Distanz und die verbrannten Kalorien in einer permanenten Benachrichtigung an, wenn der Schrittzähler aktiv ist. In den Einstellungen können Sie wählen, welche Daten angzeigt werden sollen. Die Benachrichtigung ist notwendig, um den Schrittzähler am Leben zu erhalten, um die Benachrichtigung verstecken möchten, gehen Sie in die Systemeinstellungen und deaktivieren Sie alle Benachrichtigungen für diese App.</string>
     <string name="help_functionality_step_counter_summary">Der dauerhafte Schrittzähler zählt Ihre Schritte im Hintergrund. Die Schritte werden mit Hilfe eine (falls vorhandenen) Hardware-Schrittzählers oder den Daten des Beschleunigungssensors gezählt. Sie können den dauerhaften Schrittzähler in den Einstellungen deaktivieren.</string>
@@ -135,4 +138,14 @@
     <string name="help_permission_boot_description">wird verwendet, um den Schrittzähler und die Benachrichtigungen beim Hochfahren des Geräts zu starten. Wenn die Berechtigung nicht gewährt wird, müssen Sie die App nach dem Systemstart einmal manuell starten.</string>
     <string name="help_permissions_description">Der privatsphärefreundliche Activity Tracker nutzt keine sensitiven Berechtigungen.</string>
     <string name="activity_summary_chart_legend_stepgoal">Schrittziel</string>
+    <string name="pref_title_accelerometer_threshold">Empfindlichkeit</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>sehr hoch</item>
+        <item>höher</item>
+        <item>hoch</item>
+        <item>normal</item>
+        <item>niedrig</item>
+        <item>niedriger</item>
+        <item>sehr niedrig</item>
+    </string-array>
 </resources>

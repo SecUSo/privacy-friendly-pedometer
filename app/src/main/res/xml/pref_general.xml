@@ -12,7 +12,7 @@
              dismiss it. -->
         <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="1|km|kilometers|km/h"
             android:entries="@array/pref_keys_unit_of_length"
             android:entryValues="@array/pref_values_unit_of_length"
             android:key="@string/pref_unit_of_length"

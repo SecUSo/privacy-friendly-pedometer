@@ -35,7 +35,7 @@ import java.util.List;
  * Does not detect steps itself - the step detection has to be done in the subclasses.
  *
  * @author Tobias Neidig
- * @version 20160721
+ * @version 20160810
  */
 public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -200,9 +200,9 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "Destroying service.");
+        // release wake lock if any
         if(mWakeLock != null){
-            mWakeLock.release();
-            mWakeLock = null;
+            releaseWakeLock();
         }
         // Unregister sensor listeners
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -223,10 +223,10 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "Starting service.");
         startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
-        if(mWakeLock == null) {
-            PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "StepDetectorWakeLock");
-            mWakeLock.acquire();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean useWakeLock = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock), false);
+        if(mWakeLock == null && useWakeLock) {
+            acquireWakeLock();
         }
 
         return START_STICKY;
@@ -252,6 +252,13 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
                 key.equals(getString(R.string.pref_notification_permanent_show_distance)) ||
                 key.equals(getString(R.string.pref_notification_permanent_show_calories))) {
             updateNotification();
+        } else if(key.equals(getString(R.string.pref_use_wake_lock))){
+            boolean useWakeLock = sharedPreferences.getBoolean(getString(R.string.pref_use_wake_lock), false);
+            if(useWakeLock && this.mWakeLock == null){
+                acquireWakeLock();
+            }else if(!useWakeLock && this.mWakeLock != null){
+                releaseWakeLock();
+            }
         }
     }
 
@@ -290,6 +297,26 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         mNotifyManager.notify(NOTIFICATION_ID, notification);
     }
 
+    /**
+     * Acquires a wakelock
+     */
+    private void acquireWakeLock(){
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        if(mWakeLock == null || !mWakeLock.isHeld()) {
+            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "StepDetectorWakeLock");
+            mWakeLock.acquire();
+        }
+    }
+
+    /**
+     * Releases the wake lock if there is any.
+     */
+    private void releaseWakeLock(){
+        if(mWakeLock != null && mWakeLock.isHeld()) {
+            mWakeLock.release();
+            mWakeLock = null;
+        }
+    }
     /**
      * Class used for the client Binder.
      *

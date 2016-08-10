@@ -27,6 +27,11 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_accelerometer_threshold" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_use_wake_lock"
+            android:summary="@string/pref_summary_use_wake_lock"
+            android:title="@string/pref_title_use_wake_lock" />
     </PreferenceCategory>
 
     <PreferenceCategory

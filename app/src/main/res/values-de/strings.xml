@@ -148,4 +148,6 @@
         <item>niedriger</item>
         <item>sehr niedrig</item>
     </string-array>
+    <string name="pref_title_use_wake_lock">Prozessor wach halten</string>
+    <string name="pref_summary_use_wake_lock">Bei manchen Geräten wird der Prozessor in den Ruhezustand versetzt, wenn das Display aus ist. Dadurch können die Schrittzahlen ungenau sein. Das Wachhalten vermeidet dies, kann aber zu einem erhöhten Akkuverbrauch führen.</string>
 </resources>

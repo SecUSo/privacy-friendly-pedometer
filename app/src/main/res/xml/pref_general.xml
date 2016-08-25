@@ -1,41 +1,36 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/pref_group_title_general_settings"
-        android:key="@string/pref_group_general_settings">
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/pref_step_counter_enabled"
-            android:summary="@string/pref_summary_step_counter_enabled"
-            android:title="@string/pref_title_step_counter_enabled" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_step_counter_enabled"
+        android:summary="@string/pref_summary_step_counter_enabled"
+        android:title="@string/pref_title_step_counter_enabled" />
 
-        <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-             dismiss it. -->
-        <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-        <ListPreference
-            android:defaultValue="1|km|kilometers|km/h"
-            android:entries="@array/pref_keys_unit_of_length"
-            android:entryValues="@array/pref_values_unit_of_length"
-            android:key="@string/pref_unit_of_length"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:title="@string/pref_title_unit_of_length" />
-        <ListPreference
-            android:defaultValue="0.75"
-            android:entries="@array/pref_keys_accelerometer_threshold"
-            android:entryValues="@array/pref_values_accelerometer_threshold"
-            android:key="@string/pref_accelerometer_threshold"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:title="@string/pref_title_accelerometer_threshold" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_use_wake_lock"
-            android:summary="@string/pref_summary_use_wake_lock"
-            android:title="@string/pref_title_use_wake_lock" />
-    </PreferenceCategory>
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:defaultValue="1|km|kilometers|km/h"
+        android:entries="@array/pref_keys_unit_of_length"
+        android:entryValues="@array/pref_values_unit_of_length"
+        android:key="@string/pref_unit_of_length"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_unit_of_length" />
+    <ListPreference
+        android:defaultValue="0.75"
+        android:entries="@array/pref_keys_accelerometer_threshold"
+        android:entryValues="@array/pref_values_accelerometer_threshold"
+        android:key="@string/pref_accelerometer_threshold"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_accelerometer_threshold" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_use_wake_lock"
+        android:summary="@string/pref_summary_use_wake_lock"
+        android:title="@string/pref_title_use_wake_lock" />
 
-    <PreferenceCategory
-        android:title="@string/pref_group_title_personal_settings">
+    <PreferenceCategory android:title="@string/pref_group_title_personal_settings">
         <EditTextPreference
             android:defaultValue="@string/pref_default_daily_step_goal"
             android:inputType="number"

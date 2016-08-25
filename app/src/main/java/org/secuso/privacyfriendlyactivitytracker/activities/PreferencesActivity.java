@@ -192,9 +192,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             if (AndroidVersionHelper.supportsStepDetector(getActivity().getPackageManager())) {
                 // hide accelerometer threshold if hardware detection is used.
                 PreferenceScreen screen = getPreferenceScreen();
-                PreferenceCategory generalGroup = (PreferenceCategory) findPreference(getString(R.string.pref_group_general_settings));
                 ListPreference accelerometerThresholdPref = (ListPreference) findPreference(getString(R.string.pref_accelerometer_threshold));
-                generalGroup.removePreference(accelerometerThresholdPref);
+                screen.removePreference(accelerometerThresholdPref);
             }
         }
 

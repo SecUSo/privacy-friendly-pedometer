@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
 
     <group android:id="@+id/menu_group_general">
-        <item android:id="@+id/menu_home" android:title="@string/action_main" android:icon="@drawable/ic_action_home"
+        <item android:id="@+id/menu_home" android:title="@string/action_main" android:icon="@drawable/ic_directions_walk_65black_30dp"
             android:orderInCategory="100" app:showAsAction="never" />
         <item android:id="@+id/menu_training" android:title="@string/action_training" android:icon="@drawable/ic_directions_run"
             android:orderInCategory="100" app:showAsAction="never" />

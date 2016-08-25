@@ -35,6 +35,7 @@
             android:defaultValue="@string/pref_default_daily_step_goal"
             android:inputType="number"
             android:key="@string/pref_daily_step_goal"
+            android:maxLength="6"
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -46,7 +47,8 @@
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/pref_title_weight" />
+            android:title="@string/pref_title_weight"
+            android:maxLength="6"/>
         <ListPreference
             android:defaultValue="1|km|kilometers|km/h"
             android:entries="@array/pref_keys_gender"

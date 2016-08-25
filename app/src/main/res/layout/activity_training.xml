@@ -263,6 +263,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="@string/training_stop_button" />
+            android:text="@string/training_stop_button"
+            android:textColor="@color/white"
+            android:background="@drawable/button_fullwidth"/>
     </LinearLayout>
 </LinearLayout>

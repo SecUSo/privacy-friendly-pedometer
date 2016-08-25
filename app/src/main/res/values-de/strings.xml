@@ -63,11 +63,11 @@
     <string name="pref_title_daily_step_goal">Persönliches tägliches Schrittziel</string>
     <string name="pref_title_gender">Geschlecht</string>
     <string name="pref_title_notification_motivation_alert_criterion">Benachrichtigungskriterium</string>
-    <string name="pref_title_notification_motivation_alert_enabled">Aktiviere Motivationsbenachrichtigungen</string>
+    <string name="pref_title_notification_motivation_alert_enabled">Motivationsbenachrichtigung</string>
     <string name="pref_title_notification_motivation_alert_texts">Motivationstexte</string>
     <string name="pref_title_notification_motivation_alert_time">Zeitpunkt der Benachrichtigung</string>
     <string name="pref_title_notification_permanent_show_calories">Zeige Kalorienzahl </string>
-    <string name="pref_title_notification_permanent_show_distance">Zeige täglich zurückgelegte Entfernungen</string>
+    <string name="pref_title_notification_permanent_show_distance">Zeige zurückgelegte Entfernung</string>
     <string name="pref_title_notification_permanent_show_steps">Zeige tägliche Schrittzahl</string>
     <string name="pref_title_step_counter_enabled">Dauerhafter Schrittzähler</string>
     <string name="pref_title_unit_of_length">Längeneinheit</string>

@@ -28,7 +28,7 @@
              dismiss it. -->
         <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="70"
             android:entries="@array/pref_keys_notification_motivation_alert_criterion"
             android:entryValues="@array/pref_values_notification_motivation_alert_criterion"
             android:key="@string/pref_notification_motivation_alert_criterion"

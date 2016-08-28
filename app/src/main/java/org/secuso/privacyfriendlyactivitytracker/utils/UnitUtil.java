@@ -136,7 +136,16 @@ public class UnitUtil {
      */
     public static String getUsersUnit(int type, Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        String unit = sharedPref.getString(context.getString(R.string.pref_unit_of_length), "1|km|kilometers|km/h");
+        String unit_key = sharedPref.getString(context.getString(R.string.pref_unit_of_length), "km");
+        String unit;
+        switch(unit_key){
+            case "mi":
+                unit = context.getString(R.string.unit_of_length_mi);
+                break;
+            case "km":
+            default:
+                unit = context.getString(R.string.unit_of_length_km);
+        }
         String[] units = unit.split("\\|");
         if (units.length <= type) {
             return "-";

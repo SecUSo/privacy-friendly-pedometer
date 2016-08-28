@@ -110,18 +110,16 @@
         <item>Kilometer</item>
         <item>Meilen</item>
     </string-array>
-    <string-array name="pref_values_unit_of_length">
-        <item>1|km|Kilometer|km/h</item> <!-- 1km = 1km -->
-        <item>0.621371|mi|Meilen|mph</item> <!-- 1km = 0.621371 miles -->
-    </string-array>
+    <string name="unit_of_length_km">1|km|Kilometer|km/h</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|Meilen|mph</string><!-- 1km = 0.621371 miles -->
     <string-array name="pref_keys_gender">
         <item>weiblich</item>
         <item>männlich</item>
     </string-array>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>bei weniger als 90% des Tagesziels</item>
-        <item>bei weniger als 70% des Tagesziels</item>
-        <item>bei weniger als 50% des Tagesziels</item>
+        <item>bei weniger als 90&#65285; des Tagesziels</item>
+        <item>bei weniger als 70&#65285; des Tagesziels</item>
+        <item>bei weniger als 50&#65285; des Tagesziels</item>
     </string-array>
     <string-array name="pref_default_walking_mode_names">
         <item>Laufen</item>

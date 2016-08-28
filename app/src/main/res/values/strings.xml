@@ -77,10 +77,12 @@
         <item>kilometers</item>
         <item>miles</item>
     </string-array>
-    <string-array name="pref_values_unit_of_length">
-        <item>1|km|kilometers|km/h</item> <!-- 1km = 1km -->
-        <item>0.621371|mi|miles|mph</item> <!-- 1km = 0.621371 miles -->
+    <string-array name="pref_values_unit_of_length" translatable="false">
+        <item>km</item>
+        <item>mi</item>
     </string-array>
+    <string name="unit_of_length_km">1|km|kilometers|km/h</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph</string><!-- 1km = 0.621371 miles -->
 
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Weight</string>
@@ -140,9 +142,9 @@
     <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
     <string name="pref_title_notification_motivation_alert_criterion">Motivation alert criterion</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>less than 90% of daily step goal</item>
-        <item>less than 70% of daily step goal</item>
-        <item>less than 50% of daily step goal</item>
+        <item>less than 90&#65285; of daily step goal</item>
+        <item>less than 70&#65285; of daily step goal</item>
+        <item>less than 50&#65285; of daily step goal</item>
     </string-array>
     <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
         <item>90</item>

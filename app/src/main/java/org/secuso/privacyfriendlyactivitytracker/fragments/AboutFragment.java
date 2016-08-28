@@ -29,7 +29,7 @@ public class AboutFragment extends Fragment {
             actionBar.setSubtitle(R.string.action_about);
         }
         TextView versionTextView = (TextView) rootView.findViewById(R.id.textFieldVersion);
-        versionTextView.setText(String.format(getString(R.string.version_number), BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
+        versionTextView.setText(String.format(getString(R.string.version_number), BuildConfig.VERSION_NAME));
         TextView urlTextView = (TextView) rootView.findViewById(R.id.textViewUrl);
         urlTextView.setMovementMethod(LinkMovementMethod.getInstance());
         TextView libTextView = (TextView) rootView.findViewById(R.id.textViewLib);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_affiliation">In Zusammenarbeit mit</string>
-    <string name="about_author">Autor: Tobias Neidig</string>
+    <string name="about_author">Autor: Tobias Neidig und Mitwirkende</string>
     <string name="action_about">Über</string>
     <string name="action_help">Hilfe</string>
     <string name="action_main">Schrittzähler</string>
@@ -14,7 +14,7 @@
     <string name="more_info">Mehr Informationen unter:</string>
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
     <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/de/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
-    <string name="version_number">Version %1$s (%2$s)</string>
+    <string name="version_number">Version %1$s</string>
     <string name="app_name">Activity Tracker</string>
     <string name="app_name_long">Privacy Friendly Activity Tracker</string>
     <string name="month">Monat</string>
@@ -104,7 +104,7 @@
     <string name="motivation_alert_input_message">Speichern Sie Ihre persönliche Motivationsbenachrichtigung. Die App wählt dann zufällig aus.</string>
     <string name="motivation_alert_input_empty">Leere Motivationsbenachrichtigungen sind nicht sehr hilfreich, oder?</string>
     <string name="motivation_alert_empty">Erstellen Sie persönliche Motivationsbenachrichtigungen, die erscheinen, wenn Ihr Tagesziel in Gefahr ist.\n\nEs erscheint keine Benachrichtigung, wenn keine Texte angelegt sind.</string>
-    <string name="about_thrid_party_libs">Dies ist eine <a href="https://github.com/SecUSo/privacy-friendly-health-tracker">OpenSource-App</a>. Gestalten Sie sie mit!<br></br><br></br>Die Anwendung nutzt <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart von Philipp Jahoda</a> lizenziert unter under the Apache License, Version 2.0 und Icons von <a href="https://design.google.com/icons/index.html">Google Material Icon Set</a> lizenziert unter Apache License, Version 2.0.</string>
+    <string name="about_thrid_party_libs">Die Anwendung nutzt <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart von Philipp Jahoda</a> (Apache 2 License) und Icons von <a href="https://design.google.com/icons/index.html">Google Material Icon Set</a> (Apache 2 License).</string>
 
     <string-array name="pref_keys_unit_of_length">
         <item>Kilometer</item>

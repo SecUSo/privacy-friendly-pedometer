@@ -40,7 +40,7 @@
     <string name="help_overview_heading">Übersicht</string>
     <string name="help_permission_boot_heading">Berechtigung RECEIVE BOOT COMPLETED</string>
     <string name="help_permissions_heading">Berechtigungen</string>
-    <string name="help_privacy_heading">Privatsphäreninfo</string>
+    <string name="help_privacy_heading">Datenschutz-Info</string>
     <string name="hint_training_description">Beschreibung</string>
     <string name="hint_training_feeling">Gefühl:</string>
     <string name="hint_training_title">Titel</string>

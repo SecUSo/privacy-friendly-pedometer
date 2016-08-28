@@ -29,10 +29,6 @@
             android:summary="@string/help_permission_boot_description"
             android:title="@string/help_permission_boot_heading"
             android:selectable="false"/>
-        <Preference
-            android:summary="@string/help_permissions_description"
-            android:title="@string/help_permissions_heading"
-            android:selectable="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

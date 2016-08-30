@@ -23,7 +23,8 @@
         android:key="@string/pref_accelerometer_threshold"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_title_accelerometer_threshold" />
+        android:title="@string/pref_title_accelerometer_threshold"
+        android:dialogMessage="@string/pref_summary_accelerometer_threshold"/>
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_use_wake_lock"
@@ -40,6 +41,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_daily_step_goal" />
+        <Preference android:summary="@string/pref_explanation_weight_and_gender"/>
         <EditTextPreference
             android:defaultValue="@string/pref_default_weight"
             android:inputType="numberDecimal"
@@ -56,6 +58,6 @@
             android:key="@string/pref_gender"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
-            android:title="@string/pref_title_gender" />
+            android:title="@string/pref_title_gender"/>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -18,7 +18,7 @@
 
     <!-- AboutFragment-->
     <string name="version_number">Version %1$s</string>
-    <string name="about_author">Author: Tobias Neidig and contributors</string>
+    <string name="about_author">Author:\n\nTobias Neidig and contributors</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
     <string name="more_info">More information can be found on:</string>
@@ -83,6 +83,10 @@
     </string-array>
     <string name="unit_of_length_km">1|km|kilometers|km/h</string><!-- 1km = 1km -->
     <string name="unit_of_length_mi">0.621371|mi|miles|mph</string><!-- 1km = 0.621371 miles -->
+
+    <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please provide set your weight and gender.</string>
+    <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
+    <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please.</string>
 
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Weight</string>

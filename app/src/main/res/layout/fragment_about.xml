@@ -49,7 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="@string/about_author" />
+            android:text="@string/about_author"
+            android:autoText="false"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/textFieldAffiliation"

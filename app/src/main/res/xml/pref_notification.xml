@@ -1,24 +1,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/pref_group_title_permanent_notification">
+        <Preference android:summary="@string/pref_summary_notification_permanent" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_notification_permanent_show_steps"
-            android:title="@string/pref_title_notification_permanent_show_steps"/>
+            android:title="@string/pref_title_notification_permanent_show_steps" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_notification_permanent_show_distance"
-            android:title="@string/pref_title_notification_permanent_show_distance"/>
+            android:title="@string/pref_title_notification_permanent_show_distance" />
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_notification_permanent_show_calories"
-            android:title="@string/pref_title_notification_permanent_show_calories"/>
+            android:title="@string/pref_title_notification_permanent_show_calories" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_group_title_motivation_alert">
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_notification_motivation_alert_enabled"
-            android:title="@string/pref_title_notification_motivation_alert_enabled"/>
+            android:title="@string/pref_title_notification_motivation_alert_enabled" />
         <!-- default is 18:00 -->
         <org.secuso.privacyfriendlyactivitytracker.preferences.TimePreference
             android:defaultValue="64800000"
@@ -38,8 +39,8 @@
 
         <Preference android:title="@string/pref_title_notification_motivation_alert_texts">
             <intent
-                android:targetPackage="org.secuso.privacyfriendlyactivitytracker"
-                android:targetClass="org.secuso.privacyfriendlyactivitytracker.activities.MotivationAlertTextsActivity" />
+                android:targetClass="org.secuso.privacyfriendlyactivitytracker.activities.MotivationAlertTextsActivity"
+                android:targetPackage="org.secuso.privacyfriendlyactivitytracker" />
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

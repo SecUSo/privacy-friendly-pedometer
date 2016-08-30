@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // show welcome dialog on first run
         String isNotFirstRun = PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.pref_is_not_first_run), "");
-        if (isNotFirstRun.equals("") || true) {
+        if (isNotFirstRun.equals("")) {
             PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.pref_is_not_first_run), "true").apply();
             WelcomeDialog welcomeDialog = new WelcomeDialog();
             welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // handle the clicks on navigation drawer items
         Fragment fragment = null;
-        Intent intent = null;
+        Intent intent;
         int id = item.getItemId();
 
         switch (id) {

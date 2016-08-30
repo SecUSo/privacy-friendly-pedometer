@@ -179,7 +179,7 @@ public class StepDetectionServiceHelper {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        long timestamp = sharedPref.getLong(context.getString(R.string.pref_notification_motivation_alert_time), 0);
+        long timestamp = sharedPref.getLong(context.getString(R.string.pref_notification_motivation_alert_time), 64800000);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp);
         calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));

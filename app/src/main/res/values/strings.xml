@@ -173,6 +173,16 @@
     <string name="delete">Delete</string>
     <string name="operation_failed">Operation failed</string>
     <string name="since">since</string>
+    <string name="okay">Okay</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">Welcome</string>
+    <string name="welcome_text">Welcome to the Privacy Friendly Activity Tracker. This app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.\n\nYou can switch your current walking modes using the context menu in the toolbar.\n\nTo improve the calculation of the calories you have burned by walking please customize your personal settings.</string>
+    <string name="pref_is_not_first_run" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.is_not_first_run</string>
+    <string name="view_personal_settings">Settings</string>
+    <string name="view_help">View Help</string>
+    <!-- /welcome dialog -->
 
     <!-- motivation alert -->
     <string-array name="pref_default_notification_motivation_alert_messages">

@@ -164,9 +164,13 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
             Log.e(LOG_CLASS, "Distance or walking mode is null.");
             return;
         }
-        double meterPerStep = this.distance / ((double) this.stepCount);
-        this.walkingMode.setStepLength(meterPerStep);
-        WalkingModePersistenceHelper.save(this.walkingMode, this);
+
+        // update walking mode if the user walked at minimum one step
+        if(this.stepCount != 0) {
+            double meterPerStep = this.distance / ((double) this.stepCount);
+            this.walkingMode.setStepLength(meterPerStep);
+            WalkingModePersistenceHelper.save(this.walkingMode, this);
+        }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();

@@ -28,7 +28,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.AxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityChart;
@@ -37,6 +39,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.ActivityDayChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivitySummary;
 import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -143,7 +146,27 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 }
                 BarDataSet barDataSet = new BarDataSet(dataEntries, barChartLabel);
                 BarDataSet barDataSetReachedDailyGoal = new BarDataSet(dataEntriesReachedDailyGoal, barChartLabel);
+                if(barChartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
+                    String formatPattern = "###,###,##0.0";
+                    barDataSet.setValueFormatter(new DoubleValueFormatter(formatPattern));
+                    barDataSetReachedDailyGoal.setValueFormatter(new DoubleValueFormatter(formatPattern));
+                }
+                if(barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS && barChartXValues.size() > 15){
+                    barDataSet.setDrawValues(false);
+                    barDataSetReachedDailyGoal.setDrawValues(false);
+                }
                 ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
+                if(barChartData.getDisplayedDataType() != ActivityDayChart.DataType.STEPS){
+                    // make sure, that the first and last entry are fully displayed
+                        Entry start = new Entry(0, 0);
+                        Entry end = new Entry(barChartI - 1, 0);
+                        LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
+                        chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                        chartLineDataSet.setDrawCircles(false);
+                        chartLineDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.transparent), 0);
+                        chartLineDataSet.setDrawValues(false);
+                        lineDataSets.add(chartLineDataSet);
+                }
                 // add daily step goal
                 if (barChartXValues.size() > 0 && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
                     Entry start = new Entry(0, barChartData.getGoal());
@@ -263,29 +286,29 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     dataSets.add(chartLineDataSet);
                 }
                 // Workaround since scaling does not work correctly in MPAndroidChart v3.0.0.0-beta1
-                {
-                    Entry start = new Entry(0, 0);
-                    Entry end = new Entry(chartXValues.size() - 1, maxValue * 1.03f);
-                    LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
-                    chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-                    chartLineDataSet.setDrawCircles(false);
-                    chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.transparent), 0);
-                    chartLineDataSet.setDrawValues(false);
-                    dataSets.add(chartLineDataSet);
-                }
-                LineData data = new LineData(dataSets);
-                chartViewHolder.mChart.setData(data);
-                chartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(chartXValues));
-                // add legend
-                Legend legend = chartViewHolder.mChart.getLegend();
-                legend.setComputedColors(new ArrayList<Integer>());
-                legend.setComputedLabels(new ArrayList<String>());
-                legend.setCustom(new ArrayList<>(legendValues.keySet()), new ArrayList<>(legendValues.values()));
-                // invalidate
-                chartViewHolder.mChart.getData().notifyDataChanged();
-                chartViewHolder.mChart.notifyDataSetChanged();
-                chartViewHolder.mChart.invalidate();
-                break;
+            {
+                Entry start = new Entry(0, 0);
+                Entry end = new Entry(chartXValues.size() - 1, maxValue * 1.03f);
+                LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
+                chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                chartLineDataSet.setDrawCircles(false);
+                chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.transparent), 0);
+                chartLineDataSet.setDrawValues(false);
+                dataSets.add(chartLineDataSet);
+            }
+            LineData data = new LineData(dataSets);
+            chartViewHolder.mChart.setData(data);
+            chartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(chartXValues));
+            // add legend
+            Legend legend = chartViewHolder.mChart.getLegend();
+            legend.setComputedColors(new ArrayList<Integer>());
+            legend.setComputedLabels(new ArrayList<String>());
+            legend.setCustom(new ArrayList<>(legendValues.keySet()), new ArrayList<>(legendValues.values()));
+            // invalidate
+            chartViewHolder.mChart.getData().notifyDataChanged();
+            chartViewHolder.mChart.notifyDataSetChanged();
+            chartViewHolder.mChart.invalidate();
+            break;
             case TYPE_SUMMARY:
                 ActivitySummary summaryData = (ActivitySummary) mItems.get(position);
                 SummaryViewHolder summaryViewHolder = (SummaryViewHolder) holder;
@@ -500,6 +523,24 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         @Override
         public int getDecimalDigits() {
             return -1;
+        }
+    }
+
+    public class DoubleValueFormatter implements ValueFormatter {
+
+        private DecimalFormat mFormat;
+
+        public DoubleValueFormatter(String formatPattern) {
+            mFormat = new DecimalFormat(formatPattern);
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            if (value == 0) {
+                return "0";
+            } else {
+                return mFormat.format(value);
+            }
         }
     }
 }

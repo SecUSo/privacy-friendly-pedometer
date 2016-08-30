@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +30,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.ActivityDayChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivitySummary;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
@@ -58,6 +61,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     private RecyclerView mRecyclerView;
 
     private OnFragmentInteractionListener mListener;
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
 
     private Calendar day;
     private ActivitySummary activitySummary;
@@ -129,10 +133,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        // Bind to stepDetector if today is shown
-        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
-            bindService();
-        }
+
         return view;
     }
 
@@ -145,45 +146,78 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        if(day == null){
+            day = Calendar.getInstance();
+        }
+        // Bind to stepDetector if today is shown
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
+        }
+        registerReceivers();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Bind to stepDetector if today is shown
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
+        }
+        registerReceivers();
     }
 
     @Override
     public void onDetach() {
         unbindService();
         mListener = null;
+        unregisterReceivers();
         super.onDetach();
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         unbindService();
+        unregisterReceivers();
         super.onPause();
     }
-
 
     @Override
     public void onDestroy() {
         unbindService();
+        unregisterReceivers();
         super.onDestroy();
     }
 
-
-    private void bindService(){
+    private void bindService() {
         Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
         getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    private void unbindService(){
+    private void unbindService() {
         if (this.isTodayShown() && mServiceConnection != null && myBinder != null && myBinder.getService() != null) {
             getActivity().getApplicationContext().unbindService(mServiceConnection);
             myBinder = null;
         }
     }
 
+    private void registerReceivers(){
+        // subscribe to onStepsSaved and onStepsDetected broadcasts
+        IntentFilter filterRefreshUpdate = new IntentFilter();
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
+        filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+    }
+
+    private void unregisterReceivers(){
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+    }
     /**
      * @return is the day which is currently shown today?
      */
     private boolean isTodayShown() {
+        if(day == null){
+            return false;
+        }
         Calendar start = (Calendar) day.clone();
         start.set(Calendar.DAY_OF_MONTH, 1);
         start.set(Calendar.MILLISECOND, 0);
@@ -215,7 +249,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         final Context context = getActivity().getApplicationContext();
         final Locale locale = context.getResources().getConfiguration().locale;
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-
+        final Calendar now = Calendar.getInstance();
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -226,15 +260,27 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                 Map<String, Double> stepData = new LinkedHashMap<>();
                 Map<String, Double> distanceData = new LinkedHashMap<>();
                 Map<String, Double> caloriesData = new LinkedHashMap<>();
+                stepData.put("", null);
+                distanceData.put("", null);
+                caloriesData.put("", null);
                 int totalSteps = 0;
                 double totalDistance = 0;
                 int totalCalories = 0;
                 for (int i = 0; i <= day.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
                     List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, context);
-                    // TODO add current steps if today is shown
                     int steps = 0;
                     double distance = 0;
                     int calories = 0;
+                    // add current steps if today is shown
+                    if (isTodayShown() && myBinder != null
+                            && start.get(Calendar.YEAR) == now.get(Calendar.YEAR)
+                            && start.get(Calendar.MONTH) == now.get(Calendar.MONTH)
+                            && start.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)) {
+                        StepCount stepCountSinceLastSave = new StepCount();
+                        stepCountSinceLastSave.setStepCount(myBinder.stepsSinceLastSave());
+                        stepCountSinceLastSave.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context)); // add current walking mode
+                        stepCounts.add(stepCountSinceLastSave);
+                    }
                     for (StepCount stepCount : stepCounts) {
                         steps += stepCount.getStepCount();
                         distance += stepCount.getDistance();
@@ -250,7 +296,6 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                         start.add(Calendar.DAY_OF_MONTH, 1);
                     }
                 }
-
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM yy", locale);
                 String title = simpleDateFormat.format(day.getTime());
 
@@ -334,12 +379,18 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     public void onPrevClicked() {
         this.day.add(Calendar.MONTH, -1);
         this.generateReports(false);
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
+        }
     }
 
     @Override
     public void onNextClicked() {
         this.day.add(Calendar.MONTH, 1);
         this.generateReports(false);
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
+        }
     }
 
     @Override
@@ -356,6 +407,9 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                 MonthlyReportFragment.this.day.set(Calendar.MONTH, monthOfYear);
                 MonthlyReportFragment.this.day.set(Calendar.YEAR, year);
                 MonthlyReportFragment.this.generateReports(false);
+                if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+                    bindService();
+                }
             }
         }, year, month, day);
         dialog.show();
@@ -369,5 +423,25 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
      */
     public interface OnFragmentInteractionListener {
         // Currently doing nothing here.
+    }
+
+    public class BroadcastReceiver extends android.content.BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null) {
+                Log.w(LOG_TAG, "Received intent which is null.");
+                return;
+            }
+            switch (intent.getAction()) {
+                case AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED:
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
+                case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:
+                    // Steps were saved, reload step count from database
+                    generateReports(true);
+                    break;
+                default:
+            }
+        }
     }
 }

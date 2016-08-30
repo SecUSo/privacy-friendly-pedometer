@@ -158,6 +158,14 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if(isTodayShown()){
+            bindService();
+        }
+    }
+
+    @Override
     public void onDetach() {
         unbindService();
         unregisterReceivers();
@@ -191,6 +199,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     private void unregisterReceivers(){
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
     }
+
     private void bindService(){
         if(myBinder == null) {
             Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
@@ -391,12 +400,18 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     public void onPrevClicked() {
         this.day.add(Calendar.DAY_OF_MONTH, -1);
         this.generateReports(false);
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
+        }
     }
 
     @Override
     public void onNextClicked() {
         this.day.add(Calendar.DAY_OF_MONTH, 1);
         this.generateReports(false);
+        if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+            bindService();
+        }
     }
 
     @Override
@@ -413,6 +428,9 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                 DailyReportFragment.this.day.set(Calendar.MONTH, monthOfYear);
                 DailyReportFragment.this.day.set(Calendar.YEAR, year);
                 DailyReportFragment.this.generateReports(false);
+                if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
+                    bindService();
+                }
             }
         }, year, month, day);
         dialog.show();

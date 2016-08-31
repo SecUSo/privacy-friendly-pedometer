@@ -21,10 +21,12 @@ import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorSe
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Receives the motivation alert event and notifies the user.
@@ -93,7 +95,8 @@ public class MotivationAlertReceiver extends WakefulBroadcastReceiver {
             return;
         }
 
-        List<String> motivationTexts = new ArrayList<>(sharedPref.getStringSet(context.getString(R.string.pref_notification_motivation_alert_texts), new HashSet<String>()));
+        Set<String> defaultStringSet = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.pref_default_notification_motivation_alert_messages)));
+        List<String> motivationTexts = new ArrayList<>(sharedPref.getStringSet(context.getString(R.string.pref_notification_motivation_alert_texts),  defaultStringSet));
 
         if (motivationTexts.size() == 0) {
             Log.e(LOG_CLASS, "Motivation texts are empty. Cannot notify the user.");

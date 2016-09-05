@@ -153,7 +153,7 @@
     <string name="view_personal_settings">Einstellungen</string>
     <string name="welcome">Willkommen!</string>
     <string name="welcome_text">Herzlich willkommen in der Privacy Friendly Activity Tracker-App. Mithilfe dieser App können Sie Ihre täglichen Schritte im Hintergrund zählen und eigene Laufmodi zur genaueren Berechnung der Distanz anlegen. Die App gibt Ihnen einen Überblick über Ihre zurückgelegten Schritte und kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden.\n\nSie können zwischen den Laufmodi wechseln, indem Sie sie in der Toolbar auswählen.\n\nUm die Berechnung der verbrannten Kalorien zu verbessern, passen Sie bitte Ihre persönlichen Einstellungen an.</string>
-    <string name="pref_summary_accelerometer_threshold">Die App nutzt den Beschleunigungssensor Ihres Geräts, um die Schritt zu erkennen. Passen Sie die Empfindlichkeit des Sensors an, um die Schritterkennung zu verbessern.</string>
+    <string name="pref_summary_accelerometer_threshold">Die App nutzt den Beschleunigungssensor Ihres Geräts, um die Schritt zu erkennen. Passen Sie die Empfindlichkeit des Sensors an, um die Schritterkennung zu verbessern: \n</string>
     <string name="pref_summary_notification_permanent">Wenn die App Ihre Schritte zählt, zeigt sie eine Benachrichtigung an. Hier können Sie wählen, welche Informationen Sie angezeigt bekommen möchten</string>
     <string name="pref_explanation_weight_and_gender">Geben Sie Ihr Gewicht und Ihr Geschlecht an, um die Kalorienberechnung zu verbessern.</string>
 </resources>

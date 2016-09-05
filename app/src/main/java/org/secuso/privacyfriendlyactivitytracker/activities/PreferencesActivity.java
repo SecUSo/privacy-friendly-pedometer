@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -21,7 +20,9 @@ import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -35,6 +36,7 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class PreferencesActivity extends AppCompatPreferenceActivity {
+    private static Map<String, String> additionalSummaryTexts;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -49,11 +51,11 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
-
+                String additionalSummaryText = additionalSummaryTexts.get(preference.getKey());
                 // Set the summary to reflect the new value.
                 preference.setSummary(
                         index >= 0
-                                ? listPreference.getEntries()[index]
+                                ? (((additionalSummaryText != null) ? additionalSummaryText : "") + listPreference.getEntries()[index])
                                 : null);
 
             } else {
@@ -64,6 +66,11 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             return true;
         }
     };
+
+    public PreferencesActivity() {
+        super();
+        this.additionalSummaryTexts = new HashMap<>();
+    }
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -179,6 +186,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
+            additionalSummaryTexts.put(getString(R.string.pref_accelerometer_threshold), getString(R.string.pref_summary_accelerometer_threshold));
+
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_length)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_daily_step_goal)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_weight)));

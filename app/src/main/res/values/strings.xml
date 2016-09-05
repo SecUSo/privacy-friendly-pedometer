@@ -86,7 +86,7 @@
 
     <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please provide set your weight and gender.</string>
     <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
-    <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please.</string>
+    <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please:\n</string>
 
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Weight</string>

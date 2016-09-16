@@ -7,17 +7,17 @@
             android:persistent="false"
             android:title=""
             android:summary="@string/help_intro"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/help_functionality_heading">
-        <Preference android:title="@string/help_functionality_step_counter"
+        <Preference
             android:summary="@string/help_functionality_step_counter_summary"
             android:selectable="false"/>
-        <Preference android:title="@string/help_functionality_visualization"
-            android:summary="@string/help_functionality_visualization_summary"
-            android:selectable="false"/>
-        <Preference android:title="@string/help_functionality_notification"
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_functionality_notification">
+        <Preference android:title="@string/help_functionality_notification_heading"
             android:summary="@string/help_functionality_notification_summary"
+            android:selectable="false"/>
+        <Preference
+            android:summary="@string/help_functionality_notification_delete"
             android:selectable="false"/>
         <Preference android:title="@string/help_functionality_motivation_alert"
             android:summary="@string/help_functionality_motivation_alert_summary"

@@ -2,9 +2,6 @@
     <string name="app_name">Activity Tracker</string>
     <string name="app_name_long">Privacy Friendly Activity Tracker</string>
 
-    <string name="hello_world">Hello world!</string>
-
-
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
@@ -17,13 +14,15 @@
     <string name="action_training">Training</string>
 
     <!-- AboutFragment-->
-    <string name="version_number">Version %1$s</string>
-    <string name="about_author">Author:\n\nTobias Neidig and contributors</string>
+    <string name="version_number">Version 1.0</string>
+    <string name="about_author">Author: Tobias Neidig and contributors</string>
     <string name="about_affiliation">In affiliation with</string>
-    <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
     <string name="more_info">More information can be found on:</string>
-    <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps"><i>https://www.secuso.org</i></a></string>
-    <string name="about_thrid_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> (Apache 2 License) and icons from <a href="https://design.google.com/icons/index.html">Google Material Icon Set</a> (Apache 2 License).</string>
+    <string name="about_thrid_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> (Apache 2 License).</string>
+    <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
+
 
     <!-- ReportFragment -->
     <string name="month">Month</string>
@@ -39,21 +38,20 @@
     <!-- HelpFragment -->
     <string name="activity_title_help">Help</string>
     <string name="help_overview_heading">Overview</string>
-    <string name="help_intro">Welcome to the help page. This app provides you a Privacy Friendly Activity Tracker. The app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+    <string name="help_intro">This app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
     <string name="help_functionality_heading">Basic functionality</string>
     <string name="help_functionality_step_counter">Step Counter</string>
-    <string name="help_functionality_step_counter_summary">The permanent step counter counts your daily steps in background. The steps are count by using the hardware step counter (if any) or the accelerometer sensor data. You can disable the permanent step counter in preferences.</string>
-    <string name="help_functionality_visualization">Visualization</string>
-    <string name="help_functionality_visualization_summary">You can review your daily steps in the daily, weekly or monthly view. In this views you can choose to show the steps or distance you walked or the calories you burned. The distance is calculated based on the step lengths you provided in the walking modes. The calories are calculated based on your personal preferences.</string>
+    <string name="help_functionality_step_counter_summary">The step counter counts your daily steps in background and can be disabled in the settings.</string>
+    <string name="help_functionality_notification_heading">Permanent Notification</string>
     <string name="help_functionality_notification">Notification</string>
-    <string name="help_functionality_notification_summary">The app shows you the daily steps, distance and calories in a permanent notification if step counter is enabled. In the preferences you can choose what to display. The notification is necessary to keep the step counter alive. You can disable all notifications in system preferences.</string>
+    <string name="help_functionality_notification_summary">The permanent notification is necessary to keep the step counter alive in background. The content of the notification can be chosen in the settings.</string>
+    <string name="help_functionality_notification_delete">You can disable all notifications in system preferences.</string>
     <string name="help_functionality_motivation_alert">Motivation alert</string>
     <string name="help_functionality_motivation_alert_summary">The app can show you motivation alerts if the achievement of your daily step goal is in danger. You can define the criterion, the time of day and the notification texts.</string>
     <string name="help_privacy_heading">Privacy Info</string>
-    <string name="help_permission_boot_heading">Permission RECEIVE BOOT COMPLETED</string>
-    <string name="help_permission_boot_description">is used to start the step counter and set the notifications at boot time. If RECEIVE BOOT COMPLETED is not granted you have to start the app manually once after boot to activate the app.</string>
+    <string name="help_permission_boot_heading">Permission Receive Boot Completed</string>
+    <string name="help_permission_boot_description">is used to start the step counter and set the notifications at boot time. If the permission is not granted you have to start the app manually once after boot to activate the app.</string>
     <string name="help_permissions_heading">Permissions</string>
-    <string name="help_permissions_description">Privacy Friendly Activity Tracker does not use any privacy-related permissions.</string>
 
     <!-- Preferences -->
     <!-- general settings -->
@@ -84,9 +82,9 @@
     <string name="unit_of_length_km">1|km|kilometers|km/h</string><!-- 1km = 1km -->
     <string name="unit_of_length_mi">0.621371|mi|miles|mph</string><!-- 1km = 0.621371 miles -->
 
-    <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please provide set your weight and gender.</string>
+    <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please set your weight and gender.</string>
     <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
-    <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please:\n</string>
+    <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please.</string>
 
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Weight</string>

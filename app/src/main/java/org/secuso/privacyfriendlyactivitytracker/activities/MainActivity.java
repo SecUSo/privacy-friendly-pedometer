@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             LayoutInflater i = getActivity().getLayoutInflater();
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setView(i.inflate(R.layout.welcome_dialog, null));
-            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setIcon(R.mipmap.ic_drawer);
             builder.setTitle(getActivity().getString(R.string.welcome));
             builder.setPositiveButton(getActivity().getString(R.string.okay), null);
             builder.setNegativeButton(getActivity().getString(R.string.view_help), new DialogInterface.OnClickListener() {

@@ -20,7 +20,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/sym_def_app_icon" />
+            android:src="@mipmap/ic_drawer" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,6 +32,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
     </RelativeLayout>

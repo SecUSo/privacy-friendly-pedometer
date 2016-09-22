@@ -80,10 +80,8 @@
             android:id="@+id/textViewLib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:linksClickable="true"
             android:text="@string/about_thrid_party_libs" />
 
         <TextView
@@ -95,19 +93,19 @@
 
 
         <TextView
+            android:id="@+id/textFieldSecuso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/url"
             android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:autoLink="web"/>
+            android:layout_gravity="center_horizontal" />
         <TextView
+            android:id="@+id/textFieldRepo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:textStyle="bold"
-            android:autoLink="web"
             android:text="@string/github" />
 
     </LinearLayout>

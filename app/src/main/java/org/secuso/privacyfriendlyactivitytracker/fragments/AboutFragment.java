@@ -29,6 +29,14 @@ public class AboutFragment extends Fragment {
             actionBar.setSubtitle(R.string.action_about);
         }
 
+        // Make links clickable
+        TextView libTextView = (TextView) rootView.findViewById(R.id.textViewLib);
+        libTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView secusoTextView = (TextView) rootView.findViewById(R.id.textFieldSecuso);
+        secusoTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView repoTextView = (TextView) rootView.findViewById(R.id.textFieldRepo);
+        repoTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
         container.removeAllViews();
         return rootView;
     }

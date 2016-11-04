@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Activity Tracker</string>
-    <string name="app_name_long">Privacy Friendly Activity Tracker</string>
+    <string name="app_name">Schrittzähler</string>
+    <string name="app_name_long">Privacy Friendly Schrittzähler</string>
 
     <!-- Navigation Drawer -->
     <string name="action_about">Über</string>
@@ -56,7 +56,7 @@
     <string name="help_functionality_notification_summary">Die permanente Benachrichtigung ist notwendig, um Schritte auch im Hintergrund zu zählen. Der Inhalt der Benachrichtigung kann in den Einstellungen gewählt werden. </string>
     <string name="help_functionality_notification_delete">Um die Benachrichtigung zu deaktivieren, gehen Sie in die Systemeinstellungen und deaktivieren Sie alle Benachrichtigungen für diese App.</string>
     <string name="help_functionality_step_counter_summary">Der Schrittzähler zählt Ihre Schritte und kann in den Einstellungen (de)aktiviert werden. Im Trainingsmodus wird auch die Geschwindigkeit gemessen.</string>
-    <string name="help_intro">Privacy Friendly Activity Tracker zählt die Anzahl Ihrer Schritte. Außerdem wird Ihnen ein Überblick über die zurückgelegten Schritte, Distanzen und verbrannten Kalorien bereitgestellt. </string>
+    <string name="help_intro">Privacy Friendly Schrittzähler zählt die Anzahl Ihrer Schritte. Außerdem wird Ihnen ein Überblick über die zurückgelegten Schritte, Distanzen und verbrannten Kalorien bereitgestellt. </string>
     <string name="help_permission_boot_description">wird verwendet, um den Schrittzähler und die Benachrichtigungen beim Hochfahren des Geräts zu starten. Wenn die Berechtigung nicht gewährt wird, muss Sie die App nach dem Systemstart einmal manuell gestartet werden.</string>
 
     <string name="hint_training_description">Beschreibung</string>

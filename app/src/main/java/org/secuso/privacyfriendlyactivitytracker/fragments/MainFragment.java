@@ -39,7 +39,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setSubtitle(R.string.action_main);
+            //actionBar.setSubtitle(R.string.action_main);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         container.removeAllViews();

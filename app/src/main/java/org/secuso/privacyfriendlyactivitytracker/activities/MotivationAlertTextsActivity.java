@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.adapters.MotivationAlertTextsAdapter;
 
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.secuso.privacyfriendlyactivitytracker.R;
 
 /**
  * This activity allows the user to manage the motivation texts.

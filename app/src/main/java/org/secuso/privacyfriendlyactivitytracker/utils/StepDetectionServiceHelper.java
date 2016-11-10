@@ -10,14 +10,13 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
+import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver;
 import org.secuso.privacyfriendlyactivitytracker.receivers.StepCountPersistenceReceiver;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import org.secuso.privacyfriendlyactivitytracker.R;
 
 /**
  * Helper class to start and stop the necessary services

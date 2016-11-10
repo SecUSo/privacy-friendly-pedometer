@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 
 import java.util.List;
-
-import org.secuso.privacyfriendlyactivitytracker.R;
 
 /**
  * This adapter is used for walking modes.

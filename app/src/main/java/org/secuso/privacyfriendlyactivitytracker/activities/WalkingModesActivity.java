@@ -16,14 +16,13 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.adapters.WalkingModesAdapter;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.secuso.privacyfriendlyactivitytracker.R;
 
 /**
  * This activity allows the user to manage the walking modes.

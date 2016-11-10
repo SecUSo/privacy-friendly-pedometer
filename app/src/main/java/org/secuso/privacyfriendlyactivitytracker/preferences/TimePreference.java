@@ -9,9 +9,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 
-import java.util.Calendar;
-
 import org.secuso.privacyfriendlyactivitytracker.R;
+
+import java.util.Calendar;
 
 /**
  * TimePreferences can be used as preference dialog to allow user to pick a time in hour:minute

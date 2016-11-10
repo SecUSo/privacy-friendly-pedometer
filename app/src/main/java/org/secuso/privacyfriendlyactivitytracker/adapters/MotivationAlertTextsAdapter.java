@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.List;
-
 import org.secuso.privacyfriendlyactivitytracker.R;
+
+import java.util.List;
 
 /**
  * This adapter is used for motivation-alert texts.

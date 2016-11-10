@@ -14,7 +14,7 @@
     <string name="action_training">Training</string>
 
     <!-- AboutFragment-->
-    <string name="version_number">Version 1.0</string>
+    <string name="version_number">Version 1.0.1</string>
     <string name="about_author">Author: Tobias Neidig and contributors</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="more_info">More information can be found on:</string>
@@ -49,9 +49,12 @@
     <string name="help_functionality_motivation_alert">Motivation alert</string>
     <string name="help_functionality_motivation_alert_summary">The app can show you motivation alerts if the achievement of your daily step goal is in danger. You can define the criterion, the time of day and the notification texts.</string>
     <string name="help_privacy_heading">Privacy Info</string>
-    <string name="help_permission_boot_heading">Permission Receive Boot Completed</string>
+    <string name="help_permission_boot_heading">Permission: Receive Boot Completed</string>
     <string name="help_permission_boot_description">is used to start the step counter and set the notifications at boot time. If the permission is not granted you have to start the app manually once after boot to activate the app.</string>
     <string name="help_permissions_heading">Permissions</string>
+    <string name="help_permissions_selection">The permissions used by Privacy Friendly Pedometer can not be managed by the user in any Android version.</string>
+    <string name="help_permission_wake_heading">Permission: Wake Lock</string>
+    <string name="help_permission_wake_description">is used to keep the CPU awake to count the steps in background.</string>
 
     <!-- Preferences -->
     <!-- general settings -->

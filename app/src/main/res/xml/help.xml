@@ -26,8 +26,15 @@
 
     <PreferenceCategory android:title="@string/help_privacy_heading">
         <Preference
+            android:summary="@string/help_permissions_selection"
+            android:selectable="false"/>
+        <Preference
             android:summary="@string/help_permission_boot_description"
             android:title="@string/help_permission_boot_heading"
+            android:selectable="false"/>
+        <Preference
+            android:summary="@string/help_permission_wake_description"
+            android:title="@string/help_permission_wake_heading"
             android:selectable="false"/>
     </PreferenceCategory>
 

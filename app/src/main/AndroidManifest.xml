@@ -37,6 +37,25 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name="org.secuso.privacyfriendlyactivitytracker.activities.AboutActivity"
+            android:label="@string/action_about"
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlyactivitytracker.activities.HelpActivity"
+            android:label="@string/action_help"
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+        </activity>
+        <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity"
             android:label="@string/activity_title_training"
             android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity">

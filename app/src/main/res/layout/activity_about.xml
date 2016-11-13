@@ -109,6 +109,14 @@
             android:text="@string/privacy_friendly" />
 
         <TextView
+            android:id="@+id/textViewLib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/about_thrid_party_libs" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

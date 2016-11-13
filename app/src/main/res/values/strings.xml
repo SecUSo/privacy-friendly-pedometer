@@ -2,8 +2,8 @@
     <string name="app_name">Pedometer</string>
     <string name="app_name_long">Privacy Friendly Pedometer</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <!-- Menu Items-->
     <string name="action_help">Help</string>

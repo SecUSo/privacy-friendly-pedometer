@@ -12,8 +12,9 @@
     <string name="action_main">Pedometer</string>
     <string name="action_navigation">Navigation</string>
     <string name="action_training">Training</string>
+    <string name="action_switch">On/Off</string>
 
-    <!-- AboutFragment-->
+    <!-- AboutActivity-->
     <string name="version_number">Version 1.0.1</string>
     <string name="about_author">Author: </string>
     <string name="about_author_names" translatable="false">Tobias Neidig </string>
@@ -24,7 +25,6 @@
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
     <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
-
 
     <!-- ReportFragment -->
     <string name="month">Month</string>
@@ -37,7 +37,7 @@
     <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
     <string name="summary_card_calories">cal</string>
 
-    <!-- HelpFragment -->
+    <!-- HelpActivity -->
     <string name="activity_title_help">Help</string>
     <string name="help_overview_heading">Overview</string>
     <string name="help_intro">This app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>

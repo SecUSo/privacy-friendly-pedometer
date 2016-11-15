@@ -2,13 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
 
-    <group android:id="@+id/menu_group_general">
+    <group android:id="@+id/menu_group_general" android:checkableBehavior="all">
         <item android:id="@+id/menu_home" android:title="@string/action_main" android:icon="@drawable/ic_directions_walk_65black_30dp"
             android:orderInCategory="100" app:showAsAction="never" />
         <item android:id="@+id/menu_training" android:title="@string/action_training" android:icon="@drawable/ic_directions_run"
             android:orderInCategory="100" app:showAsAction="never" />
     </group>
-    <group android:id="@+id/menu_group_settings">
+    <group android:id="@+id/menu_group_settings" android:checkableBehavior="all">
         <item android:id="@+id/menu_settings" android:title="@string/action_settings" android:icon="@drawable/ic_settings"
             android:orderInCategory="100" app:showAsAction="never" />
         <item android:id="@+id/menu_help" android:title="@string/action_help" android:icon="@drawable/ic_action_help"

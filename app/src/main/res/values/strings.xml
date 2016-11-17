@@ -15,7 +15,7 @@
     <string name="action_switch">On/Off</string>
 
     <!-- AboutActivity-->
-    <string name="version_number">Version 1.0.1</string>
+    <string name="version_number">Version 1.0.2</string>
     <string name="about_author">Author: </string>
     <string name="about_author_names" translatable="false">Tobias Neidig </string>
     <string name="about_author_contributors"> and contributors.</string>

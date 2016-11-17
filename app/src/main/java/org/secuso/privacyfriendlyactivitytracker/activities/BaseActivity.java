@@ -140,10 +140,13 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
 
         switch (itemId) {
             case R.id.menu_home:
-                Fragment fragment = new MainFragment();
+                //Fragment fragment = new MainFragment();
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+                //FragmentManager fragmentManager = getSupportFragmentManager();
+                //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+                intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
                 break;
             case R.id.menu_training:
@@ -164,6 +167,20 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
                 break;
             default:
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        View mainContent = findViewById(R.id.main_content);
+        if (mainContent != null && mainContent.getAlpha() != 1.0f) {
+            mainContent.setAlpha(0);
+            mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        }
+
+        selectNavigationItem(getNavigationDrawerID());
+
     }
 
     @Override

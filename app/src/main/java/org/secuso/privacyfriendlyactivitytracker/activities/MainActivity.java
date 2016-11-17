@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.fragments.DailyReportFragment;
@@ -41,8 +42,6 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
             WelcomeDialog welcomeDialog = new WelcomeDialog();
             welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
         }
-
-
 
         // Load first view
         final android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

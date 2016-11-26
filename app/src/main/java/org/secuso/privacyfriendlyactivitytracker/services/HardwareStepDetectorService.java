@@ -3,22 +3,20 @@ package org.secuso.privacyfriendlyactivitytracker.services;
 import android.annotation.SuppressLint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 
 /**
- * Uses the hardware step counter sensor to detect steps.
+ * Uses the hardware step detector sensor to detect steps.
  * Publishes the detected steps to any subscriber.
  *
  * @author Tobias Neidig
- * @version 20160522
+ * @version 20161126
  */
 public class HardwareStepDetectorService extends AbstractStepDetectorService {
-    /**
-     * Number of steps which the user went today
-     * This is used when step counter is used.
-     */
-    private float mStepOffset = -1;
+
+    private static final String LOG_TAG = HardwareStepDetectorService.class.getName();
 
     /**
      * Creates an HardwareStepDetectorService.
@@ -35,28 +33,15 @@ public class HardwareStepDetectorService extends AbstractStepDetectorService {
      */
     public HardwareStepDetectorService(String name) {
         super(name);
+        Log.i(LOG_TAG, "Created step counter service");
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        switch (event.sensor.getType()) {
-            case Sensor.TYPE_STEP_DETECTOR:
-                this.onStepDetected(1);
-                break;
-            case Sensor.TYPE_STEP_COUNTER:
-                if (this.mStepOffset < 0) {
-                    this.mStepOffset = event.values[0];
-                }
-                if (this.mStepOffset > event.values[0]) {
-                    // this should never happen?
-                    return;
-                }
-                // publish difference between last known step count and the current ones.
-                this.onStepDetected((int) (event.values[0] - mStepOffset));
-                // Set offset to current value so we know it at next event
-                mStepOffset = event.values[0];
-                break;
-        }
+        if (event.sensor.getType() != Sensor.TYPE_STEP_DETECTOR)
+            return;
+
+        this.onStepDetected(1);
     }
 
     @SuppressLint("InlinedApi")

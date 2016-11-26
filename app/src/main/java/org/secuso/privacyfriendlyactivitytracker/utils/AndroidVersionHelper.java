@@ -6,7 +6,7 @@ import android.os.Build;
 /**
  *
  * @author Tobias Neidig
- * @version 20160610
+ * @version 20161126
  */
 public class AndroidVersionHelper {
     /**
@@ -19,10 +19,19 @@ public class AndroidVersionHelper {
         // https://developer.android.com/about/versions/android-4.4.html
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 // In addition to the system version
-                // the hardware step detection is not supported on every device
+                // the hardware step counter is not supported on every device
                 // let's check the device's ability.
-                && pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)
                 && pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_DETECTOR);
 
+    }
+
+    public static boolean supportsStepCounter(PackageManager pm) {
+        // (Hardware) step detection was introduced in KitKat (4.4 / API 19)
+        // https://developer.android.com/about/versions/android-4.4.html
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                // In addition to the system version
+                // the hardware step detection is not supported on every device
+                // let's check the device's ability.
+                && pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER);
     }
 }

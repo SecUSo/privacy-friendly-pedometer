@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.services.AccelerometerStepDetectorService;
+import org.secuso.privacyfriendlyactivitytracker.services.HardwareStepCounterService;
 import org.secuso.privacyfriendlyactivitytracker.services.HardwareStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 
@@ -11,7 +12,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
  * Factory class
  *
  * @author Tobias Neidig
- * @version 20160610
+ * @version 20161126
  */
 public class Factory {
 
@@ -23,10 +24,12 @@ public class Factory {
      * @return The class of step detector
      */
     public static Class<? extends AbstractStepDetectorService> getStepDetectorServiceClass(PackageManager pm){
-        if(pm != null && AndroidVersionHelper.supportsStepDetector(pm)) {
-            return HardwareStepDetectorService.class;
-        }else{
-            return AccelerometerStepDetectorService.class;
+        if(pm != null) {
+            if (AndroidVersionHelper.supportsStepCounter(pm))
+                return HardwareStepCounterService.class;
+            if (AndroidVersionHelper.supportsStepDetector(pm))
+                return HardwareStepDetectorService.class;
         }
+        return AccelerometerStepDetectorService.class;
     }
 }

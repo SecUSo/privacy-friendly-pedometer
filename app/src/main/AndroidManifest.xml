@@ -136,6 +136,9 @@
         <service
             android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepDetectorService"
             android:stopWithTask="false" />
+        <service
+            android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepCounterService"
+            android:stopWithTask="false" />
     </application>
 
 </manifest>

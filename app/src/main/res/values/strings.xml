@@ -240,7 +240,7 @@
     <string name="hint_training_description">Description</string>
     <string name="hint_training_title">Title</string>
     <string name="hint_training_feeling">Feeling:</string>
-    <string name="training_card_calories">cal</string>
+    <string name="training_card_calories">kcal</string>
     <string name="training_card_distance_km">km</string>
     <string name="training_card_duration">h</string>
     <string name="training_minutes">min</string>

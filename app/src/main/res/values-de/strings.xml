@@ -141,10 +141,10 @@
     <string name="since">seit</string>
     <string name="step_length">Schrittlänge:</string>
     <string name="steps">Schritte</string>
-    <string name="summary_card_calories">cal</string>
+    <string name="summary_card_calories">kcal</string>
 
     <!-- Training -->
-    <string name="training_card_calories">cal</string>
+    <string name="training_card_calories">kcal</string>
     <string name="training_card_distance_km">km</string>
     <string name="training_card_duration">h</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>

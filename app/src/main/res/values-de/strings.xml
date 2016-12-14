@@ -179,8 +179,15 @@
 
     <string name="okay">OKAY</string>
     <string name="view_help">Hilfe</string>
-    <string name="view_personal_settings">Einstellungen</string>
     <string name="welcome">Willkommen!</string>
-    <string name="welcome_text">Mithilfe dieser App können Sie Ihre täglichen Schritte im Hintergrund zählen und eigene Laufmodi zur genaueren Berechnung der Distanz anlegen. Die App gibt Ihnen einen Überblick über Ihre zurückgelegten Schritte und kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden.\n\nSie können zwischen den Laufmodi wechseln, indem Sie sie in der Toolbar auswählen.\n\nUm die Berechnung der verbrannten Kalorien zu verbessern, passen Sie bitte Ihre persönlichen Einstellungen an.</string>
+    <string name="next">Weiter</string>
+    <string name="skip">Überspringen</string>
 
+    <string name="welcome_text">Privacy Friendly Schrittzähler zählt Ihre täglichen Schritte und stellt Ihnen einen Überblick zur Verfügung.</string>
+    <string name="pref_is_not_first_run" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.is_not_first_run</string>
+    <string name="slide_2_title">Personalisierung</string>
+    <string name="slide_2_desc">Um die Berechnung der verbrannten Kalorien zu verbessern, können Sie bitte unter Einstellungen persönliche Werte eingeben.</string>
+    <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus wechseln, indem Sie sie in der Toolbar auswählen.</string>
+    <string name="slide_3_title">Benachritigungen</string>
+    <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
 </resources>

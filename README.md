@@ -17,7 +17,7 @@ Further development requires Android Studio, we recommend to use at least versio
 ### API Reference
 
 Minimum SDK: 16
-Target SDK: 25
+Target SDK: 24
 
 ## License
 

@@ -1,0 +1,201 @@
+﻿<resources>
+    <string name="app_name">Pedometer</string>
+    <string name="app_name_long">Privacy Friendly Pedometer</string>
+
+    <!-- Menu Items-->
+    <string name="action_help">ヘルプ</string>
+    <string name="action_about">アプリについて</string>
+    <string name="action_settings">設定</string>
+    <string name="action_main">歩数計</string>
+    <string name="action_navigation">ナビゲーション</string>
+    <string name="action_training">トレーニング</string>
+    <string name="action_switch">オン/オフ</string>
+
+    <!-- AboutActivity-->
+    <string name="version_number">Version 1.0.3</string>
+    <string name="about_author">作者: </string>
+    <string name="about_author_contributors"> と貢献者。</string>
+    <string name="about_affiliation">提携</string>
+    <string name="more_info">さらに詳しい情報は以下でご覧ください:</string>
+    <string name="about_thrid_party_libs">このアプリは <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> を使用しています (Apache 2 ライセンス)。</string>
+    <string name="privacy_friendly">このアプリケーションは、ダルムシュタット工科大学 (Technische Universität Darmstadt, Germany) が開発したプライバシーフレンドリーアプリのグループに属しています。ソースコードは GPLv3 の下でライセンスされます。画像の著作権は TU Darmstadt および Google Inc.</string>
+    <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Webサイト</a></string>
+
+    <!-- ReportFragment -->
+    <string name="month">月</string>
+    <string name="week">週</string>
+    <string name="day">日</string>
+    <string name="steps">歩数</string>
+    <string name="calories">カロリー</string>
+    <string name="km">キロメートル</string>
+    <string name="activity_summary_subtitle">活動のサマリー</string>
+    <string name="activity_chart_summary_subtitle">あなたの活動の詳細サマリー</string>
+    <string name="summary_card_calories">kcal</string>
+
+    <!-- HelpActivity -->
+    <string name="activity_title_help">ヘルプ</string>
+    <string name="help_overview_heading">概要</string>
+    <string name="help_intro">このアプリはバックグラウンドであなたの歩数を数えることができ、歩数についての概要を提供します。カスタム歩行モードを定義して、毎日の歩数の目標達成が危うい場合に、通知することができます。</string>
+    <string name="help_functionality_heading">基本機能</string>
+    <string name="help_functionality_step_counter">歩数計</string>
+    <string name="help_functionality_step_counter_summary">歩数計は、バックグラウンドで 1 日の歩数をカウントします。設定で無効にすることができます。</string>
+    <string name="help_functionality_notification_heading">常時通知</string>
+    <string name="help_functionality_notification">通知</string>
+    <string name="help_functionality_notification_summary">歩数計をバックグラウンドで動作させるために、常時通知が必要です。 通知の内容は設定で選択できます。</string>
+    <string name="help_functionality_notification_delete">システムの設定ですべての通知を無効にすることができます。</string>
+    <string name="help_functionality_motivation_alert">モチベーションの警告</string>
+    <string name="help_functionality_motivation_alert_summary">毎日の歩数の目標達成が危うい場合に、アプリがモチベーションの警告を表示することができます。 基準、時刻、通知テキストを定義することができます。</string>
+    <string name="help_privacy_heading">プライバシー情報</string>
+    <string name="help_permission_boot_heading">アクセス許可: 起動完了の受信</string>
+    <string name="help_permission_boot_description">が、歩数計を開始し、起動時に通知を設定するために使用されます。 アクセス許可が与えられていない場合は、起動後にアプリを手動で開始して、アプリを有効にする必要があります。</string>
+    <string name="help_permissions_heading">アクセス許可</string>
+    <string name="help_permissions_selection">プライバシーフレンドリーな歩数計で使用されるアクセス許可は、すべてのバージョンの Android で、ユーザーが管理することはできません。</string>
+    <string name="help_permission_wake_heading">アクセス許可: ウェイクロック</string>
+    <string name="help_permission_wake_description">が、CPU を起動したままにして、バックグラウンドで歩数をカウントするために使用されます。</string>
+
+    <!-- Preferences -->
+    <!-- general settings -->
+    <string name="pref_header_general">全般</string>
+    <string name="pref_group_title_personal_settings">パーソナライゼーション</string>
+
+    <string name="pref_title_step_counter_enabled">常時歩数計を有効にする</string>
+    <string name="pref_summary_step_counter_enabled">アプリはバックグラウンドで歩数をカウントします。</string>
+
+    <string name="pref_title_use_wake_lock">プロセッサを起動したままにする</string>
+    <string name="pref_summary_use_wake_lock">一部のデバイスでは、プロセッサがスリープ状態になり、歩数のカウントが妨害されます。 これを有効にすると、歩数をカウントしている間プロセッサを起動させ続けることができます - これによりバッテリが消耗する可能性があります!</string>
+
+    <string name="pref_title_daily_step_goal">1 日の目標歩数</string>
+    <string name="pref_title_unit_of_length">距離の単位</string>
+    <string-array name="pref_keys_unit_of_length">
+        <item>キロメートル</item>
+        <item>マイル</item>
+    </string-array>
+    <string name="unit_of_length_km">1|km|キロメートル|km/h</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|マイル|mph</string><!-- 1km = 0.621371 miles -->
+
+    <string name="pref_explanation_weight_and_gender">カロリー計算を正確に行うため、体重と性別を設定してください。</string>
+    <string name="pref_summary_notification_permanent">アプリがバックグラウンドで歩数をカウントすると、常時通知が表示されます。 アプリが何を表示するかをカスタマイズすることができます。</string>
+    <string name="pref_summary_accelerometer_threshold">アプリはお使いのデバイスの加速度計を使用しています。 ステップ検出を最適化するには感度を調整してください。</string>
+
+    <string name="pref_title_weight">体重 (kg)</string>
+
+    <string name="pref_title_gender">性別</string>
+    <string-array name="pref_keys_gender">
+        <item>女性</item>
+        <item>男性</item>
+    </string-array>
+    <string name="pref_title_accelerometer_threshold">感度</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>非常に高い</item>
+        <item>より高い</item>
+        <item>高</item>
+        <item>通常</item>
+        <item>低</item>
+        <item>より低い</item>
+        <item>非常に低い</item>
+    </string-array>
+
+    <!-- /general settings -->
+    <!-- notification settings -->
+    <string name="pref_header_notifications">通知</string>
+    <string name="pref_group_title_permanent_notification">常時通知</string>
+    <string name="pref_group_title_motivation_alert">モチベーションの警告</string>
+
+    <string name="pref_title_notification_permanent_show_steps">今日歩いた歩数を表示する</string>
+    <string name="pref_title_notification_permanent_show_distance">今日歩いた距離を表示する</string>
+    <string name="pref_title_notification_permanent_show_calories">カロリー数を表示する</string>
+
+    <string name="pref_title_notification_motivation_alert_enabled">モチベーションの警告を有効にする</string>
+    <string name="pref_title_notification_motivation_alert_time">モチベーションの警告時刻</string>
+    <string name="pref_title_notification_motivation_alert_texts">モチベーション通知のテキスト</string>
+    <string name="pref_title_notification_motivation_alert_criterion">モチベーションの警告基準</string>
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>1 日の目標の 90&#65285; 未満</item>
+        <item>1 日の目標の 70&#65285; 未満</item>
+        <item>1 日の目標の 50&#65285; 未満</item>
+    </string-array>
+    <!-- /notification settings -->
+    <string name="pref_header_walking_modes">ウォーキングモード</string>
+    <!-- /Preferences -->
+
+    <!-- Will be removed on next update -->
+    <string name="notification_text_steps">今日は %1$s / %2$s 歩、歩きました。</string>
+    <string name="notification_text_distance">今日は %1$.2f %2$s 歩きました。</string>
+    <string name="notification_text_calories">今日は %.2f カロリー消費しました。</string>
+    <!-- /Will be removed on next update -->
+
+    <!-- others -->
+    <string name="action_calories">カロリー</string>
+    <string name="action_distance">距離</string>
+    <string name="action_steps">歩数</string>
+    <string name="set">設定</string>
+    <string name="save">保存</string>
+    <string name="edit">編集</string>
+    <string name="delete">削除</string>
+    <string name="operation_failed">操作に失敗しました</string>
+    <string name="since">開始</string>
+    <string name="okay">OK</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">ようこそ!</string>
+    <string name="welcome_text">プライバシーに配慮した歩数計は、歩数をバックグラウンドで数えることができ、歩行の概要を提供します。</string>
+    <string name="slide_2_title">カスタマイズ</string>
+    <string name="slide_2_desc">歩いて消費したカロリーの計算を正確に行うため、個人的な設定をカスタマイズしてください。</string>
+    <string name="slide_2_desc_two">現在のウォーキングモードは、ツールバーのコンテキストメニューを使用して切り替えることができます。</string>
+    <string name="slide_3_title">通知</string>
+    <string name="slide_3_desc">カスタムウォーキングモードを定義して、毎日の目標達成が危うい場合に通知します。</string>
+    <string name="view_help">ヘルプを表示</string>
+    <string name="next">次へ</string>
+    <string name="skip">スキップ</string>
+    <!-- /welcome dialog -->
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>さあ、歩きましょう!</item>
+    </string-array>
+    <string name="motivation_alert_empty">毎日の歩数目標が危ういときの、カスタム警告メッセージを設定してください。\n\nメッセージがない場合は警告が表示されません。</string>
+    <string name="motivation_alert_input_title">モチベーションの警告メッセージを設定</string>
+    <string name="motivation_alert_input_message">あなた独自のカスタムモチベーション警告を設定してください。 アプリはテキストをランダムに通知します。</string>
+    <string name="motivation_alert_input_empty">モチベーションの警告が空では役に立ちませんね?</string>
+    <string name="activity_title_motivation_alerts">モチベーションの警告</string>
+    <string name="motivation_alert_notification_title">歩数計</string>
+
+    <!-- walking modes -->
+    <string name="activity_title_walking_modes">ウォーキングモード</string>
+    <string name="walking_mode_input_title">ウォーキングモード</string>
+    <string name="walking_mode_input_message">カスタムウォーキングモードを設定:</string>
+    <string name="walking_mode_at_least_one_is_required">少なくとも 1 つウォーキングモードが必要です。</string>
+    <string name="walking_mode_cannot_delete_active_one">有効なウォーキングモードは削除できません。</string>
+    <string name="walking_mode_set_active">有効にする</string>
+    <string name="walking_mode_menu_learn">学習</string>
+    <string name="walking_mode_learning_distance_description">歩く距離:</string>
+    <string name="walking_mode_learning_steps_description">歩いた歩数:</string>
+    <string name="walking_mode_learning_stop">学習モード終了</string>
+    <string name="walking_mode_learning_description">アプリケーションが歩幅を学習することができます。 所定の距離を歩いて、終了したら、終了を押してください。</string>
+    <string name="step_length">歩幅:</string>
+    <string name="walking_mode_active_ext"> (有効)</string>
+    <string name="walking_mode_input_empty">名前と歩幅が必要です。 入力してください!</string>
+    <string name="hint_walking_mode_name">名前</string>
+    <string name="hint_walking_mode_step_length">歩幅</string>
+    <string-array name="pref_default_walking_mode_names">
+        <item>ウォーキング</item>
+        <item>ランニング</item>
+    </string-array>
+
+    <string name="training_overview_empty">まだトレーニング機能を使用していないようです。 トレーニングを始める時間です!</string>
+    <string name="training_input_message" />
+    <string name="training_input_title">トレーニングセッション</string>
+    <string name="activity_title_training">トレーニングTraining</string>
+    <string name="hint_training_description">説明</string>
+    <string name="hint_training_title">タイトル</string>
+    <string name="hint_training_feeling">気分:</string>
+    <string name="training_card_calories">kcal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+    <string name="training_minutes">分</string>
+    <string name="training_velocity">km/h</string>
+    <string name="training_stop_button">今すぐトレーニング終了</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+    <string name="activity_summary_chart_legend_stepgoal">歩数の目標</string>
+</resources>

@@ -2,9 +2,6 @@
     <string name="app_name">Podómetro</string>
     <string name="app_name_long">Podómetro con Privacidad</string>
 
-    <string name="drawer_open">Abrir panel de navegación</string>
-    <string name="drawer_close">Cerrar panel de navegación</string>
-
     <!-- Menu Items-->
     <string name="action_help">Ayuda</string>
     <string name="action_about">Sobre la aplicación</string>
@@ -15,10 +12,10 @@
 
     <!-- AboutFragment-->
     <string name="version_number">Versión 1.0.1</string>
-    <string name="about_author">Autor: Tobias Neidig and contributors</string>
+    <string name="about_author">Autor:</string>
     <string name="about_affiliation">En colaboración con:</string>
     <string name="more_info">Puede encontrar más información en:</string>
-    <string name="about_thrid_party_libs">Esta aplicación usa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licencia de Apache 2).</string>
+    <string name="about_third_party_libs">La aplicación usa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licencia Apache 2).</string>
     <string name="privacy_friendly">Esta aplicación pertenece al grupo Aplicaciones con Privacidad desarolladas por Technische Universität Darmstadt. El código fuente está bajo la licencia GPLv3. Las imágenes tienen Copyright TU Darmstadt y Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Página Web-SECUSO</a></string>
 
@@ -32,7 +29,7 @@
     <string name="km">kilómetros</string>
     <string name="activity_summary_subtitle">Resumen de actividades</string>
     <string name="activity_chart_summary_subtitle">Resumen detallado de sus actividades</string>
-    <string name="summary_card_calories">cal</string>
+    <string name="summary_card_calories">kcal</string>
 
     <!-- HelpFragment -->
     <string name="activity_title_help">Ayuda</string>
@@ -142,7 +139,6 @@
     <!-- welcome dialog -->
     <string name="welcome">Bienvenido</string>
     <string name="welcome_text">Bienvenido al Podómetro con Privacidad. Esta aplicación puede contar sus pasos en segundo plano, le proporciona un resumen sobre los pasos andados y le permite definir modos de andado personalizados, además de notificaciones si tu meta diaria está en peligro.\n\nPuedes cambiar tu modo de andado actual usando el menú contextual en la barra de herramientas.\n\nPara mejorar el cálculo de calorías quemadas por favor modifique sus ajustes personales.</string>
-    <string name="view_personal_settings">Ajustes</string>
     <string name="view_help">Ver ayuda</string>
     <!-- /welcome dialog -->
 
@@ -186,7 +182,7 @@
     <string name="hint_training_description">Descripción</string>
     <string name="hint_training_title">Título</string>
     <string name="hint_training_feeling">Sentimiento:</string>
-    <string name="training_card_calories">cal</string>
+    <string name="training_card_calories">kcal</string>
     <string name="training_card_distance_km">km</string>
     <string name="training_card_duration">h</string>
     <string name="training_minutes">min</string>
@@ -194,4 +190,13 @@
     <string name="training_stop_button">Finalizar entrenamiento ahora</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Meta de pasos</string>
+    <string name="about_author_contributors"> y contribuidores.</string>
+    <string name="action_switch">Encendido/Apagado</string>
+    <string name="next">Siguiente</string>
+    <string name="skip">Saltar</string>
+    <string name="slide_2_desc">Para mejorar el cálculo de calorías quemadas por favor modifique sus datos personales.</string>
+    <string name="slide_2_desc_two">Puede cambiar los modos de andado usando el menú contextual en la barra de herramientas.</string>
+    <string name="slide_2_title">Personalizar</string>
+    <string name="slide_3_desc">Defina modos de andado personalizados y las notificaciones si su meta diaria está en peligro.</string>
+    <string name="slide_3_title">Notificaciones</string>
 </resources>

@@ -35,7 +35,7 @@
     <string name="km">kilometers</string>
     <string name="activity_summary_subtitle">Summary of activities</string>
     <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
-    <string name="summary_card_calories">cal</string>
+    <string name="summary_card_calories">kcal</string>
 
     <!-- HelpActivity -->
     <string name="activity_title_help">Help</string>

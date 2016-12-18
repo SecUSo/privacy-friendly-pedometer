@@ -21,7 +21,7 @@
     <string name="about_author_contributors"> and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="more_info">More information can be found on:</string>
-    <string name="about_thrid_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> (Apache 2 License).</string>
+    <string name="about_third_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> (Apache 2 License).</string>
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
     <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>

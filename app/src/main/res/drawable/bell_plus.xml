@@ -1,8 +1,0 @@
-<!-- drawable/bell-plus.xml -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:height="24dp"
-    android:width="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
-    <path android:fillColor="#000" android:pathData="M10,21C10,22.11 10.9,23 12,23A2,2 0 0,0 14,21M18.88,16.82V11C18.88,7.75 16.63,5.03 13.59,4.31V3.59A1.59,1.59 0 0,0 12,2A1.59,1.59 0 0,0 10.41,3.59V4.31C7.37,5.03 5.12,7.75 5.12,11V16.82L3,18.94V20H21V18.94M16,13H13V16H11V13H8V11H11V8H13V11H16" />
-</vector>

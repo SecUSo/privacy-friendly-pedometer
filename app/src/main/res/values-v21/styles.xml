@@ -1,8 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:timePickerStyle">@style/TimePickerDialogStyle</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="textAppearanceLargePopupMenu">@style/popupMenuTextAppearanceSmall</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/popupMenuTextAppearanceSmall</item>
+        <item name="textAppearanceSmallPopupMenu">@style/popupMenuTextAppearanceLarge</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/popupMenuTextAppearanceLarge</item>
+        <item name="android:alertDialogTheme">@style/AppTheme.AlertDialog</item>
     </style>
 
     <style name="TimePickerDialogStyle" parent="@android:style/Widget.Material.Light.TimePicker">

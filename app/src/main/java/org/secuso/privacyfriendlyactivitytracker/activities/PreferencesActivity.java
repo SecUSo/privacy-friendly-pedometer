@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlyactivitytracker.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
@@ -166,8 +168,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || HelpFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                //|| HelpFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -297,23 +299,23 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     /**
      * This fragment shows the help content.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class HelpFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.help);
-            setHasOptionsMenu(false);
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                this.getActivity().onBackPressed();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+//    public static class HelpFragment extends PreferenceFragment {
+//        @Override
+//        public void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            addPreferencesFromResource(R.xml.help);
+//            setHasOptionsMenu(false);
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem item) {
+//            int id = item.getItemId();
+//            if (id == android.R.id.home) {
+//                this.getActivity().onBackPressed();
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

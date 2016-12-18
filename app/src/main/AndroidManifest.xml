@@ -31,10 +31,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".tutorial.TutorialActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlyactivitytracker.activities.AboutActivity"
+            android:label="@string/action_about"
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlyactivitytracker.activities.HelpActivity"
+            android:label="@string/action_help"
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity"

@@ -17,7 +17,7 @@
 
     <PreferenceCategory android:title="@string/pref_group_title_motivation_alert">
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/pref_notification_motivation_alert_enabled"
             android:title="@string/pref_title_notification_motivation_alert_enabled" />
         <!-- default is 18:00 -->

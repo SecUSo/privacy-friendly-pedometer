@@ -9,5 +9,15 @@
     <dimen name="cardview_default_margin">8dp</dimen>
     <dimen name="cardview_default_padding_top">24dp</dimen>
     <dimen name="cardview_default_padding_side">16dp</dimen>
+
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
+    <dimen name="img_width_height">120dp</dimen>
+    <dimen name="slide_title">30dp</dimen>
+    <dimen name="slide_desc">16dp</dimen>
+    <dimen name="slide_actions">20dp</dimen>
+    <dimen name="desc_padding">40dp</dimen>
+
 </resources>

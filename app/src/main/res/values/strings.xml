@@ -12,10 +12,11 @@
     <string name="action_main">Pedometer</string>
     <string name="action_navigation">Navigation</string>
     <string name="action_training">Training</string>
-    <string name="action_switch">On/Off</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
 
     <!-- AboutActivity-->
-    <string name="version_number">Version 1.0.3</string>
+    <string name="version_number">Version 1.0.4</string>
     <string name="about_author">Author: </string>
     <string name="about_author_names" translatable="false">Tobias Neidig </string>
     <string name="about_author_contributors"> and contributors.</string>

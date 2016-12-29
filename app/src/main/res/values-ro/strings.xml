@@ -1,0 +1,235 @@
+<resources>
+    <string name="app_name">Pedometer</string>
+    <string name="app_name_long">Privacy Friendly Pedometer</string>
+
+    <!-- Menu Items-->
+    <string name="action_help">Ajutor</string>
+    <string name="action_about">Despre</string>
+    <string name="action_settings">Setări</string>
+    <string name="action_main">Pedometer</string>
+    <string name="action_navigation">Navigare</string>
+    <string name="action_training">Antrenament</string>
+    <string name="pause">Pauză</string>
+    <string name="resume">Reia</string>
+
+    <!-- AboutActivity-->
+    <string name="version_number">Versiune 1.0.4</string>
+    <string name="about_author">Autor:</string>
+    <string name="about_author_contributors">și colaboratorii.</string>
+    <string name="about_affiliation">Împreună cu</string>
+    <string name="more_info">Mai multe informații se pot găsi la:</string>
+    <string name="about_third_party_libs">Aplicația folosește <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de la Philipp Jahoda</a> (Licență Apache 2).</string>
+    <string name="privacy_friendly">Această aplicație face parte din suita Privacy Friendly Apps (aplicații prietenoase cu intimitatea) dezvoltat de Technische Universität Darmstadt. Codul sursă este licențita sub GPLv3. Drepturile de autor pentru imagini aparțin lui TU Darmstadt și Google Inc.</string>
+    <string name="url"><a href="https://www.secuso.org/pfa">Site SECUSO</a></string>
+
+    <!-- ReportFragment -->
+    <string name="month">Lună</string>
+    <string name="week">Săptămână</string>
+    <string name="day">Zi</string>
+    <string name="steps">Pași</string>
+    <string name="calories">calorii</string>
+    <string name="km">kilometrii</string>
+    <string name="activity_summary_subtitle">Sumar activități</string>
+    <string name="activity_chart_summary_subtitle">Sumar detaliat al activităților dvs</string>
+    <string name="summary_card_calories">kcal</string>
+
+    <!-- HelpActivity -->
+    <string name="activity_title_help">Ajutor</string>
+    <string name="help_overview_heading">Informații despre aplicație</string>
+    <string name="help_intro">Această aplicație poate să contorizeze în fundal numărul de pași, oferă un sumar despre cât ați mers și oferă posibilitatea definirii de notificări și de moduri de mers personalizate atunci când realizare obiectivului zilnic de pași este în pericol.</string>
+    <string name="help_functionality_heading">Funcționalitate de bază</string>
+    <string name="help_functionality_step_counter">Contor de pași</string>
+    <string name="help_functionality_step_counter_summary">Contorul de pași numără pașii făcuți zilnic și poate fi dezactivat în setări.</string>
+    <string name="help_functionality_notification_heading">Notificare permanentă</string>
+    <string name="help_functionality_notification">Notificare</string>
+    <string name="help_functionality_notification_summary">Notificarea permanentă este necesară pentru a putea menține aplicația de contorizare pornită în fundal. Conținutul notificării poate fi ales in setări.</string>
+    <string name="help_functionality_notification_delete">Toate notificările se pot dezactiva în setările sistemului.</string>
+    <string name="help_functionality_motivation_alert">Alertă motivațională</string>
+    <string name="help_functionality_motivation_alert_summary">Aplicația o să arate alerta motivațională dacă numărul de pași făcuți în acea zi este in pericol să nu fie atins. Puteți defini criteriul, ora din zi si mesajul din notificare.</string>
+    <string name="help_privacy_heading">Informații privind intimitatea</string>
+    <string name="help_permission_boot_heading">Permisiune: Receive Boot Completed</string>
+    <string name="help_permission_boot_description">este folosită pentru a porni contorul de pași și a seta notificarea la pornirea dispozitivului. Daca permisiunea nu este acceptată trebuie să porniți cel puțin o dată aplicația după start.</string>
+    <string name="help_permissions_heading">Permisiuni</string>
+    <string name="help_permissions_selection">Permisiunile folosite de Privacy Friendly Pedometer nu pot fi modificate de utilizator în nici o versiune de Android.</string>
+    <string name="help_permission_wake_heading">Permisiune: Wake Lock</string>
+    <string name="help_permission_wake_description">este folosit pentru a ține treaz procesorul și a putea contoriza în fundal pașii</string>
+
+    <!-- Preferences -->
+    <!-- general settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_group_title_personal_settings">Personalizare</string>
+
+    <string name="pref_title_step_counter_enabled">Contor de pași permanent</string>
+    <string name="pref_summary_step_counter_enabled">Aplicația îți contorizează în fundal numărul de pași.</string>
+
+    <string name="pref_title_use_wake_lock">Ține procesorul treaz</string>
+    <string name="pref_summary_use_wake_lock">Pe unele dispozitive procesorul poate adormii și oprește contorizarea pașilor. Activează asta pentru a menține treaz procesorul atunci când se contorizează pașii - poate duce la un consum ridicat al bateriei!</string>
+
+    <string name="pref_title_daily_step_goal">Obiectiv personal ca număr de pași zilnic</string>
+    <string name="pref_title_unit_of_length">Unitate de lungime</string>
+
+    <string-array name="pref_keys_unit_of_length">
+        <item>kilometrii</item>
+        <item>mile</item>
+    </string-array>
+        <item>km</item>
+        <item>mi</item>
+    </string-array>
+
+    <string name="unit_of_length_km">1|km|kilometrii|km/oră</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|mile|mile/oră</string><!-- 1km = 0.621371 miles -->
+
+    <string name="pref_explanation_weight_and_gender">Pentru a îmbunătății precizia calculului de calorii introdu greutatea și sexul.</string>
+    <string name="pref_summary_notification_permanent">Notificarea permanentă este vizibilă atunci când aplicația contorizează în fundal pașii. Se poate personaliza conținutul notificării.</string>
+    <string name="pref_summary_accelerometer_threshold">Aplicația folosește accelerometrul dispozitivului. Vă rugăm, pentru a putea optimiza detecția pașilor, ajustați sensibilitatea.</string>
+
+    <string name="pref_title_weight">Greutate (kg)</string>
+
+    <string name="pref_title_gender">Sex</string>
+
+    <string-array name="pref_keys_gender">
+        <item>femeie</item>
+        <item>bărbat</item>
+    </string-array>
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="pref_title_accelerometer_threshold">Sensibilitate</string>
+
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>foarte mare</item>
+        <item>mai mare</item>
+        <item>mare</item>
+        <item>normală</item>
+        <item>mică</item>
+        <item>mai mică</item>
+        <item>foarte mică</item>
+    </string-array>
+        <item>0.125</item>
+        <item>0.25</item>
+        <item>0.50</item>
+        <item>0.75</item>
+        <item>1.00</item>
+        <item>1.25</item>
+        <item>1.50</item>
+    </string-array>
+
+    <!-- /general settings -->
+    <!-- notification settings -->
+
+    <string name="pref_header_notifications">Notificări</string>
+    <string name="pref_group_title_permanent_notification">Notificare permanentă</string>
+    <string name="pref_group_title_motivation_alert">Alertă motivațională</string>
+
+    <string name="pref_title_notification_permanent_show_steps">Arată numărul de pași făcuți azi</string>
+    <string name="pref_title_notification_permanent_show_distance">Arată distanța parcursă azi</string>
+    <string name="pref_title_notification_permanent_show_calories">Arată numărul de calorii</string>
+
+    <string name="pref_title_notification_motivation_alert_enabled">Activează alerta motivațională</string>
+    <string name="pref_title_notification_motivation_alert_time">Oră alertă motivațională</string>
+    <string name="pref_title_notification_motivation_alert_texts">Mesaj notificare motivațională</string>
+    <string name="pref_title_notification_motivation_alert_criterion">Criteriu alertă motivațională</string>
+
+
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>mai puțin de 90% din obiectivul zilnic de pași</item>
+        <item>mai puțin de 70% din obiectivul zilnic de pași</item>
+        <item>mai puțin de 50% din obiectivul zilnic de pași</item>
+    </string-array>
+        <item>90</item>
+        <item>70</item>
+        <item>50</item>
+    </string-array>
+
+    <!-- /notification settings -->
+    <string name="pref_header_walking_modes">Moduri de mers</string>
+    <!-- /Preferences -->
+
+    <!-- Will be removed on next update -->
+    <string name="notification_text_steps">Ai mers %1$s pași din %2$s azi.</string>
+    <string name="notification_text_distance">Ai mers %1$.2f %2$s azi.</string>
+    <string name="notification_text_calories">Ai ars %.2f calorii azi.</string>
+    <!-- /Will be removed on next update -->
+
+    <!-- others -->
+    <string name="action_calories">Calorii</string>
+    <string name="action_distance">Distanță</string>
+    <string name="action_steps">Pași</string>
+    <string name="set">Setează</string>
+    <string name="save">Salvează</string>
+    <string name="edit">Editează</string>
+    <string name="delete">Șterge</string>
+    <string name="operation_failed">Operația a eșuat</string>
+    <string name="since">din</string>
+    <string name="okay">Bine</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">Bine ați venit!</string>
+    <string name="welcome_text">Privacy Friendly Pedometer poate să contorizeze în fundal numărul de pași pe care i-ai făcut și să îți ofere un sumar.</string>
+    <string name="slide_2_title">Personalizează</string>
+    <string name="slide_2_desc">Pentru a putea îmbunătății calculul caloriilor arse mergând, vă rugăm să completați setările personale.</string>
+    <string name="slide_2_desc_two">Se poate schimba modul curent de mers din meniul contextual al barei de unelte.</string>
+    <string name="slide_3_title">Notificări</string>
+    <string name="slide_3_desc">Definește notificări și moduri de mers personalizate atunci când realizare obiectivului zilnic de pași este în pericol.</string>
+    <string name="view_help">Arată informații ajutătoare</string>
+    <string name="next">Urmatoarea</string>
+    <string name="skip">Omite</string>
+    <!-- /welcome dialog -->
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Haide, e timpul să mergi!</item>
+    </string-array>
+
+
+        <string name="motivation_alert_empty">Setează mesaje de alertă personalizate pentru atunci când obiectivul dumneavoastră zilnic de număr de pași de făcut este în pericol. Alerta apare doar dacă există mesaje.</string>
+    <string name="motivation_alert_input_title">Setează un mesaj pentru alerta motivațională</string>
+    <string name="motivation_alert_input_message">Setează propria alertă motivațională. Aplicația te anunță folosind unul din aceste mesaje luat aleator.</string>
+    <string name="motivation_alert_input_empty">Alertele motivaționale fără un mesaj sunt inutile, nu?</string>
+    <string name="activity_title_motivation_alerts">Alertă motivațională</string>
+    <string name="motivation_alert_notification_title">Contor de pași</string>
+
+    <!-- walking modes -->
+    <string name="activity_title_walking_modes">Moduri de mers</string>
+    <string name="walking_mode_input_title">Mod de mers</string>
+    <string name="walking_mode_input_message">Seteazăți modul personalizat de mers</string>
+    <string name="walking_mode_at_least_one_is_required">Cel puțin un mod de mers este necesar.</string>
+    <string name="walking_mode_cannot_delete_active_one">Nu se poate sterge modul de mers activ.</string>
+    <string name="walking_mode_set_active">Setează ca activ</string>
+    <string name="walking_mode_menu_learn">Învață</string>
+    <string name="walking_mode_learning_distance_description">Distanța de mers:</string>
+    <string name="walking_mode_learning_steps_description">Pași făcuți:</string>
+    <string name="walking_mode_learning_stop">Oprește modul de învățare</string>
+    <string name="walking_mode_learning_description">Aplicația poate determina lungimea pasului dumneavoastră. Vă rugăm să parcurgeți distanța specificată și să apăsați sfârșit când ați terminat.</string>
+    <string name="step_length">Lungime pas:</string>
+    <string name="walking_mode_active_ext"> (activ)</string>
+    <string name="walking_mode_input_empty">Numele și lungimea pasului sunt obligatorii. Vă rugăm să le completați!</string>
+    <string name="hint_walking_mode_name">Nume</string>
+    <string name="hint_walking_mode_step_length">Lungime pas (metrii)</string>
+
+
+    <string-array name="pref_default_walking_mode_names">
+        <item>Mers</item>
+        <item>Alergat</item>
+    </string-array>
+        <item>0.5</item><!-- step length in meters -->
+        <item>0.7</item>
+    </string-array>
+
+    <string name="training_overview_empty">Se pare că nu ai folosit încă funcția de antrenament. Este momentul să te antrenezi!</string>
+    <string name="training_input_title">Training session</string>
+    <string name="activity_title_training">Antrenament</string>
+    <string name="hint_training_description">Descriere</string>
+    <string name="hint_training_title">Titlu</string>
+    <string name="hint_training_feeling">Cum se simte:</string>
+    <string name="training_card_calories">kcal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">ore</string>
+    <string name="training_minutes">min</string>
+    <string name="training_velocity">km/oră</string>
+    <string name="training_stop_button">Oprește antrenamentul acum</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+    <string name="activity_summary_chart_legend_stepgoal">Obiectiv ca număr de pași</string>
+</resources>

@@ -68,7 +68,7 @@
     <string name="hint_training_feeling">Gefühl:</string>
     <string name="hint_training_title">Titel</string>
     <string name="hint_walking_mode_name">Name</string>
-    <string name="hint_walking_mode_step_length">Schrittlänge</string>
+    <string name="hint_walking_mode_step_length">Schrittlänge (meter)</string>
     <string name="km">Kilometer</string>
     <string name="motivation_alert_notification_title">Schrittzähler</string>
     <string name="notification_text_calories">%.2f Kalorien verbrannt.</string>

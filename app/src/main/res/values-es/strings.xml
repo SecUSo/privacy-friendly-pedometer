@@ -1,0 +1,202 @@
+<resources>
+    <string name="app_name">Podómetro</string>
+    <string name="app_name_long">Podómetro con Privacidad</string>
+
+    <!-- Menu Items-->
+    <string name="action_help">Ayuda</string>
+    <string name="action_about">Sobre la aplicación</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_main">Podómetro</string>
+    <string name="action_navigation">Navegación</string>
+    <string name="action_training">Entrenamiento</string>
+
+    <!-- AboutFragment-->
+    <string name="version_number">Versión 1.0.1</string>
+    <string name="about_author">Autor:</string>
+    <string name="about_affiliation">En colaboración con:</string>
+    <string name="more_info">Puede encontrar más información en:</string>
+    <string name="about_third_party_libs">La aplicación usa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licencia Apache 2).</string>
+    <string name="privacy_friendly">Esta aplicación pertenece al grupo Aplicaciones con Privacidad desarolladas por Technische Universität Darmstadt. El código fuente está bajo la licencia GPLv3. Las imágenes tienen Copyright TU Darmstadt y Google Inc.</string>
+    <string name="url"><a href="https://www.secuso.org/pfa">Página Web-SECUSO</a></string>
+
+
+    <!-- ReportFragment -->
+    <string name="month">Mes</string>
+    <string name="week">Semana</string>
+    <string name="day">Día</string>
+    <string name="steps">Pasos</string>
+    <string name="calories">calorías</string>
+    <string name="km">kilómetros</string>
+    <string name="activity_summary_subtitle">Resumen de actividades</string>
+    <string name="activity_chart_summary_subtitle">Resumen detallado de sus actividades</string>
+    <string name="summary_card_calories">kcal</string>
+
+    <!-- HelpFragment -->
+    <string name="activity_title_help">Ayuda</string>
+    <string name="help_overview_heading">Resumen</string>
+    <string name="help_intro">Esta aplicación puede contar sus pasos en segundo plano, le proporciona un resumen sobre los pasos andados y le permite definir modos de andar personalizados, además de mostrar notificaciones si tu meta diaria está en peligro.</string>
+    <string name="help_functionality_heading">Funcionalidad básica</string>
+    <string name="help_functionality_step_counter">Contador de pasos</string>
+    <string name="help_functionality_step_counter_summary">El contador de pasos cuenta sus pasos día a día en segundo plano y puede desactivarse en los ajustes.</string>
+    <string name="help_functionality_notification_heading">Notificación permanente</string>
+    <string name="help_functionality_notification">Notificación</string>
+    <string name="help_functionality_notification_summary">La notificación permanente es necesaria para poder ejecutar el contador de pasos en segundo plano. El contenido de la notificación puede modificarse en los ajustes.</string>
+    <string name="help_functionality_notification_delete">Puede desactivar todas las notificaciones en los ajustes (preferencias) del sistema.</string>
+    <string name="help_functionality_motivation_alert">Alerta de motivación</string>
+    <string name="help_functionality_motivation_alert_summary">La aplicación puede mostrarle alertas de motivación si tu meta diaria está en peligro. Puedes definir el criterio, la hora del día y el texto de la notificación.</string>
+    <string name="help_privacy_heading">Infomación sobre privacidad</string>
+    <string name="help_permission_boot_heading">Permiso: Ejecutarse al inicio</string>
+    <string name="help_permission_boot_description">se usa para iniciar el contador de pasos y mostrar las notificaciones al inicio. Si no se otorga el permiso, debe abrir la aplicación manualmente una vez tras iniciar el dispositivo para activar la aplicación.</string>
+    <string name="help_permissions_heading">Permisos</string>
+    <string name="help_permissions_selection">Los permisos usados por Podómetro con Privacidad no pueden ser administrados por el usuario en ninguna versión de Android.</string>
+    <string name="help_permission_wake_heading">Permiso: Impedir que el teléfono entre en modo de suspensión</string>
+    <string name="help_permission_wake_description">se usa para mantener la CPU "despierta" para contar los pasos en segundo plano.</string>
+
+    <!-- Preferences -->
+    <!-- general settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_group_title_personal_settings">Personalización</string>
+
+    <string name="pref_title_step_counter_enabled">Contador de pasos permanente</string>
+    <string name="pref_summary_step_counter_enabled">La aplicación cuenta sus pasos en segundo plano.</string>
+
+    <string name="pref_title_use_wake_lock">Mantener el procesador despierto</string>
+    <string name="pref_summary_use_wake_lock">En algunos dispositivos el procesador se duerme, lo que impide que se puedan contar los pasos. Active esto para mantener el procesador despierto mientras se cuentan los pasos - ¡esto puede hacer que la batería se agote más rápido!</string>
+
+    <string name="pref_title_daily_step_goal">Meta de pasos diaria</string>
+    <string name="pref_title_unit_of_length">Unidad de medida</string>
+    <string-array name="pref_keys_unit_of_length">
+        <item>kilómetros</item>
+        <item>millas</item>
+    </string-array>
+    <string name="unit_of_length_km">1|km|kilómetro|km/h</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|millas|mph</string><!-- 1km = 0.621371 miles -->
+
+    <string name="pref_explanation_weight_and_gender">Para mejorar los cálculos de las calorías por favor especifique su peso y género.</string>
+    <string name="pref_summary_notification_permanent">La notificación permanente se muestra cuando la aplicación cuenta sus pasos en segundo plano. Puede personalizar lo que la aplicación debería mostrar.</string>
+    <string name="pref_summary_accelerometer_threshold">La aplicación usa el acelerómetro de su dispositivo. Para detectar mejor los pasos, por favor ajuste la sensibilidad.</string>
+
+    <string name="pref_title_weight">Peso</string>
+
+    <string name="pref_title_gender">Género</string>
+    <string-array name="pref_keys_gender">
+        <item>femenino</item>
+        <item>masculino</item>
+    </string-array>
+    <string name="pref_title_accelerometer_threshold">Sensibilidad</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>muy alta</item>
+        <item>más alta</item>
+        <item>alta</item>
+        <item>normal</item>
+        <item>baja</item>
+        <item>más baja</item>
+        <item>muy baja</item>
+    </string-array>
+
+    <!-- /general settings -->
+    <!-- notification settings -->
+    <string name="pref_header_notifications">Notificaciones</string>
+    <string name="pref_group_title_permanent_notification">Notificaciones permanentes</string>
+    <string name="pref_group_title_motivation_alert">Alerta de motivación</string>
+
+    <string name="pref_title_notification_permanent_show_steps">Mostrar el número de pasos andados hoy</string>
+    <string name="pref_title_notification_permanent_show_distance">Mostrar la distancia andada hoy</string>
+    <string name="pref_title_notification_permanent_show_calories">Mostrar el número de calorías</string>
+
+    <string name="pref_title_notification_motivation_alert_enabled">Activar alerta de motivación</string>
+    <string name="pref_title_notification_motivation_alert_time">Hora de la alerta de motivación</string>
+    <string name="pref_title_notification_motivation_alert_texts">Textos de la alerta de motivación</string>
+    <string name="pref_title_notification_motivation_alert_criterion">Criterio de la alerta de motivación</string>
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>menos del 90&#65285; de la meta diaria</item>
+        <item>menos del 70&#65285; de la meta diaria</item>
+        <item>menos del 50&#65285; de la meta diaria</item>
+    </string-array>
+    <!-- /notification settings -->
+    <string name="pref_header_walking_modes">Modos de andar</string>
+    <!-- /Preferences -->
+
+    <!-- Will be removed on next update -->
+    <string name="notification_text_steps">%1$s de %2$s pasos andados hoy.</string>
+    <string name="notification_text_distance">%1$.2f %2$s andados hoy.</string>
+    <string name="notification_text_calories">Quemadas %.2f calorías hoy.</string>
+    <!-- /Will be removed on next update -->
+
+    <!-- others -->
+    <string name="action_calories">Calorías</string>
+    <string name="action_distance">Distancia</string>
+    <string name="action_steps">Pasos</string>
+    <string name="set">Ajustar</string>
+    <string name="save">Guardar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="operation_failed">Operación fallida</string>
+    <string name="since">desde</string>
+    <string name="okay">Aceptar</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">Bienvenido</string>
+    <string name="welcome_text">Bienvenido al Podómetro con Privacidad. Esta aplicación puede contar sus pasos en segundo plano, le proporciona un resumen sobre los pasos andados y le permite definir modos de andado personalizados, además de notificaciones si tu meta diaria está en peligro.\n\nPuedes cambiar tu modo de andado actual usando el menú contextual en la barra de herramientas.\n\nPara mejorar el cálculo de calorías quemadas por favor modifique sus ajustes personales.</string>
+    <string name="view_help">Ver ayuda</string>
+    <!-- /welcome dialog -->
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Vamos, ¡es hora de andar!</item>
+    </string-array>
+    <string name="motivation_alert_empty">Ajustar mensajes personalizados en las alertas cuando su meta diaria esté en peligro.\n\nThere will be no alert if no message exists.</string>
+    <string name="motivation_alert_input_title">Ajustar el mensaje de motivación</string>
+    <string name="motivation_alert_input_message">Ajuste su propia alerta de motivación. La aplicación le notifica con uno de sus textos al azar.</string>
+    <string name="motivation_alert_input_empty">Las alertas de motivación vacías son un poco inútiles, ¿no cree?</string>
+    <string name="activity_title_motivation_alerts">Alertas de motivación</string>
+    <string name="motivation_alert_notification_title">Contador de pasos</string>
+
+    <!-- walking modes -->
+    <string name="activity_title_walking_modes">Modos de andar</string>
+    <string name="walking_mode_input_title">Modo de andar</string>
+    <string name="walking_mode_input_message">Seleccione su modo de andado:</string>
+    <string name="walking_mode_at_least_one_is_required">Se requiere al menos un modo de andado.</string>
+    <string name="walking_mode_cannot_delete_active_one">No se puede eliminar el modo de andado activo.</string>
+    <string name="walking_mode_set_active">Marcar como activo</string>
+    <string name="walking_mode_menu_learn">Aprender</string>
+    <string name="walking_mode_learning_distance_description">Distancia a andar:</string>
+    <string name="walking_mode_learning_steps_description">Pasos andados:</string>
+    <string name="walking_mode_learning_stop">Terminar modo de aprendizaje</string>
+    <string name="walking_mode_learning_description">La aplicación puede aprender su distancia por paso. Por favor camine la distancia indicada y pulse sobre terminar si ha acabado.</string>
+    <string name="step_length">Distancia por paso:</string>
+    <string name="walking_mode_active_ext"> (activo)</string>
+    <string name="walking_mode_input_empty">Se requiere un nombre y una distancia por paso. ¡Por favor rellene esos campos!</string>
+    <string name="hint_walking_mode_name">Nombre</string>
+    <string name="hint_walking_mode_step_length">Distancia por paso</string>
+    <string-array name="pref_default_walking_mode_names">
+        <item>Andando</item>
+        <item>Corriendo</item>
+    </string-array>
+
+    <string name="training_overview_empty">Parece que no ha usado la funcionalidad de aprendizaje, aún. ¡Es hora de comenzar su entrenamiento!</string>
+    <string name="training_input_message" />
+    <string name="training_input_title">Sesión de entrenamiento</string>
+    <string name="activity_title_training">Entrenamiento</string>
+    <string name="hint_training_description">Descripción</string>
+    <string name="hint_training_title">Título</string>
+    <string name="hint_training_feeling">Sentimiento:</string>
+    <string name="training_card_calories">kcal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+    <string name="training_minutes">min</string>
+    <string name="training_velocity">km/h</string>
+    <string name="training_stop_button">Finalizar entrenamiento ahora</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+    <string name="activity_summary_chart_legend_stepgoal">Meta de pasos</string>
+    <string name="about_author_contributors"> y contribuidores.</string>
+    <string name="action_switch">Encendido/Apagado</string>
+    <string name="next">Siguiente</string>
+    <string name="skip">Saltar</string>
+    <string name="slide_2_desc">Para mejorar el cálculo de calorías quemadas por favor modifique sus datos personales.</string>
+    <string name="slide_2_desc_two">Puede cambiar los modos de andado usando el menú contextual en la barra de herramientas.</string>
+    <string name="slide_2_title">Personalizar</string>
+    <string name="slide_3_desc">Defina modos de andado personalizados y las notificaciones si su meta diaria está en peligro.</string>
+    <string name="slide_3_title">Notificaciones</string>
+</resources>

@@ -130,7 +130,7 @@
         <item>unter 50&#65285; des Tagesziels</item>
     </string-array>
     <string-array name="pref_default_walking_mode_names">
-        <item>Laufen</item>
+        <item>Gehen</item>
         <item>Rennen</item>
     </string-array>
     <string-array name="pref_default_notification_motivation_alert_messages">
@@ -158,14 +158,14 @@
 
     <!-- Walking Mode -->
     <string name="walking_mode_active_ext"> (aktiv)</string>
-    <string name="walking_mode_at_least_one_is_required">Mindestens ein Laufmodi muss vorhanden sein.</string>
-    <string name="walking_mode_cannot_delete_active_one">Ein aktiver Laufmodi kann nicht gelöscht werden.</string>
+    <string name="walking_mode_at_least_one_is_required">Mindestens ein Laufmodus muss vorhanden sein.</string>
+    <string name="walking_mode_cannot_delete_active_one">Ein aktiver Laufmodus kann nicht gelöscht werden.</string>
     <string name="walking_mode_input_empty">Bitte geben Sie Name und Schrittlänge an.</string>
     <string name="walking_mode_input_message">Verwenden Sie Ihre persönlichen Laufmodi.</string>
-    <string name="walking_mode_input_title">Laufmodi</string>
+    <string name="walking_mode_input_title">Laufmodus</string>
     <string name="walking_mode_learning_description">Die Anwendung kann die Schrittlänge automatisch erkennen. Bitte legen Sie die angegebene Distanz zurück und klicken Sie auf beenden, sobald Sie fertig sind.</string>
-    <string name="walking_mode_learning_distance_description">Zu laufende Entfernung:</string>
-    <string name="walking_mode_learning_steps_description">Gelaufene Schritte:</string>
+    <string name="walking_mode_learning_distance_description">Zu gehende Entfernung:</string>
+    <string name="walking_mode_learning_steps_description">Gegangene Schritte:</string>
     <string name="walking_mode_learning_stop">Beende Lernmodus</string>
     <string name="walking_mode_menu_learn">Lernmodus</string>
     <string name="walking_mode_set_active">Aktivieren</string>

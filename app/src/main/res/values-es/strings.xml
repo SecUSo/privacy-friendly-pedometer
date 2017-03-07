@@ -11,7 +11,7 @@
     <string name="action_training">Entrenamiento</string>
 
     <!-- AboutFragment-->
-    <string name="version_number">Versión 1.0.1</string>
+    <string name="version_number">Versión</string>
     <string name="about_author">Autor:</string>
     <string name="about_affiliation">En colaboración con:</string>
     <string name="more_info">Puede encontrar más información en:</string>

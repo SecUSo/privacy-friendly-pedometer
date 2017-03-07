@@ -7,6 +7,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlyactivitytracker.BuildConfig;
 import org.secuso.privacyfriendlyactivitytracker.R;
 
 
@@ -30,10 +31,12 @@ public class AboutActivity extends AppCompatActivity {
             mainContent.animate().alpha(1).setDuration(BaseActivity.MAIN_CONTENT_FADEIN_DURATION);
         }
 
-        overridePendingTransition(0, 0);
-
         ((TextView)findViewById(R.id.secusoWebsite)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView)findViewById(R.id.githubURL)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.textFieldVersionName)).setText(BuildConfig.VERSION_NAME);
+
+        overridePendingTransition(0, 0);
+
     }
 
     //@Override

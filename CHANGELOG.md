@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 1.0.5 *(2017-03-07)*
+----------------------------
+
+ * Minor Bug Fixes
+ * Manifest refinement
+
 Version 1.0.4 *(2016-12-23)*
 ----------------------------
 

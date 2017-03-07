@@ -7,7 +7,6 @@
     <string name="action_about">Sobre la aplicación</string>
     <string name="action_settings">Ajustes</string>
     <string name="action_main">Podómetro</string>
-    <string name="action_navigation">Navegación</string>
     <string name="action_training">Entrenamiento</string>
 
     <!-- AboutFragment-->
@@ -26,17 +25,13 @@
     <string name="day">Día</string>
     <string name="steps">Pasos</string>
     <string name="calories">calorías</string>
-    <string name="km">kilómetros</string>
     <string name="activity_summary_subtitle">Resumen de actividades</string>
     <string name="activity_chart_summary_subtitle">Resumen detallado de sus actividades</string>
     <string name="summary_card_calories">kcal</string>
 
     <!-- HelpFragment -->
-    <string name="activity_title_help">Ayuda</string>
     <string name="help_overview_heading">Resumen</string>
     <string name="help_intro">Esta aplicación puede contar sus pasos en segundo plano, le proporciona un resumen sobre los pasos andados y le permite definir modos de andar personalizados, además de mostrar notificaciones si tu meta diaria está en peligro.</string>
-    <string name="help_functionality_heading">Funcionalidad básica</string>
-    <string name="help_functionality_step_counter">Contador de pasos</string>
     <string name="help_functionality_step_counter_summary">El contador de pasos cuenta sus pasos día a día en segundo plano y puede desactivarse en los ajustes.</string>
     <string name="help_functionality_notification_heading">Notificación permanente</string>
     <string name="help_functionality_notification">Notificación</string>
@@ -47,7 +42,6 @@
     <string name="help_privacy_heading">Infomación sobre privacidad</string>
     <string name="help_permission_boot_heading">Permiso: Ejecutarse al inicio</string>
     <string name="help_permission_boot_description">se usa para iniciar el contador de pasos y mostrar las notificaciones al inicio. Si no se otorga el permiso, debe abrir la aplicación manualmente una vez tras iniciar el dispositivo para activar la aplicación.</string>
-    <string name="help_permissions_heading">Permisos</string>
     <string name="help_permissions_selection">Los permisos usados por Podómetro con Privacidad no pueden ser administrados por el usuario en ninguna versión de Android.</string>
     <string name="help_permission_wake_heading">Permiso: Impedir que el teléfono entre en modo de suspensión</string>
     <string name="help_permission_wake_description">se usa para mantener la CPU "despierta" para contar los pasos en segundo plano.</string>
@@ -139,7 +133,6 @@
     <!-- welcome dialog -->
     <string name="welcome">Bienvenido</string>
     <string name="welcome_text">Bienvenido al Podómetro con Privacidad. Esta aplicación puede contar sus pasos en segundo plano, le proporciona un resumen sobre los pasos andados y le permite definir modos de andado personalizados, además de notificaciones si tu meta diaria está en peligro.\n\nPuedes cambiar tu modo de andado actual usando el menú contextual en la barra de herramientas.\n\nPara mejorar el cálculo de calorías quemadas por favor modifique sus ajustes personales.</string>
-    <string name="view_help">Ver ayuda</string>
     <!-- /welcome dialog -->
 
     <!-- motivation alert -->
@@ -185,13 +178,11 @@
     <string name="training_card_calories">kcal</string>
     <string name="training_card_distance_km">km</string>
     <string name="training_card_duration">h</string>
-    <string name="training_minutes">min</string>
     <string name="training_velocity">km/h</string>
     <string name="training_stop_button">Finalizar entrenamiento ahora</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Meta de pasos</string>
     <string name="about_author_contributors"> y contribuidores.</string>
-    <string name="action_switch">Encendido/Apagado</string>
     <string name="next">Siguiente</string>
     <string name="skip">Saltar</string>
     <string name="slide_2_desc">Para mejorar el cálculo de calorías quemadas por favor modifique sus datos personales.</string>

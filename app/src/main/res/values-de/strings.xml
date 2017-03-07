@@ -8,11 +8,8 @@
     <string name="action_about">Über</string>
     <string name="action_help">Hilfe</string>
     <string name="action_main">Schrittzähler</string>
-    <string name="action_navigation">Navigation</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_training">Training</string>
-    <string name="pause">Pause</string>
-    <string name="resume">Fortsetzen</string>
 
     <!--About -->
     <string name="about_affiliation">In Zusammenarbeit mit</string>
@@ -32,7 +29,6 @@
     <string name="action_steps">Schritte</string>
     <string name="activity_chart_summary_subtitle">Detaillierte Übersicht aller Aktivitäten</string>
     <string name="activity_summary_subtitle">Aktivitätenübersicht</string>
-    <string name="activity_title_help">Hilfe</string>
     <string name="activity_title_motivation_alerts">Motivationsbenachrichtigungen</string>
     <string name="activity_title_training">Training</string>
     <string name="activity_title_walking_modes">Laufmodi</string>
@@ -41,16 +37,13 @@
     <string name="edit">Bearbeiten</string>
 
     <!-- Help -->
-    <string name="help_functionality_heading">Basisfunktionalität</string>
     <string name="help_functionality_motivation_alert">Motivationsbenachrichtigungen</string>
     <string name="help_functionality_notification">Benachrichtigungen</string>
     <string name="help_functionality_notification_heading">Permanente Benachrichtigung</string>
-    <string name="help_functionality_step_counter">Schrittzähler</string>
     <string name="help_overview_heading">Übersicht</string>
 
 
     <string name="help_permission_boot_heading">Berechtigung "Startvorgang abgeschlossen"</string>
-    <string name="help_permissions_heading">Berechtigungen</string>
     <string name="help_privacy_heading">Datenschutz-Info</string>
 
     <string name="help_permissions_selection">Die Berechtigungen, die von Privacy Friendly Schrittzähler verwendet werden, können in keiner Android-Version durch den Benutzer verwaltet werden.</string>
@@ -69,7 +62,6 @@
     <string name="hint_training_title">Titel</string>
     <string name="hint_walking_mode_name">Name</string>
     <string name="hint_walking_mode_step_length">Schrittlänge (Meter)</string>
-    <string name="km">Kilometer</string>
     <string name="motivation_alert_notification_title">Schrittzähler</string>
     <string name="notification_text_calories">%.2f Kalorien verbrannt.</string>
     <string name="notification_text_distance">%1$.2f %2$s gelaufen.</string>
@@ -151,7 +143,6 @@
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="training_input_message"> </string>
     <string name="training_input_title">Trainingseinheit</string>
-    <string name="training_minutes">min</string>
     <string name="training_overview_empty">So wie es aussieht, haben Sie die Trainingsfunktionalität noch nicht verwendet. Legen Sie gleich los!</string>
     <string name="training_stop_button">Beende Trainingseinheit</string>
     <string name="training_velocity">km/h</string>
@@ -179,7 +170,6 @@
     <string name="activity_summary_chart_legend_stepgoal">Schrittziel</string>
 
     <string name="okay">OKAY</string>
-    <string name="view_help">Hilfe</string>
     <string name="welcome">Willkommen!</string>
     <string name="next">Weiter</string>
     <string name="skip">Überspringen</string>

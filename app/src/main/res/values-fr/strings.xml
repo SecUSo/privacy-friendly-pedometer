@@ -1,0 +1,193 @@
+<resources>
+    <string name="app_name">Podomètre</string>
+    <string name="app_name_long">Podomètre Privacy Friendly</string>
+
+
+    <!-- Menu Items-->
+    <string name="action_help">Aide</string>
+    <string name="action_about">À Propos</string>
+    <string name="action_settings">Préférences</string>
+    <string name="action_main">Podomètre</string>
+    <string name="action_training">Entraînement</string>
+
+    <!-- AboutActivity-->
+    <string name="version_number">Version</string>
+    <string name="about_author">Auteur :</string>
+    <string name="about_author_contributors">et les contributeurs.</string>
+    <string name="about_affiliation">En lien avec</string>
+    <string name="more_info">Plus d\'informations sur :</string>
+    <string name="about_third_party_libs">Cette application utilise <a href=\"https://github.com/PhilJay/MPAndroidChart\" >MPAndroidChart de Philipp Jahoda</a> (Licence Apache 2).</string>
+    <string name="privacy_friendly">Cette application fait partie du groupe d\'applications Privacy Friendly développées par la Technische Universität de Darmstadt. Le code source est sous licence GPLv3. Copyright des images : TU Darmstadt et Google Inc.</string>
+    <string name="url"><a href=\"https://www.secuso.org/pfa\" >Site web de SECUSO</a></string>
+
+    <!-- ReportFragment -->
+    <string name="month">Mois</string>
+    <string name="week">Semaine</string>
+    <string name="day">Jour</string>
+    <string name="steps">Pas</string>
+    <string name="calories">calories</string>
+    <string name="activity_summary_subtitle">Résumé des activités</string>
+    <string name="activity_chart_summary_subtitle">Résumé détaillé de vos activités</string>
+    <string name="summary_card_calories">kcal</string>
+
+    <!-- HelpActivity -->
+    <string name="help_overview_heading">Vue d\'ensemble</string>
+    <string name="help_intro">Cette application peut compter vos pas en arrière-plan, vous fournissant une vue d\'ensemble de vos pas effectués et vous permettant de définir des modes de marche personnalisés et des notifications si la réalisation de votre objectif de pas quotidien est en danger.</string>
+    <string name="help_functionality_step_counter_summary">Le compteur de pas compte vos pas quotidiens en arrière-plan et peut être désactivé dans les réglages.</string>
+    <string name="help_functionality_notification_heading">Notification Permanente</string>
+    <string name="help_functionality_notification">Notification</string>
+    <string name="help_functionality_notification_summary">La notification permanente est nécessaire pour maintenir actif le compteur de pas en arrière-plan. Le contenu de la notification peut être choisi dans les réglages.</string>
+    <string name="help_functionality_notification_delete">Vous pouvez désactiver toutes les notifications dans les réglages.</string>
+    <string name="help_functionality_motivation_alert">Alerte de motivation</string>
+    <string name="help_functionality_motivation_alert_summary">L\'application peut vous montrer des alertes de motivation si la réalisation de votre objectif de pas quotidien est en danger. Vous pouvez définir le critère, l\'heure et les textes de ces notifications.</string>
+    <string name="help_privacy_heading">Informations sur la Confidentialité</string>
+    <string name="help_permission_boot_heading">Autorisation : Receive Boot Completed</string>
+    <string name="help_permission_boot_description">est utilisé pour démarrer le compteur de pas et définir les notifications au démarrage. Si l\'autorisation n\'est pas accordée, vous devez lancer l\'application manuellement après chaque démarrage pour l\'activer.</string>
+    <string name="help_permissions_selection">Les autorisations utilisées par Podomètre Privacy Friendly ne peuvent être gérées par l\'utilisateur dans aucune version d\'Android.</string>
+    <string name="help_permission_wake_heading">Autorisation : Wake Lock</string>
+    <string name="help_permission_wake_description">est utilisé pour maintenir le CPU éveillé en arrière-plan pour compter les pas.</string>
+
+    <!-- Preferences -->
+    <!-- general settings -->
+    <string name="pref_header_general">Général</string>
+    <string name="pref_group_title_personal_settings">Personnalisation</string>
+
+    <string name="pref_title_step_counter_enabled">Compteur de pas permanent</string>
+    <string name="pref_summary_step_counter_enabled">L\'application compte vos pas en arrière-plan.</string>
+
+    <string name="pref_title_use_wake_lock">Garder le processeur éveillé</string>
+    <string name="pref_summary_use_wake_lock">Sur certains smartphones, le processeur s\'endort et empêche le comptage des pas. Activez ceci pour garder le processeur éveillé pendant le comptage des pas - cela peut vider votre batterie!</string>
+
+    <string name="pref_title_daily_step_goal">Objectif personnel journalier de pas</string>
+    <string name="pref_title_unit_of_length">Unité de longueur</string>
+    <string-array name="pref_keys_unit_of_length">
+        <item>kilomètres</item>
+        <item>miles</item>
+    </string-array>
+    <string name="unit_of_length_km">1|km|kilomètres|km/h</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph</string><!-- 1km = 0.621371 miles -->
+
+    <string name="pref_explanation_weight_and_gender">Pour améliorer le calcul des calories, veuillez indiquer votre poids et votre sexe.</string>
+    <string name="pref_summary_notification_permanent">La notification permanente s\'affiche lorsque l\'application comptabilise vos pas en arrière-plan. Vous pouvez personnaliser ce que l\'application doit vous montrer.</string>
+    <string name="pref_summary_accelerometer_threshold">L\'application utilise l\'accéléromètre de votre appareil. Pour optimiser la détection des pas, veuillez s\'il vous plaît régler la sensibilité.</string>
+
+    <string name="pref_title_weight">Poids (kg)</string>
+
+    <string name="pref_title_gender">Genre</string>
+    <string-array name="pref_keys_gender">
+        <item>femme</item>
+        <item>homme</item>
+    </string-array>
+    <string name="pref_title_accelerometer_threshold">Sensibilité</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>très grande</item>
+        <item>plus grande</item>
+        <item>grande</item>
+        <item>normale</item>
+        <item>faible</item>
+        <item>plus faible</item>
+        <item>très faible</item>
+    </string-array>
+
+    <!-- /general settings -->
+    <!-- notification settings -->
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_group_title_permanent_notification">Notification Permanente</string>
+    <string name="pref_group_title_motivation_alert">Alerte de Motivation</string>
+
+    <string name="pref_title_notification_permanent_show_steps">Montrer le nombre de pas effectués aujourd\'hui</string>
+    <string name="pref_title_notification_permanent_show_distance">Montrer la distance couverte aujourd\'hui</string>
+    <string name="pref_title_notification_permanent_show_calories">Montrer le nombre de calories</string>
+
+    <string name="pref_title_notification_motivation_alert_enabled">Activer les alertes de motivation</string>
+    <string name="pref_title_notification_motivation_alert_time">Durée de l\'alerte de motivation</string>
+    <string name="pref_title_notification_motivation_alert_texts">Textes des notifications de motivation</string>
+    <string name="pref_title_notification_motivation_alert_criterion">Critère de l\'alerte de motivation</string>
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>moins de 90% de l\'objectif quotidien de pas</item>
+        <item>moins de 70% de l\'objectif quotidien de pas</item>
+        <item>moins de 50% de l\'objectif quotidien de pas</item>
+    </string-array>
+    <!-- /notification settings -->
+    <string name="pref_header_walking_modes">Modes de marche</string>
+    <!-- /Preferences -->
+
+    <!-- Will be removed on next update -->
+    <string name="notification_text_steps">%1$s sur %2$s pas effectués aujourd\'hui.</string>
+    <string name="notification_text_distance">%1$.2f %2$s marché(s) aujourd\'hui.</string>
+    <string name="notification_text_calories">%.2f kcal brûlées aujourd\'hui</string>
+    <!-- /Will be removed on next update -->
+
+    <!-- others -->
+    <string name="action_calories">Calories</string>
+    <string name="action_distance">Distance</string>
+    <string name="action_steps">Pas</string>
+    <string name="set">Définir</string>
+    <string name="save">Sauvegarder</string>
+    <string name="edit">Éditer</string>
+    <string name="delete">Effacer</string>
+    <string name="operation_failed">L\'opération a échouée</string>
+    <string name="since">depuis</string>
+    <string name="okay">Okay</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">Bienvenue!</string>
+    <string name="welcome_text">Ce Podomètre Privacy Friendly peut compter vos pas en arrière-plan et fournir une vue d\'ensemble de vos pas effectués.</string>
+    <string name="slide_2_title">Personnaliser</string>
+    <string name="slide_2_desc">Pour améliorer le calcul des calories que vous avez brûlées en marchant, veuillez personnaliser vos paramètres personnels.</string>
+    <string name="slide_2_desc_two">Vous pouvez changer le mode de marche en utilisant le menu contextuel de la barre d\'outils.</string>
+    <string name="slide_3_title">Notifications</string>
+    <string name="slide_3_desc">Définissez des modes de marche personnalisés et des notifications si la réalisation de votre objectif quotidien est en danger.</string>
+    <string name="next">Suivant</string>
+    <string name="skip">Passer</string>
+    <!-- /welcome dialog -->
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Allez, il est temps de marcher!</item>
+    </string-array>
+    <string name="motivation_alert_empty">Définissez des messages d\'alerte personnalisés lorsque la réalisation de votre objectif de pas quotidien est en danger.\n\nIl n\'y aura pas d\'alerte si aucun message n\'existe.</string>
+    <string name="motivation_alert_input_title">Définir un message de motivation</string>
+    <string name="motivation_alert_input_message">Définissez votre alerte de motivation personnalisée. L\'application vous informe avec un de vos textes au hasard.</string>
+    <string name="motivation_alert_input_empty">Les messages de motivation vides sont inutiles, n\'est-ce pas?</string>
+    <string name="activity_title_motivation_alerts">Alertes de motivation</string>
+    <string name="motivation_alert_notification_title">Compteur de pas</string>
+
+    <!-- walking modes -->
+    <string name="activity_title_walking_modes">Modes de marche</string>
+    <string name="walking_mode_input_title">Mode de marche</string>
+    <string name="walking_mode_input_message">Définissez votre mode de marche :</string>
+    <string name="walking_mode_at_least_one_is_required">Au moins un mode de marche est requis.</string>
+    <string name="walking_mode_cannot_delete_active_one">Suppression d\'un mode de marche actif impossible.</string>
+    <string name="walking_mode_set_active">Définir comme actif</string>
+    <string name="walking_mode_menu_learn">Apprendre</string>
+    <string name="walking_mode_learning_distance_description">Distance de marche :</string>
+    <string name="walking_mode_learning_steps_description">Pas effectués</string>
+    <string name="walking_mode_learning_stop">Terminer</string>
+    <string name="walking_mode_learning_description">L\'application peut apprendre la distance par pas. Veuillez parcourir la distance indiquée et appuyer sur Terminer si vous avez finis.</string>
+    <string name="step_length">Longueur des pas :</string>
+    <string name="walking_mode_active_ext">(actif)</string>
+    <string name="walking_mode_input_empty">Un nom et la longueur des pas sont requis. Veuillez remplir ces informations!</string>
+    <string name="hint_walking_mode_name">Nom</string>
+    <string name="hint_walking_mode_step_length">Longueur des pas (Mètres)</string>
+    <string-array name="pref_default_walking_mode_names">
+        <item>Marche</item>
+        <item>Course</item>
+    </string-array>
+
+    <string name="training_overview_empty">Il semble que vous n\'ayez pas encore utilisé la fonctionnalité d\'entraînement. Il est temps de commencer votre entraînement!</string>
+    <string name="training_input_message" />
+    <string name="training_input_title">Session d\'entraînement</string>
+    <string name="activity_title_training">Entraînement</string>
+    <string name="hint_training_description">Description</string>
+    <string name="hint_training_title">Titre</string>
+    <string name="hint_training_feeling">Sensation :</string>
+    <string name="training_card_calories">kcal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+    <string name="training_velocity">km/h</string>
+    <string name="training_stop_button">Terminer l\'entraînement</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+    <string name="activity_summary_chart_legend_stepgoal">Objectif de pas</string>
+</resources>

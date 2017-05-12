@@ -155,6 +155,38 @@ public class StepCountPersistenceHelper {
     }
 
     /**
+     * Returns the stepCount models for the steps walked.
+     *
+     * @param context    The application context
+     * @return The @{see StepCount}-Models
+     */
+    public static List<StepCount> getStepCountsForever(Context context) {
+        if (context == null) {
+            Log.e(LOG_CLASS, "Cannot get step count - context is null");
+            return new ArrayList<>();
+        }
+        Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
+                new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE},
+                "", new String[]{}, null, null, null);
+        List<StepCount> steps = new ArrayList<>();
+        long start = 0;
+        int sum = 0;
+        while (c.moveToNext()) {
+            StepCount s = new StepCount();
+            s.setStartTime(start);
+            s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT)));
+            //Log.w("ASDF", "Getting walking mode " + c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)));
+            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)), context));
+            steps.add(s);
+            start = s.getEndTime();
+            sum += s.getStepCount();
+        }
+        c.close();
+        return steps;
+    }
+
+    /**
      * Returns the number of steps walked in the given time interval
      *
      * @param start_time The start time

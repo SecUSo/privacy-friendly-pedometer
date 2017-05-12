@@ -29,6 +29,10 @@
         android:key="@string/pref_use_wake_lock"
         android:summary="@string/pref_summary_use_wake_lock"
         android:title="@string/pref_title_use_wake_lock" />
+    <Preference
+        android:title="@string/pref_title_export_data"
+        android:summary="@string/pref_summary_export_data"
+        android:key="@string/pref_export_data" />
 
     <PreferenceCategory android:title="@string/pref_group_title_personal_settings">
         <EditTextPreference

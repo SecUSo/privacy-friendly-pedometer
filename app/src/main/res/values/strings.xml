@@ -83,6 +83,10 @@
     <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
     <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please.</string>
 
+    <string name="pref_export_data" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.exportdata</string>
+    <string name="pref_title_export_data">Export data</string>
+    <string name="pref_summary_export_data">Export step count in csv file.</string>
+
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Weight (kg)</string>
     <string name="pref_default_weight" translatable="false">65.0</string>
@@ -237,4 +241,8 @@
     <string name="training_stop_button">End training now</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Stepgoal</string>
+    <string name="export_csv_header">Start;End;Steps;Mode</string>
+    <string name="export_csv_begin">&lt;begin&gt;</string>
+    <string name="export_csv_error">Error happen during export</string>
+    <string name="export_csv_success">"CSV exported at "</string>
 </resources>

@@ -8,9 +8,7 @@ Privacy Friendly Pedometer belongs to the group of [Privacy Friendly Apps](https
 
 ## Download and more information
 
-[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/app/org.secuso.privacyfriendlyactivitytracker)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlyactivitytracker"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
-
-### Building
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdid=org.secuso.privacyfriendlypasswordgenerator)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlypasswordgenerator"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
 
 Further development requires Android Studio, we recommend to use at least version 2.2.2
 

@@ -16,9 +16,9 @@
     <string name="about_author_contributors">et les contributeurs.</string>
     <string name="about_affiliation">En lien avec</string>
     <string name="more_info">Plus d\'informations sur :</string>
-    <string name="about_third_party_libs">Cette application utilise <a href=\"https://github.com/PhilJay/MPAndroidChart\" >MPAndroidChart de Philipp Jahoda</a> (Licence Apache 2).</string>
+    <string name="about_third_party_libs">Cette application utilise <a href="https://github.com/PhilJay/MPAndroidChart" >MPAndroidChart de Philipp Jahoda</a> (Licence Apache 2).</string>
     <string name="privacy_friendly">Cette application fait partie du groupe d\'applications Privacy Friendly Apps développées par la Technische Universität Darmstadt. Le code source est sous licence GPLv3. Copyright des images : TU Darmstadt et Google Inc.</string>
-    <string name="url"><a href=\"https://www.secuso.org/pfa\" >Site web de SECUSO</a></string>
+    <string name="url"><a href="https://www.secuso.org/pfa" >Site web de SECUSO</a></string>
 
     <!-- ReportFragment -->
     <string name="month">Mois</string>
@@ -104,9 +104,9 @@
     <string name="pref_title_notification_motivation_alert_texts">Textes des notifications de motivation</string>
     <string name="pref_title_notification_motivation_alert_criterion">Critère de l\'alerte de motivation</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>moins de 90% de l\'objectif quotidien de pas</item>
-        <item>moins de 70% de l\'objectif quotidien de pas</item>
-        <item>moins de 50% de l\'objectif quotidien de pas</item>
+        <item>moins de 90&#65285; de l\'objectif quotidien de pas</item>
+        <item>moins de 70&#65285; de l\'objectif quotidien de pas</item>
+        <item>moins de 50&#65285; de l\'objectif quotidien de pas</item>
     </string-array>
     <!-- /notification settings -->
     <string name="pref_header_walking_modes">Modes de marche</string>

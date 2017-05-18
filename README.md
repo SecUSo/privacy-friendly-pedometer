@@ -1,12 +1,15 @@
 ## Privacy Friendly Pedometer
 
+
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdid=org.secuso.privacyfriendlyactivitytracker)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlyactivitytracker"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
+
 The Privacy Friendly Pedometer stores the user's step count per hour. The user can review the recorded steps in a daily, weekly and monthly report. These reports also display the calculated distance and calories. As a bonus feature the app can record training sessions (e.g. a jogging session) in a different view. The user can choose whether the app should remind him if the achievement of his daily step goal is in danger.
 
 ## Motivation
 
 Privacy Friendly Pedometer belongs to the group of [Privacy Friendly Apps](https://www.secuso.informatik.tu-darmstadt.de/en/secuso-home/research/results/privacy-friendly-apps/) and has therefore been optimized with respect to user's privacy.
 
-## Download and more information
+## Building
 
 [<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdid=org.secuso.privacyfriendlypasswordgenerator)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlypasswordgenerator"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
 

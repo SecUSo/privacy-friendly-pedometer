@@ -37,6 +37,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -332,6 +333,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             activitySummary.setDistance(distance);
             activitySummary.setCalories(calories);
             activitySummary.setTitle(simpleDateFormat.format(day.getTime()));
+            activitySummary.setHasSuccessor(!this.isTodayShown());
+            activitySummary.setHasPredecessor(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).before(day.getTime()));
         }
 
         if (activityChart == null) {
@@ -433,6 +436,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                 }
             }
         }, year, month, day);
+        dialog.getDatePicker().setMaxDate(new Date().getTime()); // Max date is today
+        dialog.getDatePicker().setMinDate(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).getTime());
         dialog.show();
     }
 

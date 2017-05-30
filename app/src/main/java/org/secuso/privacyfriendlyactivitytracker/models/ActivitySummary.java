@@ -8,6 +8,14 @@ public class ActivitySummary {
     private double distance;
     private int calories;
     private String title;
+    /**
+     * Does the period of time has successors?
+     */
+    private boolean hasSuccessor;
+    /**
+     * Does the period of time has predecessors?
+     */
+    private boolean hasPredecessor;
 
     public ActivitySummary(int steps, double distance, int calories) {
         this(steps, distance, calories, "");
@@ -50,5 +58,21 @@ public class ActivitySummary {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isHasSuccessor() {
+        return hasSuccessor;
+    }
+
+    public void setHasSuccessor(boolean hasSuccessor) {
+        this.hasSuccessor = hasSuccessor;
+    }
+
+    public boolean isHasPredecessor() {
+        return hasPredecessor;
+    }
+
+    public void setHasPredecessor(boolean hasPredecessor) {
+        this.hasPredecessor = hasPredecessor;
     }
 }

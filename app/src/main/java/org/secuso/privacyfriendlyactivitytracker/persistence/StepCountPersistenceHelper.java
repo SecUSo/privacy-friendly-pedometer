@@ -171,6 +171,28 @@ public class StepCountPersistenceHelper {
     }
 
     /**
+     * Returns the date of first entry in database
+     * @param context Application context
+     * @return Date of first entry or default today
+     */
+    public static Date getDateOfFirstEntry(Context context){
+        Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
+                new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP}, /* columns */
+                null,
+                null,
+                null,
+                null,
+                StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " ASC", /* orderBy */
+                "1" /* limit */);
+        Date date = new Date(); // fallback is today
+        while(c.moveToNext()){
+            date.setTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
+        }
+        c.close();
+        return date;
+    }
+
+    /**
      * Returns the writable database
      *
      * @param context The application context

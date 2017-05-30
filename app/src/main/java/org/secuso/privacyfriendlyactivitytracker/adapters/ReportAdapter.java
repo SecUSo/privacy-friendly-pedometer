@@ -1,7 +1,13 @@
 package org.secuso.privacyfriendlyactivitytracker.adapters;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -146,26 +154,26 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 }
                 BarDataSet barDataSet = new BarDataSet(dataEntries, barChartLabel);
                 BarDataSet barDataSetReachedDailyGoal = new BarDataSet(dataEntriesReachedDailyGoal, barChartLabel);
-                if(barChartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
+                if (barChartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
                     String formatPattern = "###,###,##0.0";
                     barDataSet.setValueFormatter(new DoubleValueFormatter(formatPattern));
                     barDataSetReachedDailyGoal.setValueFormatter(new DoubleValueFormatter(formatPattern));
                 }
-                if(barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS && barChartXValues.size() > 15){
+                if (barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS && barChartXValues.size() > 15) {
                     barDataSet.setDrawValues(false);
                     barDataSetReachedDailyGoal.setDrawValues(false);
                 }
                 ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
-                if(barChartData.getDisplayedDataType() != ActivityDayChart.DataType.STEPS){
+                if (barChartData.getDisplayedDataType() != ActivityDayChart.DataType.STEPS) {
                     // make sure, that the first and last entry are fully displayed
-                        Entry start = new Entry(0, 0);
-                        Entry end = new Entry(barChartI - 1, 0);
-                        LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
-                        chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-                        chartLineDataSet.setDrawCircles(false);
-                        chartLineDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.transparent), 0);
-                        chartLineDataSet.setDrawValues(false);
-                        lineDataSets.add(chartLineDataSet);
+                    Entry start = new Entry(0, 0);
+                    Entry end = new Entry(barChartI - 1, 0);
+                    LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
+                    chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                    chartLineDataSet.setDrawCircles(false);
+                    chartLineDataSet.setColor(ContextCompat.getColor(barChartViewHolder.context, R.color.transparent), 0);
+                    chartLineDataSet.setDrawValues(false);
+                    lineDataSets.add(chartLineDataSet);
                 }
                 // add daily step goal
                 if (barChartXValues.size() > 0 && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
@@ -319,6 +327,12 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 summaryViewHolder.mDistanceTitleTextView.setText(UnitUtil.usersLengthDescriptionShort(summaryViewHolder.itemView.getContext()));
                 summaryViewHolder.mNextButton.setVisibility(summaryData.isHasSuccessor() ? View.VISIBLE : View.INVISIBLE);
                 summaryViewHolder.mPrevButton.setVisibility(summaryData.isHasPredecessor() ? View.VISIBLE : View.INVISIBLE);
+                if(summaryData.getCurrentSpeed() != null){
+                    summaryViewHolder.mVelocityContainer.setVisibility(View.VISIBLE);
+                    summaryViewHolder.mVelocityTextView.setText(String.valueOf(String.format(summaryViewHolder.context.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometersPerHourToUsersVelocityUnit(UnitUtil.metersPerSecondToKilometersPerHour(summaryData.getCurrentSpeed()), summaryViewHolder.context))) + UnitUtil.usersVelocityDescription(summaryViewHolder.context));
+                }else{
+                    summaryViewHolder.mVelocityContainer.setVisibility(View.GONE);
+                }
                 break;
         }
     }
@@ -364,9 +378,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public Context context;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            context = itemView.getContext();
         }
     }
 
@@ -376,7 +392,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public TextView mStepsTextView;
         public TextView mDistanceTextView;
         public TextView mCaloriesTextView;
+        public TextView mVelocityTextView;
         public TextView mDistanceTitleTextView;
+        public RelativeLayout mVelocityContainer;
         public ImageButton mPrevButton;
         public ImageButton mNextButton;
 
@@ -386,6 +404,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mStepsTextView = (TextView) itemView.findViewById(R.id.stepCount);
             mDistanceTextView = (TextView) itemView.findViewById(R.id.distanceCount);
             mCaloriesTextView = (TextView) itemView.findViewById(R.id.calorieCount);
+            mVelocityTextView = (TextView) itemView.findViewById(R.id.speed);
+            mVelocityContainer = (RelativeLayout) itemView.findViewById(R.id.speedContainer);
             mDistanceTitleTextView = (TextView) itemView.findViewById(R.id.distanceTitle);
             mPrevButton = (ImageButton) itemView.findViewById(R.id.prev_btn);
             mNextButton = (ImageButton) itemView.findViewById(R.id.next_btn);
@@ -421,11 +441,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
         public TextView mTitleTextView;
         public ImageButton mMenuButton;
-        public Context context;
 
         public AbstractChartViewHolder(View itemView) {
             super(itemView);
-            context = itemView.getContext();
             mTitleTextView = (TextView) itemView.findViewById(R.id.period);
             mMenuButton = (ImageButton) itemView.findViewById(R.id.periodMoreButton);
             mMenuButton.setOnClickListener(new View.OnClickListener() {

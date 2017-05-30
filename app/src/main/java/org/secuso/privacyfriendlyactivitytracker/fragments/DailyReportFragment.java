@@ -32,6 +32,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
+import org.secuso.privacyfriendlyactivitytracker.services.MovementSpeedService;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.text.SimpleDateFormat;
@@ -77,6 +78,20 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             myBinder = (AbstractStepDetectorService.StepDetectorBinder) service;
+            generateReports(true);
+        }
+    };
+    private MovementSpeedService.MovementSpeedBinder movementSpeedBinder;
+    private ServiceConnection mMovementSpeedServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            movementSpeedBinder = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            movementSpeedBinder = (MovementSpeedService.MovementSpeedBinder) service;
             generateReports(true);
         }
     };
@@ -156,6 +171,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             bindService();
         }
         registerReceivers();
+        bindMovementSpeedService();
     }
 
     @Override
@@ -164,11 +180,14 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         if(isTodayShown()){
             bindService();
         }
+        registerReceivers();
+        bindMovementSpeedService();
     }
 
     @Override
     public void onDetach() {
         unbindService();
+        unbindMovementSpeedService();
         unregisterReceivers();
         mListener = null;
         super.onDetach();
@@ -177,6 +196,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     @Override
     public void onPause(){
         unbindService();
+        unbindMovementSpeedService();
         unregisterReceivers();
         super.onPause();
     }
@@ -184,16 +204,18 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     @Override
     public void onDestroy() {
         unbindService();
+        unbindMovementSpeedService();
         unregisterReceivers();
         super.onDestroy();
     }
 
 
     private void registerReceivers(){
-        // subscribe to onStepsSaved and onStepsDetected broadcasts
+        // subscribe to onStepsSaved and onStepsDetected broadcasts and onSpeedChanged
         IntentFilter filterRefreshUpdate = new IntentFilter();
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
+        filterRefreshUpdate.addAction(MovementSpeedService.BROADCAST_ACTION_SPEED_CHANGED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
     }
 
@@ -213,6 +235,23 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             getActivity().getApplicationContext().unbindService(mServiceConnection);
             myBinder = null;
         }
+    }
+
+    private void bindMovementSpeedService(){
+        if(movementSpeedBinder == null){
+            Intent serviceIntent = new Intent(getContext(), MovementSpeedService.class);
+            getActivity().getApplicationContext().startService(serviceIntent);
+            getActivity().getApplicationContext().bindService(serviceIntent, mMovementSpeedServiceConnection, Context.BIND_AUTO_CREATE);
+        }
+    }
+
+    private void unbindMovementSpeedService(){
+        if(movementSpeedBinder != null && mMovementSpeedServiceConnection != null && movementSpeedBinder.getService() != null){
+            getActivity().getApplicationContext().unbindService(mMovementSpeedServiceConnection);
+            movementSpeedBinder = null;
+        }
+        Intent serviceIntent = new Intent(getContext(), MovementSpeedService.class);
+        getActivity().getApplicationContext().stopService(serviceIntent);
     }
 
     /**
@@ -335,6 +374,9 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             activitySummary.setTitle(simpleDateFormat.format(day.getTime()));
             activitySummary.setHasSuccessor(!this.isTodayShown());
             activitySummary.setHasPredecessor(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).before(day.getTime()));
+            if(movementSpeedBinder != null){
+                activitySummary.setCurrentSpeed(movementSpeedBinder.getSpeed());
+            }
         }
 
         if (activityChart == null) {
@@ -463,6 +505,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                 case AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED:
                 case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
                 case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:
+                case MovementSpeedService.BROADCAST_ACTION_SPEED_CHANGED:
                     // Steps were saved, reload step count from database
                     generateReports(true);
                     break;

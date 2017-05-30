@@ -10,6 +10,8 @@
         android:smallScreens="true"
         android:xlargeScreens="true"/>
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -132,6 +134,7 @@
 
         <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver"/>
 
+        <service android:name="org.secuso.privacyfriendlyactivitytracker.services.MovementSpeedService" />
         <service android:name="org.secuso.privacyfriendlyactivitytracker.services.AccelerometerStepDetectorService" />
         <service
             android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepDetectorService"

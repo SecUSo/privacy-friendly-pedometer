@@ -8,6 +8,7 @@ public class ActivitySummary {
     private double distance;
     private int calories;
     private String title;
+    private Float currentSpeed = null;
     /**
      * Does the period of time has successors?
      */
@@ -74,5 +75,13 @@ public class ActivitySummary {
 
     public void setHasPredecessor(boolean hasPredecessor) {
         this.hasPredecessor = hasPredecessor;
+    }
+
+    public Float getCurrentSpeed() {
+        return currentSpeed;
+    }
+
+    public void setCurrentSpeed(Float currentSpeed) {
+        this.currentSpeed = currentSpeed;
     }
 }

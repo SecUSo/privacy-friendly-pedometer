@@ -37,6 +37,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -223,15 +224,36 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         if(day == null){
             return false;
         }
+        Calendar start = getStartDay();
+        Calendar end = getEndDay();
+        return (start.before(day) || start.equals(day)) && end.after(day);
+    }
+
+    /**
+     * The start day is midnight of fist day of week.
+     * @return The start day of shown interval
+     */
+    private Calendar getStartDay(){
+        if(day == null){
+            return Calendar.getInstance();
+        }
         Calendar start = (Calendar) day.clone();
         start.set(Calendar.DAY_OF_WEEK, day.getFirstDayOfWeek());
         start.set(Calendar.MILLISECOND, 0);
         start.set(Calendar.SECOND, 0);
         start.set(Calendar.MINUTE, 0);
         start.set(Calendar.HOUR_OF_DAY, 0);
-        Calendar end = (Calendar) start.clone();
+        return start;
+    }
+
+    /**
+     * The end day is midnight of first day of next week.
+     * @return The end day of shown interval
+     */
+    private Calendar getEndDay(){
+        Calendar end = getStartDay();
         end.add(Calendar.WEEK_OF_YEAR, 1);
-        return (start.before(day) || start.equals(day)) && end.after(day);
+        return end;
     }
 
     /**
@@ -322,6 +344,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                     activitySummary.setDistance(totalDistance);
                     activitySummary.setCalories(totalCalories);
                     activitySummary.setTitle(title);
+                    activitySummary.setHasSuccessor(new Date().after(getEndDay().getTime()));
+                    activitySummary.setHasPredecessor(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).before(day.getTime()));
                 }
                 if (activityChart == null) {
                     activityChart = new ActivityChart(stepData, distanceData, caloriesData, title);
@@ -421,6 +445,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 }
             }
         }, year, month, day);
+        dialog.getDatePicker().setMaxDate(new Date().getTime()); // Max date is today
+        dialog.getDatePicker().setMinDate(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).getTime());
         dialog.show();
     }
 

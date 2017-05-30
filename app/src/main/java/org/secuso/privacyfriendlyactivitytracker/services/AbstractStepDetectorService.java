@@ -141,6 +141,9 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
             message += (!message.isEmpty()) ? "\n" : "";
             message += String.format(getString(R.string.notification_text_calories), totalCalories);
         }
+        if(message.isEmpty()){
+            message = getString(R.string.notification_text_default);
+        }
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mNotifyManager =

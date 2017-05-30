@@ -158,6 +158,7 @@
     <string name="notification_text_steps">%1$s of %2$s steps walked today.</string>
     <string name="notification_text_distance">%1$.2f %2$s walked today.</string>
     <string name="notification_text_calories">Burned %.2f kcal today.</string>
+    <string name="notification_text_default">Pedometer is active.</string>
     <!-- /Will be removed on next update -->
 
     <!-- others -->

@@ -30,6 +30,12 @@
         android:summary="@string/pref_summary_use_wake_lock"
         android:title="@string/pref_title_use_wake_lock" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_show_velocity"
+        android:summary="@string/pref_summary_show_velocity"
+        android:title="@string/pref_title_show_velocity" />
+
     <PreferenceCategory android:title="@string/pref_group_title_personal_settings">
         <EditTextPreference
             android:defaultValue="@string/pref_default_daily_step_goal"

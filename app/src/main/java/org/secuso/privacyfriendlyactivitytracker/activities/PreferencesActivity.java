@@ -1,10 +1,13 @@
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 
+import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +17,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
@@ -172,6 +177,23 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 //|| HelpFragment.class.getName().equals(fragmentName);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        for (int i = 0; i < permissions.length; i++) {
+            String permission = permissions[i];
+            int grantResult = grantResults[i];
+
+            if (permission.equals(Manifest.permission.ACCESS_COARSE_LOCATION) || permission.equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    // location permission was not granted - disable velocity setting.
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putBoolean(getString(R.string.pref_show_velocity), false);
+                    editor.apply();
+                }
+            }
+        }
+    }
     /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
@@ -234,6 +256,16 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
                 } else {
                     StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+                }
+            }
+            // check for location permission
+            if (key.equals(getString(R.string.pref_show_velocity))) {
+                boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_show_velocity), false);
+                if (isEnabled) {
+                    if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                    }
                 }
             }
         }

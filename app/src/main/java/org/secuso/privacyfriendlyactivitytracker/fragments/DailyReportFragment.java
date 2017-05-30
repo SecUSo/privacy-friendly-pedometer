@@ -238,7 +238,9 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     }
 
     private void bindMovementSpeedService(){
-        if(movementSpeedBinder == null){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean isVelocityEnabled = sharedPref.getBoolean(getString(R.string.pref_show_velocity), false);
+        if(movementSpeedBinder == null && isVelocityEnabled){
             Intent serviceIntent = new Intent(getContext(), MovementSpeedService.class);
             getActivity().getApplicationContext().startService(serviceIntent);
             getActivity().getApplicationContext().bindService(serviceIntent, mMovementSpeedServiceConnection, Context.BIND_AUTO_CREATE);
@@ -374,8 +376,11 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             activitySummary.setTitle(simpleDateFormat.format(day.getTime()));
             activitySummary.setHasSuccessor(!this.isTodayShown());
             activitySummary.setHasPredecessor(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).before(day.getTime()));
-            if(movementSpeedBinder != null){
+            boolean isVelocityEnabled = sharedPref.getBoolean(getString(R.string.pref_show_velocity), false);
+            if(movementSpeedBinder != null  && isVelocityEnabled){
                 activitySummary.setCurrentSpeed(movementSpeedBinder.getSpeed());
+            }else{
+                activitySummary.setCurrentSpeed(null);
             }
         }
 

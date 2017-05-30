@@ -59,9 +59,10 @@ public class MovementSpeedService extends IntentService implements LocationListe
     private final IBinder mBinder = new MovementSpeedBinder();
     private LocationManager mLocationManager;
     private Float speed;
-    private double curTime= 0;
+    private double curTime = 0;
     private double oldLat = 0.0;
     private double oldLon = 0.0;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *

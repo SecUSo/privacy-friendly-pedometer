@@ -97,6 +97,9 @@
     <string name="pref_summary_notification_permanent">Während die App Ihre Schritte zählt, wird eine Benachrichtigung angezeigt. Wählen Sie den Inhalt der Benachrichtigung:</string>
     <string name="pref_explanation_weight_and_gender">Geben Sie Ihr Gewicht und Geschlecht an, um die Kalorienberechnung zu verbessern.</string>
 
+    <string name="pref_title_show_velocity">Zeige Bewegungsgeschwindigkeit</string>
+    <string name="pref_summary_show_velocity">Die App zeigt auf der Tagesübersicht die aktuelle Bewegungsübersicht an. Dazu wird der Zugriff auf die aktuelle Position benötigt.</string>
+
     <string-array name="pref_keys_accelerometer_threshold">
         <item>sehr hoch</item>
         <item>höher</item>

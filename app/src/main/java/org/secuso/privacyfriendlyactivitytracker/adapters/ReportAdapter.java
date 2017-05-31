@@ -232,13 +232,15 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 legendValues.put(ContextCompat.getColor(chartViewHolder.itemView.getContext(), R.color.colorPrimary), label);
                 ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                 float lastValue = 0;
-                float lastWalkingModeId = 0;
+                float lastWalkingModeId = -1;
                 float maxValue = 0;
                 // Generate data for line data sets
                 for (Map.Entry<String, ActivityChartDataSet> dataEntry : dataMap.entrySet()) {
                     long walkingModeId = 0;
                     if (dataEntry.getValue() != null && dataEntry.getValue().getStepCount() != null && dataEntry.getValue().getStepCount().getWalkingMode() != null) {
                         walkingModeId = dataEntry.getValue().getStepCount().getWalkingMode().getId();
+                    }else{
+                        walkingModeId = 0;
                     }
                     // Generate new data set if walking mode changed
                     if (lastWalkingModeId != walkingModeId || dataSets.size() == 0) {

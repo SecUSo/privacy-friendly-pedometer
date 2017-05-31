@@ -24,12 +24,20 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_accelerometer_threshold"/>
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_accelerometer_steps_threshold"
+        android:inputType="number"
+        android:key="@string/pref_accelerometer_steps_threshold"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_accelerometer_steps_threshold" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="@string/pref_use_wake_lock"
         android:summary="@string/pref_summary_use_wake_lock"
         android:title="@string/pref_title_use_wake_lock" />
-
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_show_velocity"

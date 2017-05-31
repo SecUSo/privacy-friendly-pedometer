@@ -33,7 +33,8 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
     private float[] mLastStepAccelerationDeltas = {-1, -1, -1, -1, -1, -1};
     private int mLastStepAccelerationDeltasIndex = 0;
     private float accelerometerThreshold;
-
+    private int valid_steps = 0;
+    private int validStepsThreshold = 0;
     //private float[]
 
     /**
@@ -58,6 +59,7 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
         super.onCreate();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         accelerometerThreshold = Float.parseFloat(sharedPref.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
+        validStepsThreshold = Integer.parseInt(sharedPref.getString(getString(R.string.pref_accelerometer_steps_threshold), "10"));
     }
 
     @Override
@@ -88,11 +90,13 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
 
         if (current_sign == last_sign) {
             // the maximum is not reached yet, keep on waiting
+            valid_steps = 0;
             return;
         }
 
         if (!isSignificantValue(acceleration)) {
             // not significant (acceleration delta is too small)
+            valid_steps = 0;
             return;
         }
 
@@ -100,12 +104,14 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
         if (!isAlmostAsLargeAsPreviousOne(acceleration_diff)) {
             if (debug) Log.i(LOG_TAG, "Not as large as previous");
             last_acceleration_diff = acceleration_diff;
+            valid_steps = 0;
             return;
         }
 
         if (!wasPreviousLargeEnough(acceleration_diff)) {
             if (debug) Log.i(LOG_TAG, "Previous not large enough");
             last_acceleration_diff = acceleration_diff;
+            valid_steps = 0;
             return;
         }
 
@@ -117,10 +123,12 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
             // Ignore steps with more than 180bpm and less than 20bpm
             if (step_time_delta < 60 * 1000 / 180) {
                 if (debug) Log.i(LOG_TAG, "Too fast.");
+                valid_steps = 0;
                 return;
             } else if (step_time_delta > 60 * 1000 / 20) {
                 if (debug) Log.i(LOG_TAG, "Too slow.");
                 last_step_time = current_step_time;
+                valid_steps = 0;
                 return;
             }
 
@@ -128,6 +136,7 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
             if (!isRegularlyOverTime(step_time_delta)) {
                 last_step_time = current_step_time;
                 if (debug) Log.i(LOG_TAG, "Not regularly over time.");
+                valid_steps = 0;
                 return;
             }
             last_step_time = current_step_time;
@@ -138,14 +147,19 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
                 last_acceleration_diff = acceleration_diff;
                 if (debug)
                     Log.i(LOG_TAG, "Not regularly over acceleration" + Arrays.toString(mLastStepAccelerationDeltas));
+                valid_steps = 0;
                 return;
             }
             last_acceleration_value = acceleration;
             last_acceleration_diff = acceleration_diff;
-
             // okay, finally this has to be a step
-            this.onStepDetected(1);
-
+            valid_steps ++;
+            // count it only if we got more than validStepsThreshold steps
+            if(valid_steps == validStepsThreshold){
+                this.onStepDetected(valid_steps);
+            }else if(valid_steps > validStepsThreshold){
+                this.onStepDetected(1);
+            }
         }
 
         last_step_time = current_step_time;
@@ -240,6 +254,9 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
         super.onSharedPreferenceChanged(sharedPreferences, key);
         if (key.equals(getString(R.string.pref_accelerometer_threshold))) {
             accelerometerThreshold = Float.parseFloat(sharedPreferences.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
+        }
+        if (key.equals(getString(R.string.pref_accelerometer_steps_threshold))) {
+            validStepsThreshold = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_accelerometer_steps_threshold), "10"));
         }
     }
 }

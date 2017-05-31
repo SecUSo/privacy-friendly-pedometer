@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -226,7 +227,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 // hide accelerometer threshold if hardware detection is used.
                 PreferenceScreen screen = getPreferenceScreen();
                 ListPreference accelerometerThresholdPref = (ListPreference) findPreference(getString(R.string.pref_accelerometer_threshold));
+                EditTextPreference accelerometerStepsThresholdPref = (EditTextPreference) findPreference(getString(R.string.pref_accelerometer_steps_threshold));
                 screen.removePreference(accelerometerThresholdPref);
+                screen.removePreference(accelerometerStepsThresholdPref);
             }
         }
 

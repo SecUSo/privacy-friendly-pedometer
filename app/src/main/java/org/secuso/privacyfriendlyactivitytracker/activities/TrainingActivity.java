@@ -43,6 +43,10 @@ import java.util.TimerTask;
  * @version 20160730
  */
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener {
+    /**
+     * Broadcast action identifier for messages broadcasted when new steps were detected
+     */
+    public static final String BROADCAST_ACTION_TRAINING_STOPPED = "org.secuso.privacyfriendlystepcounter.TRAINING_STOPPED";
     public static final String LOG_CLASS = TrainingActivity.class.getName();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private Map<Integer, WalkingMode> menuWalkingModes;
@@ -86,8 +90,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             // Now wait for steps saved broadcast message and than create a new training session.
             // We have to wait to ensure, that only the steps since now are counted.
         }
-        StepDetectionServiceHelper.startAllIfEnabled(this);
-
         mTextViewSteps = (TextView) findViewById(R.id.training_steps);
         mTextViewDistance = (TextView) findViewById(R.id.training_distance);
         mTextViewDistanceTitle = (TextView) findViewById(R.id.training_distance_title);
@@ -237,7 +239,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             this.mTimer = null;
         }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
-
+        // broadcast the end of training mode
+        Intent localIntent = new Intent(BROADCAST_ACTION_TRAINING_STOPPED);
+        // Broadcasts the Intent to receivers in this app.
+        LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
         StepDetectionServiceHelper.stopAllIfNotRequired(this);
         Intent intent = new Intent(this, TrainingOverviewActivity.class);
         startActivity(intent);
@@ -303,6 +308,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         training.setName(String.format(getResources().getConfiguration().locale, getString(R.string.training_default_title), WalkingModePersistenceHelper.getActiveMode(TrainingActivity.this).getName(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH)));
                         training.setDescription("");
                         training = TrainingPersistenceHelper.save(training, TrainingActivity.this);
+                        StepDetectionServiceHelper.startAllIfEnabled(getApplicationContext());
                     }
                     // continue with updating the view
                 case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:

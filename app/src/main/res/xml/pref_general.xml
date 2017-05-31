@@ -39,6 +39,11 @@
         android:summary="@string/pref_summary_use_wake_lock"
         android:title="@string/pref_title_use_wake_lock" />
     <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_use_wake_lock_during_training"
+        android:summary="@string/pref_summary_use_wake_lock_during_training"
+        android:title="@string/pref_title_use_wake_lock_during_training" />
+    <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_show_velocity"
         android:summary="@string/pref_summary_show_velocity"

@@ -22,8 +22,10 @@ import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
 
@@ -195,7 +197,10 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         sharedPref.registerOnSharedPreferenceChangeListener(this);
 
         // register for steps-saved-event
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED));
+        IntentFilter filterRefreshUpdate = new IntentFilter();
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
+        filterRefreshUpdate.addAction(TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
         // load step count from database
         getStepsAtLastSave();
     }
@@ -204,9 +209,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public void onDestroy() {
         Log.i(LOG_TAG, "Destroying service.");
         // release wake lock if any
-        if(mWakeLock != null){
-            releaseWakeLock();
-        }
+        acquireOrReleaseWakeLock();
         // Unregister sensor listeners
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
@@ -226,11 +229,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "Starting service.");
         startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean useWakeLock = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock), false);
-        if(mWakeLock == null && useWakeLock) {
-            acquireWakeLock();
-        }
+        acquireOrReleaseWakeLock();
 
         return START_STICKY;
     }
@@ -256,12 +255,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
                 key.equals(getString(R.string.pref_notification_permanent_show_calories))) {
             updateNotification();
         } else if(key.equals(getString(R.string.pref_use_wake_lock))){
-            boolean useWakeLock = sharedPreferences.getBoolean(getString(R.string.pref_use_wake_lock), false);
-            if(useWakeLock && this.mWakeLock == null){
-                acquireWakeLock();
-            }else if(!useWakeLock && this.mWakeLock != null){
-                releaseWakeLock();
-            }
+            acquireOrReleaseWakeLock();
         }
     }
 
@@ -298,6 +292,21 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     private void updateNotification() {
         Notification notification = buildNotification(this.stepCountFromTotalSteps());
         mNotifyManager.notify(NOTIFICATION_ID, notification);
+    }
+
+    private void acquireOrReleaseWakeLock(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean useWakeLock = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock), false);
+        boolean useWakeLockDuringTraining = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock_during_training), true);
+        boolean isTrainingActive = TrainingPersistenceHelper.getActiveItem(getApplicationContext()) != null;
+        if(mWakeLock == null && (useWakeLock || (useWakeLockDuringTraining && isTrainingActive))) {
+            Log.i(LOG_TAG, "acquireWakeLock.");
+            acquireWakeLock();
+        }
+        if(mWakeLock != null && !(useWakeLock || (useWakeLockDuringTraining && isTrainingActive))){
+            Log.i(LOG_TAG, "releaseWakeLock.");
+            releaseWakeLock();
+        }
     }
 
     /**
@@ -362,6 +371,8 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
                     // Steps were saved, reload step count from database
                     getStepsAtLastSave();
                     break;
+                case TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED:
+                    acquireOrReleaseWakeLock();
                 default:
             }
         }

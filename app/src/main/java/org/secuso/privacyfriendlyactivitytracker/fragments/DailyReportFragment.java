@@ -415,7 +415,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
 
 
         // notify ui
-        if (mAdapter != null && mRecyclerView != null) {
+        if (mAdapter != null && mRecyclerView != null && getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

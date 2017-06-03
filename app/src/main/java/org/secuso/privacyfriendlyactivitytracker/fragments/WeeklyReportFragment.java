@@ -369,7 +369,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 String d = sharedPref.getString(context.getString(R.string.pref_daily_step_goal), "10000");
                 activityChart.setGoal(Integer.valueOf(d));
                 // notify ui
-                if (mAdapter != null && mRecyclerView != null) {
+                if (mAdapter != null && mRecyclerView != null && getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

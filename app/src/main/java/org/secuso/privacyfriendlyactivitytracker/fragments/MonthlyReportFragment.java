@@ -359,7 +359,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                 activityChart.setGoal(Integer.valueOf(d));
 
                 // notify ui
-                if (mAdapter != null && mRecyclerView != null) {
+                if (mAdapter != null && mRecyclerView != null && getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

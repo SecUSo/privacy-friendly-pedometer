@@ -258,7 +258,7 @@ public class StepCountPersistenceHelper {
         if(stepCounts.size() == 0){
             return null;
         }else{
-            return stepCounts.get(/*stepCounts.size() - */0);
+            return stepCounts.get(stepCounts.size() - 1);
         }
     }
 

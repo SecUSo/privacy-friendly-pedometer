@@ -231,6 +231,8 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         // register for steps-saved-event
         IntentFilter filterRefreshUpdate = new IntentFilter();
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED );
         filterRefreshUpdate.addAction(TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
         // load step count from database
@@ -370,9 +372,12 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
                 return;
             }
             switch (intent.getAction()) {
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED:
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED:
                 case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
                     // Steps were saved, reload step count from database
                     getStepsAtLastSave();
+                    updateNotification();
                     break;
                 case TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED:
                     acquireOrReleaseWakeLock();

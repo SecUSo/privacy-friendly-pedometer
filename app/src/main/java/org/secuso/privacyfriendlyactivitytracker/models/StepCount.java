@@ -7,6 +7,9 @@ import android.preference.PreferenceManager;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * A step count object represents an interval in which some steps were taken and which walking mode
  * is related to this interval.
@@ -81,11 +84,10 @@ public class StepCount {
     }
     @Override
     public String toString() {
-        return "StepCount{" +
-                "stepCount=" + stepCount +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", walkingMode=" + walkingMode +
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyy HH:mm:ss");
+        return "StepCount{" + format.format(new Date(startTime)) +
+                " - " + format.format(new Date(endTime)) +
+                ": " + stepCount + " @ " + ((walkingMode == null) ? -1 : walkingMode.getId())+
                 '}';
     }
 }

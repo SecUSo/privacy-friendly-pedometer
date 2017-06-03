@@ -33,6 +33,10 @@
     <string name="activity_summary_subtitle">Summary of activities</string>
     <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
     <string name="summary_card_calories">kcal</string>
+    <string name="correct_steps">Correct steps</string>
+    <string name="correct_steps_dialog_title">Correct steps</string>
+    <string name="correct_steps_dialog_message">Please provide a new number of steps you walked.</string>
+    <string name="hint_steps">Number of steps</string>
 
     <!-- HelpActivity -->
     <string name="help_overview_heading">Overview</string>

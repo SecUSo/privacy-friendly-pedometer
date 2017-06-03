@@ -30,6 +30,8 @@ public class StepCountPersistenceHelper {
      * Broadcast action identifier for messages broadcast when step count was saved
      */
     public static final String BROADCAST_ACTION_STEPS_SAVED = "org.secuso.privacyfriendlystepcounter.STEPS_SAVED";
+    public static final String BROADCAST_ACTION_STEPS_UPDATED = "org.secuso.privacyfriendlystepcounter.STEPS_UPDATED";
+    public static final String BROADCAST_ACTION_STEPS_INSERTED = "org.secuso.privacyfriendlystepcounter.STEPS_INSERTED";
     public static String LOG_CLASS = StepCountPersistenceHelper.class.getName();
     private static SQLiteDatabase db = null;
 
@@ -75,6 +77,60 @@ public class StepCountPersistenceHelper {
         // Broadcasts the Intent to receivers in this app.
         LocalBroadcastManager.getInstance(context).sendBroadcast(localIntent);
 
+        return true;
+    }
+
+    /**
+     * Stores the given step count to database
+     *
+     * @param stepCount The step count to save
+     * @param context       The application context
+     * @return true if save was successful else false.
+     */
+    public static boolean storeStepCount(StepCount stepCount, Context context) {
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCount.getStepCount());
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 0);
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, stepCount.getEndTime());
+
+        // Insert the new row, returning the primary key value of the new row
+        getDB(context).insert(
+                StepCountDbHelper.StepCountEntry.TABLE_NAME,
+                null,
+                values);
+        // broadcast the event
+        Intent localIntent = new Intent(BROADCAST_ACTION_STEPS_INSERTED);
+        // Broadcasts the Intent to receivers in this app.
+        LocalBroadcastManager.getInstance(context).sendBroadcast(localIntent);
+        return true;
+    }
+
+    /**
+     * Updates the given step count in database based on end timestamp
+     *
+     * @param stepCount The step count to save
+     * @param context       The application context
+     * @return true if save was successful else false.
+     */
+    public static boolean updateStepCount(StepCount stepCount, Context context) {
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCount.getStepCount());
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, stepCount.getEndTime());
+
+        // Insert the new row, returning the primary key value of the new row
+        getDB(context).update(
+                StepCountDbHelper.StepCountEntry.TABLE_NAME,
+                values,
+                StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " = ?",
+                new String[]{String.valueOf(stepCount.getEndTime())}
+        );
+        // broadcast the event
+        Intent localIntent = new Intent(BROADCAST_ACTION_STEPS_UPDATED);
+        // Broadcasts the Intent to receivers in this app.
+        LocalBroadcastManager.getInstance(context).sendBroadcast(localIntent);
         return true;
     }
 
@@ -134,7 +190,7 @@ public class StepCountPersistenceHelper {
         Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE},
                 StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " >= ? AND " + StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " <= ?", new String[]{String.valueOf(start_time),
-                        String.valueOf(end_time)}, null, null, null);
+                        String.valueOf(end_time)}, null, null, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " ASC");
         List<StepCount> steps = new ArrayList<>();
         long start = start_time;
         int sum = 0;
@@ -143,7 +199,6 @@ public class StepCountPersistenceHelper {
             s.setStartTime(start);
             s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
             s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT)));
-            //Log.w("ASDF", "Getting walking mode " + c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)));
             s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)), context));
             steps.add(s);
             start = s.getEndTime();
@@ -184,12 +239,27 @@ public class StepCountPersistenceHelper {
                 null,
                 StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " ASC", /* orderBy */
                 "1" /* limit */);
-        Date date = new Date(); // fallback is today
+        Date date = Calendar.getInstance().getTime(); // fallback is today
         while(c.moveToNext()){
             date.setTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
         }
         c.close();
         return date;
+    }
+
+    /**
+     * Returns the last step count entry for given day
+     * @param day the day
+     * @param context application context
+     * @return the last step count entry for given day
+     */
+    public static StepCount getLastStepCountEntryForDay(Calendar day, Context context){
+        List<StepCount> stepCounts = getStepCountsForDay(day, context);
+        if(stepCounts.size() == 0){
+            return null;
+        }else{
+            return stepCounts.get(/*stepCounts.size() - */0);
+        }
     }
 
     /**

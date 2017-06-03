@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlyactivitytracker.fragments;
 import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -12,6 +13,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,16 +22,21 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RatingBar;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
+import org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity;
 import org.secuso.privacyfriendlyactivitytracker.adapters.ReportAdapter;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityChartDataSet;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityDayChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivitySummary;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
+import org.secuso.privacyfriendlyactivitytracker.models.Training;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.services.MovementSpeedService;
@@ -69,6 +76,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     private Calendar day;
     private boolean generatingReports;
     private Map<Integer, WalkingMode> menuWalkingModes;
+    private int menuCorrectStepId;
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -218,6 +226,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
         filterRefreshUpdate.addAction(MovementSpeedService.BROADCAST_ACTION_SPEED_CHANGED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
     }
 
@@ -502,17 +512,69 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             menuWalkingModes.put(id, walkingMode);
             menu.add(0, id, Menu.NONE, walkingMode.getName()).setChecked(walkingMode.isActive());
         }
+        menu.add(1, Menu.FIRST + i, Menu.NONE, getString(R.string.correct_steps)).setCheckable(false);
+        menuCorrectStepId = Menu.FIRST + i;
         menu.setGroupCheckable(0, true, true);
     }
 
     @Override
     public void onWalkingModeClicked(int id) {
-        if (!menuWalkingModes.containsKey(id)) {
-            return;
+        if (menuWalkingModes.containsKey(id)) {
+            // update active walking mode
+            WalkingMode walkingMode = menuWalkingModes.get(id);
+            WalkingModePersistenceHelper.setActiveMode(walkingMode, getContext());
+        }else if(id == menuCorrectStepId){
+            AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext(), R.style.AppTheme_Dialog);
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            final View dialogLayout = inflater.inflate(R.layout.dialog_correct_steps, null);
+            final EditText edittext = (EditText) dialogLayout.findViewById(R.id.steps);
+            edittext.setText(String.valueOf(getStepCountInclNonSavedSteps(day)));
+            alert.setMessage(getString(R.string.correct_steps_dialog_message));
+            alert.setTitle(getString(R.string.correct_steps_dialog_title));
+            alert.setView(dialogLayout);
+            alert.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                /* Nothing to do here, we will set an on click listener later
+                That allows us to handle the dismiss */
+                }
+            });
+            alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {/* nothing to do here */}
+            });
+            final AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+            alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int steps_new = Integer.parseInt(edittext.getText().toString());
+                    int steps_saved = getStepCountInclNonSavedSteps(day);
+                    int diff = steps_new - steps_saved;
+                    StepCount stepCount = StepCountPersistenceHelper.getLastStepCountEntryForDay(day, getContext());
+                    if(stepCount == null){
+                        stepCount = new StepCount();
+                        stepCount.setStartTime(day.getTime().getTime());
+                        stepCount.setEndTime(day.getTime().getTime());
+                        stepCount.setStepCount(stepCount.getStepCount() + diff);
+                        StepCountPersistenceHelper.storeStepCount(stepCount, getContext());
+                    }else {
+                        stepCount.setStepCount(stepCount.getStepCount() + diff);
+                        StepCountPersistenceHelper.updateStepCount(stepCount, getContext());
+                    }
+                    generateReports(false);
+                    alertDialog.dismiss();
+                }
+            });
         }
-        // update active walking mode
-        WalkingMode walkingMode = menuWalkingModes.get(id);
-        WalkingModePersistenceHelper.setActiveMode(walkingMode, getContext());
+    }
+
+    private int getStepCountInclNonSavedSteps(Calendar day){
+        int steps = StepCountPersistenceHelper.getStepCountForDay(day, getContext());
+        if (this.isTodayShown() && myBinder != null) {
+            // Today is shown. Add the steps which are not in database.
+            steps += myBinder.stepsSinceLastSave();
+        }
+        return steps;
     }
 
     /**
@@ -540,6 +602,10 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                 case MovementSpeedService.BROADCAST_ACTION_SPEED_CHANGED:
                     // Steps were saved, reload step count from database
                     generateReports(true);
+                    break;
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED:
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED:
+                    generateReports(false);
                     break;
                 default:
             }

@@ -201,6 +201,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         IntentFilter filterRefreshUpdate = new IntentFilter();
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
     }
 
@@ -502,6 +504,10 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:
                     // Steps were saved, reload step count from database
                     generateReports(true);
+                    break;
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED:
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED:
+                    generateReports(false);
                     break;
                 default:
             }

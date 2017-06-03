@@ -300,11 +300,9 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         boolean useWakeLockDuringTraining = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock_during_training), true);
         boolean isTrainingActive = TrainingPersistenceHelper.getActiveItem(getApplicationContext()) != null;
         if(mWakeLock == null && (useWakeLock || (useWakeLockDuringTraining && isTrainingActive))) {
-            Log.i(LOG_TAG, "acquireWakeLock.");
             acquireWakeLock();
         }
         if(mWakeLock != null && !(useWakeLock || (useWakeLockDuringTraining && isTrainingActive))){
-            Log.i(LOG_TAG, "releaseWakeLock.");
             releaseWakeLock();
         }
     }

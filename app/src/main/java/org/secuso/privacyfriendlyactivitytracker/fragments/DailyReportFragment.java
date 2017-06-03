@@ -329,7 +329,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             s.setEndTime(m.getTimeInMillis());
             stepCounts.add(h, s);
         }
-
         // Create report data
         SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm", locale);
         for (StepCount s : stepCounts) {

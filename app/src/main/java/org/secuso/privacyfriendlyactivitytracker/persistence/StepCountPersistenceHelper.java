@@ -58,7 +58,7 @@ public class StepCountPersistenceHelper {
         ContentValues values = new ContentValues();
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCountSinceLastSave);
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, walkingModeId);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, new Date().getTime());
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, Calendar.getInstance().getTime().getTime());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;

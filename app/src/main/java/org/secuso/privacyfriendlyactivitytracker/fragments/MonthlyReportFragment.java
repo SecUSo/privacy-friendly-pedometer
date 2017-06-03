@@ -29,6 +29,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.ActivityChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityDayChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivitySummary;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
+import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
@@ -38,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -69,6 +71,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     private ActivityChart activityChart;
     private List<Object> reports = new ArrayList<>();
     private boolean generatingReports;
+    private Map<Integer, WalkingMode> menuWalkingModes;
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -439,6 +442,31 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         dialog.getDatePicker().setMaxDate(new Date().getTime()); // Max date is today
         dialog.getDatePicker().setMinDate(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).getTime());
         dialog.show();
+    }
+
+    @Override
+    public void inflateWalkingModeMenu(Menu menu) {
+        // Add the walking modes to option menu
+        menu.clear();
+        menuWalkingModes = new HashMap<>();
+        List<WalkingMode> walkingModes = WalkingModePersistenceHelper.getAllItems(getContext());
+        int i = 0;
+        for (WalkingMode walkingMode : walkingModes) {
+            int id = Menu.FIRST + (i++);
+            menuWalkingModes.put(id, walkingMode);
+            menu.add(0, id, Menu.NONE, walkingMode.getName()).setChecked(walkingMode.isActive());
+        }
+        menu.setGroupCheckable(0, true, true);
+    }
+
+    @Override
+    public void onWalkingModeClicked(int id) {
+        if (!menuWalkingModes.containsKey(id)) {
+            return;
+        }
+        // update active walking mode
+        WalkingMode walkingMode = menuWalkingModes.get(id);
+        WalkingModePersistenceHelper.setActiveMode(walkingMode, getContext());
     }
 
     /**

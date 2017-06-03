@@ -374,6 +374,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         void onNextClicked();
 
         void onTitleClicked();
+
+        void inflateWalkingModeMenu(Menu menu);
+
+        void onWalkingModeClicked(int id);
     }
 
     // Provide a reference to the views for each data item
@@ -388,7 +392,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         }
     }
 
-    public class SummaryViewHolder extends ViewHolder {
+    public class SummaryViewHolder extends ViewHolder implements PopupMenu.OnMenuItemClickListener {
 
         public TextView mTitleTextView;
         public TextView mStepsTextView;
@@ -399,6 +403,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public RelativeLayout mVelocityContainer;
         public ImageButton mPrevButton;
         public ImageButton mNextButton;
+        public ImageButton mMenuButton;
 
         public SummaryViewHolder(View itemView) {
             super(itemView);
@@ -411,31 +416,59 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mDistanceTitleTextView = (TextView) itemView.findViewById(R.id.distanceTitle);
             mPrevButton = (ImageButton) itemView.findViewById(R.id.prev_btn);
             mNextButton = (ImageButton) itemView.findViewById(R.id.next_btn);
+            mMenuButton = (ImageButton) itemView.findViewById(R.id.periodMoreButton);
+
+            mMenuButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                showPopup(mMenuButton, context);
+                }
+            });
 
             mPrevButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mItemClickListener != null) {
-                        mItemClickListener.onPrevClicked();
-                    }
+                if (mItemClickListener != null) {
+                    mItemClickListener.onPrevClicked();
+                }
                 }
             });
             mNextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mItemClickListener != null) {
-                        mItemClickListener.onNextClicked();
-                    }
+                if (mItemClickListener != null) {
+                    mItemClickListener.onNextClicked();
+                }
                 }
             });
             mTitleTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mItemClickListener != null) {
-                        mItemClickListener.onTitleClicked();
-                    }
+                if (mItemClickListener != null) {
+                    mItemClickListener.onTitleClicked();
+                }
                 }
             });
+        }
+
+        public void showPopup(View v, Context c) {
+            PopupMenu popup = new PopupMenu(c, v);
+            if (mItemClickListener != null) {
+                mItemClickListener.inflateWalkingModeMenu(popup.getMenu());
+            }
+            popup.setOnMenuItemClickListener(this);
+            popup.show();
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            item.setChecked(!item.isChecked());
+            if (mItemClickListener != null) {
+                mItemClickListener.onWalkingModeClicked(item.getItemId());
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

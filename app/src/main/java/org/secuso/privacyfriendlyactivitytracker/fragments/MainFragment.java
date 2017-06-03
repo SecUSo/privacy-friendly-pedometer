@@ -32,7 +32,6 @@ import java.util.Map;
  * @version 20160601
  */
 public class MainFragment extends Fragment {
-    private Map<Integer, WalkingMode> menuWalkingModes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,28 +65,12 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        // Add the walking modes to option menu
-        menu.clear();
-        menuWalkingModes = new HashMap<>();
-        List<WalkingMode> walkingModes = WalkingModePersistenceHelper.getAllItems(getContext());
-        int i = 0;
-        for (WalkingMode walkingMode : walkingModes) {
-            int id = Menu.FIRST + (i++);
-            menuWalkingModes.put(id, walkingMode);
-            menu.add(0, id, Menu.NONE, walkingMode.getName()).setChecked(walkingMode.isActive());
-        }
-        menu.setGroupCheckable(0, true, true);
+
         super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (!menuWalkingModes.containsKey(item.getItemId())) {
-            return false;
-        }
-        // update active walking mode
-        WalkingMode walkingMode = menuWalkingModes.get(item.getItemId());
-        WalkingModePersistenceHelper.setActiveMode(walkingMode, getContext());
         return true;
     }
 
@@ -124,5 +107,4 @@ public class MainFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
-
 }

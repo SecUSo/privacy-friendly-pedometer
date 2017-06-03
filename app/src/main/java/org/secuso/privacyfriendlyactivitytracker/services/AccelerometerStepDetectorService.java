@@ -90,13 +90,11 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
 
         if (current_sign == last_sign) {
             // the maximum is not reached yet, keep on waiting
-            valid_steps = 0;
             return;
         }
 
         if (!isSignificantValue(acceleration)) {
             // not significant (acceleration delta is too small)
-            valid_steps = 0;
             return;
         }
 
@@ -104,14 +102,12 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
         if (!isAlmostAsLargeAsPreviousOne(acceleration_diff)) {
             if (debug) Log.i(LOG_TAG, "Not as large as previous");
             last_acceleration_diff = acceleration_diff;
-            valid_steps = 0;
             return;
         }
 
         if (!wasPreviousLargeEnough(acceleration_diff)) {
             if (debug) Log.i(LOG_TAG, "Previous not large enough");
             last_acceleration_diff = acceleration_diff;
-            valid_steps = 0;
             return;
         }
 
@@ -123,7 +119,6 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
             // Ignore steps with more than 180bpm and less than 20bpm
             if (step_time_delta < 60 * 1000 / 180) {
                 if (debug) Log.i(LOG_TAG, "Too fast.");
-                valid_steps = 0;
                 return;
             } else if (step_time_delta > 60 * 1000 / 20) {
                 if (debug) Log.i(LOG_TAG, "Too slow.");
@@ -136,7 +131,6 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
             if (!isRegularlyOverTime(step_time_delta)) {
                 last_step_time = current_step_time;
                 if (debug) Log.i(LOG_TAG, "Not regularly over time.");
-                valid_steps = 0;
                 return;
             }
             last_step_time = current_step_time;
@@ -154,6 +148,8 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
             last_acceleration_diff = acceleration_diff;
             // okay, finally this has to be a step
             valid_steps ++;
+            if (debug)
+                Log.i(LOG_TAG, "Detected step. Valid steps = " + valid_steps);
             // count it only if we got more than validStepsThreshold steps
             if(valid_steps == validStepsThreshold){
                 this.onStepDetected(valid_steps);

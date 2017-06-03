@@ -57,7 +57,7 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160606
  */
-public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener {
+public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     public static String LOG_TAG = WeeklyReportFragment.class.getName();
 
     private ReportAdapter mAdapter;
@@ -204,10 +204,14 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED);
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void unregisterReceivers(){
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private void bindService(){
@@ -478,6 +482,17 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         // update active walking mode
         WalkingMode walkingMode = menuWalkingModes.get(id);
         WalkingModePersistenceHelper.setActiveMode(walkingMode, getContext());
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.pref_step_counter_enabled))){
+            if(!StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
+                unbindService();
+            }else if(this.isTodayShown()){
+                bindService();
+            }
+        }
     }
 
     /**

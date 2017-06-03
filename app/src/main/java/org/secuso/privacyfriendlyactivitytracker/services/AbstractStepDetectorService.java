@@ -27,6 +27,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
 
 import java.util.Calendar;
@@ -185,24 +186,6 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public void onCreate() {
         super.onCreate();
         Log.i(LOG_TAG, "Creating service.");
-        // register for sensors
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
-
-        // Get daily goal(s) from preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
-        this.dailyStepGoal = Integer.parseInt(d);
-        sharedPref.registerOnSharedPreferenceChangeListener(this);
-
-        // register for steps-saved-event
-        IntentFilter filterRefreshUpdate = new IntentFilter();
-        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
-        filterRefreshUpdate.addAction(TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED);
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
-        // load step count from database
-        getStepsAtLastSave();
     }
 
     @Override
@@ -230,6 +213,28 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         Log.i(LOG_TAG, "Starting service.");
         startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
         acquireOrReleaseWakeLock();
+
+        if(!StepDetectionServiceHelper.isStepDetectionEnabled(getApplicationContext())){
+            stopSelf();
+        }
+        // register for sensors
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
+
+        // Get daily goal(s) from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
+        this.dailyStepGoal = Integer.parseInt(d);
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+        // register for steps-saved-event
+        IntentFilter filterRefreshUpdate = new IntentFilter();
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
+        filterRefreshUpdate.addAction(TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+        // load step count from database
+        getStepsAtLastSave();
 
         return START_STICKY;
     }

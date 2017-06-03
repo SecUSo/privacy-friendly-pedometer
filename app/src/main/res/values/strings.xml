@@ -37,6 +37,8 @@
     <string name="correct_steps_dialog_title">Correct steps</string>
     <string name="correct_steps_dialog_message">Please provide a new number of steps you walked.</string>
     <string name="hint_steps">Number of steps</string>
+    <string name="pause_step_detection">Pause step detection</string>
+    <string name="continue_step_detection">Continue step detection</string>
 
     <!-- HelpActivity -->
     <string name="help_overview_heading">Overview</string>

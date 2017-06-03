@@ -1,7 +1,9 @@
 package org.secuso.privacyfriendlyactivitytracker.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import android.view.ViewGroup;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +35,14 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160601
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +65,13 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDetach(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+        super.onDetach();
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         new ViewPagerAdapter(null);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
@@ -64,14 +82,61 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_options_overview, menu);
+    }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+        setPauseContinueMenuItemVisibility(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return true;
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        switch(item.getItemId()){
+            case R.id.menu_pause_step_detection:
+                editor.putBoolean(getString(R.string.pref_step_counter_enabled), false);
+                editor.apply();
+                StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+                return true;
+            case R.id.menu_continue_step_detection:
+                editor.putBoolean(getString(R.string.pref_step_counter_enabled), true);
+                editor.apply();
+                StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Sets the visibility of pause and continue buttons in given menu
+     * @param menu
+     */
+    private void setPauseContinueMenuItemVisibility(Menu menu){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean isStepCounterEnabled = sharedPref.getBoolean(getString(R.string.pref_step_counter_enabled), true);
+        MenuItem continueStepDetectionMenuItem = menu.findItem(R.id.menu_continue_step_detection);
+        MenuItem pauseStepDetectionMenuItem = menu.findItem(R.id.menu_pause_step_detection);
+        if(isStepCounterEnabled){
+            continueStepDetectionMenuItem.setVisible(false);
+            pauseStepDetectionMenuItem.setVisible(true);
+        }else {
+            continueStepDetectionMenuItem.setVisible(true);
+            pauseStepDetectionMenuItem.setVisible(false);
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.pref_step_counter_enabled))){
+            this.getActivity().invalidateOptionsMenu();
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

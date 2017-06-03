@@ -34,15 +34,17 @@ public class StepDetectionServiceHelper {
      * @param context The application context.
      */
     public static void startAllIfEnabled(Context context) {
-        Log.i(LOG_CLASS, "Started all services");
+        Log.i(LOG_CLASS, "Start of all services requested");
         // Start the step detection if enabled or training is active
         if (isStepDetectionEnabled(context)) {
+            Log.i(LOG_CLASS, "Start step detection");
             StepDetectionServiceHelper.startStepDetection(context);
             // schedule stepCountPersistenceService
             StepDetectionServiceHelper.schedulePersistenceService(context);
         }
 
         if(isMotivationAlertEnabled(context)){
+            Log.i(LOG_CLASS, "Schedule motivation alert");
             // set motivation alert
             setMotivationAlert(context);
         }
@@ -56,9 +58,13 @@ public class StepDetectionServiceHelper {
         // Start the step detection if enabled or training is active
         if (!isStepDetectionEnabled(context)) {
             Log.i(LOG_CLASS, "Stopping all services");
-            StepDetectionServiceHelper.stopStepDetection(context);
-            // schedule stepCountPersistenceService
-            StepDetectionServiceHelper.cancelPersistenceService(forceSave, context);
+            if(forceSave){
+                // un-schedule stepCountPersistenceService
+                // persistence service will stop step detection service.
+                StepDetectionServiceHelper.cancelPersistenceService(forceSave, context);
+            }else {
+                StepDetectionServiceHelper.stopStepDetection(context);
+            }
         }else{
             Log.i(LOG_CLASS, "Not stopping services b.c. they are required");
         }
@@ -75,7 +81,7 @@ public class StepDetectionServiceHelper {
      */
     public static void startStepDetection(Context context) {
         Log.i(LOG_CLASS, "Started step detection service.");
-        Intent      stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
             context.getApplicationContext().startService(stepDetectorServiceIntent);
     }
 
@@ -86,7 +92,7 @@ public class StepDetectionServiceHelper {
      */
     public static void stopStepDetection(Context context){
         Log.i(LOG_CLASS, "Stopping step detection service.");
-        Intent stepDetectorServiceIntent= new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
         if(!context.getApplicationContext().stopService(stepDetectorServiceIntent)){
             Log.w(LOG_CLASS, "Stopping of service failed or it is not running.");
         }

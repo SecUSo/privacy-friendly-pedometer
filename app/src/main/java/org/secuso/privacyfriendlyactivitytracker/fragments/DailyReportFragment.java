@@ -64,7 +64,7 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160727
  */
-public class DailyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener {
+public class DailyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     public static String LOG_TAG = DailyReportFragment.class.getName();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private ReportAdapter mAdapter;
@@ -177,7 +177,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         if(day == null){
             day = Calendar.getInstance();
         }
-        if(isTodayShown()){
+        if(isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
             bindService();
         }
         registerReceivers();
@@ -187,7 +187,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     @Override
     public void onResume(){
         super.onResume();
-        if(isTodayShown()){
+        if(isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
             bindService();
         }
         registerReceivers();
@@ -229,10 +229,14 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED);
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void unregisterReceivers(){
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private void bindService(){
@@ -575,6 +579,17 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             steps += myBinder.stepsSinceLastSave();
         }
         return steps;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.pref_step_counter_enabled))){
+            if(!StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
+                unbindService();
+            }else if(this.isTodayShown()){
+                bindService();
+            }
+        }
     }
 
     /**

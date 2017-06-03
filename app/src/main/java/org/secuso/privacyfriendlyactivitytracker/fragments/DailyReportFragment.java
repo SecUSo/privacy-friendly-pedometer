@@ -415,11 +415,17 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
 
 
         // notify ui
-        if (mAdapter != null && mRecyclerView != null && !mRecyclerView.isComputingLayout()) {
-            mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
-
-            mAdapter.notifyItemChanged(reports.indexOf(activityChart));
-            mAdapter.notifyDataSetChanged();
+        if (mAdapter != null && mRecyclerView != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(!mRecyclerView.isComputingLayout()) {
+                        mAdapter.notifyDataSetChanged();
+                    }else{
+                        Log.w(LOG_TAG, "Cannot inform adapter for changes - RecyclerView is computing layout.");
+                    }
+                }
+            });
         } else {
             Log.w(LOG_TAG, "Cannot inform adapter for changes.");
         }

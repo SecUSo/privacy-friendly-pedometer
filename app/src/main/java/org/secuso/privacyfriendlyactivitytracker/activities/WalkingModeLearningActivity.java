@@ -24,7 +24,7 @@ import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenc
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.util.Calendar;
 
@@ -94,11 +94,11 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
         mTextViewSteps = (TextView) findViewById(R.id.walking_mode_learning_steps);
         TextView textViewDistance = (TextView) findViewById(R.id.walking_mode_learning_distance);
         if(textViewDistance != null) {
-            textViewDistance.setText(String.valueOf(UnitUtil.metersToUsersLengthUnit(this.distance, this)));
+            textViewDistance.setText(String.valueOf(UnitHelper.metersToUsersLengthUnit(this.distance, this)));
         }
         TextView textViewDistanceTitle = (TextView) findViewById(R.id.walking_mode_learning_distance_title);
         if(textViewDistanceTitle != null) {
-            textViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionForMeters(this));
+            textViewDistanceTitle.setText(UnitHelper.usersLengthDescriptionForMeters(this));
         }
         Button buttonStop = (Button) findViewById(R.id.walking_mode_learning_stop_button);
         if (buttonStop != null) {

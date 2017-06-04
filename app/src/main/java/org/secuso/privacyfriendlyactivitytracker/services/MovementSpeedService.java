@@ -2,18 +2,10 @@ package org.secuso.privacyfriendlyactivitytracker.services;
 
 import android.Manifest;
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,22 +13,11 @@ import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
-import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
-import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
-
-import java.util.Calendar;
-import java.util.List;
 
 /**
  *

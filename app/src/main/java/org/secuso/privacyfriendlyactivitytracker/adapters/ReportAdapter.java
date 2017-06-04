@@ -39,7 +39,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.ActivityChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityChartDataSet;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityDayChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivitySummary;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -136,7 +136,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     if (dataEntry.getValue() != null) {
                         float val = dataEntry.getValue().floatValue();
                         if (barChartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
-                            val = Double.valueOf(UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(val), barChartViewHolder.context)).floatValue();
+                            val = Double.valueOf(UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(val), barChartViewHolder.context)).floatValue();
                         }
                         if (dataEntry.getValue() >= barChartData.getGoal() && barChartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
                             dataEntriesReachedDailyGoal.add(new BarEntry(barChartI, val));
@@ -253,7 +253,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         // add entries to data set.
                         float val = Double.valueOf(dataEntry.getValue().getValue()).floatValue();
                         if (chartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
-                            val = Double.valueOf(UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(val), chartViewHolder.context)).floatValue();
+                            val = Double.valueOf(UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(val), chartViewHolder.context)).floatValue();
                         }
                         Entry prevChartEntry, chartEntry;
                         if (i == 0) {
@@ -315,14 +315,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 SummaryViewHolder summaryViewHolder = (SummaryViewHolder) holder;
                 summaryViewHolder.mTitleTextView.setText(summaryData.getTitle());
                 summaryViewHolder.mStepsTextView.setText(String.valueOf(summaryData.getSteps()));
-                summaryViewHolder.mDistanceTextView.setText(String.format(summaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(summaryData.getDistance()), summaryViewHolder.itemView.getContext())));
+                summaryViewHolder.mDistanceTextView.setText(String.format(summaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(summaryData.getDistance()), summaryViewHolder.itemView.getContext())));
                 summaryViewHolder.mCaloriesTextView.setText(String.valueOf(summaryData.getCalories()));
-                summaryViewHolder.mDistanceTitleTextView.setText(UnitUtil.usersLengthDescriptionShort(summaryViewHolder.itemView.getContext()));
+                summaryViewHolder.mDistanceTitleTextView.setText(UnitHelper.usersLengthDescriptionShort(summaryViewHolder.itemView.getContext()));
                 summaryViewHolder.mNextButton.setVisibility(summaryData.isHasSuccessor() ? View.VISIBLE : View.INVISIBLE);
                 summaryViewHolder.mPrevButton.setVisibility(summaryData.isHasPredecessor() ? View.VISIBLE : View.INVISIBLE);
                 if(summaryData.getCurrentSpeed() != null){
                     summaryViewHolder.mVelocityContainer.setVisibility(View.VISIBLE);
-                    summaryViewHolder.mVelocityTextView.setText(String.valueOf(String.format(summaryViewHolder.context.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometersPerHourToUsersVelocityUnit(UnitUtil.metersPerSecondToKilometersPerHour(summaryData.getCurrentSpeed()), summaryViewHolder.context))) + UnitUtil.usersVelocityDescription(summaryViewHolder.context));
+                    summaryViewHolder.mVelocityTextView.setText(String.valueOf(String.format(summaryViewHolder.context.getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometersPerHourToUsersVelocityUnit(UnitHelper.metersPerSecondToKilometersPerHour(summaryData.getCurrentSpeed()), summaryViewHolder.context))) + UnitHelper.usersVelocityDescription(summaryViewHolder.context));
                 }else{
                     summaryViewHolder.mVelocityContainer.setVisibility(View.GONE);
                 }

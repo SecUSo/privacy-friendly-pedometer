@@ -26,7 +26,7 @@ import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistence
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -212,8 +212,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         mTextViewSteps.setText(String.valueOf((int)this.training.getSteps()));
-        mTextViewDistance.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(this.training.getDistance()), this)));
-        mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(this));
+        mTextViewDistance.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(this.training.getDistance()), this)));
+        mTextViewDistanceTitle.setText(UnitHelper.usersLengthDescriptionShort(this));
         mTextViewCalories.setText(String.format(getResources().getConfiguration().locale, "%.2f", this.training.getCalories()));
         int duration = this.training.getDuration();
         int hours = (duration / 3600);
@@ -221,8 +221,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         int seconds = (duration - hours * 3600 - minutes * 60);
         String durationText = String.format(getResources().getConfiguration().locale, "%02d:%02d:%02d", hours, minutes, seconds);
         mTextViewDuration.setText(durationText);
-        mTextViewVelocity.setText(String.valueOf(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometersPerHourToUsersVelocityUnit(UnitUtil.metersPerSecondToKilometersPerHour(this.training.getVelocity()), this))));
-        mTextViewVelocityTitle.setText(UnitUtil.usersVelocityDescription(this));
+        mTextViewVelocity.setText(String.valueOf(String.format(getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometersPerHourToUsersVelocityUnit(UnitHelper.metersPerSecondToKilometersPerHour(this.training.getVelocity()), this))));
+        mTextViewVelocityTitle.setText(UnitHelper.usersVelocityDescription(this));
     }
 
     /**

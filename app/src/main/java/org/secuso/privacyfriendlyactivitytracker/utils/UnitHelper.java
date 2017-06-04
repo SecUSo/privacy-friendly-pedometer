@@ -12,7 +12,7 @@ import org.secuso.privacyfriendlyactivitytracker.R;
  * @author Tobias Neidig
  * @version 20160729
  */
-public class UnitUtil {
+public class UnitHelper {
     /**
      * The unit factor for conversion from and to kilometers
      */

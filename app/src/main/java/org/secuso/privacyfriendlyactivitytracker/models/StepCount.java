@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,7 +80,7 @@ public class StepCount {
         // inspired by https://github.com/bagilevi/android-pedometer/blob/master/src/name/bagi/levente/pedometer/CaloriesNotifier.java
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         float bodyWeight = Float.parseFloat(sharedPref.getString(context.getString(R.string.pref_weight),context.getString(R.string.pref_default_weight)));
-        return bodyWeight * METRIC_AVG_FACTOR * UnitUtil.metersToKilometers(getDistance());
+        return bodyWeight * METRIC_AVG_FACTOR * UnitHelper.metersToKilometers(getDistance());
     }
     @Override
     public String toString() {

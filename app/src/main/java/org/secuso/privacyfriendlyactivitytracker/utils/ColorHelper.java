@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Color helper util
  */
-public class ColorUtil {
+public class ColorHelper {
 
     /**
      * Material color list

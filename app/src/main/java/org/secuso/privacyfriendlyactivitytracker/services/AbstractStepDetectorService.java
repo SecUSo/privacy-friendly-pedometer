@@ -28,7 +28,7 @@ import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenc
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.util.Calendar;
 import java.util.List;
@@ -138,7 +138,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         }
         if (showDistance) {
             message += (!message.isEmpty()) ? "\n" : "";
-            message += String.format(getString(R.string.notification_text_distance), UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(totalDistance), this), UnitUtil.usersLengthDescriptionShort(this));
+            message += String.format(getString(R.string.notification_text_distance), UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(totalDistance), this), UnitHelper.usersLengthDescriptionShort(this));
         }
         if (showCalories) {
             message += (!message.isEmpty()) ? "\n" : "";

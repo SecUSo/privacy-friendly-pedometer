@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModeDbHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.ColorUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.ColorHelper;
 
 /**
  * A walking mode has a user defined name and a custom step length.
@@ -101,7 +101,7 @@ public class WalkingMode {
      * @return the walking-mode-specific color
      */
     public int getColor() {
-        return ColorUtil.getMaterialColor(this.getId() + this.getName());
+        return ColorHelper.getMaterialColor(this.getId() + this.getName());
     }
 
 }

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.Training;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -94,7 +94,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                     trainingSummaryViewHolder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
                 }
                 if (trainingSummaryViewHolder.mTextViewDistance != null) {
-                    trainingSummaryViewHolder.mTextViewDistance.setText(String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSummaryViewHolder.itemView.getContext())));
+                    trainingSummaryViewHolder.mTextViewDistance.setText(String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(item.getDistance()), trainingSummaryViewHolder.itemView.getContext())));
                 }
                 if (trainingSummaryViewHolder.mTextViewCalories != null) {
                     trainingSummaryViewHolder.mTextViewCalories.setText(String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", item.getCalories()));
@@ -104,7 +104,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                     trainingSummaryViewHolder.mTextViewDuration.setText(durationText);
                 }
                 if (trainingSummaryViewHolder.mTextViewDistanceTitle != null) {
-                    trainingSummaryViewHolder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSummaryViewHolder.itemView.getContext()));
+                    trainingSummaryViewHolder.mTextViewDistanceTitle.setText(UnitHelper.usersLengthDescriptionShort(trainingSummaryViewHolder.itemView.getContext()));
                 }
                 if(trainingSummaryViewHolder.mTextViewSince != null){
                     DateFormat df = new SimpleDateFormat("MMMM yyyy", trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale);
@@ -133,7 +133,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                     trainingSessionViewHolder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
                 }
                 if (trainingSessionViewHolder.mTextViewDistance != null) {
-                    trainingSessionViewHolder.mTextViewDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
+                    trainingSessionViewHolder.mTextViewDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
                 }
                 if (trainingSessionViewHolder.mTextViewCalories != null) {
                     trainingSessionViewHolder.mTextViewCalories.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", item.getCalories()));
@@ -152,16 +152,16 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                     trainingSessionViewHolder.mTextViewSmallDuration.setText(durationText);
                 }
                 if (trainingSessionViewHolder.mTextViewSmallDistance != null) {
-                    trainingSessionViewHolder.mTextViewSmallDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
+                    trainingSessionViewHolder.mTextViewSmallDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
                 }
                 if (trainingSessionViewHolder.mTextViewSmallName != null) {
                     trainingSessionViewHolder.mTextViewSmallName.setText(item.getName());
                 }
                 if (trainingSessionViewHolder.mTextViewDistanceTitle != null) {
-                    trainingSessionViewHolder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
+                    trainingSessionViewHolder.mTextViewDistanceTitle.setText(UnitHelper.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
                 }
                 if (trainingSessionViewHolder.mTextViewSmallDistanceTitle != null) {
-                    trainingSessionViewHolder.mTextViewSmallDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
+                    trainingSessionViewHolder.mTextViewSmallDistanceTitle.setText(UnitHelper.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
                 }
 
                 if (trainingSessionViewHolder.mRatingBarFeeling != null) {

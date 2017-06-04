@@ -12,7 +12,6 @@ import android.util.Log;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
-import org.secuso.privacyfriendlyactivitytracker.utils.TimezoneHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,7 +60,7 @@ public class StepCountPersistenceHelper {
         ContentValues values = new ContentValues();
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCountSinceLastSave);
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, walkingModeId);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, TimezoneHelper.usersTimezoneToUtc(Calendar.getInstance().getTime().getTime()));
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, Calendar.getInstance().getTime().getTime());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -93,7 +92,7 @@ public class StepCountPersistenceHelper {
         ContentValues values = new ContentValues();
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCount.getStepCount());
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 0);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, TimezoneHelper.usersTimezoneToUtc(stepCount.getEndTime()));
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, stepCount.getEndTime());
 
         // Insert the new row, returning the primary key value of the new row
         getDB(context).insert(
@@ -119,14 +118,14 @@ public class StepCountPersistenceHelper {
         ContentValues values = new ContentValues();
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCount.getStepCount());
         values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, TimezoneHelper.usersTimezoneToUtc(stepCount.getEndTime()));
+        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, stepCount.getEndTime());
 
         // Insert the new row, returning the primary key value of the new row
         getDB(context).update(
                 StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 values,
                 StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " = ?",
-                new String[]{String.valueOf(TimezoneHelper.usersTimezoneToUtc(stepCount.getEndTime()))}
+                new String[]{String.valueOf(stepCount.getEndTime())}
         );
         // broadcast the event
         Intent localIntent = new Intent(BROADCAST_ACTION_STEPS_UPDATED);
@@ -190,14 +189,14 @@ public class StepCountPersistenceHelper {
         }
         Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE},
-                StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " >= ? AND " + StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " <= ?", new String[]{String.valueOf(TimezoneHelper.usersTimezoneToUtc(start_time)),
-                        String.valueOf(TimezoneHelper.usersTimezoneToUtc(end_time))}, null, null, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " ASC");
+                StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " >= ? AND " + StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " <= ?", new String[]{String.valueOf(start_time),
+                        String.valueOf(end_time)}, null, null, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " ASC");
         List<StepCount> steps = new ArrayList<>();
         long start = start_time;
         while (c.moveToNext()) {
             StepCount s = new StepCount();
             s.setStartTime(start);
-            s.setEndTime(TimezoneHelper.utcToUsersTimezone(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP))));
+            s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
             s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT)));
             s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)), context));
             steps.add(s);
@@ -240,7 +239,7 @@ public class StepCountPersistenceHelper {
                 "1" /* limit */);
         Date date = Calendar.getInstance().getTime(); // fallback is today
         while(c.moveToNext()){
-            date.setTime(TimezoneHelper.utcToUsersTimezone(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP))));
+            date.setTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
         }
         c.close();
         return date;

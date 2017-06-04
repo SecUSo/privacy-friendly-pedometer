@@ -302,11 +302,9 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         final Context context = getActivity().getApplicationContext();
         final Locale locale = context.getResources().getConfiguration().locale;
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(day, context);
-        int stepCount = 0;
-        double distance = 0;
-        int calories = 0;
-        if (this.isTodayShown() && myBinder != null) {
+        List<StepCount> stepCounts = new ArrayList<>();
+        //StepCountPersistenceHelper.getStepCountsForDay(day, context);
+        /*if (this.isTodayShown() && myBinder != null) {
             // Today is shown. Add the steps which are not in database.
             StepCount s = new StepCount();
             if (stepCounts.size() > 0) {
@@ -318,65 +316,88 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             s.setStepCount(myBinder.stepsSinceLastSave());
             s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context)); // add current walking mode
             stepCounts.add(s);
+        }*/
+
+        WalkingMode wm = null;
+        int hour = -1;
+        SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm", locale);
+        Calendar m = day;
+        m.set(Calendar.HOUR_OF_DAY, 0);
+        m.set(Calendar.MINUTE, 0);
+        m.set(Calendar.SECOND, 0);
+
+        StepCount s = new StepCount();
+        s.setStartTime(m.getTimeInMillis());
+        s.setEndTime(m.getTimeInMillis()); // one hour more
+        s.setStepCount(0);
+        s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context));
+        stepCounts.add(s);
+        Log.i(LOG_TAG, s.toString());
+        StepCount previousStepCount = s;
+        for (int h = 0; h < 24; h++) {
+            m.set(Calendar.HOUR_OF_DAY, h);
+            s = new StepCount();
+            s.setStartTime(m.getTimeInMillis() + 1000);
+            if(h != 23) {
+                s.setEndTime(m.getTimeInMillis() + 3600000); // one hour more
+            }else{
+                s.setEndTime(m.getTimeInMillis() + 3599000); // one hour more - 1sec
+            }
+            s.setWalkingMode(previousStepCount.getWalkingMode());
+            previousStepCount = s;
+            // load step counts in interval [s.getStartTime(), s.getEndTime()] from database
+            List<StepCount> stepCountsFromStorage = StepCountPersistenceHelper.getStepCountsForInterval(s.getStartTime(), s.getEndTime(), context);
+            // add non-saved steps if today
+            if(isTodayShown() && s.getStartTime() < Calendar.getInstance().getTimeInMillis() && s.getEndTime() >= Calendar.getInstance().getTimeInMillis() && myBinder != null){
+                // Today is shown. Add the steps which are not in database.
+                StepCount s1 = new StepCount();
+                if (stepCountsFromStorage.size() > 0) {
+                    s.setStartTime(stepCountsFromStorage.get(stepCountsFromStorage.size() - 1).getEndTime());
+                } else {
+                    s.setStartTime(s.getStartTime());
+                }
+                s.setEndTime(Calendar.getInstance().getTimeInMillis()); // now
+                s.setStepCount(myBinder.stepsSinceLastSave());
+                s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context)); // add current walking mode
+                stepCounts.add(s);
+            }
+            // iterate over stepcounts in interval to sum up steps and detect changes in walkingmode
+            for(StepCount stepCountFromStorage : stepCountsFromStorage){
+                if(!previousStepCount.getWalkingMode().equals(stepCountFromStorage.getWalkingMode())){
+                    // we have to create a new stepcount entry.
+                    long oldEndTime = s.getEndTime();
+                    s.setEndTime(stepCountFromStorage.getStartTime() - 1000);
+                    stepCounts.add(s);
+                    previousStepCount = s;
+                    // create new stepcount.
+                    s = new StepCount();
+                    s.setStartTime(stepCountFromStorage.getStartTime());
+                    s.setEndTime(oldEndTime);
+                    s.setStepCount(stepCountFromStorage.getStepCount());
+                    s.setWalkingMode(stepCountFromStorage.getWalkingMode());
+                }else{
+                    s.setStepCount(s.getStepCount() + stepCountFromStorage.getStepCount());
+                }
+            }
+
+            Log.i(LOG_TAG, s.toString());
+            stepCounts.add(s);
         }
+        // fill chart data arrays
+        int stepCount = 0;
+        double distance = 0;
+        int calories = 0;
         Map<String, ActivityChartDataSet> stepData = new LinkedHashMap<>();
         Map<String, ActivityChartDataSet> distanceData = new LinkedHashMap<>();
         Map<String, ActivityChartDataSet> caloriesData = new LinkedHashMap<>();
-        WalkingMode wm = null;
-        int hour = -1;
+        for (StepCount s1: stepCounts) {
+            stepCount += s1.getStepCount();
+            distance += s1.getDistance();
+            calories += s1.getCalories(context);
 
-        // fill hours without info
-        int e;
-        if (stepCounts.size() > 0) {
-            Calendar end = Calendar.getInstance();
-            end.setTimeInMillis(stepCounts.get(0).getEndTime());
-            e = end.get(Calendar.HOUR_OF_DAY);
-        } else {
-            e = 24;
-        }
-
-        for (int h = 0; h < e; h++) {
-            StepCount s = new StepCount();
-            Calendar m = day;
-            m.set(Calendar.HOUR_OF_DAY, h);
-            m.set(Calendar.MINUTE, 0);
-            m.set(Calendar.SECOND, 0);
-            s.setStartTime(m.getTimeInMillis());
-            s.setEndTime(m.getTimeInMillis());
-            stepCounts.add(h, s);
-        }
-        // Create report data
-        SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm", locale);
-        for (StepCount s : stepCounts) {
-            Calendar end = Calendar.getInstance();
-            end.setTimeInMillis(s.getEndTime());
-
-            stepCount += s.getStepCount();
-            distance += s.getDistance();
-            calories += s.getCalories(context);
-
-            if (s.getWalkingMode() == null && wm != null || s.getWalkingMode() != null && wm == null ||
-                    s.getWalkingMode() != null && wm != null && s.getWalkingMode().getId() != wm.getId() ||
-                    end.get(Calendar.HOUR_OF_DAY) != hour || stepCounts.indexOf(s) == stepCounts.size() - 1) {
-                // create new field
-                wm = s.getWalkingMode();
-                hour = end.get(Calendar.HOUR_OF_DAY);
-                stepData.put(formatHourMinute.format(end.getTime()), new ActivityChartDataSet(stepCount, s));
-                distanceData.put(formatHourMinute.format(end.getTime()), new ActivityChartDataSet(distance, s));
-                caloriesData.put(formatHourMinute.format(end.getTime()), new ActivityChartDataSet(calories, s));
-            }
-        }
-
-        // fill hours without info
-        if (stepCounts.size() > 0) {
-            Calendar end = Calendar.getInstance();
-            end.setTimeInMillis(stepCounts.get(stepCounts.size() - 1).getEndTime());
-            e = end.get(Calendar.HOUR_OF_DAY);
-            for (int h = e + 1; h < 24; h++) {
-                stepData.put(h + ":00", null);
-                distanceData.put(h + ":00", null);
-                caloriesData.put(h + ":00", null);
-            }
+            stepData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(stepCount, s1));
+            distanceData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(distance, s1));
+            caloriesData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(calories, s1));
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd. MMMM", locale);
@@ -412,7 +433,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         }
         String d = sharedPref.getString(context.getString(R.string.pref_daily_step_goal), "10000");
         activityChart.setGoal(Integer.valueOf(d));
-
 
         // notify ui
         if (mAdapter != null && mRecyclerView != null && getActivity() != null) {

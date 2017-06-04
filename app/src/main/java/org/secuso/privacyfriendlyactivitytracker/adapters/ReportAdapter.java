@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -197,7 +198,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 chartViewHolder.mTitleTextView.setText(chartData.getTitle());
 
                 final ArrayList<String> chartXValues = new ArrayList<>();
-                int i = 1;
+                int i = 0;
                 Map<String, ActivityChartDataSet> dataMap;
                 Map<Integer, String> legendValues = new LinkedHashMap<>();
                 String label;
@@ -235,45 +236,42 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     }else{
                         walkingModeId = 0;
                     }
-                    // Generate new data set if walking mode changed
-                    if (lastWalkingModeId != walkingModeId || dataSets.size() == 0) {
-                        LineDataSet chartLineDataSet = new LineDataSet(new ArrayList<Entry>(), label);
-                        chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-                        chartLineDataSet.setLineWidth(3);
-                        chartLineDataSet.setCircleRadius(3.5f);
-                        chartLineDataSet.setDrawCircleHole(false);
-                        chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorPrimary), 200);
-                        chartLineDataSet.setCircleColor(ContextCompat.getColor(chartViewHolder.context, R.color.colorPrimary));
-                        if (dataEntry.getValue() != null && dataEntry.getValue().getStepCount() != null && dataEntry.getValue().getStepCount().getWalkingMode() != null) {
+                    // add data entry only if not null
+                    if (dataEntry.getValue() != null) {
+                        LineDataSet chartLineDataSet = getNewChartLineDataSet(chartViewHolder.context, label);
+                        // set color/legend by walking mode
+                        if (dataEntry.getValue().getStepCount() != null && dataEntry.getValue().getStepCount().getWalkingMode() != null) {
                             int color = dataEntry.getValue().getStepCount().getWalkingMode().getColor();
                             int alpha = 85;
-                            int colorWithAlph = Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
+                            int colorWithAlpha = Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
                             chartLineDataSet.setFillColor(color);
                             chartLineDataSet.setFillAlpha(alpha);
                             chartLineDataSet.setDrawFilled(true);
-                            legendValues.put(colorWithAlph, dataEntry.getValue().getStepCount().getWalkingMode().getName());
+                            legendValues.put(colorWithAlpha, dataEntry.getValue().getStepCount().getWalkingMode().getName());
                         }
-                        chartLineDataSet.setDrawValues(false);
                         dataSets.add(chartLineDataSet);
-                    }
-                    // add data entry only if not null
-                    if (dataEntry.getValue() != null) {
+                        // add entries to data set.
                         float val = Double.valueOf(dataEntry.getValue().getValue()).floatValue();
                         if (chartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
                             val = Double.valueOf(UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(val), chartViewHolder.context)).floatValue();
                         }
-                        Entry chartEntry;
-                        if (i > 0 && lastWalkingModeId != walkingModeId) {
-                            chartEntry = new Entry(i - 1, lastValue);
-                            ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(chartEntry);
+                        Entry prevChartEntry, chartEntry;
+                        if (i == 0) {
+                            prevChartEntry = new Entry(0, 0);
+                        }else{
+                            prevChartEntry = new Entry(i - 1, lastValue);
                         }
                         chartEntry = new Entry(i++, val);
+                        ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(prevChartEntry);
                         ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(chartEntry);
+                        // add x val
+                        chartXValues.add(dataEntry.getKey());
+                        // remember variables
                         lastValue = val;
                         maxValue = Math.max(maxValue, val);
+                        lastWalkingModeId = walkingModeId;
+                        Log.i("Report", dataEntry.getKey() + " " + val);
                     }
-                    lastWalkingModeId = walkingModeId;
-                    chartXValues.add(dataEntry.getKey());
                 }
                 // add daily step goal
                 if (chartXValues.size() > 0 && chartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {
@@ -289,28 +287,28 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     dataSets.add(chartLineDataSet);
                 }
                 // Workaround since scaling does not work correctly in MPAndroidChart v3.0.0.0-beta1
-            {
-                Entry start = new Entry(0, 0);
-                Entry end = new Entry(chartXValues.size() - 1, maxValue * 1.03f);
-                LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
-                chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-                chartLineDataSet.setDrawCircles(false);
-                chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.transparent), 0);
-                chartLineDataSet.setDrawValues(false);
-                dataSets.add(chartLineDataSet);
-            }
-            LineData data = new LineData(dataSets);
-            chartViewHolder.mChart.setData(data);
-            chartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(chartXValues));
-            // add legend
-            Legend legend = chartViewHolder.mChart.getLegend();
-            legend.setComputedColors(new ArrayList<Integer>());
-            legend.setComputedLabels(new ArrayList<String>());
-            legend.setCustom(new ArrayList<>(legendValues.keySet()), new ArrayList<>(legendValues.values()));
-            // invalidate
-            chartViewHolder.mChart.getData().notifyDataChanged();
-            chartViewHolder.mChart.notifyDataSetChanged();
-            chartViewHolder.mChart.invalidate();
+                {
+                    Entry start = new Entry(0, 0);
+                    Entry end = new Entry(chartXValues.size() - 1, maxValue * 1.03f);
+                    LineDataSet chartLineDataSet = new LineDataSet(Arrays.asList(start, end), "");
+                    chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+                    chartLineDataSet.setDrawCircles(false);
+                    chartLineDataSet.setColor(ContextCompat.getColor(chartViewHolder.context, R.color.transparent), 0);
+                    chartLineDataSet.setDrawValues(false);
+                    dataSets.add(chartLineDataSet);
+                }
+                LineData data = new LineData(dataSets);
+                chartViewHolder.mChart.setData(data);
+                chartViewHolder.mChart.getXAxis().setValueFormatter(new ArrayListAxisValueFormatter(chartXValues));
+                // add legend
+                Legend legend = chartViewHolder.mChart.getLegend();
+                legend.setComputedColors(new ArrayList<Integer>());
+                legend.setComputedLabels(new ArrayList<String>());
+                legend.setCustom(new ArrayList<>(legendValues.keySet()), new ArrayList<>(legendValues.values()));
+                // invalidate
+                chartViewHolder.mChart.getData().notifyDataChanged();
+                chartViewHolder.mChart.notifyDataSetChanged();
+                chartViewHolder.mChart.invalidate();
             break;
             case TYPE_SUMMARY:
                 ActivitySummary summaryData = (ActivitySummary) mItems.get(position);
@@ -330,6 +328,19 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 }
                 break;
         }
+    }
+
+    private LineDataSet getNewChartLineDataSet(Context context, String label){
+        LineDataSet chartLineDataSet = new LineDataSet(new ArrayList<Entry>(), label);
+        chartLineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        chartLineDataSet.setLineWidth(3);
+        chartLineDataSet.setCircleRadius(3.5f);
+        chartLineDataSet.setDrawCircleHole(false);
+        chartLineDataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimary), 200);
+        chartLineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        chartLineDataSet.setDrawValues(false);
+
+        return chartLineDataSet;
     }
 
     // Return the size of your dataset (invoked by the layout manager)

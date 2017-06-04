@@ -51,6 +51,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Report-fragment for one specific day
@@ -177,6 +178,10 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         if(day == null){
             day = Calendar.getInstance();
         }
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         if(isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
             bindService();
         }
@@ -187,6 +192,13 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     @Override
     public void onResume(){
         super.onResume();
+        if(day == null){
+            day = Calendar.getInstance();
+        }
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         if(isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
             bindService();
         }
@@ -218,7 +230,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         unregisterReceivers();
         super.onDestroy();
     }
-
 
     private void registerReceivers(){
         // subscribe to onStepsSaved and onStepsDetected broadcasts and onSpeedChanged

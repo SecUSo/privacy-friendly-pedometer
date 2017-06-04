@@ -44,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Report-fragment for one specific day
@@ -153,6 +154,10 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         if(day == null){
             day = Calendar.getInstance();
         }
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         Log.e("ASD", "Is today shown? " + isTodayShown());
         Log.e("ASDF", "enabled?" + StepDetectionServiceHelper.isStepDetectionEnabled(getContext()));
         // Bind to stepDetector if today is shown
@@ -165,13 +170,19 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     @Override
     public void onResume(){
         super.onResume();
+        if(day == null){
+            day = Calendar.getInstance();
+        }
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
         }
         registerReceivers();
     }
-
 
     @Override
     public void onDetach() {
@@ -187,7 +198,6 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         unregisterReceivers();
         super.onPause();
     }
-
 
     @Override
     public void onDestroy() {

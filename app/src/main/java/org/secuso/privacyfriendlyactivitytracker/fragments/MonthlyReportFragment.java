@@ -44,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Report-fragment for one specific day
@@ -101,7 +102,6 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     public static MonthlyReportFragment newInstance() {
         MonthlyReportFragment fragment = new MonthlyReportFragment();
         Bundle args = new Bundle();
-        // args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -110,9 +110,6 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         day = Calendar.getInstance();
-        /*if (getArguments() != null) {
-           mParam1 = getArguments().getString(ARG_PARAM1);
-        }*/
     }
 
     @Override
@@ -153,6 +150,10 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         if(day == null){
             day = Calendar.getInstance();
         }
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
@@ -163,6 +164,13 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     @Override
     public void onResume() {
         super.onResume();
+        if(day == null){
+            day = Calendar.getInstance();
+        }
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();

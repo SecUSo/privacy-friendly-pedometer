@@ -134,7 +134,7 @@
     </string-array>
     <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
     <string name="pref_title_accelerometer_steps_threshold">Steps before counting starts</string>
-    <string name="pref_default_accelerometer_steps_threshold">10</string>
+    <string name="pref_default_accelerometer_steps_threshold" translatable="false">10</string>
     <!-- /general settings -->
     <!-- notification settings -->
     <string name="pref_header_notifications">Notifications</string>

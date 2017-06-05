@@ -326,7 +326,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         s.setStepCount(0);
         s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context));
         stepCounts.add(s);
-        Log.i(LOG_TAG, s.toString());
         StepCount previousStepCount = s;
         for (int h = 0; h < 24; h++) {
             m.set(Calendar.HOUR_OF_DAY, h);
@@ -388,10 +387,15 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             stepCount += s1.getStepCount();
             distance += s1.getDistance();
             calories += s1.getCalories(context);
-
-            stepData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(stepCount, s1));
-            distanceData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(distance, s1));
-            caloriesData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(calories, s1));
+            if(s1.getEndTime() > Calendar.getInstance().getTime().getTime()){
+                stepData.put(formatHourMinute.format(s1.getEndTime()), null);
+                distanceData.put(formatHourMinute.format(s1.getEndTime()), null);
+                caloriesData.put(formatHourMinute.format(s1.getEndTime()), null);
+            }else {
+                stepData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(stepCount, s1));
+                distanceData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(distance, s1));
+                caloriesData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(calories, s1));
+            }
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd. MMMM", locale);
@@ -585,7 +589,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                         stepCount.setStepCount(stepCount.getStepCount() + diff);
                         StepCountPersistenceHelper.updateStepCount(stepCount, getContext());
                     }
-                    generateReports(false);
+                    generateReports(true);
                     alertDialog.dismiss();
                 }
             });

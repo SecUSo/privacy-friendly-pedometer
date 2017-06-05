@@ -264,14 +264,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         chartEntry = new Entry(i++, val);
                         ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(prevChartEntry);
                         ((LineDataSet) dataSets.get(dataSets.size() - 1)).getValues().add(chartEntry);
-                        // add x val
-                        chartXValues.add(dataEntry.getKey());
                         // remember variables
                         lastValue = val;
                         maxValue = Math.max(maxValue, val);
                         lastWalkingModeId = walkingModeId;
                         Log.i("Report", dataEntry.getKey() + " " + val);
                     }
+                    // add x val
+                    chartXValues.add(dataEntry.getKey());
                 }
                 // add daily step goal
                 if (chartXValues.size() > 0 && chartData.getDisplayedDataType() == ActivityDayChart.DataType.STEPS) {

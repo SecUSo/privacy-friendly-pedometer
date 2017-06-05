@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -226,16 +225,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 legendValues.put(ContextCompat.getColor(chartViewHolder.itemView.getContext(), R.color.colorPrimary), label);
                 ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                 float lastValue = 0;
-                float lastWalkingModeId = -1;
                 float maxValue = 0;
                 // Generate data for line data sets
                 for (Map.Entry<String, ActivityChartDataSet> dataEntry : dataMap.entrySet()) {
-                    long walkingModeId = 0;
-                    if (dataEntry.getValue() != null && dataEntry.getValue().getStepCount() != null && dataEntry.getValue().getStepCount().getWalkingMode() != null) {
-                        walkingModeId = dataEntry.getValue().getStepCount().getWalkingMode().getId();
-                    }else{
-                        walkingModeId = 0;
-                    }
                     // add data entry only if not null
                     if (dataEntry.getValue() != null) {
                         LineDataSet chartLineDataSet = getNewChartLineDataSet(chartViewHolder.context, label);
@@ -267,8 +259,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         // remember variables
                         lastValue = val;
                         maxValue = Math.max(maxValue, val);
-                        lastWalkingModeId = walkingModeId;
-                        Log.i("Report", dataEntry.getKey() + " " + val);
                     }
                     // add x val
                     chartXValues.add(dataEntry.getKey());

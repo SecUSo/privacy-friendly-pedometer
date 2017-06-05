@@ -158,8 +158,6 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
             day = Calendar.getInstance();
             generateReports(true);
         }
-        Log.e("ASD", "Is today shown? " + isTodayShown());
-        Log.e("ASDF", "enabled?" + StepDetectionServiceHelper.isStepDetectionEnabled(getContext()));
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();

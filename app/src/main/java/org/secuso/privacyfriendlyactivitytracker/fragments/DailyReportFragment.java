@@ -372,8 +372,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                     s.setStepCount(s.getStepCount() + stepCountFromStorage.getStepCount());
                 }
             }
-
-            Log.i(LOG_TAG, s.toString());
             stepCounts.add(s);
         }
         // fill chart data arrays

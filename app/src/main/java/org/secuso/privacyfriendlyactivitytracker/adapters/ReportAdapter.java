@@ -313,16 +313,19 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             case TYPE_SUMMARY:
                 ActivitySummary summaryData = (ActivitySummary) mItems.get(position);
                 SummaryViewHolder summaryViewHolder = (SummaryViewHolder) holder;
+                UnitHelper.FormattedUnitPair distance = UnitHelper.formatKilometers(UnitHelper.metersToKilometers(summaryData.getDistance()), summaryViewHolder.itemView.getContext());
+                UnitHelper.FormattedUnitPair calories = UnitHelper.formatCalories(summaryData.getCalories(), summaryViewHolder.itemView.getContext());
                 summaryViewHolder.mTitleTextView.setText(summaryData.getTitle());
                 summaryViewHolder.mStepsTextView.setText(String.valueOf(summaryData.getSteps()));
-                summaryViewHolder.mDistanceTextView.setText(String.format(summaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(summaryData.getDistance()), summaryViewHolder.itemView.getContext())));
-                summaryViewHolder.mCaloriesTextView.setText(String.valueOf(summaryData.getCalories()));
-                summaryViewHolder.mDistanceTitleTextView.setText(UnitHelper.usersLengthDescriptionShort(summaryViewHolder.itemView.getContext()));
+                summaryViewHolder.mDistanceTextView.setText(distance.getValue());
+                summaryViewHolder.mDistanceTitleTextView.setText(distance.getUnit());
+                summaryViewHolder.mCaloriesTextView.setText(calories.getValue());
+                summaryViewHolder.mCaloriesTitleTextView.setText(calories.getUnit());
                 summaryViewHolder.mNextButton.setVisibility(summaryData.isHasSuccessor() ? View.VISIBLE : View.INVISIBLE);
                 summaryViewHolder.mPrevButton.setVisibility(summaryData.isHasPredecessor() ? View.VISIBLE : View.INVISIBLE);
                 if(summaryData.getCurrentSpeed() != null){
                     summaryViewHolder.mVelocityContainer.setVisibility(View.VISIBLE);
-                    summaryViewHolder.mVelocityTextView.setText(String.valueOf(String.format(summaryViewHolder.context.getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometersPerHourToUsersVelocityUnit(UnitHelper.metersPerSecondToKilometersPerHour(summaryData.getCurrentSpeed()), summaryViewHolder.context))) + UnitHelper.usersVelocityDescription(summaryViewHolder.context));
+                    summaryViewHolder.mVelocityTextView.setText(String.valueOf(UnitHelper.formatKilometersPerHour(UnitHelper.metersPerSecondToKilometersPerHour(summaryData.getCurrentSpeed()), summaryViewHolder.context)));
                 }else{
                     summaryViewHolder.mVelocityContainer.setVisibility(View.GONE);
                 }
@@ -404,6 +407,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public TextView mCaloriesTextView;
         public TextView mVelocityTextView;
         public TextView mDistanceTitleTextView;
+        public TextView mCaloriesTitleTextView;
         public RelativeLayout mVelocityContainer;
         public ImageButton mPrevButton;
         public ImageButton mNextButton;
@@ -418,6 +422,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mVelocityTextView = (TextView) itemView.findViewById(R.id.speed);
             mVelocityContainer = (RelativeLayout) itemView.findViewById(R.id.speedContainer);
             mDistanceTitleTextView = (TextView) itemView.findViewById(R.id.distanceTitle);
+            mCaloriesTitleTextView = (TextView) itemView.findViewById(R.id.calorieTitle);
             mPrevButton = (ImageButton) itemView.findViewById(R.id.prev_btn);
             mNextButton = (ImageButton) itemView.findViewById(R.id.next_btn);
             mMenuButton = (ImageButton) itemView.findViewById(R.id.periodMoreButton);

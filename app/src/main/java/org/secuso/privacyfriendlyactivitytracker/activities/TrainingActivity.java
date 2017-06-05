@@ -212,8 +212,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         mTextViewSteps.setText(String.valueOf((int)this.training.getSteps()));
-        mTextViewDistance.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(this.training.getDistance()), this)));
-        mTextViewDistanceTitle.setText(UnitHelper.usersLengthDescriptionShort(this));
+        UnitHelper.FormattedUnitPair distance = UnitHelper.formatKilometers(UnitHelper.metersToKilometers(this.training.getDistance()), this);
+        mTextViewDistance.setText(distance.getValue());
+        mTextViewDistanceTitle.setText(distance.getUnit());
         mTextViewCalories.setText(String.format(getResources().getConfiguration().locale, "%.2f", this.training.getCalories()));
         int duration = this.training.getDuration();
         int hours = (duration / 3600);

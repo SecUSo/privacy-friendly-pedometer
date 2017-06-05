@@ -114,8 +114,8 @@
         <item>Kilometer</item>
         <item>Meilen</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|Kilometer|km/h</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|Meilen|mph</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|Kilometer|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|Meilen|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
     <string-array name="pref_keys_gender">
         <item>weiblich</item>
         <item>männlich</item>
@@ -138,7 +138,7 @@
     <string name="since">seit</string>
     <string name="step_length">Schrittlänge:</string>
     <string name="steps">Schritte</string>
-    <string name="summary_card_calories">kcal</string>
+    <string name="summary_card_kilocalories">kcal</string>
 
     <!-- Training -->
     <string name="training_card_calories">kcal</string>
@@ -184,4 +184,5 @@
     <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus wechseln, indem Sie sie in der Toolbar auswählen.</string>
     <string name="slide_3_title">Benachritigungen</string>
     <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
+    <string name="summary_card_calories">cal</string>
 </resources>

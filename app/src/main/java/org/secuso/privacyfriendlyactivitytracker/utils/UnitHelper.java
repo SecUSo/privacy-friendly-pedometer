@@ -29,6 +29,14 @@ public class UnitHelper {
      * The velocity unit descriptor (e.g. km/h)
      */
     public static int USER_UNIT_VELOCITY_DESCRIPTION = 3;
+    /**
+     * The unit factor for conversion from and to kilometers
+     */
+    public static int USER_SMALL_UNIT_FACTOR = 4;
+    /**
+     * The short small length unit descriptor (e.g. m)
+     */
+    public static int USER_SMALL_UNIT_SHORT_DESCRIPTION = 5;
 
     /**
      * Converts meters to kilometers
@@ -74,6 +82,18 @@ public class UnitHelper {
     }
 
     /**
+     * Converts kilometers to the users small length unit (ex meters or feets)
+     *
+     * @param km      the kilometers to convert
+     * @param context The application context
+     * @return converted kilometers
+     */
+    public static double kilometerToUsersSmallLengthUnit(double km, Context context) {
+        double factor = Double.parseDouble(getUsersUnit(USER_SMALL_UNIT_FACTOR, context));
+        return km * factor;
+    }
+
+    /**
      * Converts length in users length unit to kilometers
      *
      * @param length  the length to convert
@@ -108,6 +128,16 @@ public class UnitHelper {
     }
 
     /**
+     * Returns the users velocity caption like km or mi
+     *
+     * @param context The application context
+     * @return velocity caption (e.g. km or mi)
+     */
+    public static String usersSmallLengthDescriptionShort(Context context) {
+        return getUsersUnit(USER_SMALL_UNIT_SHORT_DESCRIPTION, context);
+    }
+
+    /**
      * Returns the users length caption like meters
      *
      * @param context The application context
@@ -125,6 +155,31 @@ public class UnitHelper {
      */
     public static String usersVelocityDescription(Context context) {
         return getUsersUnit(USER_UNIT_VELOCITY_DESCRIPTION, context);
+    }
+
+    public static String formatKilometersPerHour(double kmh, Context context){
+        return formatString("%.2f", kilometersPerHourToUsersVelocityUnit(kmh, context), context) + usersVelocityDescription(context);
+    }
+
+    public static FormattedUnitPair formatKilometers(double km, Context context){
+        double kilometerInUsersLenghtUnit = kilometerToUsersLengthUnit(km, context);
+        if(kilometerInUsersLenghtUnit < 0.1){
+            return new FormattedUnitPair(formatString("%.2f", kilometerToUsersSmallLengthUnit(km, context), context), usersSmallLengthDescriptionShort(context));
+        }else{
+            return new FormattedUnitPair(formatString("%.2f", kilometerInUsersLenghtUnit, context), usersLengthDescriptionShort(context));
+        }
+    }
+
+    public static FormattedUnitPair formatCalories(double kcal, Context context){
+        if(kcal < 100){
+            return new FormattedUnitPair(formatString("%.2f", kcal / 1000, context), context.getString(R.string.summary_card_calories));
+        }else{
+            return new FormattedUnitPair(formatString("%.2f", kcal, context), context.getString(R.string.summary_card_kilocalories));
+        }
+    }
+
+    private static String formatString(String format, double d, Context context){
+        return String.format(context.getResources().getConfiguration().locale, format, d);
     }
 
     /**
@@ -151,5 +206,31 @@ public class UnitHelper {
             return "-";
         }
         return units[type];
+    }
+
+    public static class FormattedUnitPair{
+        private String value;
+        private String unit;
+
+        public FormattedUnitPair(String value, String unit){
+            this.value = value;
+            this.unit = unit;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getUnit() {
+            return unit;
+        }
+
+        public void setUnit(String unit) {
+            this.unit = unit;
+        }
     }
 }

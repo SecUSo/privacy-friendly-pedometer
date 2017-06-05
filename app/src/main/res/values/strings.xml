@@ -32,7 +32,8 @@
     <string name="calories">calories</string>
     <string name="activity_summary_subtitle">Summary of activities</string>
     <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
-    <string name="summary_card_calories">kcal</string>
+    <string name="summary_card_kilocalories">kcal</string>
+    <string name="summary_card_calories">cal</string>
     <string name="correct_steps">Correct steps</string>
     <string name="correct_steps_dialog_title">Correct steps</string>
     <string name="correct_steps_dialog_message">Please provide a new number of steps you walked.</string>
@@ -90,8 +91,8 @@
         <item>km</item>
         <item>mi</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilometers|km/h</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|miles|mph</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
 
     <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please set your weight and gender.</string>
     <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>

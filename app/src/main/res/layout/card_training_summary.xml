@@ -131,7 +131,7 @@
                         android:src="@drawable/ic_fire_65black_40dp" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/calorieTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageView2"

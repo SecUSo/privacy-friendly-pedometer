@@ -186,7 +186,7 @@
                             android:layout_marginStart="1sp"
                             android:layout_toEndOf="@+id/calorieCount"
                             android:layout_toRightOf="@+id/calorieCount"
-                            android:text="@string/summary_card_calories"
+                            android:text="@string/summary_card_kilocalories"
                             android:textColor="@color/darkgrey" />
                     </RelativeLayout>
                     <RelativeLayout

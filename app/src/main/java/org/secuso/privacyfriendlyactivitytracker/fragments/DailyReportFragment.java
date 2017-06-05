@@ -314,23 +314,6 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         final Locale locale = context.getResources().getConfiguration().locale;
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         List<StepCount> stepCounts = new ArrayList<>();
-        //StepCountPersistenceHelper.getStepCountsForDay(day, context);
-        /*if (this.isTodayShown() && myBinder != null) {
-            // Today is shown. Add the steps which are not in database.
-            StepCount s = new StepCount();
-            if (stepCounts.size() > 0) {
-                s.setStartTime(stepCounts.get(stepCounts.size() - 1).getEndTime());
-            } else {
-                s.setStartTime(day.getTimeInMillis());
-            }
-            s.setEndTime(Calendar.getInstance().getTimeInMillis()); // now
-            s.setStepCount(myBinder.stepsSinceLastSave());
-            s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context)); // add current walking mode
-            stepCounts.add(s);
-        }*/
-
-        WalkingMode wm = null;
-        int hour = -1;
         SimpleDateFormat formatHourMinute = new SimpleDateFormat("HH:mm", locale);
         Calendar m = day;
         m.set(Calendar.HOUR_OF_DAY, 0);
@@ -363,14 +346,14 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                 // Today is shown. Add the steps which are not in database.
                 StepCount s1 = new StepCount();
                 if (stepCountsFromStorage.size() > 0) {
-                    s.setStartTime(stepCountsFromStorage.get(stepCountsFromStorage.size() - 1).getEndTime());
+                    s1.setStartTime(stepCountsFromStorage.get(stepCountsFromStorage.size() - 1).getEndTime());
                 } else {
-                    s.setStartTime(s.getStartTime());
+                    s1.setStartTime(s.getStartTime());
                 }
-                s.setEndTime(Calendar.getInstance().getTimeInMillis()); // now
-                s.setStepCount(myBinder.stepsSinceLastSave());
-                s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context)); // add current walking mode
-                stepCounts.add(s);
+                s1.setEndTime(Calendar.getInstance().getTimeInMillis()); // now
+                s1.setStepCount(myBinder.stepsSinceLastSave());
+                s1.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context)); // add current walking mode
+                stepCounts.add(s1);
             }
             // iterate over stepcounts in interval to sum up steps and detect changes in walkingmode
             for(StepCount stepCountFromStorage : stepCountsFromStorage){

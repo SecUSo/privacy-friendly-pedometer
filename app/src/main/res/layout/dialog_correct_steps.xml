@@ -8,12 +8,14 @@
         android:id="@+id/input_layout_steps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <EditText
             android:id="@+id/steps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/hint_steps"
             android:inputType="number"
             android:lines="1"
-            android:hint="@string/hint_steps"/>
+            android:maxLength="7" />
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

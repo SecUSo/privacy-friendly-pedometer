@@ -105,6 +105,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity" />
         </activity>
+        <activity android:name="org.secuso.privacyfriendlyactivitytracker.activities.WidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
 
         <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnBootCompletedBroadcastReceiver">
             <intent-filter>

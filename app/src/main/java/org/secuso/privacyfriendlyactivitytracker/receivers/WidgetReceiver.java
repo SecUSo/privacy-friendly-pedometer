@@ -105,6 +105,7 @@ public class WidgetReceiver extends AppWidgetProvider {
         RemoteViews rv = getRemoteViews(context, newOptions);
         appWidgetManager.updateAppWidget(appWidgetId, rv);
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+        forceWidgetUpdate(appWidgetId, context);
     }
 
     @Override
@@ -157,11 +158,19 @@ public class WidgetReceiver extends AppWidgetProvider {
     }
 
     public static void forceWidgetUpdate(Context context){
+        forceWidgetUpdate(null, context);
+    }
+
+    public static void forceWidgetUpdate(Integer widgetId, Context context){
         Intent intent = new Intent(context, WidgetReceiver.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-
-        int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, WidgetReceiver.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        int[] ids;
+        if(widgetId == null) {
+            ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, WidgetReceiver.class));
+        }else{
+            ids = new int[]{widgetId};
+        }
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         context.sendBroadcast(intent);
     }
 }

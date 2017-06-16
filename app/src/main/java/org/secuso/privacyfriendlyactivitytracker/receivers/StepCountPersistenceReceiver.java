@@ -38,6 +38,7 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
             StepCountPersistenceHelper.storeStepCounts(service, context, oldWalkingMode);
             StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
             context.getApplicationContext().unbindService(mServiceConnection);
+            WidgetReceiver.forceWidgetUpdate(context);
         }
     };
 

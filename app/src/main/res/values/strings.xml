@@ -168,6 +168,7 @@
     </string-array>
     <!-- /notification settings -->
     <string name="pref_header_walking_modes">Walking modes</string>
+    <string name="pref_widget_data_set" translatable="false">rg.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->

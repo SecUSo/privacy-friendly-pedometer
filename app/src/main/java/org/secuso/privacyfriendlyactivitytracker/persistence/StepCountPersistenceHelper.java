@@ -204,7 +204,6 @@ public class StepCountPersistenceHelper {
         }
         c.close();
         return steps;
-
     }
 
     /**

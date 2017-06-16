@@ -14,6 +14,7 @@ import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver;
 import org.secuso.privacyfriendlyactivitytracker.receivers.StepCountPersistenceReceiver;
+import org.secuso.privacyfriendlyactivitytracker.receivers.WidgetReceiver;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -52,6 +53,7 @@ public class StepDetectionServiceHelper {
 
     public static void stopAllIfNotRequired(Context context){
         stopAllIfNotRequired(true, context);
+        WidgetReceiver.forceWidgetUpdate(context);
     }
 
     public static void stopAllIfNotRequired(boolean forceSave, Context context){
@@ -83,6 +85,7 @@ public class StepDetectionServiceHelper {
         Log.i(LOG_CLASS, "Started step detection service.");
         Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
             context.getApplicationContext().startService(stepDetectorServiceIntent);
+        WidgetReceiver.forceWidgetUpdate(context);
     }
 
     /**

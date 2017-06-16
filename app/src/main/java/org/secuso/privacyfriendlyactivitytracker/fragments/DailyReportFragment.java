@@ -582,6 +582,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                         stepCount.setStartTime(day.getTime().getTime());
                         stepCount.setEndTime(day.getTime().getTime());
                         stepCount.setStepCount(stepCount.getStepCount() + diff);
+                        stepCount.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getContext()));
                         StepCountPersistenceHelper.storeStepCount(stepCount, getContext());
                     }else {
                         stepCount.setStepCount(stepCount.getStepCount() + diff);

@@ -105,6 +105,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity" />
         </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlyactivitytracker.activities.DistanceMeasurementActivity"
+            android:label="@string/action_distance_measurement"
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+        </activity>
         <activity android:name="org.secuso.privacyfriendlyactivitytracker.activities.WidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>

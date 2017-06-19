@@ -168,7 +168,8 @@
     </string-array>
     <!-- /notification settings -->
     <string name="pref_header_walking_modes">Walking modes</string>
-    <string name="pref_widget_data_set" translatable="false">rg.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
+    <string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
+    <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
@@ -257,4 +258,7 @@
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Stepgoal</string>
     <string name="widget_config_data_set_title">Which data should be displayed?</string>
+    <string name="action_distance_measurement">Distance Measurement</string>
+    <string name="distance_measurement_stop_button">Stop distance measurement</string>
+    <string name="distance_measurement_start_button">Start distance measurement</string>
 </resources>

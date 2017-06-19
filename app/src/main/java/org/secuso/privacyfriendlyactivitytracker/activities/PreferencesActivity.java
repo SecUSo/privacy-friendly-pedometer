@@ -214,6 +214,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             additionalSummaryTexts.put(getString(R.string.pref_accelerometer_threshold), getString(R.string.pref_summary_accelerometer_threshold));
 
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_length)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_energy)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_daily_step_goal)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_weight)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_gender)));

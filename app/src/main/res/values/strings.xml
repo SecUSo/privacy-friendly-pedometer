@@ -93,6 +93,16 @@
     </string-array>
     <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
     <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
+    <string name="pref_title_unit_of_energy">Unit of energy</string>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>calories</item>
+        <item>joules</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_energy" translatable="false">
+        <item>cal</item>
+        <item>J</item>
+    </string-array>
 
     <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please set your weight and gender.</string>
     <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
@@ -261,4 +271,6 @@
     <string name="action_distance_measurement">Distance Measurement</string>
     <string name="distance_measurement_stop_button">Stop distance measurement</string>
     <string name="distance_measurement_start_button">Start distance measurement</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
 </resources>

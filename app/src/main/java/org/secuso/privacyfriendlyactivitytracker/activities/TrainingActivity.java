@@ -58,6 +58,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewDistance;
     private TextView mTextViewDistanceTitle;
     private TextView mTextViewCalories;
+    private TextView mTextViewCaloriesTitle;
     private TextView mTextViewDuration;
     private TextView mTextViewVelocity;
     private TextView mTextViewVelocityTitle;
@@ -94,6 +95,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTextViewDistance = (TextView) findViewById(R.id.training_distance);
         mTextViewDistanceTitle = (TextView) findViewById(R.id.training_distance_title);
         mTextViewCalories = (TextView) findViewById(R.id.training_calories);
+        mTextViewCaloriesTitle = (TextView) findViewById(R.id.training_calories_title);
         mTextViewDuration = (TextView) findViewById(R.id.training_duration);
         mTextViewVelocity = (TextView) findViewById(R.id.training_velocity);
         mTextViewVelocityTitle = (TextView) findViewById(R.id.training_velocity_title);
@@ -213,9 +215,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
         mTextViewSteps.setText(String.valueOf((int)this.training.getSteps()));
         UnitHelper.FormattedUnitPair distance = UnitHelper.formatKilometers(UnitHelper.metersToKilometers(this.training.getDistance()), this);
+        UnitHelper.FormattedUnitPair calories = UnitHelper.formatCalories(UnitHelper.metersToKilometers(this.training.getCalories()), this);
         mTextViewDistance.setText(distance.getValue());
         mTextViewDistanceTitle.setText(distance.getUnit());
-        mTextViewCalories.setText(String.format(getResources().getConfiguration().locale, "%.2f", this.training.getCalories()));
+        mTextViewCalories.setText(calories.getValue());
+        mTextViewCaloriesTitle.setText(calories.getUnit());
         int duration = this.training.getDuration();
         int hours = (duration / 3600);
         int minutes = (duration - hours * 3600) / 60;

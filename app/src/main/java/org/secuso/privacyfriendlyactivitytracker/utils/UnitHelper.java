@@ -171,10 +171,21 @@ public class UnitHelper {
     }
 
     public static FormattedUnitPair formatCalories(double kcal, Context context){
-        if(kcal < 100){
-            return new FormattedUnitPair(formatString("%.2f", kcal / 1000, context), context.getString(R.string.summary_card_calories));
-        }else{
-            return new FormattedUnitPair(formatString("%.2f", kcal, context), context.getString(R.string.summary_card_kilocalories));
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String unit_key = sharedPref.getString(context.getString(R.string.pref_unit_of_energy), "cal");
+        if(unit_key.equals("J")) {
+            double joule = kcal * 4184;
+            if (joule < 100) {
+                return new FormattedUnitPair(formatString("%.2f", joule, context), context.getString(R.string.joules));
+            } else {
+                return new FormattedUnitPair(formatString("%.2f", joule / 1000, context), context.getString(R.string.kilojoules));
+            }
+        }else {
+            if (kcal < 100) {
+                return new FormattedUnitPair(formatString("%.2f", kcal / 1000, context), context.getString(R.string.summary_card_calories));
+            } else {
+                return new FormattedUnitPair(formatString("%.2f", kcal, context), context.getString(R.string.summary_card_kilocalories));
+            }
         }
     }
 

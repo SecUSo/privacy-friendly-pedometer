@@ -196,7 +196,7 @@
                     android:textSize="39sp" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/training_calories_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 

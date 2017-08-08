@@ -28,7 +28,7 @@ public class TrainingPersistenceHelper {
      * @return a list of training sessions
      */
     public static List<Training> getAllItems(Context context) {
-        Cursor c = getCursor(null, null, TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START + " DESC", context);
+        Cursor c = getCursor(null, null, TrainingDbHelper.TrainingSessionEntry.KEY_START + " DESC", context);
         List<Training> trainingSessions = new ArrayList<>();
         if (c == null) {
             return trainingSessions;
@@ -71,7 +71,7 @@ public class TrainingPersistenceHelper {
      * @return the requested training session or null
      */
     public static Training getActiveItem(Context context) {
-        Cursor c = getCursor(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END + " = ?", new String[]{"0"}, context);
+        Cursor c = getCursor(TrainingDbHelper.TrainingSessionEntry.KEY_END + " = ?", new String[]{"0"}, context);
         Training trainingSession = null;
         if (c == null) {
             return null;
@@ -187,14 +187,14 @@ public class TrainingPersistenceHelper {
         // you will actually use after this query.
         String[] projection = {
                 TrainingDbHelper.TrainingSessionEntry._ID,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_NAME,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DESCRIPTION,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_STEPS,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DISTANCE,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_CALORIES,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END,
-                TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_FEELING
+                TrainingDbHelper.TrainingSessionEntry.KEY_NAME,
+                TrainingDbHelper.TrainingSessionEntry.KEY_DESCRIPTION,
+                TrainingDbHelper.TrainingSessionEntry.KEY_STEPS,
+                TrainingDbHelper.TrainingSessionEntry.KEY_DISTANCE,
+                TrainingDbHelper.TrainingSessionEntry.KEY_CALORIES,
+                TrainingDbHelper.TrainingSessionEntry.KEY_START,
+                TrainingDbHelper.TrainingSessionEntry.KEY_END,
+                TrainingDbHelper.TrainingSessionEntry.KEY_FEELING
         };
 
         return getDB(context).query(

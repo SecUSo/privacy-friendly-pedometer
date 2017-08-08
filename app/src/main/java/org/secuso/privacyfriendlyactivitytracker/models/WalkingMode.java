@@ -21,11 +21,11 @@ public class WalkingMode {
     public static WalkingMode from(Cursor c) {
         WalkingMode alarmItem = new WalkingMode();
         alarmItem.setId(c.getLong(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry._ID)));
-        alarmItem.setName(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME)));
-        alarmItem.setStepLength(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE)));
-        alarmItem.setStepFrequency(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY)));
-        alarmItem.setIsActive(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE))));
-        alarmItem.setIsDeleted(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED))));
+        alarmItem.setName(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_NAME)));
+        alarmItem.setStepLength(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_SIZE)));
+        alarmItem.setStepFrequency(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_FREQUENCY)));
+        alarmItem.setIsActive(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_ACTIVE))));
+        alarmItem.setIsDeleted(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_DELETED))));
         return alarmItem;
     }
 
@@ -79,11 +79,11 @@ public class WalkingMode {
 
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME, this.getName());
-        values.put(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE, this.getStepLength());
-        values.put(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY, this.getStepFrequency());
-        values.put(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE, String.valueOf(this.isActive()));
-        values.put(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED, String.valueOf(this.isDeleted()));
+        values.put(WalkingModeDbHelper.WalkingModeEntry.KEY_NAME, this.getName());
+        values.put(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_SIZE, this.getStepLength());
+        values.put(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_FREQUENCY, this.getStepFrequency());
+        values.put(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_ACTIVE, String.valueOf(this.isActive()));
+        values.put(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_DELETED, String.valueOf(this.isDeleted()));
         return values;
     }
 

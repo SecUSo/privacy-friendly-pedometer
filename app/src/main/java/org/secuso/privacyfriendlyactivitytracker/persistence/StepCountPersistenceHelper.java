@@ -58,9 +58,9 @@ public class StepCountPersistenceHelper {
         }
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCountSinceLastSave);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, walkingModeId);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, Calendar.getInstance().getTime().getTime());
+        values.put(StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT, stepCountSinceLastSave);
+        values.put(StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE, walkingModeId);
+        values.put(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP, Calendar.getInstance().getTime().getTime());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -90,9 +90,9 @@ public class StepCountPersistenceHelper {
     public static boolean storeStepCount(StepCount stepCount, Context context) {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCount.getStepCount());
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 0);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, stepCount.getEndTime());
+        values.put(StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT, stepCount.getStepCount());
+        values.put(StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 0);
+        values.put(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP, stepCount.getEndTime());
 
         // Insert the new row, returning the primary key value of the new row
         getDB(context).insert(
@@ -116,15 +116,15 @@ public class StepCountPersistenceHelper {
     public static boolean updateStepCount(StepCount stepCount, Context context) {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, stepCount.getStepCount());
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
-        values.put(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, stepCount.getEndTime());
+        values.put(StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT, stepCount.getStepCount());
+        values.put(StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
+        values.put(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP, stepCount.getEndTime());
 
         // Insert the new row, returning the primary key value of the new row
         getDB(context).update(
                 StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 values,
-                StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " = ?",
+                StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP + " = ?",
                 new String[]{String.valueOf(stepCount.getEndTime())}
         );
         // broadcast the event
@@ -188,17 +188,17 @@ public class StepCountPersistenceHelper {
             return new ArrayList<>();
         }
         Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
-                new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE},
-                StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " >= ? AND " + StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " <= ?", new String[]{String.valueOf(start_time),
-                        String.valueOf(end_time)}, null, null, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " ASC");
+                new String[]{StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT, StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP, StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE},
+                StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP + " >= ? AND " + StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP + " <= ?", new String[]{String.valueOf(start_time),
+                        String.valueOf(end_time)}, null, null, StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP + " ASC");
         List<StepCount> steps = new ArrayList<>();
         long start = start_time;
         while (c.moveToNext()) {
             StepCount s = new StepCount();
             s.setStartTime(start);
-            s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
-            s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT)));
-            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)), context));
+            s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT)));
+            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE)), context));
             steps.add(s);
             start = s.getEndTime();
         }
@@ -229,16 +229,16 @@ public class StepCountPersistenceHelper {
      */
     public static Date getDateOfFirstEntry(Context context){
         Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
-                new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP}, /* columns */
+                new String[]{StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP}, /* columns */
                 null,
                 null,
                 null,
                 null,
-                StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP + " ASC", /* orderBy */
+                StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP + " ASC", /* orderBy */
                 "1" /* limit */);
         Date date = Calendar.getInstance().getTime(); // fallback is today
         while(c.moveToNext()){
-            date.setTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
+            date.setTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP)));
         }
         c.close();
         return date;

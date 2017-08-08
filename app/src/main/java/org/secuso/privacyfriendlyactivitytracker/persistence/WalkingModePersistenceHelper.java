@@ -37,7 +37,7 @@ public class WalkingModePersistenceHelper {
      * @return a list of walking modes
      */
     public static List<WalkingMode> getAllItems(Context context) {
-        Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED + " = ?", new String[]{String.valueOf(false)}, context);
+        Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_DELETED + " = ?", new String[]{String.valueOf(false)}, context);
         List<WalkingMode> walkingModes = new ArrayList<>();
         if (c == null) {
             return walkingModes;
@@ -176,7 +176,7 @@ public class WalkingModePersistenceHelper {
      * @return The walking mode with active-flag set
      */
     public static WalkingMode getActiveMode(Context context) {
-        Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE + " = ?", new String[]{String.valueOf(true)}, context);
+        Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_ACTIVE + " = ?", new String[]{String.valueOf(true)}, context);
         WalkingMode walkingMode;
         if (c.getCount() == 0) {
             walkingMode = null;
@@ -236,11 +236,11 @@ public class WalkingModePersistenceHelper {
         // you will actually use after this query.
         String[] projection = {
                 WalkingModeDbHelper.WalkingModeEntry._ID,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED
+                WalkingModeDbHelper.WalkingModeEntry.KEY_NAME,
+                WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_SIZE,
+                WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_FREQUENCY,
+                WalkingModeDbHelper.WalkingModeEntry.KEY_IS_ACTIVE,
+                WalkingModeDbHelper.WalkingModeEntry.KEY_IS_DELETED
         };
 
         // How you want the results sorted in the resulting Cursor

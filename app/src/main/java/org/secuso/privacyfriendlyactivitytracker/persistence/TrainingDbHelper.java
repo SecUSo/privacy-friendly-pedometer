@@ -14,24 +14,36 @@ import android.provider.BaseColumns;
 public class TrainingDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
+
     public static final String DATABASE_NAME = "TrainingSessions.db";
 
-    private static final String INTEGER_TYPE = " INTEGER";
+    public static final String TABLE_NAME = "walkingmodes";
+
+    public static final String KEY_ID = "_id";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_STEPS = "steps";
+    public static final String KEY_CALORIES = "calories";
+    public static final String KEY_DISTANCE = "distance";
+    public static final String KEY_START = "start";
+    public static final String KEY_END = "end";
+    public static final String KEY_FEELING = "feeling";
+
     private static final String STRING_TYPE = " TEXT";
     private static final String REAL_TYPE = " REAL";
 
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TrainingSessionEntry.TABLE_NAME + " (" +
-                    TrainingSessionEntry._ID + " INTEGER PRIMARY KEY," +
-                    TrainingSessionEntry.COLUMN_NAME_NAME + STRING_TYPE + COMMA_SEP +
-                    TrainingSessionEntry.COLUMN_NAME_DESCRIPTION + STRING_TYPE + COMMA_SEP +
-                    TrainingSessionEntry.COLUMN_NAME_STEPS + REAL_TYPE + COMMA_SEP +
-                    TrainingSessionEntry.COLUMN_NAME_DISTANCE + REAL_TYPE + COMMA_SEP +
-                    TrainingSessionEntry.COLUMN_NAME_CALORIES + REAL_TYPE + COMMA_SEP +
-                    TrainingSessionEntry.COLUMN_NAME_START + REAL_TYPE + COMMA_SEP +
-                    TrainingSessionEntry.COLUMN_NAME_END + REAL_TYPE + COMMA_SEP +
-                    TrainingSessionEntry.COLUMN_NAME_FEELING + REAL_TYPE +
+            "CREATE TABLE " + TABLE_NAME + " (" +
+                    KEY_ID + " INTEGER PRIMARY KEY," +
+                    KEY_NAME + STRING_TYPE + COMMA_SEP +
+                    KEY_DESCRIPTION + STRING_TYPE + COMMA_SEP +
+                    KEY_STEPS + REAL_TYPE + COMMA_SEP +
+                    KEY_DISTANCE + REAL_TYPE + COMMA_SEP +
+                    KEY_CALORIES + REAL_TYPE + COMMA_SEP +
+                    KEY_START + REAL_TYPE + COMMA_SEP +
+                    KEY_END + REAL_TYPE + COMMA_SEP +
+                    KEY_FEELING + REAL_TYPE +
             " )";
 
     public TrainingDbHelper(Context context) {
@@ -47,16 +59,19 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    /* Inner class that defines the table contents */
+    /**
+     * @deprecated This class is deprecated due to structural updates to match pfa sample app.
+     *             Please use {@link TrainingDbHelper} instead.
+     */
     public static abstract class TrainingSessionEntry implements BaseColumns {
-        public static final String TABLE_NAME = "walkingmodes";
-        public static final String COLUMN_NAME_NAME = "name";
-        public static final String COLUMN_NAME_DESCRIPTION = "description";
-        public static final String COLUMN_NAME_STEPS = "steps";
-        public static final String COLUMN_NAME_CALORIES = "calories";
-        public static final String COLUMN_NAME_DISTANCE = "distance";
-        public static final String COLUMN_NAME_START = "start";
-        public static final String COLUMN_NAME_END = "end";
-        public static final String COLUMN_NAME_FEELING = "feeling";
+        public static final String TABLE_NAME = TrainingDbHelper.TABLE_NAME;
+        public static final String KEY_NAME = TrainingDbHelper.KEY_NAME;
+        public static final String KEY_DESCRIPTION = TrainingDbHelper.KEY_DESCRIPTION;
+        public static final String KEY_STEPS = TrainingDbHelper.KEY_STEPS;
+        public static final String KEY_CALORIES = TrainingDbHelper.KEY_CALORIES;
+        public static final String KEY_DISTANCE = TrainingDbHelper.KEY_DISTANCE;
+        public static final String KEY_START = TrainingDbHelper.KEY_START;
+        public static final String KEY_END = TrainingDbHelper.KEY_END;
+        public static final String KEY_FEELING = TrainingDbHelper.KEY_FEELING;
     }
 }

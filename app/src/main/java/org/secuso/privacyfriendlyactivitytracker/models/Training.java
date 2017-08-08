@@ -30,14 +30,14 @@ public class Training {
     public static Training from(Cursor c) {
         Training trainingSession = new Training();
         trainingSession.setId(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry._ID)));
-        trainingSession.setName(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_NAME)));
-        trainingSession.setDescription(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DESCRIPTION)));
-        trainingSession.setSteps(c.getInt(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_STEPS)));
-        trainingSession.setDistance(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DISTANCE)));
-        trainingSession.setCalories(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_CALORIES)));
-        trainingSession.setFeeling(c.getFloat(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_FEELING)));
-        trainingSession.setStart(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START)));
-        trainingSession.setEnd(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END)));
+        trainingSession.setName(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_NAME)));
+        trainingSession.setDescription(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_DESCRIPTION)));
+        trainingSession.setSteps(c.getInt(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_STEPS)));
+        trainingSession.setDistance(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_DISTANCE)));
+        trainingSession.setCalories(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_CALORIES)));
+        trainingSession.setFeeling(c.getFloat(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_FEELING)));
+        trainingSession.setStart(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_START)));
+        trainingSession.setEnd(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_END)));
         return trainingSession;
     }
 
@@ -146,14 +146,14 @@ public class Training {
 
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_NAME, this.getName());
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DESCRIPTION, this.getDescription());
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_STEPS, this.getSteps());
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DISTANCE, String.valueOf(this.getDistance()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_CALORIES, String.valueOf(this.getCalories()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_FEELING, String.valueOf(this.getFeeling()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START, String.valueOf(this.getStart()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END, String.valueOf(this.getEnd()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_NAME, this.getName());
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_DESCRIPTION, this.getDescription());
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_STEPS, this.getSteps());
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_DISTANCE, String.valueOf(this.getDistance()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_CALORIES, String.valueOf(this.getCalories()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_FEELING, String.valueOf(this.getFeeling()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_START, String.valueOf(this.getStart()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_END, String.valueOf(this.getEnd()));
         return values;
     }
 }

@@ -228,6 +228,8 @@
     <string name="slide_2_desc_two">You can switch your current walking modes using the context menu in the toolbar.</string>
     <string name="slide_3_title">Notifications</string>
     <string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+    <string name="slide_4_title">Widget</string>
+    <string name="slide_4_desc">Add a widget to your homescreen to stay up to date about your walked steps.</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <!-- /welcome dialog -->

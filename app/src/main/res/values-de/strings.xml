@@ -201,8 +201,8 @@
     <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus wechseln, indem Sie sie in der Toolbar auswählen.</string>
     <string name="slide_3_title">Benachritigungen</string>
     <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
-    <string name="slide_3_title">Widget</string>
-    <string name="slide_3_desc">Die App bietet Ihnen ein Widget an, welches Sie Ihrem Homescreen hinzufügen können. So bleiben Sie immer auf dem aktuellen Stand.</string>
+    <string name="slide_4_title">Widget</string>
+    <string name="slide_4_desc">Die App bietet Ihnen ein Widget an, welches Sie Ihrem Homescreen hinzufügen können. So bleiben Sie immer auf dem aktuellen Stand.</string>
     <string name="summary_card_calories">cal</string>
     <string name="continue_step_detection">Starte Schritterkennung</string>
     <string name="correct_steps">Schrittzahl bearbeiten</string>

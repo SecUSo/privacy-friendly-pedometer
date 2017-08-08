@@ -194,4 +194,11 @@
     <string name="pref_summary_use_wake_lock_during_training">Zur besseren Erkennung der Schritte während des Trainings halte den Prozessor aktiv. Wenn Prozessor immer aktiv gehalten werden soll, ist diese Einstellung hinfällig</string>
     <string name="pref_title_accelerometer_steps_threshold">Anzahl Schritte, bevor die Schritterfassung starten soll</string>
     <string name="pref_title_use_wake_lock_during_training">Wachhalten während Training</string>
+    <string name="action_distance_measurement">Distanzmessung</string>
+    <string name="distance_measurement_start_button">Starte Messung</string>
+    <string name="distance_measurement_stop_button">Stoppe Messung</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="pref_title_unit_of_energy">Energieeinheit</string>
+    <string name="widget_config_data_set_title">Welche Daten sollen angezeigt werden?</string>
 </resources>

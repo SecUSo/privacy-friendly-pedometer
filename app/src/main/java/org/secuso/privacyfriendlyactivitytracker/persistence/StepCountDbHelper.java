@@ -17,10 +17,19 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.persistence;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
+
+import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Database helper class for storing steps
@@ -52,8 +61,11 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
                     KEY_TIMESTAMP + INTEGER_TYPE +
             " )";
 
+    private Context context;
+
     public StepCountDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
@@ -63,6 +75,110 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+
+    /**
+     * Stores the given StepCount in database. EndTime will be used for KEY_TIMESTAMP.
+     * @param stepCount the StepCount to save.
+     */
+    public void addStepCount(StepCount stepCount){
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(KEY_STEP_COUNT, stepCount.getStepCount());
+        values.put(KEY_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
+        values.put(KEY_TIMESTAMP, stepCount.getEndTime());
+
+        // Insert the new row, returning the primary key value of the new row
+        getWritableDatabase().insert(
+                TABLE_NAME,
+                null,
+                values);
+    }
+
+    /**
+     * Adds StepCount - same as @{link StepCountDbHelper#addStepCount(StepCount)} since we have no ID.
+     * @param stepCount
+     */
+    public void addStepCountWithID(StepCount stepCount){
+        addStepCount(stepCount);
+    }
+
+    /**
+     * Return all StepCounts
+     * @return all StepCount-Entries
+     */
+    public List<StepCount> getAllStepCounts(){
+        return getStepCountsForInterval(0, Long.MAX_VALUE);
+    }
+
+    /**
+     * Returns the stepCount models for the steps walked in the given interval.
+     *
+     * @param start_time The start time in users timezone
+     * @param end_time   The end time in users timezone
+     * @return The StepCount-Models between start and end time
+     */
+    public List<StepCount> getStepCountsForInterval(long start_time, long end_time) {
+        Cursor c = getReadableDatabase().query(TABLE_NAME,
+                new String[]{
+                        KEY_STEP_COUNT,
+                        KEY_TIMESTAMP,
+                        KEY_WALKING_MODE
+                },
+                KEY_TIMESTAMP + " >= ? AND " + KEY_TIMESTAMP + " <= ?", new String[]{String.valueOf(start_time),
+                        String.valueOf(end_time)}, null, null, KEY_TIMESTAMP + " ASC");
+        WalkingModeDbHelper walkingModeDbHelper = new WalkingModeDbHelper(context);
+        List<StepCount> steps = new ArrayList<>();
+        long start = start_time;
+        while (c.moveToNext()) {
+            StepCount s = new StepCount();
+            s.setStartTime(start);
+            s.setEndTime(c.getLong(c.getColumnIndex(KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndex(KEY_STEP_COUNT)));
+            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndex(KEY_WALKING_MODE))));
+            steps.add(s);
+            start = s.getEndTime();
+        }
+        c.close();
+        return steps;
+    }
+
+    /**
+     * Updates the given step count in database based on end timestamp
+     *
+     * @param stepCount The step count to save
+     */
+    public void updateStepCount(StepCount stepCount){
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(KEY_STEP_COUNT, stepCount.getStepCount());
+        values.put(KEY_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
+        values.put(KEY_TIMESTAMP, stepCount.getEndTime());
+
+        // Insert the new row, returning the primary key value of the new row
+        getWritableDatabase().update(
+                TABLE_NAME,
+                values,
+                KEY_TIMESTAMP + " = ?",
+                new String[]{String.valueOf(stepCount.getEndTime())}
+        );
+    }
+
+    /**
+     * Deletes the given StepCount from database
+     * @param stepCount The StepCount to delete.
+     */
+    public void deleteStepCount(StepCount stepCount){
+        String selection = KEY_TIMESTAMP + " = ?";
+        String[] selectionArgs = {String.valueOf(stepCount.getEndTime())};
+        this.getWritableDatabase().delete(TABLE_NAME, selection, selectionArgs);
+    }
+
+    /**
+     * Deletes all StepCounts from database
+     */
+    public void deleteAllStepCounts(){
+        getWritableDatabase().execSQL("delete from " + TABLE_NAME);
     }
 
     /**

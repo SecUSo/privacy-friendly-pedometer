@@ -17,16 +17,23 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.persistence;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+
+import org.secuso.privacyfriendlyactivitytracker.models.Training;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Database helper class for storing walking modes
  *
  * @author Tobias Neidig
- * @version 20160727
+ * @version 20170810
  */
 public class TrainingDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
@@ -74,6 +81,177 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+
+    /**
+     * Inserts the given training session as new entry.
+     *
+     * @param item    The training session which should be stored
+     * @return the inserted id
+     */
+    protected long addTraining(Training item) {
+        ContentValues values = item.toContentValues();
+        return getWritableDatabase().insert(
+                TABLE_NAME,
+                null,
+                values);
+    }
+
+    /**
+     * Inserts the given training session as new entry keeping the original id
+     *
+     * @param item    The training session which should be stored
+     * @return the inserted id
+     */
+    protected long addTrainingWithID(Training item) {
+        ContentValues values = item.toContentValues();
+        values.put(KEY_ID, item.getId());
+        return getWritableDatabase().insert(
+                TABLE_NAME,
+                null,
+                values);
+    }
+
+    /**
+     * Gets the specific training session
+     *
+     * @param id      the id of the training session
+     * @return the requested training session or null
+     */
+    public Training getTraining(int id) {
+        Cursor c = getCursor(KEY_ID + " = ?", new String[]{String.valueOf(id)});
+        Training trainingSession;
+        if (c == null) {
+            return null;
+        }
+        if (c.getCount() == 0) {
+            trainingSession = null;
+        } else {
+            c.moveToFirst();
+            trainingSession = Training.from(c);
+        }
+
+        c.close();
+        return trainingSession;
+    }
+
+    /**
+     * Gets the active training session
+     *
+     * @return the requested training session or null
+     */
+    public Training getActiveTraining() {
+        Cursor c = getCursor(KEY_END + " = ?", new String[]{"0"});
+        Training trainingSession;
+        if (c == null) {
+            return null;
+        }
+        if (c.getCount() == 0) {
+            trainingSession = null;
+        } else {
+            c.moveToFirst();
+            trainingSession = Training.from(c);
+        }
+
+        c.close();
+        return trainingSession;
+    }
+
+    /**
+     * Gets all training sessions from database
+     *
+     * @return a list of training sessions
+     */
+    public List<Training> getAllTrainings() {
+        Cursor c = getCursor(null, null, KEY_START + " DESC");
+        List<Training> trainingSessions = new ArrayList<>();
+        if (c == null) {
+            return trainingSessions;
+        }
+        while (c.moveToNext()) {
+            trainingSessions.add(Training.from(c));
+        }
+        c.close();
+        return trainingSessions;
+    }
+
+
+    /**
+     * Updates the given training session in database
+     *
+     * @param item    The training session to update
+     * @return the number of rows affected
+     */
+    protected int updateTraining(Training item) {
+        ContentValues values = item.toContentValues();
+
+        String selection = KEY_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(item.getId())};
+
+        int rowsAffected = getWritableDatabase().update(
+                TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        return rowsAffected;
+    }
+
+    /**
+     * Deletes the given training session from database
+     *
+     * @param item    the item to delete
+     */
+    public void deleteTraining(Training item) {
+        if (item == null || item.getId() <= 0) {
+            return;
+        }
+        String selection = KEY_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(item.getId())};
+        getWritableDatabase().delete(TABLE_NAME, selection, selectionArgs);
+    }
+
+    /**
+     * Deletes all training data from database.
+     */
+    public void deleteAllTrainings(){
+        getWritableDatabase().execSQL("delete from " + TABLE_NAME);
+    }
+
+    protected Cursor getCursor(String selection, String[] selectionArgs){
+        return getCursor(selection, selectionArgs, KEY_ID + " ASC");
+    }
+
+    /**
+     * Gets the database cursor for given selection arguments.
+     *
+     * @param selection     The selection query
+     * @param selectionArgs The arguments for selection query
+     * @return the database cursor
+     */
+    protected Cursor getCursor(String selection, String[] selectionArgs, String sortOrder) {
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                KEY_ID,
+                KEY_NAME,
+                KEY_DESCRIPTION,
+                KEY_STEPS,
+                KEY_DISTANCE,
+                KEY_CALORIES,
+                KEY_START,
+                KEY_END,
+                KEY_FEELING
+        };
+
+        return getWritableDatabase().query(
+                TABLE_NAME,  // The table to query
+                projection,                                            // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder                                 // The sort order
+        );
     }
 
     /**

@@ -61,7 +61,21 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
                     KEY_TIMESTAMP + INTEGER_TYPE +
             " )";
 
+    private static SQLiteDatabase db;
+
     private Context context;
+
+    /**
+     * Returns a static database instance
+     * @param instance Instance of stepCountDbHelper to fetch new db-instance if necessary
+     * @return static database instance
+     */
+    private static SQLiteDatabase getDatabase(StepCountDbHelper instance){
+        if(db == null){
+            db = instance.getWritableDatabase();
+        }
+        return db;
+    }
 
     public StepCountDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -89,7 +103,7 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         values.put(KEY_TIMESTAMP, stepCount.getEndTime());
 
         // Insert the new row, returning the primary key value of the new row
-        getWritableDatabase().insert(
+        getDatabase(this).insert(
                 TABLE_NAME,
                 null,
                 values);
@@ -119,7 +133,7 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
      * @return The StepCount-Models between start and end time
      */
     public List<StepCount> getStepCountsForInterval(long start_time, long end_time) {
-        Cursor c = getReadableDatabase().query(TABLE_NAME,
+        Cursor c = getDatabase(this).query(TABLE_NAME,
                 new String[]{
                         KEY_STEP_COUNT,
                         KEY_TIMESTAMP,
@@ -156,7 +170,7 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         values.put(KEY_TIMESTAMP, stepCount.getEndTime());
 
         // Insert the new row, returning the primary key value of the new row
-        getWritableDatabase().update(
+        getDatabase(this).update(
                 TABLE_NAME,
                 values,
                 KEY_TIMESTAMP + " = ?",
@@ -171,14 +185,14 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
     public void deleteStepCount(StepCount stepCount){
         String selection = KEY_TIMESTAMP + " = ?";
         String[] selectionArgs = {String.valueOf(stepCount.getEndTime())};
-        this.getWritableDatabase().delete(TABLE_NAME, selection, selectionArgs);
+        this.getDatabase(this).delete(TABLE_NAME, selection, selectionArgs);
     }
 
     /**
      * Deletes all StepCounts from database
      */
     public void deleteAllStepCounts(){
-        getWritableDatabase().execSQL("delete from " + TABLE_NAME);
+        getDatabase(this).execSQL("delete from " + TABLE_NAME);
     }
 
     /**

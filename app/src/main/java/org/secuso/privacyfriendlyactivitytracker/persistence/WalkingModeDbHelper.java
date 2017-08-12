@@ -67,8 +67,21 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
                     WalkingModeEntry.KEY_IS_DELETED + INTEGER_TYPE +
                     " )";
     private static final String LOG_CLASS = WalkingModeDbHelper.class.getName();
+    private static SQLiteDatabase db;
 
     private Context context;
+
+    /**
+     * Returns a static database instance
+     * @param instance Instance of stepCountDbHelper to fetch new db-instance if necessary
+     * @return static database instance
+     */
+    private static SQLiteDatabase getDatabase(WalkingModeDbHelper instance){
+        if(db == null){
+            db = instance.getWritableDatabase();
+        }
+        return db;
+    }
 
     public WalkingModeDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -117,7 +130,7 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
      */
     public long addWalkingMode(WalkingMode walkingMode){
         ContentValues values = walkingMode.toContentValues();
-        return getWritableDatabase().insert(
+        return getDatabase(this).insert(
                 TABLE_NAME,
                 null,
                 values);
@@ -131,7 +144,7 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
     public void addWalkingModeWithID(WalkingMode walkingMode){
         ContentValues values = walkingMode.toContentValues();
         values.put(KEY_ID, walkingMode.getId());
-        getWritableDatabase().insert(
+        getDatabase(this).insert(
                 TABLE_NAME,
                 null,
                 values);
@@ -218,7 +231,7 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
         String selection = KEY_ID + " = ?";
         String[] selectionArgs = {String.valueOf(walkingMode.getId())};
 
-        return getWritableDatabase().update(
+        return getDatabase(this).update(
                 TABLE_NAME,
                 values,
                 selection,
@@ -236,14 +249,14 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
         }
         String selection = KEY_ID + " = ?";
         String[] selectionArgs = {String.valueOf(walkingMode.getId())};
-        this.getWritableDatabase().delete(TABLE_NAME, selection, selectionArgs);
+        getDatabase(this).delete(TABLE_NAME, selection, selectionArgs);
     }
 
     /**
      * Deletes all walking modes from database
      */
     public void deleteAllWalkingModes(){
-        this.getWritableDatabase().execSQL("delete from " + TABLE_NAME);
+        getDatabase(this).execSQL("delete from " + TABLE_NAME);
     }
 
     /**
@@ -269,7 +282,7 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
         String sortOrder =
                 KEY_ID + " ASC";
 
-        return this.getWritableDatabase().query(
+        return getDatabase(this).query(
                 TABLE_NAME,                         // The table to query
                 projection,                         // The columns to return
                 selection,                          // The columns for the WHERE clause

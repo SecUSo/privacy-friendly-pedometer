@@ -69,6 +69,19 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
                     KEY_END + REAL_TYPE + COMMA_SEP +
                     KEY_FEELING + REAL_TYPE +
             " )";
+    private static SQLiteDatabase db;
+
+    /**
+     * Returns a static database instance
+     * @param instance Instance of stepCountDbHelper to fetch new db-instance if necessary
+     * @return static database instance
+     */
+    private static SQLiteDatabase getDatabase(TrainingDbHelper instance){
+        if(db == null){
+            db = instance.getWritableDatabase();
+        }
+        return db;
+    }
 
     public TrainingDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -91,7 +104,7 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
      */
     protected long addTraining(Training item) {
         ContentValues values = item.toContentValues();
-        return getWritableDatabase().insert(
+        return getDatabase(this).insert(
                 TABLE_NAME,
                 null,
                 values);
@@ -106,7 +119,7 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
     protected long addTrainingWithID(Training item) {
         ContentValues values = item.toContentValues();
         values.put(KEY_ID, item.getId());
-        return getWritableDatabase().insert(
+        return getDatabase(this).insert(
                 TABLE_NAME,
                 null,
                 values);
@@ -188,7 +201,7 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
         String selection = KEY_ID + " = ?";
         String[] selectionArgs = {String.valueOf(item.getId())};
 
-        int rowsAffected = getWritableDatabase().update(
+        int rowsAffected = getDatabase(this).update(
                 TABLE_NAME,
                 values,
                 selection,
@@ -207,14 +220,14 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
         }
         String selection = KEY_ID + " = ?";
         String[] selectionArgs = {String.valueOf(item.getId())};
-        getWritableDatabase().delete(TABLE_NAME, selection, selectionArgs);
+        getDatabase(this).delete(TABLE_NAME, selection, selectionArgs);
     }
 
     /**
      * Deletes all training data from database.
      */
     public void deleteAllTrainings(){
-        getWritableDatabase().execSQL("delete from " + TABLE_NAME);
+        getDatabase(this).execSQL("delete from " + TABLE_NAME);
     }
 
     protected Cursor getCursor(String selection, String[] selectionArgs){
@@ -243,7 +256,7 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
                 KEY_FEELING
         };
 
-        return getWritableDatabase().query(
+        return getDatabase(this).query(
                 TABLE_NAME,  // The table to query
                 projection,                                            // The columns to return
                 selection,                                // The columns for the WHERE clause

@@ -148,25 +148,13 @@ public class StepDetectionServiceHelper {
         PendingIntent sender = PendingIntent.getBroadcast(context, 2, hardwareStepCounterServiceIntent, 0);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        // Fire at next half hour
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        int unroundedMinutes = calendar.get(Calendar.MINUTE);
-        int mod = unroundedMinutes % 30;
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
         calendar.add(Calendar.MINUTE, 5);
 
-        // Set repeating alarm
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, sender);
+        // Set inexact repeating alarm
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HALF_HOUR, sender);
         Log.i(LOG_CLASS, "Scheduled hardware step counter alert at start time " + calendar.toString());
-        /*
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent hardwareStepCounterServiceIntent = new Intent(context, HardwareStepCountReceiver.class);
-        PendingIntent pending = PendingIntent.getBroadcast(context, 0, hardwareStepCounterServiceIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, Calendar.getInstance().getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pending);
-        Log.i(LOG_CLASS, "Scheduled hardware step counter alert");*/
     }
 
     public static void stopHardwareStepCounter(Context context){

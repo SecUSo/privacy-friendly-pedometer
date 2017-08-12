@@ -135,6 +135,7 @@ public HardwareStepCounterService(){
         localIntent = new Intent(BROADCAST_ACTION_STEPS_SAVED);
         // Broadcasts the Intent to receivers in this app.
         LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+        stopSelf();
     }
 
     @Override

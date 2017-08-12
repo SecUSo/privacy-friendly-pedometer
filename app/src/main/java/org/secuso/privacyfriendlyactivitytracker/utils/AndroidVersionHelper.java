@@ -27,7 +27,7 @@ import android.os.Build;
  */
 public class AndroidVersionHelper {
     /**
-     * Decides weather the current soft- and hardware setup allows to use hardware step detection
+     * Decides whether the current soft- and hardware setup allows to use hardware step detection
      * @param pm An instance of the android PackageManager
      * @return true if hardware step detection can be used otherwise false
      */
@@ -40,6 +40,16 @@ public class AndroidVersionHelper {
                 // let's check the device's ability.
                 && pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)
                 && pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_DETECTOR);
+    }
 
+    /**
+     * Decides whether the hardware step counter should be used. In this case the step counter-service
+     * will not show any notification and update the step count not in real time. This helps to save
+     * energy and increases the accuracy - but is only available on some devices.
+     * @param pm An instance of the android PackageManager
+     * @return true if hardware step counter should and can be used.
+     */
+    public static boolean isHardwareStepCounterEnabled(PackageManager pm){
+        return supportsStepDetector(pm);
     }
 }

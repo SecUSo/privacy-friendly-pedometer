@@ -64,6 +64,9 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
+
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setSubtitle(R.string.action_main);
@@ -86,7 +89,14 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     public void onDetach(){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+        StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
         super.onDetach();
+    }
+
+    @Override
+    public void onPause(){
+        StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+        super.onPause();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -124,7 +134,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             case R.id.menu_continue_step_detection:
                 editor.putBoolean(getString(R.string.pref_step_counter_enabled), true);
                 editor.apply();
-                StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
+                StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
                 return true;
             default:
                 return false;
@@ -187,6 +197,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
 
     @Override
     public void onAttach(Activity activity) {
+        StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
         super.onAttach(activity);
     }
 }

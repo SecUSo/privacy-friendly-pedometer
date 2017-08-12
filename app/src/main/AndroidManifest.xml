@@ -171,7 +171,9 @@
         </receiver>
 
         <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver"/>
+        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.HardwareStepCountReceiver"/>
 
+        <service android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepCounterService" />
         <service android:name="org.secuso.privacyfriendlyactivitytracker.services.MovementSpeedService" />
         <service android:name="org.secuso.privacyfriendlyactivitytracker.services.AccelerometerStepDetectorService" />
         <service

@@ -197,6 +197,7 @@
     <string name="pref_header_walking_modes">Walking modes</string>
     <string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
     <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
+    <string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->

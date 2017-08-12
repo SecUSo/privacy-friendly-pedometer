@@ -130,12 +130,14 @@ public class DistanceMeasurementActivity extends AppCompatActivity implements Vi
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
-        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
-        getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         start_timestamp = sharedPref.getLong(getString(R.string.pref_distance_measurement_start_timestamp), -1);
         if(start_timestamp < 0){
             start_timestamp = null;
+        }
+        if(start_timestamp != null && start_timestamp > 0){
+            Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
+            getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         }
         // Force refresh of view.
         this.getStepCounts();
@@ -204,7 +206,7 @@ public class DistanceMeasurementActivity extends AppCompatActivity implements Vi
     /**
      * Updates the users view to current distance measurement.
      */
-        protected void updateView() {
+    protected void updateView() {
         if(this.start_after_storing_steps || this.start_timestamp != null){
             buttonStart.setVisibility(View.GONE);
             buttonStop.setVisibility(View.VISIBLE);
@@ -288,7 +290,7 @@ public class DistanceMeasurementActivity extends AppCompatActivity implements Vi
                     updateView();
                     break;
                 case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
-                    if(start_timestamp == null){
+                    if(start_timestamp == null && start_after_storing_steps){
                         start_timestamp = Calendar.getInstance().getTime().getTime();
                         start_after_storing_steps = false;
                         distance = 0;

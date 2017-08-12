@@ -53,8 +53,8 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             StepCountPersistenceHelper.storeStepCounts(service, context, oldWalkingMode);
-            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
             context.getApplicationContext().unbindService(mServiceConnection);
+            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
             WidgetReceiver.forceWidgetUpdate(context);
         }
     };

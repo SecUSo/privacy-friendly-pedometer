@@ -149,6 +149,10 @@
     <string-array name="pref_default_notification_motivation_alert_messages">
         <item>Los geht\'s! Es ist Zeit eine Runde zu laufen!</item>
     </string-array>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>Kalorien</item>
+        <item>Joule</item>
+    </string-array>
 
     <string name="save">Speichern</string>
     <string name="set">Übernehmen</string>

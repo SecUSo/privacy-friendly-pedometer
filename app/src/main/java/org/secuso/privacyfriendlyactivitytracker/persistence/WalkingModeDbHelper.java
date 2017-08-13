@@ -109,7 +109,7 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
             walkingMode.setStepLength(stepLength);
             walkingMode.setName(name);
             walkingMode.setIsActive(i == 0);
-            this.addWalkingMode(walkingMode);
+            this.addWalkingMode(walkingMode, db);
             Log.i(LOG_CLASS, "Created default walking mode " + name);
         }
     }
@@ -129,8 +129,18 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
      * @return the inserted id
      */
     public long addWalkingMode(WalkingMode walkingMode){
+        return addWalkingMode(walkingMode, getDatabase(this));
+    }
+
+    /**
+     * Inserts the given walking mode as new entry using the given database object.
+     *
+     * @param walkingMode    The walking mode which should be stored
+     * @return the inserted id
+     */
+    public long addWalkingMode(WalkingMode walkingMode, SQLiteDatabase db){
         ContentValues values = walkingMode.toContentValues();
-        return getDatabase(this).insert(
+        return db.insert(
                 TABLE_NAME,
                 null,
                 values);

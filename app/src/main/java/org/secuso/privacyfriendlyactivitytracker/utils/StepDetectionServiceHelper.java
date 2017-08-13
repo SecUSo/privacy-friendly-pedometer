@@ -153,7 +153,7 @@ public class StepDetectionServiceHelper {
         calendar.add(Calendar.MINUTE, 5);
 
         // Set inexact repeating alarm
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HALF_HOUR, sender);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HOUR, sender);
         Log.i(LOG_CLASS, "Scheduled hardware step counter alert at start time " + calendar.toString());
     }
 

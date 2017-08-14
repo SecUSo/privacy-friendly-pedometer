@@ -17,85 +17,38 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.services;
 
-import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.hardware.TriggerEvent;
 import android.hardware.TriggerEventListener;
-import android.os.Binder;
-import android.os.IBinder;
-import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
-import org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountDbHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModeDbHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.util.Calendar;
-import java.util.List;
 
 import static org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED;
-import static org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED;
-import static org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService.EXTENDED_DATA_NEW_STEPS;
-import static org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService.EXTENDED_DATA_TOTAL_STEPS;
 
 /**
- * Generic class for a step detector.
- * Does not detect steps itself - the step detection has to be done in the subclasses.
+ * Hardware step counter service - this service uses STEP_COUNTER to detect steps.
  *
  * @author Tobias Neidig
- * @version 20160810
+ * @version 20170814
  */
-public class HardwareStepCounterService extends IntentService{
+public class HardwareStepCounterService extends AbstractStepDetectorService{
     private static final String LOG_TAG = HardwareStepCounterService.class.getName();
     protected TriggerEventListener listener;
-    private SensorEventListener mSensorEventListenerCounter = new SensorEventListener() {
 
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            Log.i(LOG_TAG, "Received onSensorChanged");
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(HardwareStepCounterService.this);
-            float numberOfHWStepsSinceLastReboot = event.values[0];
-            float numberOfHWStepsOnLastSave = sharedPref.getFloat(HardwareStepCounterService.this.getString(R.string.pref_hw_steps_on_last_save), 0);
-            float numberOfNewSteps = numberOfHWStepsSinceLastReboot - numberOfHWStepsOnLastSave;
-            Log.i(LOG_TAG, numberOfHWStepsSinceLastReboot + " - " + numberOfHWStepsOnLastSave + " = " + numberOfNewSteps);
-            // Store new steps
-            HardwareStepCounterService.this.onStepDetected((int) numberOfNewSteps);
-            // store steps since last reboot
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putFloat(HardwareStepCounterService.this.getString(R.string.pref_hw_steps_on_last_save), numberOfHWStepsSinceLastReboot);
-            editor.apply();
-        }
-    };
-public HardwareStepCounterService(){
-    super("");
-}
+    public HardwareStepCounterService(){
+        super("");
+    }
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -105,11 +58,28 @@ public HardwareStepCounterService(){
         super(name);
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Log.i(LOG_TAG, "Received onSensorChanged");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(HardwareStepCounterService.this);
+        float numberOfHWStepsSinceLastReboot = event.values[0];
+        float numberOfHWStepsOnLastSave = sharedPref.getFloat(HardwareStepCounterService.this.getString(R.string.pref_hw_steps_on_last_save), 0);
+        float numberOfNewSteps = numberOfHWStepsSinceLastReboot - numberOfHWStepsOnLastSave;
+        Log.i(LOG_TAG, numberOfHWStepsSinceLastReboot + " - " + numberOfHWStepsOnLastSave + " = " + numberOfNewSteps);
+        // Store new steps
+        onStepDetected((int) numberOfNewSteps);
+        // store steps since last reboot
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putFloat(getString(R.string.pref_hw_steps_on_last_save), numberOfHWStepsSinceLastReboot);
+        editor.apply();
+    }
+
     /**
      * Notifies any subscriber about the detected amount of steps
      *
      * @param count The number of detected steps (greater zero)
      */
+    @Override
     protected void onStepDetected(int count) {
         if (count <= 0) {
             return;
@@ -135,59 +105,22 @@ public HardwareStepCounterService(){
         localIntent = new Intent(BROADCAST_ACTION_STEPS_SAVED);
         // Broadcasts the Intent to receivers in this app.
         LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+        updateNotification();
         stopSelf();
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.i(LOG_TAG, "Creating service.");
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i(LOG_TAG, "Destroying service.");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(LOG_TAG, "Starting service.");
-
-        if(AndroidVersionHelper.isHardwareStepCounterEnabled(this.getPackageManager())) {
-            listener = new TriggerEventListener(){
-                @Override
-                public void onTrigger(TriggerEvent event) {
-                    Log.i(LOG_TAG, "Received TriggerEvent");
-                    if(AndroidVersionHelper.isHardwareStepCounterEnabled(HardwareStepCounterService.this.getPackageManager())) {
-                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(HardwareStepCounterService.this);
-                        float numberOfHWStepsSinceLastReboot = event.values[0];
-                        float numberOfHWStepsOnLastSave = sharedPref.getFloat(HardwareStepCounterService.this.getString(R.string.pref_hw_steps_on_last_save), 0);
-                        float numberOfNewSteps = numberOfHWStepsSinceLastReboot - numberOfHWStepsOnLastSave;
-                        Log.i(LOG_TAG, numberOfHWStepsSinceLastReboot + " - " + numberOfHWStepsOnLastSave + " = " + numberOfNewSteps);
-                        // Store new steps
-                        HardwareStepCounterService.this.onStepDetected((int) numberOfNewSteps);
-                        // store steps since last reboot
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putFloat(HardwareStepCounterService.this.getString(R.string.pref_hw_steps_on_last_save), numberOfHWStepsSinceLastReboot);
-                        editor.apply();
-                    }
-                }
-            };
-            Log.i(LOG_TAG, "Registering for TriggerEvent of StepCounter");
-            SensorManager sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
-            Sensor stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-            sensorManager.requestTriggerSensor(listener, stepCounter);
-            sensorManager.registerListener(mSensorEventListenerCounter,
-                    stepCounter, SensorManager.SENSOR_DELAY_NORMAL);
-        }else{
-            stopSelf();
+    public int getSensorType() {
+        Log.i(LOG_TAG, "getSensorType STEP_COUNTER");
+        if (AndroidVersionHelper.isHardwareStepCounterEnabled(this.getPackageManager())) {
+            return Sensor.TYPE_STEP_COUNTER;
+        } else {
+            return 0;
         }
-        return START_STICKY;
+    }
+
+    @Override
+    protected boolean cancelNotificationOnDestroy(){
+        return false;
     }
 }

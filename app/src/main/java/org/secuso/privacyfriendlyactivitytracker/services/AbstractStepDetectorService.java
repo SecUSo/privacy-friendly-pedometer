@@ -194,6 +194,14 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      */
     public abstract int getSensorType();
 
+    /**
+     * Whether the notification should be canceled when service dies.
+     * @return true if notification should be canceled else false
+     */
+    protected boolean cancelNotificationOnDestroy(){
+        return true;
+    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // currently doing nothing here.
@@ -214,7 +222,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
         // Cancel notification
-        if (mNotifyManager != null) {
+        if (mNotifyManager != null && cancelNotificationOnDestroy()) {
             mNotifyManager.cancel(NOTIFICATION_ID);
         }
         // Unregister shared preferences listeners
@@ -313,7 +321,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     /**
      * Updates or creates the progress notification
      */
-    private void updateNotification() {
+    protected void updateNotification() {
         Notification notification = buildNotification(this.stepCountFromTotalSteps());
         mNotifyManager.notify(NOTIFICATION_ID, notification);
     }

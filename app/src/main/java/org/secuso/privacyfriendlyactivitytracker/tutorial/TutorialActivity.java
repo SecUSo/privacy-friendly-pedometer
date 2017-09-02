@@ -85,7 +85,7 @@ public class TutorialActivity extends AppCompatActivity {
                 R.layout.tutorial_slide2,
                 R.layout.tutorial_slide3,
                 R.layout.tutorial_slide4,
-                R.layout.tutorial_slide5,};
+                R.layout.tutorial_slide5};
 
         // adding bottom dots
         addBottomDots(0);

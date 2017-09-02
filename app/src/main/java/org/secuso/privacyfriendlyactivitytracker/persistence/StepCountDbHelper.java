@@ -23,12 +23,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -157,6 +155,46 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         return steps;
     }
 
+    public StepCount getLatestStepCount(){
+        Cursor c = getDatabase(this).query(TABLE_NAME,
+                new String[]{
+                        KEY_STEP_COUNT,
+                        KEY_TIMESTAMP,
+                        KEY_WALKING_MODE
+                },
+                null, null, null, null, KEY_TIMESTAMP + " DESC", "1");
+        WalkingModeDbHelper walkingModeDbHelper = new WalkingModeDbHelper(context);
+        StepCount s = null;
+        while (c.moveToNext()) {
+            s = new StepCount();
+            s.setEndTime(c.getLong(c.getColumnIndex(KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndex(KEY_STEP_COUNT)));
+            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndex(KEY_WALKING_MODE))));
+        }
+        c.close();
+        return s;
+    }
+
+    public StepCount getFirstStepCount(){
+        Cursor c = getDatabase(this).query(TABLE_NAME,
+                new String[]{
+                        KEY_STEP_COUNT,
+                        KEY_TIMESTAMP,
+                        KEY_WALKING_MODE
+                },
+                null, null, null, null, KEY_TIMESTAMP + " ASC", "1");
+        WalkingModeDbHelper walkingModeDbHelper = new WalkingModeDbHelper(context);
+        StepCount s = null;
+        while (c.moveToNext()) {
+            s = new StepCount();
+            s.setEndTime(c.getLong(c.getColumnIndex(KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndex(KEY_STEP_COUNT)));
+            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndex(KEY_WALKING_MODE))));
+        }
+        c.close();
+        return s;
+    }
+
     /**
      * Updates the given step count in database based on end timestamp
      *
@@ -169,7 +207,7 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         values.put(KEY_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
         values.put(KEY_TIMESTAMP, stepCount.getEndTime());
 
-        // Insert the new row, returning the primary key value of the new row
+        // Updaet the row, returning the primary key value of the new row
         getDatabase(this).update(
                 TABLE_NAME,
                 values,

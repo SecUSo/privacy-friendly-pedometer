@@ -65,14 +65,28 @@ public class StepCountPersistenceHelper {
             return false;
         }
         AbstractStepDetectorService.StepDetectorBinder myBinder = (AbstractStepDetectorService.StepDetectorBinder) serviceBinder;
+        StepCountDbHelper stepCountDbHelper = new StepCountDbHelper(context);
+
         // Get the steps since last save
         int stepCountSinceLastSave = myBinder.stepsSinceLastSave();
 
-        StepCount stepCount = new StepCount();
-        stepCount.setWalkingMode(walkingMode);
-        stepCount.setStepCount(stepCountSinceLastSave);
-        stepCount.setEndTime(Calendar.getInstance().getTime().getTime());
-        new StepCountDbHelper(context).addStepCount(stepCount);
+        StepCount lastStoredStepCount = stepCountDbHelper.getLatestStepCount();
+        Calendar calendarOneHourAgo = Calendar.getInstance();
+        calendarOneHourAgo.add(Calendar.HOUR, -1);
+        if(lastStoredStepCount == null || lastStoredStepCount.getEndTime() < calendarOneHourAgo.getTime().getTime() ||
+                lastStoredStepCount.getWalkingMode() != null && walkingMode != null && walkingMode.getId() != lastStoredStepCount.getWalkingMode().getId()) {
+            // create new step count if non is stored or last stored step count is older than an hour
+            StepCount stepCount = new StepCount();
+            stepCount.setWalkingMode(walkingMode);
+            stepCount.setStepCount(stepCountSinceLastSave);
+            stepCount.setEndTime(Calendar.getInstance().getTime().getTime());
+            stepCountDbHelper.addStepCount(stepCount);
+        }else{
+            lastStoredStepCount.setStepCount(lastStoredStepCount.getStepCount() + stepCountSinceLastSave);
+            lastStoredStepCount.setEndTime(Calendar.getInstance().getTime().getTime());
+            stepCountDbHelper.updateStepCount(lastStoredStepCount);
+            Log.i(LOG_CLASS, "Updating last stored step count - not creating a new one");
+        }
         // reset step count
         myBinder.resetStepCount();
         Log.i(LOG_CLASS, "Stored " + stepCountSinceLastSave + " steps");
@@ -198,19 +212,11 @@ public class StepCountPersistenceHelper {
      * @return Date of first entry or default today
      */
     public static Date getDateOfFirstEntry(Context context){
-        Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
-                new String[]{StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP}, /* columns */
-                null,
-                null,
-                null,
-                null,
-                StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP + " ASC", /* orderBy */
-                "1" /* limit */);
+        StepCount s = new StepCountDbHelper(context).getFirstStepCount();
         Date date = Calendar.getInstance().getTime(); // fallback is today
-        while(c.moveToNext()){
-            date.setTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP)));
+        if(s != null){
+            date.setTime(s.getEndTime());
         }
-        c.close();
         return date;
     }
 

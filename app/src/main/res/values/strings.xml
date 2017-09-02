@@ -296,4 +296,12 @@
     <string name="slide_5_desc">The app detects your steps based on different algorithms. On some devices you can define the sensivity of step detection in settings. In addition to that you can add steps you walked without the app or correct the stepcount on daily activity chart.</string>
     <string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
     <string name="slide_2_desc_three">In the settings you can define your own walking modes with different step lengths.</string>
+    <string name="help_walkingmodes_heading">Walking Modes</string>
+    <string name="help_walkingmodes_selection">You can define your own walking modes like \'Running\' or \'Walking\' in the preferences. Each walking mode has its own step length.</string>
+    <string name="help_training_heading">Training Sessions</string>
+    <string name="help_training_selection">The training sessions can be used to track your training performance. Each session tracks e.g. the training duration, the walked steps and distance.</string>
+    <string name="help_distancemeasurement_heading">Distance Measurement</string>
+    <string name="help_distancemeasurement_selection">The distance measurement feature allows you to measure the distance between the button press \'Start\' and \'Stop\'. The data will not be stored after app restarts. To persist the data you can use the training sessions.</string>
+    <string name="help_correctsteps_heading">Correct steps manually</string>
+    <string name="help_correctsteps_selection">You can modify the detected daily steps in daily report view. This allows you to add steps you walked without the app or to correct the detected number of steps.</string>
 </resources>

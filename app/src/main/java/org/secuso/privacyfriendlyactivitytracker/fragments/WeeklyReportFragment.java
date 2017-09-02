@@ -317,7 +317,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
             public void run() {
                 // Get all step counts for this day.
                 day.set(Calendar.DAY_OF_WEEK, day.getFirstDayOfWeek());
-                Calendar start = (Calendar) day.clone();
+                Calendar day_iterating = (Calendar) day.clone();
+                Calendar start  = (Calendar) day_iterating.clone();
                 SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM", locale);
                 Map<String, Double> stepData = new LinkedHashMap<>();
                 Map<String, Double> distanceData = new LinkedHashMap<>();
@@ -329,15 +330,15 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 double totalDistance = 0;
                 int totalCalories = 0;
                 for (int i = 0; i < 7; i++) {
-                    List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, context);
+                    List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(day_iterating, context);
                     int steps = 0;
                     double distance = 0;
                     int calories = 0;
                     // add current steps if today is shown
                     if(isTodayShown() && myBinder != null
-                            && start.get(Calendar.YEAR) == now.get(Calendar.YEAR)
-                            && start.get(Calendar.MONTH) == now.get(Calendar.MONTH)
-                            && start.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)){
+                            && day_iterating.get(Calendar.YEAR) == now.get(Calendar.YEAR)
+                            && day_iterating.get(Calendar.MONTH) == now.get(Calendar.MONTH)
+                            && day_iterating.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)){
 
                         StepCount stepCountSinceLastSave = new StepCount();
                         stepCountSinceLastSave.setStepCount(myBinder.stepsSinceLastSave());
@@ -349,14 +350,14 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                         distance += stepCount.getDistance();
                         calories += stepCount.getCalories(context);
                     }
-                    stepData.put(formatDate.format(start.getTime()), (double) steps);
-                    distanceData.put(formatDate.format(start.getTime()), distance);
-                    caloriesData.put(formatDate.format(start.getTime()), (double) calories);
+                    stepData.put(formatDate.format(day_iterating.getTime()), (double) steps);
+                    distanceData.put(formatDate.format(day_iterating.getTime()), distance);
+                    caloriesData.put(formatDate.format(day_iterating.getTime()), (double) calories);
                     totalSteps += steps;
                     totalDistance += distance;
                     totalCalories += calories;
                     if (i != 6) {
-                        start.add(Calendar.DAY_OF_MONTH, 1);
+                        day_iterating.add(Calendar.DAY_OF_MONTH, 1);
                     }
                 }
 
@@ -367,7 +368,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.", locale);
                 SimpleDateFormat simpleDateMonthFormat = new SimpleDateFormat("dd. MMMM", locale);
 
-                String title = simpleDateFormat.format(day.getTime()) + " - " + simpleDateMonthFormat.format(start.getTime());
+                String title = simpleDateFormat.format(start.getTime()) + " - " + simpleDateMonthFormat.format(day_iterating.getTime());
 
                 // create view models
                 if (activitySummary == null) {

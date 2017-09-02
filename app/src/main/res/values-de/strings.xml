@@ -204,7 +204,6 @@
     <string name="slide_2_desc">Um die Berechnung der verbrannten Kalorien zu verbessern, können Sie bitte unter Einstellungen persönliche Werte eingeben.</string>
     <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus wechseln, indem Sie sie in der Toolbar auswählen.</string>
     <string name="slide_3_title">Benachritigungen</string>
-    <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
     <string name="slide_4_title">Widget</string>
     <string name="slide_4_desc">Die App bietet Ihnen ein Widget an, welches Sie Ihrem Homescreen hinzufügen können. So bleiben Sie immer auf dem aktuellen Stand.</string>
     <string name="summary_card_calories">cal</string>
@@ -224,4 +223,8 @@
     <string name="kilojoules">kJ</string>
     <string name="pref_title_unit_of_energy">Energieeinheit</string>
     <string name="widget_config_data_set_title">Welche Daten sollen angezeigt werden?</string>
+    <string name="slide_5_title">Schritterkennung</string>
+    <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
+    <string name="slide_2_desc_three">In den Einstellungen können eigene Laufmodi mit verschiedenen Schrittlängen eingestellt werden.</string>
+    <string name="slide_5_desc">Zur Schritterkennung nutzt die App verschiedene Algorithmen. Auf manchen Geräten ist es möglich, die Genauigkeit der Schritterkennung in den Einstellungen einzustellen. Zudem ist es in der Tagesansicht möglich Schritte nachträglich manuell hinzuzufügen oder die Schrittzahl zu korrigieren.</string>
 </resources>

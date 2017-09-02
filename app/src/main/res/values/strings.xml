@@ -228,7 +228,6 @@
     <string name="slide_2_desc">To improve the calculation of the calories you have burned by walking please customize your personal settings.</string>
     <string name="slide_2_desc_two">You can switch your current walking modes using the context menu in the toolbar.</string>
     <string name="slide_3_title">Notifications</string>
-    <string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
     <string name="slide_4_title">Widget</string>
     <string name="slide_4_desc">Add a widget to your homescreen to stay up to date about your walked steps.</string>
     <string name="next">Next</string>
@@ -293,4 +292,8 @@
     <string name="distance_measurement_start_button">Start distance measurement</string>
     <string name="joules">J</string>
     <string name="kilojoules">kJ</string>
+    <string name="slide_5_title">Step Detection</string>
+    <string name="slide_5_desc">The app detects your steps based on different algorithms. On some devices you can define the sensivity of step detection in settings. In addition to that you can add steps you walked without the app or correct the stepcount on daily activity chart.</string>
+    <string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+    <string name="slide_2_desc_three">In the settings you can define your own walking modes with different step lengths.</string>
 </resources>

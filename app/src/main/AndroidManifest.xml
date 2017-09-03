@@ -107,6 +107,7 @@
         <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity"
             android:label="@string/activity_title_walking_modes"
+            android:configChanges="orientation|screenSize|keyboard"
             android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

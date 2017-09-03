@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -263,6 +264,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         float val = Double.valueOf(dataEntry.getValue().getValue()).floatValue();
                         if (chartData.getDisplayedDataType() == ActivityDayChart.DataType.DISTANCE) {
                             val = Double.valueOf(UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(val), chartViewHolder.context)).floatValue();
+                        }
+                        if(lastValue > val){
+                            Log.i("REPORT_ADAPTER", "lastvalue > val, using lastvalue");
+                            val = lastValue;
                         }
                         Entry prevChartEntry, chartEntry;
                         if (i == 0) {

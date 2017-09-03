@@ -341,7 +341,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         s.setStartTime(m.getTimeInMillis());
         s.setEndTime(m.getTimeInMillis()); // one hour more
         s.setStepCount(0);
-        s.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(context));
+        s.setWalkingMode(null);
         stepCounts.add(s);
         StepCount previousStepCount = s;
         for (int h = 0; h < 24; h++) {
@@ -373,12 +373,18 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             }
             // iterate over stepcounts in interval to sum up steps and detect changes in walkingmode
             for(StepCount stepCountFromStorage : stepCountsFromStorage){
-                if(!previousStepCount.getWalkingMode().equals(stepCountFromStorage.getWalkingMode())){
+                if(previousStepCount.getWalkingMode() == null || !previousStepCount.getWalkingMode().equals(stepCountFromStorage.getWalkingMode())){
                     // we have to create a new stepcount entry.
                     long oldEndTime = s.getEndTime();
                     s.setEndTime(stepCountFromStorage.getStartTime() - 1000);
                     stepCounts.add(s);
                     previousStepCount = s;
+                    if(previousStepCount.getWalkingMode() == null){
+                        for (StepCount s1: stepCounts) {
+                            s1.setWalkingMode(stepCountFromStorage.getWalkingMode());
+                        }
+                        previousStepCount.setWalkingMode(stepCountFromStorage.getWalkingMode());
+                    }
                     // create new stepcount.
                     s = new StepCount();
                     s.setStartTime(stepCountFromStorage.getStartTime());
@@ -402,14 +408,19 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             stepCount += s1.getStepCount();
             distance += s1.getDistance();
             calories += s1.getCalories(context);
-            if(s1.getEndTime() > Calendar.getInstance().getTime().getTime()){
-                stepData.put(formatHourMinute.format(s1.getEndTime()), null);
-                distanceData.put(formatHourMinute.format(s1.getEndTime()), null);
-                caloriesData.put(formatHourMinute.format(s1.getEndTime()), null);
-            }else {
-                stepData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(stepCount, s1));
-                distanceData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(distance, s1));
-                caloriesData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(calories, s1));
+            if (!stepData.containsKey(formatHourMinute.format(s1.getEndTime())) ||
+                    stepData.get(formatHourMinute.format(s1.getEndTime())).getStepCount().getStepCount() < stepCount) {
+                if (s1.getEndTime() > Calendar.getInstance().getTime().getTime()) {
+                    stepData.put(formatHourMinute.format(s1.getEndTime()), null);
+                    distanceData.put(formatHourMinute.format(s1.getEndTime()), null);
+                    caloriesData.put(formatHourMinute.format(s1.getEndTime()), null);
+                } else {
+                    stepData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(stepCount, s1));
+                    distanceData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(distance, s1));
+                    caloriesData.put(formatHourMinute.format(s1.getEndTime()), new ActivityChartDataSet(calories, s1));
+                }
+            }else{
+                Log.i(LOG_TAG, "Skipping put operation");
             }
         }
 
@@ -598,14 +609,14 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                         stepCount = new StepCount();
                         stepCount.setStartTime(day.getTime().getTime());
                         stepCount.setEndTime(day.getTime().getTime());
-                        stepCount.setStepCount(stepCount.getStepCount() + diff);
+                        stepCount.setStepCount(diff);
                         stepCount.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getContext()));
                         StepCountPersistenceHelper.storeStepCount(stepCount, getContext());
                     }else {
                         stepCount.setStepCount(stepCount.getStepCount() + diff);
                         StepCountPersistenceHelper.updateStepCount(stepCount, getContext());
                     }
-                    generateReports(true);
+                    generateReports(false);
                     alertDialog.dismiss();
                 }
             });

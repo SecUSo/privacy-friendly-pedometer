@@ -304,4 +304,5 @@
     <string name="help_distancemeasurement_selection">The distance measurement feature allows you to measure the distance between the button press \'Start\' and \'Stop\'. The data will not be stored after app restarts. To persist the data you can use the training sessions.</string>
     <string name="help_correctsteps_heading">Correct steps manually</string>
     <string name="help_correctsteps_selection">You can modify the detected daily steps in daily report view. This allows you to add steps you walked without the app or to correct the detected number of steps.</string>
+    <string name="slide_5_desc_two">Click on \'Preferences\' to set your step size and customize your personal data.</string>
 </resources>

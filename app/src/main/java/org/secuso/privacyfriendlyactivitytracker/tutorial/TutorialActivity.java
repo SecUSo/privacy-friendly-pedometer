@@ -37,6 +37,8 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
@@ -100,7 +102,15 @@ public class TutorialActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen();
+                // checking for last page
+                // if not last page home screen will be launched
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    launchHomeScreen();
+                } else {
+                    // show pref
+                    launchPref();
+                }
             }
         });
 
@@ -149,6 +159,12 @@ public class TutorialActivity extends AppCompatActivity {
         finish();
     }
 
+    private void launchPref() {
+        prefManager.setFirstTimeLaunch(false);
+        startActivity(new Intent(TutorialActivity.this, PreferencesActivity.class));
+        finish();
+    }
+
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
@@ -160,11 +176,11 @@ public class TutorialActivity extends AppCompatActivity {
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
                 btnNext.setText(getString(R.string.okay));
-                btnSkip.setVisibility(View.GONE);
+                btnSkip.setText(getString(R.string.action_settings));
             } else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
-                btnSkip.setVisibility(View.VISIBLE);
+                btnSkip.setText(getString(R.string.skip));
             }
         }
 

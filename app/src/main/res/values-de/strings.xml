@@ -227,4 +227,5 @@
     <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
     <string name="slide_2_desc_three">In den Einstellungen können eigene Laufmodi mit verschiedenen Schrittlängen eingestellt werden.</string>
     <string name="slide_5_desc">Zur Schritterkennung nutzt die App verschiedene Algorithmen. Auf manchen Geräten ist es möglich, die Genauigkeit der Schritterkennung in den Einstellungen einzustellen. Zudem ist es in der Tagesansicht möglich Schritte nachträglich manuell hinzuzufügen oder die Schrittzahl zu korrigieren.</string>
+    <string name="slide_5_desc_two">Klicken Sie auf \'Einstellungen\' um Ihre persönlichen Daten und Schrittlängen zu bearbeiten.</string>
 </resources>

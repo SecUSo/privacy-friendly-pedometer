@@ -228,4 +228,12 @@
     <string name="slide_2_desc_three">In den Einstellungen können eigene Laufmodi mit verschiedenen Schrittlängen eingestellt werden.</string>
     <string name="slide_5_desc">Zur Schritterkennung nutzt die App verschiedene Algorithmen. Auf manchen Geräten ist es möglich, die Genauigkeit der Schritterkennung in den Einstellungen einzustellen. Zudem ist es in der Tagesansicht möglich Schritte nachträglich manuell hinzuzufügen oder die Schrittzahl zu korrigieren.</string>
     <string name="slide_5_desc_two">Klicken Sie auf \'Einstellungen\' um Ihre persönlichen Daten und Schrittlängen zu bearbeiten.</string>
+    <string name="help_correctsteps_heading">Schrittzahl korrigieren</string>
+    <string name="help_correctsteps_selection">Die Anzahl der erfassten Schritte kann manuell in der täglichen Übersicht korrigiert werden. Dies kann beispielsweise dafür genutzt werden, um Schritte hinzuzufügen, die ohne die App gelaufen wurden oder fehlerhaft erfasste Schritte zu korrigieren.</string>
+    <string name="help_distancemeasurement_heading">Entfernungsmessung</string>
+    <string name="help_distancemeasurement_selection">Mit Hilfe der App können auch zurückgelegte Entfernungen grob gemessen werden. Dabei wird die Anzahl der Schritte nach dem Klick auf \'Start\' gezählt und anhand der Schrittlänge die Entfernung berechnet. Die gemessene Entfernung wird nicht dauerhaft gespeichert, dazu kann der Trainingsmodus genutzt werden.</string>
+    <string name="help_training_heading">Trainingsmodus</string>
+    <string name="help_training_selection">Mit Hilfe des Trainingsmodus können Trainingssitzungen aufgezeichnet werden. Jedes Training speichert dabei bspw. Informationen über die Dauer, Anzahl der Schritte, zurückgelegte Entfernung und Durchschnittsgeschwindigkeit.</string>
+    <string name="help_walkingmodes_heading">Laufmodi</string>
+    <string name="help_walkingmodes_selection">In den Einstellungen können eigene Laufmodi wie \'Rennen\' oder \'Gehen\' definiert werden. Jeder Modus hat seine eigene Schrittlänge und kann so zur Verbesserung der Entfernungsrechnung beitragen.</string>
 </resources>

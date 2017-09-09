@@ -200,19 +200,29 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
      *
      * @param stepCount The step count to save
      */
-    public void updateStepCount(StepCount stepCount){
+    public void updateStepCount(StepCount stepCount) {
+        this.updateStepCount(stepCount, stepCount.getEndTime());
+    }
+
+    /**
+     * Updates the given step count in database based on end timestamp
+     *
+     * @param stepCount The step count to save
+     * @param oldEndTime The original end time to determine which entry should be updated.
+     */
+    public void updateStepCount(StepCount stepCount, long oldEndTime){
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(KEY_STEP_COUNT, stepCount.getStepCount());
         values.put(KEY_WALKING_MODE, (stepCount.getWalkingMode() != null) ? stepCount.getWalkingMode().getId() : 1);
         values.put(KEY_TIMESTAMP, stepCount.getEndTime());
 
-        // Updaet the row, returning the primary key value of the new row
+        // Update the row, returning the primary key value of the new row
         getDatabase(this).update(
                 TABLE_NAME,
                 values,
                 KEY_TIMESTAMP + " = ?",
-                new String[]{String.valueOf(stepCount.getEndTime())}
+                new String[]{String.valueOf(oldEndTime)}
         );
     }
 

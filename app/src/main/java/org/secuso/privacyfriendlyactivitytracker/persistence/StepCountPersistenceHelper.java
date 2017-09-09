@@ -83,8 +83,9 @@ public class StepCountPersistenceHelper {
             stepCountDbHelper.addStepCount(stepCount);
         }else{
             lastStoredStepCount.setStepCount(lastStoredStepCount.getStepCount() + stepCountSinceLastSave);
+            long oldEndTime = lastStoredStepCount.getEndTime();
             lastStoredStepCount.setEndTime(Calendar.getInstance().getTime().getTime());
-            stepCountDbHelper.updateStepCount(lastStoredStepCount);
+            stepCountDbHelper.updateStepCount(lastStoredStepCount, oldEndTime);
             Log.i(LOG_CLASS, "Updating last stored step count - not creating a new one");
         }
         // reset step count

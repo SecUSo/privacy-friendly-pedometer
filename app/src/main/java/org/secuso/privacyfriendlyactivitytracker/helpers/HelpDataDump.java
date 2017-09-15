@@ -83,6 +83,10 @@ public class HelpDataDump {
         wakePermission.add(context.getResources().getString(R.string.help_permission_wake_description));
         expandableListDetail.put(context.getResources().getString(R.string.help_permission_wake_heading), wakePermission);
 
+        List<String> gpsPermission = new ArrayList<>();
+        gpsPermission.add(context.getResources().getString(R.string.help_permission_gps_description));
+        expandableListDetail.put(context.getResources().getString(R.string.help_permission_gps_heading), gpsPermission);
+
         return expandableListDetail;
     }
 

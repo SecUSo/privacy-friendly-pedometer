@@ -236,4 +236,6 @@
     <string name="help_training_selection">Mit Hilfe des Trainingsmodus können Trainingssitzungen aufgezeichnet werden. Jedes Training speichert dabei bspw. Informationen über die Dauer, Anzahl der Schritte, zurückgelegte Entfernung und Durchschnittsgeschwindigkeit.</string>
     <string name="help_walkingmodes_heading">Laufmodi</string>
     <string name="help_walkingmodes_selection">In den Einstellungen können eigene Laufmodi wie \'Rennen\' oder \'Gehen\' definiert werden. Jeder Modus hat seine eigene Schrittlänge und kann so zur Verbesserung der Entfernungsrechnung beitragen.</string>
+    <string name="help_permission_gps_heading">Berechtigung: \"Genauer Standort\"</string>
+    <string name="help_permission_gps_description">wird verwendet, um die aktuelle Bewegungsgeschwindigkeit auf der Startseite anzuzeigen. Wenn die Berechtigung nicht gestattet wird, wird die Geschwindigkeit nicht angezeigt. Dies keine Auswirkung auf andere Funktionen.</string>
 </resources>

@@ -74,6 +74,8 @@
     <string name="help_permissions_selection">The permissions used by Privacy Friendly Pedometer can not be managed by the user in any Android version.</string>
     <string name="help_permission_wake_heading">Permission: Wake Lock</string>
     <string name="help_permission_wake_description">is used to keep the CPU awake to count the steps in background.</string>
+    <string name="help_permission_gps_heading">Permission: Precise location</string>
+    <string name="help_permission_gps_description">is used to show your current walking speed on home screen. If the permission is not granted the walking speed will not be showed - there are no other implications.</string>
 
     <!-- Preferences -->
     <!-- general settings -->

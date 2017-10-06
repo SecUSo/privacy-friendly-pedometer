@@ -57,6 +57,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160810
  */
+
 public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**

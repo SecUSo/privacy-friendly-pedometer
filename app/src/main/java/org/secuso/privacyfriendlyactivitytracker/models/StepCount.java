@@ -31,6 +31,7 @@ import java.util.Date;
  * A step count object represents an interval in which some steps were taken and which walking mode
  * is related to this interval.
  */
+
 public class StepCount {
 
     // from https://github.com/bagilevi/android-pedometer/blob/master/src/name/bagi/levente/pedometer/CaloriesNotifier.java

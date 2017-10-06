@@ -33,7 +33,11 @@ import java.util.List;
 /**
  * Class structure taken from tutorial at http://www.journaldev.com/9942/android-expandablelistview-example-tutorial
  * last access 27th October 2016
+ *
+ * @author Karola Marky
+ * @version 20161027
  */
+
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 

@@ -29,6 +29,7 @@ import java.util.Calendar;
  * A walking mode has a user defined name and a custom step length.
  * Examples for walking modes are "running", "walking", "going"...
  */
+
 public class Training {
     private long id;
     private String name;

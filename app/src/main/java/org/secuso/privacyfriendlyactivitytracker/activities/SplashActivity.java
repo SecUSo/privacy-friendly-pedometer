@@ -24,7 +24,8 @@ import android.support.v7.app.AppCompatActivity;
 import org.secuso.privacyfriendlyactivitytracker.tutorial.TutorialActivity;
 
 /**
- * Created by yonjuni on 05.11.16.
+ * @author Karola Marky
+ * @version 20161105
  */
 
 public class SplashActivity extends AppCompatActivity{

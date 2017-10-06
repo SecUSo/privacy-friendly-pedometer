@@ -71,6 +71,7 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160803
  */
+
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private static final int TYPE_SUMMARY = 0;
     private static final int TYPE_DAY_CHART = 1;

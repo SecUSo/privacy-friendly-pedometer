@@ -25,6 +25,7 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160726
  */
+
 public class ActivityChart {
     private String title;
     private Map<String, Double> steps;

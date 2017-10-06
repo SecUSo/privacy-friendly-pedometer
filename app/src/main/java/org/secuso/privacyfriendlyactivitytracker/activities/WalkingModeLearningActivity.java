@@ -51,6 +51,7 @@ import java.util.Calendar;
  * @author Tobias Neidig
  * @version 20160724
  */
+
 public class WalkingModeLearningActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String LOG_CLASS = WalkingModeLearningActivity.class.getName();
 

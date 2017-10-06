@@ -31,6 +31,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
  * the step detection and it's required services if
  * step detection is enabled.
  */
+
 public class OnBootCompletedBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

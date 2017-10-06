@@ -27,6 +27,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
 /**
  * Receives the on shutdown broadcast and saves the counted steps.
  */
+
 public class OnShutdownBroadcastReceiver extends BroadcastReceiver {
     private static final String LOG_CLASS = OnShutdownBroadcastReceiver.class.getName();
 

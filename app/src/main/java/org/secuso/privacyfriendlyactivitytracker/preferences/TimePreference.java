@@ -38,6 +38,7 @@ import java.util.Calendar;
  * @author Tobias Neidig
  * @version 20160722
  */
+
 public class TimePreference extends DialogPreference {
     private Calendar calendar;
     private TimePicker picker = null;

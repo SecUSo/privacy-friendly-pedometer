@@ -37,6 +37,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
  * @author Tobias Neidig
  * @version 20160720
  */
+
 public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
     private static final String LOG_CLASS = StepCountPersistenceReceiver.class.getName();
     private WalkingMode oldWalkingMode;

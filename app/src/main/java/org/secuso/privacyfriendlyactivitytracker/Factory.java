@@ -30,6 +30,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
  * @author Tobias Neidig
  * @version 20160610
  */
+
 public class Factory {
 
     /**

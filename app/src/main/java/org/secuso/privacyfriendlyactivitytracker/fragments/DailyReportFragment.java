@@ -40,20 +40,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RatingBar;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity;
 import org.secuso.privacyfriendlyactivitytracker.adapters.ReportAdapter;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityChartDataSet;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityDayChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivitySummary;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
-import org.secuso.privacyfriendlyactivitytracker.models.Training;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.services.MovementSpeedService;
@@ -82,6 +78,7 @@ import java.util.TimeZone;
  * @author Tobias Neidig
  * @version 20160727
  */
+
 public class DailyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     public static String LOG_TAG = DailyReportFragment.class.getName();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();

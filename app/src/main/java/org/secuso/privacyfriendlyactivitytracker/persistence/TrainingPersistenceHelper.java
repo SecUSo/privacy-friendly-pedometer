@@ -17,15 +17,10 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.persistence;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import org.secuso.privacyfriendlyactivitytracker.models.Training;
-import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +29,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20170810
  */
+
 public class TrainingPersistenceHelper {
     public static final String LOG_CLASS = TrainingPersistenceHelper.class.getName();
 

@@ -42,6 +42,7 @@ import static org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPer
  * @author Tobias Neidig
  * @version 20170814
  */
+
 public class HardwareStepCounterService extends AbstractStepDetectorService{
     private static final String LOG_TAG = HardwareStepCounterService.class.getName();
     protected TriggerEventListener listener;

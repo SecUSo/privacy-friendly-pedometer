@@ -17,10 +17,8 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.persistence;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -41,6 +39,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160720
  */
+
 public class StepCountPersistenceHelper {
 
     /**

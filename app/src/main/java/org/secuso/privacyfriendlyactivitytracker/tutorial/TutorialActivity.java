@@ -38,7 +38,6 @@ import android.widget.TextView;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity;
-import org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/

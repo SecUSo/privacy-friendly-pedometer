@@ -51,6 +51,7 @@ import java.util.Set;
  * @author Tobias Neidig
  * @version 20160729
  */
+
 public class MotivationAlertReceiver extends WakefulBroadcastReceiver {
     public static final int NOTIFICATION_ID = 0;
     private static final String LOG_CLASS = MotivationAlertReceiver.class.getName();

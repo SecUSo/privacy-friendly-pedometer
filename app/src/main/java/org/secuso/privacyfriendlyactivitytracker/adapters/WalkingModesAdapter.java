@@ -39,6 +39,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160722
  */
+
 public class WalkingModesAdapter extends RecyclerView.Adapter<WalkingModesAdapter.ViewHolder> {
     private List<WalkingMode> mItems;
     private OnItemClickListener mItemClickListener;

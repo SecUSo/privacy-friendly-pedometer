@@ -35,6 +35,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20170810
  */
+
 public class TrainingDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;

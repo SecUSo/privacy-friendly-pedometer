@@ -25,6 +25,7 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160726
  */
+
 public class ActivityDayChart {
     private String title;
     private Map<String, ActivityChartDataSet> steps;

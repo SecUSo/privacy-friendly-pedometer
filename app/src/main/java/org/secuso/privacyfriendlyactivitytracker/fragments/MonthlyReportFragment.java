@@ -75,6 +75,7 @@ import java.util.TimeZone;
  * @author Tobias Neidig
  * @version 20160606
  */
+
 public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     public static String LOG_TAG = WeeklyReportFragment.class.getName();
 

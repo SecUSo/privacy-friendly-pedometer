@@ -30,6 +30,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
  * @author Tobias Neidig
  * @version 20160522
  */
+
 public class HardwareStepDetectorService extends AbstractStepDetectorService {
     /**
      * Number of steps which the user went today

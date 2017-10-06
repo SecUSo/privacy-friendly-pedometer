@@ -37,11 +37,10 @@ import android.util.Log;
 import org.secuso.privacyfriendlyactivitytracker.R;
 
 /**
- *
- *
  * @author Tobias Neidig
  * @version 20160810
  */
+
 public class MovementSpeedService extends IntentService implements LocationListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**

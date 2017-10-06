@@ -27,6 +27,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.ColorHelper;
  * A walking mode has a user defined name and a custom step length.
  * Examples for walking modes are "running", "walking", "going"...
  */
+
 public class WalkingMode {
     private long id;
     private String name;

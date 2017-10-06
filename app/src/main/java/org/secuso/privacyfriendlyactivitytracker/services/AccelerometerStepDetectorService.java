@@ -35,6 +35,7 @@ import java.util.Arrays;
  * @author Tobias Neidig
  * @version 20160802
  */
+
 public class AccelerometerStepDetectorService extends AbstractStepDetectorService {
     public static final boolean debug = false;
     private static final String LOG_TAG = AccelerometerStepDetectorService.class.getName();

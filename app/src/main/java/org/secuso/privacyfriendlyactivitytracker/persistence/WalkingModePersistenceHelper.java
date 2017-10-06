@@ -17,16 +17,12 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.persistence;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

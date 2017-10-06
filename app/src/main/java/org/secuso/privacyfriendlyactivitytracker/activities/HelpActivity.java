@@ -18,7 +18,6 @@
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.widget.ExpandableListView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -30,8 +29,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Created by yonjuni on 17.06.16.
+ * @author Karola Marky
+ * @version 20160616
  */
+
 public class HelpActivity extends BaseActivity {
 
     @Override

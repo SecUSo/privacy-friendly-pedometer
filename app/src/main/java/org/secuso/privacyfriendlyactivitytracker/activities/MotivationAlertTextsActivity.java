@@ -48,6 +48,7 @@ import java.util.Set;
  * @author Tobias Neidig
  * @version 20160724
  */
+
 public class MotivationAlertTextsActivity extends AppCompatActivity implements MotivationAlertTextsAdapter.OnItemClickListener {
     public static final String LOG_CLASS = MotivationAlertTextsActivity.class.getName();
 

@@ -29,8 +29,10 @@ import org.secuso.privacyfriendlyactivitytracker.R;
 
 
 /**
- * Created by yonjuni on 15.06.16.
+ * @author Karola Marky
+ * @version 20160615
  */
+
 public class AboutActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {

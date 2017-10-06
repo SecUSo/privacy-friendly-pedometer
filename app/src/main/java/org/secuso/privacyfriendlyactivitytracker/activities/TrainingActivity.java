@@ -59,6 +59,7 @@ import java.util.TimerTask;
  * @author Tobias Neidig
  * @version 20160730
  */
+
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener {
     /**
      * Broadcast action identifier for messages broadcasted when new steps were detected

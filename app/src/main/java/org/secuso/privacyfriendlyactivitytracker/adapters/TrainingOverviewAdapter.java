@@ -49,6 +49,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160728
  */
+
 public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOverviewAdapter.ViewHolder> {
     public static final int VIEW_TYPE_TRAINING_SESSION = 0;
     public static final int VIEW_TYPE_MONTH_HEADLINE = 1;

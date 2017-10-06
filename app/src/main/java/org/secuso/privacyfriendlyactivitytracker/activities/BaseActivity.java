@@ -25,8 +25,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,12 +35,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.fragments.MainFragment;
-
 
 /**
- * Created by Chris on 04.07.2016.
+ * @author Christopher Beckmann
+ * @version 20160704
  */
+
 public class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     // delay to launch nav drawer item, to allow close animation to play

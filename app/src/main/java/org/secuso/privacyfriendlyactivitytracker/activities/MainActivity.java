@@ -33,6 +33,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
  * @author Tobias Neidig, Karola Marky
  * @version 20161214
  */
+
 public class MainActivity extends BaseActivity implements DailyReportFragment.OnFragmentInteractionListener, WeeklyReportFragment.OnFragmentInteractionListener, MonthlyReportFragment.OnFragmentInteractionListener {
 
 

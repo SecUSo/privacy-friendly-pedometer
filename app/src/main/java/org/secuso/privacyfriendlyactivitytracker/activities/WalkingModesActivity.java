@@ -47,6 +47,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160724
  */
+
 public class WalkingModesActivity extends AppCompatActivity implements WalkingModesAdapter.OnItemClickListener {
     public static final String LOG_CLASS = WalkingModesActivity.class.getName();
 

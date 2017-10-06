@@ -56,6 +56,7 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160727
  */
+
 public class TrainingOverviewActivity extends AppCompatActivity implements TrainingOverviewAdapter.OnItemClickListener {
     public static final String LOG_CLASS = TrainingOverviewActivity.class.getName();
 

@@ -36,6 +36,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160630
  */
+
 public class StepCountDbHelper  extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 2;

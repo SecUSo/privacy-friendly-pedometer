@@ -18,8 +18,9 @@
 package org.secuso.privacyfriendlyactivitytracker.models;
 
 /**
- *
+ *  @author Tobias Neidig
  */
+
 public class ActivitySummary {
     private int steps;
     private double distance;

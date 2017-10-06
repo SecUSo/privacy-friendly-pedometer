@@ -17,47 +17,12 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.receivers;
 
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
-import android.hardware.TriggerEvent;
-import android.hardware.TriggerEventListener;
-import android.os.IBinder;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
-import org.secuso.privacyfriendlyactivitytracker.Factory;
-import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
-import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountDbHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModeDbHelper;
-import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.services.HardwareStepCounterService;
-import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED;
 
 /**
  * @author Tobias Neidig

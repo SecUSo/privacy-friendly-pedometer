@@ -38,6 +38,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160722
  */
+
 public class MotivationAlertTextsAdapter extends RecyclerView.Adapter<MotivationAlertTextsAdapter.ViewHolder> {
     private List<String> mItems;
     private OnItemClickListener mItemClickListener;

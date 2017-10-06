@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.models;
 
 import android.content.Context;
@@ -5,7 +22,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A step count object represents an interval in which some steps were taken and which walking mode
@@ -77,15 +97,14 @@ public class StepCount {
         // inspired by https://github.com/bagilevi/android-pedometer/blob/master/src/name/bagi/levente/pedometer/CaloriesNotifier.java
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         float bodyWeight = Float.parseFloat(sharedPref.getString(context.getString(R.string.pref_weight),context.getString(R.string.pref_default_weight)));
-        return bodyWeight * METRIC_AVG_FACTOR * UnitUtil.metersToKilometers(getDistance());
+        return bodyWeight * METRIC_AVG_FACTOR * UnitHelper.metersToKilometers(getDistance());
     }
     @Override
     public String toString() {
-        return "StepCount{" +
-                "stepCount=" + stepCount +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", walkingMode=" + walkingMode +
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyy HH:mm:ss");
+        return "StepCount{" + format.format(new Date(startTime)) +
+                " - " + format.format(new Date(endTime)) +
+                ": " + stepCount + " @ " + ((walkingMode == null) ? -1 : walkingMode.getId())+
                 '}';
     }
 }

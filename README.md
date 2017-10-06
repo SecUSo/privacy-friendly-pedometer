@@ -21,7 +21,7 @@ Target SDK: 25
 ## License
 
 Privacy Friendly Pedometer is licensed under the GPLv3.
-Copyright (C) 2016  Tobias Neidig
+Copyright (C) 2017  Tobias Neidig
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

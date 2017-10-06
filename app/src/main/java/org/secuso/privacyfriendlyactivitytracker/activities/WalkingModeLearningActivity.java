@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 import android.content.ComponentName;
@@ -24,7 +41,7 @@ import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenc
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.util.Calendar;
 
@@ -94,11 +111,11 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
         mTextViewSteps = (TextView) findViewById(R.id.walking_mode_learning_steps);
         TextView textViewDistance = (TextView) findViewById(R.id.walking_mode_learning_distance);
         if(textViewDistance != null) {
-            textViewDistance.setText(String.valueOf(UnitUtil.metersToUsersLengthUnit(this.distance, this)));
+            textViewDistance.setText(String.valueOf(UnitHelper.metersToUsersLengthUnit(this.distance, this)));
         }
         TextView textViewDistanceTitle = (TextView) findViewById(R.id.walking_mode_learning_distance_title);
         if(textViewDistanceTitle != null) {
-            textViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionForMeters(this));
+            textViewDistanceTitle.setText(UnitHelper.usersLengthDescriptionForMeters(this));
         }
         Button buttonStop = (Button) findViewById(R.id.walking_mode_learning_stop_button);
         if (buttonStop != null) {

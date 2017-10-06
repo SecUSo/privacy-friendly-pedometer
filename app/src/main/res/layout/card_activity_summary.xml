@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -63,6 +80,11 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_chevron_right_black_24dp" />
+                <ImageButton
+                    android:id="@+id/periodMoreButton"
+                    style="@style/SimpleImageButton"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_more_vert_black_24dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -181,8 +203,36 @@
                             android:layout_marginStart="1sp"
                             android:layout_toEndOf="@+id/calorieCount"
                             android:layout_toRightOf="@+id/calorieCount"
-                            android:text="@string/summary_card_calories"
+                            android:text="@string/summary_card_kilocalories"
                             android:textColor="@color/darkgrey" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/speedContainer">
+
+                        <ImageView
+                            android:id="@+id/speedIcon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@drawable/ic_directions_run" />
+
+                        <TextView
+                            android:id="@+id/speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/speedIcon"
+                            android:layout_toRightOf="@+id/speedIcon"
+                            android:textColor="@color/darkgrey" />
+
+
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

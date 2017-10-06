@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.utils;
 
 import android.app.AlarmManager;
@@ -12,8 +29,10 @@ import android.util.Log;
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.receivers.HardwareStepCountReceiver;
 import org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver;
 import org.secuso.privacyfriendlyactivitytracker.receivers.StepCountPersistenceReceiver;
+import org.secuso.privacyfriendlyactivitytracker.receivers.WidgetReceiver;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,15 +53,26 @@ public class StepDetectionServiceHelper {
      * @param context The application context.
      */
     public static void startAllIfEnabled(Context context) {
-        Log.i(LOG_CLASS, "Started all services");
+        startAllIfEnabled(false, context);
+    }
+
+    public static void startAllIfEnabled(boolean forceRealTimeStepDetection, Context context){
+        Log.i(LOG_CLASS, "Start of all services requested");
         // Start the step detection if enabled or training is active
         if (isStepDetectionEnabled(context)) {
-            StepDetectionServiceHelper.startStepDetection(context);
-            // schedule stepCountPersistenceService
-            StepDetectionServiceHelper.schedulePersistenceService(context);
+            if(forceRealTimeStepDetection || isRealTimeStepDetectionRequired(context) || !AndroidVersionHelper.isHardwareStepCounterEnabled(context.getPackageManager())) {
+                Log.i(LOG_CLASS, "Start step detection");
+                StepDetectionServiceHelper.startStepDetection(context);
+                // schedule stepCountPersistenceService
+                StepDetectionServiceHelper.schedulePersistenceService(context);
+            }else{
+                Log.i(LOG_CLASS, "Schedule hardware step counter request");
+                StepDetectionServiceHelper.startHardwareStepCounter(context);
+            }
         }
 
         if(isMotivationAlertEnabled(context)){
+            Log.i(LOG_CLASS, "Schedule motivation alert");
             // set motivation alert
             setMotivationAlert(context);
         }
@@ -50,17 +80,37 @@ public class StepDetectionServiceHelper {
 
     public static void stopAllIfNotRequired(Context context){
         stopAllIfNotRequired(true, context);
+        WidgetReceiver.forceWidgetUpdate(context);
     }
 
     public static void stopAllIfNotRequired(boolean forceSave, Context context){
         // Start the step detection if enabled or training is active
         if (!isStepDetectionEnabled(context)) {
             Log.i(LOG_CLASS, "Stopping all services");
-            StepDetectionServiceHelper.stopStepDetection(context);
-            // schedule stepCountPersistenceService
-            StepDetectionServiceHelper.cancelPersistenceService(forceSave, context);
+            if(forceSave){
+                // un-schedule stepCountPersistenceService
+                // persistence service will stop step detection service.
+                StepDetectionServiceHelper.cancelPersistenceService(forceSave, context);
+            }else {
+                StepDetectionServiceHelper.stopStepDetection(context);
+            }
+            StepDetectionServiceHelper.stopHardwareStepCounter(context);
         }else{
-            Log.i(LOG_CLASS, "Not stopping services b.c. they are required");
+            if(!isRealTimeStepDetectionRequired(context) && AndroidVersionHelper.isHardwareStepCounterEnabled(context.getPackageManager())){
+                Log.i(LOG_CLASS, "Stopping realtime step detection and scheduling hardware step counter");
+                // if step detection is required but no real time step count is necessary and hw step counter
+                // is available we stop the real time step detection and enable the hardware step counter.
+                if(forceSave){
+                    // un-schedule stepCountPersistenceService
+                    // persistence service will stop step detection service.
+                    StepDetectionServiceHelper.cancelPersistenceService(forceSave, context);
+                }else {
+                    StepDetectionServiceHelper.stopStepDetection(context);
+                }
+                StepDetectionServiceHelper.startHardwareStepCounter(context);
+            }else {
+                Log.i(LOG_CLASS, "Not stopping services b.c. they are required");
+            }
         }
 
         if(!isMotivationAlertEnabled(context)){
@@ -75,8 +125,9 @@ public class StepDetectionServiceHelper {
      */
     public static void startStepDetection(Context context) {
         Log.i(LOG_CLASS, "Started step detection service.");
-        Intent      stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
             context.getApplicationContext().startService(stepDetectorServiceIntent);
+        WidgetReceiver.forceWidgetUpdate(context);
     }
 
     /**
@@ -86,10 +137,32 @@ public class StepDetectionServiceHelper {
      */
     public static void stopStepDetection(Context context){
         Log.i(LOG_CLASS, "Stopping step detection service.");
-        Intent stepDetectorServiceIntent= new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
         if(!context.getApplicationContext().stopService(stepDetectorServiceIntent)){
             Log.w(LOG_CLASS, "Stopping of service failed or it is not running.");
         }
+    }
+
+    public static void startHardwareStepCounter(Context context){
+        Intent hardwareStepCounterServiceIntent = new Intent(context, HardwareStepCountReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 2, hardwareStepCounterServiceIntent, 0);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MINUTE, 5);
+
+        // Set inexact repeating alarm
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HOUR, sender);
+        Log.i(LOG_CLASS, "Scheduled hardware step counter alert at start time " + calendar.toString());
+    }
+
+    public static void stopHardwareStepCounter(Context context){
+        Intent hardwareStepCounterServiceIntent = new Intent(context, HardwareStepCountReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 2, hardwareStepCounterServiceIntent, 0);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.cancel(sender);
+        Log.i(LOG_CLASS, "Canceling hardware step counter alert");
     }
 
     /**
@@ -154,7 +227,23 @@ public class StepDetectionServiceHelper {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isStepDetectionEnabled = sharedPref.getBoolean(context.getString(R.string.pref_step_counter_enabled), true);
         boolean isWalkingModeLearningActive = sharedPref.getBoolean(context.getString(R.string.pref_walking_mode_learning_active), false);
-        return isStepDetectionEnabled || (TrainingPersistenceHelper.getActiveItem(context) != null) || isWalkingModeLearningActive;
+        boolean isDistanceMeasurementActive = sharedPref.getLong(context.getString(R.string.pref_distance_measurement_start_timestamp), -1) > 0;
+        return isStepDetectionEnabled || (TrainingPersistenceHelper.getActiveItem(context) != null) || isWalkingModeLearningActive || isDistanceMeasurementActive;
+    }
+
+    /**
+     * Do we need real time step detection or is it ok if we do some more calculation in background
+     * and send step detection events delayed?
+     * @param context The application context
+     * @return true if real time step detection is required
+     */
+    public static boolean isRealTimeStepDetectionRequired(Context context){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isWalkingModeLearningActive = sharedPref.getBoolean(context.getString(R.string.pref_walking_mode_learning_active), false);
+        boolean isDistanceMeasurementActive = sharedPref.getLong(context.getString(R.string.pref_distance_measurement_start_timestamp), -1) > 0;
+        boolean isTrainingActive = (TrainingPersistenceHelper.getActiveItem(context) != null);
+        return isTrainingActive || isWalkingModeLearningActive || isDistanceMeasurementActive;
+
     }
 
     /**

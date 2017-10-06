@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.tutorial;
 
 import android.content.Context;
@@ -20,6 +37,8 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
@@ -66,7 +85,9 @@ public class TutorialActivity extends AppCompatActivity {
         layouts = new int[]{
                 R.layout.tutorial_slide1,
                 R.layout.tutorial_slide2,
-                R.layout.tutorial_slide3,};
+                R.layout.tutorial_slide3,
+                R.layout.tutorial_slide4,
+                R.layout.tutorial_slide5};
 
         // adding bottom dots
         addBottomDots(0);
@@ -81,7 +102,15 @@ public class TutorialActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen();
+                // checking for last page
+                // if not last page home screen will be launched
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    launchHomeScreen();
+                } else {
+                    // show pref
+                    launchPref();
+                }
             }
         });
 
@@ -130,6 +159,12 @@ public class TutorialActivity extends AppCompatActivity {
         finish();
     }
 
+    private void launchPref() {
+        prefManager.setFirstTimeLaunch(false);
+        startActivity(new Intent(TutorialActivity.this, PreferencesActivity.class));
+        finish();
+    }
+
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
@@ -141,11 +176,11 @@ public class TutorialActivity extends AppCompatActivity {
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
                 btnNext.setText(getString(R.string.okay));
-                btnSkip.setVisibility(View.GONE);
+                btnSkip.setText(getString(R.string.action_settings));
             } else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
-                btnSkip.setVisibility(View.VISIBLE);
+                btnSkip.setText(getString(R.string.skip));
             }
         }
 

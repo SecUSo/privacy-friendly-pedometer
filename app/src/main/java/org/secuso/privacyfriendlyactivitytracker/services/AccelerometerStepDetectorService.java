@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.services;
 
 
@@ -33,7 +50,8 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
     private float[] mLastStepAccelerationDeltas = {-1, -1, -1, -1, -1, -1};
     private int mLastStepAccelerationDeltasIndex = 0;
     private float accelerometerThreshold;
-
+    private int valid_steps = 0;
+    private int validStepsThreshold = 0;
     //private float[]
 
     /**
@@ -58,6 +76,7 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
         super.onCreate();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         accelerometerThreshold = Float.parseFloat(sharedPref.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
+        validStepsThreshold = Integer.parseInt(sharedPref.getString(getString(R.string.pref_accelerometer_steps_threshold), "10"));
     }
 
     @Override
@@ -121,6 +140,7 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
             } else if (step_time_delta > 60 * 1000 / 20) {
                 if (debug) Log.i(LOG_TAG, "Too slow.");
                 last_step_time = current_step_time;
+                valid_steps = 0;
                 return;
             }
 
@@ -138,14 +158,21 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
                 last_acceleration_diff = acceleration_diff;
                 if (debug)
                     Log.i(LOG_TAG, "Not regularly over acceleration" + Arrays.toString(mLastStepAccelerationDeltas));
+                valid_steps = 0;
                 return;
             }
             last_acceleration_value = acceleration;
             last_acceleration_diff = acceleration_diff;
-
             // okay, finally this has to be a step
-            this.onStepDetected(1);
-
+            valid_steps ++;
+            if (debug)
+                Log.i(LOG_TAG, "Detected step. Valid steps = " + valid_steps);
+            // count it only if we got more than validStepsThreshold steps
+            if(valid_steps == validStepsThreshold){
+                this.onStepDetected(valid_steps);
+            }else if(valid_steps > validStepsThreshold){
+                this.onStepDetected(1);
+            }
         }
 
         last_step_time = current_step_time;
@@ -240,6 +267,9 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
         super.onSharedPreferenceChanged(sharedPreferences, key);
         if (key.equals(getString(R.string.pref_accelerometer_threshold))) {
             accelerometerThreshold = Float.parseFloat(sharedPreferences.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
+        }
+        if (key.equals(getString(R.string.pref_accelerometer_steps_threshold))) {
+            validStepsThreshold = Integer.parseInt(sharedPreferences.getString(getString(R.string.pref_accelerometer_steps_threshold), "10"));
         }
     }
 }

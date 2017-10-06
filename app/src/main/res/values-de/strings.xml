@@ -202,7 +202,7 @@
     <string name="welcome_text">Privacy Friendly Schrittzähler zählt Ihre täglichen Schritte und stellt Ihnen einen Überblick zur Verfügung.</string>
     <string name="slide_2_title">Personalisierung</string>
     <string name="slide_2_desc">Um die Berechnung der verbrannten Kalorien zu verbessern, können Sie bitte unter Einstellungen persönliche Werte eingeben.</string>
-    <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus wechseln, indem Sie sie in der Toolbar auswählen.</string>
+    <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus neber der Datumsanzeige wechseln.</string>
     <string name="slide_3_title">Benachritigungen</string>
     <string name="slide_4_title">Widget</string>
     <string name="slide_4_desc">Die App bietet Ihnen ein Widget an, welches Sie Ihrem Homescreen hinzufügen können. So bleiben Sie immer auf dem aktuellen Stand.</string>

@@ -1,0 +1,16 @@
+Der Privacy Friendly Schrittzähler ermöglicht es, Ihre Schritte im Hintergrund oder während expliziter Trainings-Sequenzen zu zählen. Zusätzlich gibt die App einen Überblick über die gelaufenen Schritte und erlaubt es, eigene Laufmodi mit persönlichen Schrittlängen zu erstellen und zu verwalten. Wenn das tägliche Schrittziel voraussichtlich nicht erreicht wird, kann die App eine Benachrichtigung ausgeben.
+
+Anhand der erfassten Schrittdaten erstellt die App eine tägliche, wöchentliche und monatliche Übersicht über die gelaufenen Schritte, die zurückgelegte Distanz und die verbrannten Kalorien. Es können verschiedene Laufmodi mit persönlichen Schrittlängen angelegt und ausgewählt werden, wodurch sich die Genauigkeit der Berechnung von Distanz und Kalorien erhöht.
+
+In einem gesonderten Trainingsmodus können Training-Sequenzen separat erfasst werden. Zu jeder Sequenz lassen sich zusätzliche Informationen, zum Beispiel eine Beschreibung und Gefühlszustand, hinzufügen.
+
+Was unterscheidet die App von anderen, ähnlichen Fitness-Applikationen?
+
+1. Minimale Anzahl an Berechtigungen
+* "Beim Start ausführen": Diese Berechtigung wird benötigt, um den Schrittzähler nach einem Neustart des Telefons wieder zu aktivieren.
+* "Ruhezustand deaktivieren": Bei manchen Geräten wird der Prozessor nach geraumer Zeit in den Ruhezustand geschickt, dadurch können keine weiteren Schritte gezählt werden. Mittels dieser Berechtigung kann dies verhindert werden und die Schritte werden wieder korrekt gezählt.
+
+2. Keine störende Werbung
+Viele andere kostenlose Apps im Google Play Store blenden störende Werbung ein, die unter anderem auch die Akkulaufzeit verkürzt und Datenvolumen verbrauchen kann.
+
+Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO der Technischen Universität Darmstadt entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa

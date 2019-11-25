@@ -1,0 +1,16 @@
+Privacy Friendly Pedometer can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger. The app requires minimal permissions (Run at startup and prevent phone from sleeping). It belongs to the Privacy Friendly Apps group developed by the research group SECUSO at Technische Universität Darmstadt. More information can be found an secuso.org/pfa
+
+Privacy Friendly Pedometer can count your daily walked steps while it runs in background. It gives you an overview about your walked steps, distance and about the calories you have burned while walking. You can add and choose different walking modes with different step lengths, such as walking or running, to improve the calculation of distance and calories.
+
+In a special training mode you can track your training sessions. To each training session additional information, such as feeling or a description, can be added.
+
+What makes Privacy Friendly Pedometer different from other pedometers?
+
+1. Minimal amount of permissions:
+* Run at startup: This permission is required to restart the step counting when your phone boots.
+* prevent phone from sleeping: On some devices the processor falls asleep and prevents counting steps. With this permission the app can keep the processor awake while counting steps.
+
+Most of Pedometer Apps in the Google Play Store require additional permissions. E.g. accessing the network or Internet which is mostly used to display advertisement. Some apps have access to GPS or telephony data.
+
+2. No advertisement.
+Many other free apps in the Google Play Store dazzle annoying advertising and also shortens battery life.

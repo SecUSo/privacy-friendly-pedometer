@@ -1,1 +1,1 @@
-Counts your steps in background. Customize for daily goals, notifications and walking modes.
+Counts your steps in background. Customize daily goals, notifications + modes

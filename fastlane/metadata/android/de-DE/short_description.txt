@@ -1,1 +1,1 @@
-Schritte im Hintergrund oder während expliziter Trainings-Sequenzen zählen. Überblick über die gelaufenen Schritte, eigene Laufmodi mit persönlichen Schrittlängen, Tagesziel und Benachrichtigungen.
+Schritte im Hintergrund oder während expliziter Trainings-Sequenzen zählen.

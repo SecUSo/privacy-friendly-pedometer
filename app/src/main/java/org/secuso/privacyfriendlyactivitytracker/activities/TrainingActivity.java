@@ -39,6 +39,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.models.Training;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
@@ -101,9 +102,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training);
-        // get current training instance
-        training = TrainingPersistenceHelper.getActiveItem(this);
-        if (training == null) {
+
+        boolean isTrainingActive = (new TrainingDbHelper(this).getActiveTraining() != null);
+
+        if (!isTrainingActive) {
             // if no training is active, start persistence service
             StepDetectionServiceHelper.startPersistenceService(this);
             // Now wait for steps saved broadcast message and than create a new training session.

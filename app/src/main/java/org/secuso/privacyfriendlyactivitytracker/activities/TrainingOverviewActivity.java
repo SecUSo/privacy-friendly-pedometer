@@ -39,6 +39,7 @@ import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.adapters.TrainingOverviewAdapter;
 import org.secuso.privacyfriendlyactivitytracker.models.Training;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
+import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 
@@ -72,7 +73,9 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_overview);
 
-        if(TrainingPersistenceHelper.getActiveItem(this) != null){
+        boolean isTrainingActive = (new TrainingDbHelper(this).getActiveTraining() != null);
+
+        if(isTrainingActive){
             // show current training session if there is one.
             Log.w(LOG_CLASS, "Found active training session");
             startTrainingActivity();
@@ -132,7 +135,8 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
      */
     protected void showTrainings() {
         // Load training sessions
-        List<Training> trainingsLoadFromDatabase = TrainingPersistenceHelper.getAllItems(this);
+        List<Training> trainingsLoadFromDatabase = new TrainingDbHelper(this).getAllTrainings();
+
         trainings = new ArrayList<>();
         int steps = 0;
         double distance = 0;
@@ -254,11 +258,9 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
      */
     protected void removeTrainingSession(int position) {
         Training training = trainings.get(position);
-        if (!TrainingPersistenceHelper.delete(training, this)) {
-            Toast.makeText(this, R.string.operation_failed, Toast.LENGTH_SHORT).show();
-            showTrainings();
-            return;
-        }
+
+        new TrainingDbHelper(this).deleteTraining(training);
+
         mAdapter.removeItem(position);
         mAdapter.notifyItemRemoved(position);
         mAdapter.notifyItemRangeChanged(position, trainings.size() - 1);

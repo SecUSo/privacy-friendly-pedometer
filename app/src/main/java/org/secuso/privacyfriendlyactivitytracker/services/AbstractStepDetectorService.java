@@ -42,6 +42,7 @@ import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
@@ -331,7 +332,9 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean useWakeLock = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock), false);
         boolean useWakeLockDuringTraining = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock_during_training), true);
-        boolean isTrainingActive = TrainingPersistenceHelper.getActiveItem(getApplicationContext()) != null;
+
+        boolean isTrainingActive = (new TrainingDbHelper(getApplicationContext()).getActiveTraining() != null);
+
         if(mWakeLock == null && (useWakeLock || (useWakeLockDuringTraining && isTrainingActive))) {
             acquireWakeLock();
         }

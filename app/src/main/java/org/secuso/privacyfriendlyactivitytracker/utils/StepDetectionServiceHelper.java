@@ -28,6 +28,8 @@ import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
+import org.secuso.privacyfriendlyactivitytracker.models.Training;
+import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.receivers.HardwareStepCountReceiver;
 import org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver;
@@ -57,7 +59,7 @@ public class StepDetectionServiceHelper {
     }
 
     public static void startAllIfEnabled(boolean forceRealTimeStepDetection, Context context){
-        Log.i(LOG_CLASS, "Start of all services requested");
+        Log.i(LOG_CLASS, "Start of all services : requested with force option " + ( forceRealTimeStepDetection ? "true": "false"));
         // Start the step detection if enabled or training is active
         if (isStepDetectionEnabled(context)) {
             if(forceRealTimeStepDetection || isRealTimeStepDetectionRequired(context) || !AndroidVersionHelper.isHardwareStepCounterEnabled(context.getPackageManager())) {
@@ -228,7 +230,10 @@ public class StepDetectionServiceHelper {
         boolean isStepDetectionEnabled = sharedPref.getBoolean(context.getString(R.string.pref_step_counter_enabled), true);
         boolean isWalkingModeLearningActive = sharedPref.getBoolean(context.getString(R.string.pref_walking_mode_learning_active), false);
         boolean isDistanceMeasurementActive = sharedPref.getLong(context.getString(R.string.pref_distance_measurement_start_timestamp), -1) > 0;
-        return isStepDetectionEnabled || (TrainingPersistenceHelper.getActiveItem(context) != null) || isWalkingModeLearningActive || isDistanceMeasurementActive;
+
+        boolean isTrainingActive = (new TrainingDbHelper(context).getActiveTraining() != null);
+
+        return isStepDetectionEnabled || isTrainingActive || isWalkingModeLearningActive || isDistanceMeasurementActive;
     }
 
     /**
@@ -241,7 +246,9 @@ public class StepDetectionServiceHelper {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isWalkingModeLearningActive = sharedPref.getBoolean(context.getString(R.string.pref_walking_mode_learning_active), false);
         boolean isDistanceMeasurementActive = sharedPref.getLong(context.getString(R.string.pref_distance_measurement_start_timestamp), -1) > 0;
-        boolean isTrainingActive = (TrainingPersistenceHelper.getActiveItem(context) != null);
+
+        boolean isTrainingActive = (new TrainingDbHelper(context).getActiveTraining() != null);
+
         return isTrainingActive || isWalkingModeLearningActive || isDistanceMeasurementActive;
 
     }

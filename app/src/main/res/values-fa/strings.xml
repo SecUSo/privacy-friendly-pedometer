@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+        Privacy Friendly Pedometer is licensed under the GPLv3.
+        Copyright (C) 2017  Tobias Neidig
+
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program. If not, see <http://www.gnu.org/licenses/>.
+    -->
+<resources>
+<string name="app_name">گام شمار</string>
+<string name="app_name_long">Privacy Friendly Pedometer</string>
+
+<string name="navigation_drawer_open" translatable="false">باز‌کردن کشوی راهبر </string>
+<string name="navigation_drawer_close" translatable="false">بستن کشوی راهبر</string>
+
+<!-- Menu Items-->
+<string name="action_help">راهنما</string>
+<string name="action_about">درباره ما</string>
+<string name="action_settings">تنظیمات</string>
+<string name="action_main">گام شمار</string>
+<string name="action_training">تمرین</string>
+
+<!-- AboutActivity-->
+<string name="version_number">Version</string>
+<string name="about_author">Author: </string>
+<string name="about_author_names" translatable="false">Tobias Neidig </string>
+<string name="about_author_contributors"> مشارکت کنندگان.</string>
+<string name="about_affiliation">In affiliation with</string>
+<string name="more_info">برای اطلاعات بیشتر می توانید مراجهع کنید به:</string>
+<string name="about_third_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> (Apache 2 License).</string>
+<string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+<string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
+<string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
+
+<!-- ReportFragment -->
+<string name="month">ماه</string>
+<string name="week">هغته</string>
+<string name="day">روز</string>
+<string name="steps">قدم‌ها</string>
+<string name="calories">کالری</string>
+<string name="activity_summary_subtitle">خلاصه‌ای از فعالیت‌ها</string>
+<string name="activity_chart_summary_subtitle">خلاصه‌ای از فعالیت‌های </string>
+<string name="summary_card_kilocalories">kcal</string>
+<string name="summary_card_calories">cal</string>
+<string name="correct_steps">تصحیح تعداد قدم‌ها</string>
+<string name="correct_steps_dialog_title">تصحیح تعداد قدم‌ها</string>
+<string name="correct_steps_dialog_message">لطفا عدد جدیدی از تعداد قدم‌هایی که راه رفته‌اید ارایه  دهید.</string>
+<string name="hint_steps">تعداد گام‌ها</string>
+<string name="pause_step_detection">توقف شمارش قدم‌ها</string>
+<string name="continue_step_detection">ادامه ادامه شمارش قدم‌ها</string>
+
+<!-- HelpActivity -->
+<string name="help_overview_heading">نمای کلی</string>
+<string name="help_intro">این برنامه می تواند مراحل شما را در پس زمینه بشمارد ، یک مرور کلی در مورد مراحل قدم زده شده به شما ارائه می دهد و به شما این امکان را می دهد تا در صورت عدم دستیابی به هدف تعداد گام روزانه خود  که در معرض خطر است ، حالت های پیاده روی و اطلاعیه های سفارشی را تعریف کنید.</string>
+<string name="help_functionality_step_counter_summary">شمارنده‌ی قدم ها تعداد قدم های شما را در پس‌زمینه محاسبه می کند و می توان آن را در قسمت تنظیمات از کار انداخت.</string>
+<string name="help_functionality_notification_heading">اعلان دایمی</string>
+<string name="help_functionality_notification">اعلان ها</string>
+<string name="help_functionality_notification_summary">The permanent notification is necessary to keep the step counter alive in background. The content of the notification can be chosen in the settings.</string>
+<string name="help_functionality_notification_delete">می توانید تمامی اعلان‌ها را از قسمت تنظیمات غیر فعال کنید.</string>
+<string name="help_functionality_motivation_alert">هشدار برای تحرک</string>
+<string name="help_functionality_motivation_alert_summary">The app can show you motivation alerts if the achievement of your daily step goal is in danger. You can define the criterion, the time of day and the notification texts.</string>
+<string name="help_privacy_heading">Privacy Info</string>
+<string name="help_permission_boot_heading">درخواست: Receive Boot Completed</string>
+<string name="help_permission_boot_description">is used to start the step counter and set the notifications at boot time. If the permission is not granted you have to start the app manually once after boot to activate the app.</string>
+<string name="help_permissions_selection">The permissions used by Privacy Friendly Pedometer can not be managed by the user in any Android version.</string>
+<string name="help_permission_wake_heading">درخواست: Wake Lock</string>
+<string name="help_permission_wake_description">برای بیدار نگه داشتن پردازنده تا تعداد قدم‌ها را در پس زمینه محاسبه کند.</string>
+<string name="help_permission_gps_heading">درخواست: موقعیت مکانی دقیق</string>
+<string name="help_permission_gps_description">نمایش سرعت فعلی راه‌رفتن شما در صفحه نمایش . اگر اجازه داده نشود سرعت پیاده روی نشان داده نمی شود - پیامدهای دیگری وجود ندارد.are no other implications.</string>
+
+<!-- Preferences -->
+<!-- general settings -->
+<string name="pref_header_general">عمومی</string>
+<string name="pref_group_title_personal_settings">شخصی سازی </string>
+
+<string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.step_counter_enabled</string>
+<string name="pref_title_step_counter_enabled">قدم شمار ثابت</string>
+<string name="pref_summary_step_counter_enabled">برنامه گام های شما را در پس زمینه می شمارد.</string>
+
+<string name="pref_use_wake_lock" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock</string>
+<string name="pref_title_use_wake_lock">پردازنده را بیدار نگه دارید</string>
+<string name="pref_summary_use_wake_lock">در بعضی از دستگاه ها پردازنده بیدارنده به طور مداوم قدم ها را می شمارد حتی هنگامی که دستگاه  خاموش است.این گزینه را فعال کنید تا پردازنده هنگام شمردن قدم ها بیدار باشد- ممکن است باطری گوشی را تخلیه کند</string>
+
+<string name="pref_use_wake_lock_during_training" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock_during_training</string>
+<string name="pref_title_use_wake_lock_during_training">درحین تمرین صحفه بیدار باشد</string>
+<string name="pref_summary_use_wake_lock_during_training">برای نتایج بهتر هنگام تمرین گوشی را روشن نگه دارید.اگر برنامه باید پردازنده را در هر زمان بیدار نگه دارد ، این به طور خودکار اتفاق می افتد.</string>
+
+<string name="pref_show_velocity" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.show_velocity</string>
+<string name="pref_title_show_velocity">نمایش سرعت فعلی</string>
+<string name="pref_summary_show_velocity">برنامه به صورت روزانه سرعت فعلی شما را نشان می دهد. دسترسی به موقعیت مکانی شما برای محاسبه سرعت دقیق لازم است.</string>
+
+<string name="pref_default_daily_step_goal" translatable="false">10000</string>
+<string name="pref_title_daily_step_goal">هدف گذاری روزانه برای تعداد قدم ها</string>
+<string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length</string>
+<string name="pref_title_unit_of_length">واحد عرض</string>
+<string-array name="pref_keys_unit_of_length">
+    <item>kilometers</item>
+    <item>miles</item>
+</string-array>
+<string-array name="pref_values_unit_of_length" translatable="false">
+    <item>km</item>
+    <item>mi</item>
+</string-array>
+<string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
+<string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+<string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
+<string name="pref_title_unit_of_energy">واحد انرژی</string>
+<string-array name="pref_keys_unit_of_energy">
+    <item>calories</item>
+    <item>joules</item>
+</string-array>
+<string-array name="pref_values_unit_of_energy" translatable="false">
+    <item>cal</item>
+    <item>J</item>
+</string-array>
+
+<string name="pref_explanation_weight_and_gender">برای بهبود محاسبه کالری ، لطفاً وزن و جنسیت خود را تعیین کنید.</string>
+<string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
+<string name="pref_summary_accelerometer_threshold">این برنامه از شتاب‌سنج گوشی شما استفاده می کند . لطفا برای بهینه سازی تشخیص ، حساسیت را تنظیم کنید.</string>
+
+<string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
+<string name="pref_title_weight">وزن (kg)</string>
+<string name="pref_default_weight" translatable="false">65.0</string>
+
+<string name="pref_gender" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.gender</string>
+<string name="pref_title_gender">جنسیت</string>
+<string-array name="pref_keys_gender">
+    <item>female</item>
+    <item>male</item>
+</string-array>
+<string-array name="pref_values_gender" translatable="false">
+    <item>0</item>
+    <item>1</item>
+</string-array>
+<string name="pref_accelerometer_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_threshold</string>
+<string name="pref_title_accelerometer_threshold">حساسیت</string>
+<string-array name="pref_keys_accelerometer_threshold">
+    <item>very high</item>
+    <item>higher</item>
+    <item>high</item>
+    <item>normal</item>
+    <item>low</item>
+    <item>lower</item>
+    <item>very low</item>
+</string-array>
+<string-array name="pref_values_accelerometer_threshold" translatable="false">
+    <item>0.125</item>
+    <item>0.25</item>
+    <item>0.50</item>
+    <item>0.75</item>
+    <item>1.00</item>
+    <item>1.25</item>
+    <item>1.50</item>
+</string-array>
+<string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
+<string name="pref_title_accelerometer_steps_threshold">قدم‌های قبل از شروع شمارش</string>
+<string name="pref_default_accelerometer_steps_threshold" translatable="false">10</string>
+<!-- /general settings -->
+<!-- notification settings -->
+<string name="pref_header_notifications">اعلان ها</string>
+<string name="pref_group_title_permanent_notification">اعلان ثابت</string>
+<string name="pref_group_title_motivation_alert">هشدار حرکتی</string>
+
+<string name="pref_notification_permanent_show_steps" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_steps</string>
+<string name="pref_title_notification_permanent_show_steps">نمایش تعداد قدم های امروز</string>
+<string name="pref_notification_permanent_show_distance" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_distance</string>
+<string name="pref_title_notification_permanent_show_distance">نمایش مسافت پیاده روی امروز</string>
+<string name="pref_notification_permanent_show_calories" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_calories</string>
+<string name="pref_title_notification_permanent_show_calories">نمایش تعداد کالری</string>
+
+<string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_enabled</string>
+<string name="pref_title_notification_motivation_alert_enabled">فعال کردن هشدار حرکتی</string>
+<string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time</string>
+<string name="pref_title_notification_motivation_alert_time">زمان هشدار حرکتی</string>
+<string name="pref_notification_motivation_alert_texts" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts</string>
+    <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
+<string name="pref_title_notification_motivation_alert_criterion">معیار هشدار حرکتی</string>
+<string-array name="pref_keys_notification_motivation_alert_criterion">
+    <item>less than 90&#65285; of daily step goal</item>
+    <item>less than 70&#65285; of daily step goal</item>
+    <item>less than 50&#65285; of daily step goal</item>
+</string-array>
+<string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
+    <item>90</item>
+    <item>70</item>
+    <item>50</item>
+</string-array>
+<!-- /notification settings -->
+<string name="pref_header_walking_modes">حالت راه رفتن</string>
+<string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
+<string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
+<string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
+<!-- /Preferences -->
+
+<!-- Will be removed on next update -->
+<string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.daily_step_goal</string>
+<string name="notification_text_steps">%1$s of %2$s قدم امروز برداشتید.</string>
+<string name="notification_text_distance">%1$.2f %2$s قدم زدید امروز.</string>
+<string name="notification_text_calories">امروز  %.2f kcal سوزاندین .</string>
+<string name="notification_text_default">قدم شمار فعال است.</string>
+<!-- /Will be removed on next update -->
+
+<!-- others -->
+<string name="action_calories">کالری</string>
+<string name="action_distance">مقصد</string>
+<string name="action_steps">قدم‌ها</string>
+<string name="set">تنظیم کردن</string>
+<string name="save">ذخیره</string>
+<string name="edit">تغییر</string>
+<string name="delete">پاک کردن</string>
+<string name="operation_failed">عملیات موفق نشد</string>
+<string name="since">بعد از</string>
+<string name="okay">تایید</string>
+<!-- /others -->
+
+<!-- welcome dialog -->
+<string name="welcome">خوش آمدید!</string>
+<string name="welcome_text">Privacy Friendly Pedometer can count your steps in background and provides an overview about walked steps.</string>
+<string name="slide_2_title">شخصی سازی</string>
+<string name="slide_2_desc">"لطفا برای بهتر شدن محاسبه‌ی میزان کالری که هنگام پیاده روی سوزاندین تنظیمات شخصی خود را سفارشی کنید.  "</string>
+<string name="slide_2_desc_two">می توانید حالت های پیاده روی فعلی خود را با استفاده از منوی زمینه در نوار ابزار تغییر دهید.</string>
+<string name="slide_3_title">اعلان ها</string>
+<string name="slide_4_title">ابزار</string>
+<string name="slide_4_desc">Add a widget to your homescreen to stay up to date about your walked steps.</string>
+<string name="next">بعدی</string>
+<string name="skip">رد کردن</string>
+<!-- /welcome dialog -->
+
+<!-- motivation alert -->
+<string-array name="pref_default_notification_motivation_alert_messages">
+    <item>Come on, it\'s time to walk!</item>
+</string-array>
+<string name="motivation_alert_empty">Set custom alert messages when the achievement of your daily step goal is in danger.\n\nThere will be no alert if no message exists.</string>
+<string name="motivation_alert_input_title">تنظیم پیام هشدار حرکتی</string>
+<string name="motivation_alert_input_message">هشدار حرکتی خود را فعال کنید. برنامه با یکی از نوشته‌های خودتان به صورت رندوم هشدار می دهد.</string>
+<string name="motivation_alert_input_empty">Empty motivation alerts are useless, aren\'t they?</string>
+<string name="activity_title_motivation_alerts">هشدار برای تحرک</string>
+<string name="motivation_alert_notification_title">شمارنده قدم‌ها</string>
+
+<!-- walking modes -->
+<string name="activity_title_walking_modes">حالت قدم زد</string>
+<string name="walking_mode_input_title">حالت پیاده‌روی</string>
+<string name="walking_mode_input_message">حالت پیاده روی سفارشی خود را تنظیم کنید:</string>
+<string name="walking_mode_at_least_one_is_required">حداقل یکی از حالت‌های پیاده روی پیشنهاد می‌ شود .</string>
+<string name="walking_mode_cannot_delete_active_one">نمی‌توان یک حالت پیاده‌روی را پاک کرد.</string>
+<string name="walking_mode_set_active">تنظیم به عنوان یادگیری</string>
+<string name="walking_mode_menu_learn">یادگیری</string>
+<string name="walking_mode_learning_distance_description">مسیر برای پیاده روی:</string>
+<string name="walking_mode_learning_steps_description">قدم هایی که راه رفتید:</string>
+<string name="walking_mode_learning_stop">پایان حالت یادگیری</string>
+<string name="walking_mode_learning_description">برنامه توانایی یادگیری مقصد بر اساس قدم ها را دارد لطفا طبق مقصدی که داده شده قدم بزنید و پایان را فشار دهید هنگامی که پیاده روی تمام شد..</string>
+<string name="pref_walking_mode_learning_active" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.walking_mode_learning_active</string>
+<string name="step_length">طول قدم‌ها:</string>
+<string name="walking_mode_active_ext"> (فعال)</string>
+<string name="walking_mode_input_empty">نام و طول مرحله لازم است. لطفا پر کنید!</string>
+<string name="hint_walking_mode_name">نام</string>
+<string name="hint_walking_mode_step_length">طول قدم ها (متر)</string>
+<string-array name="pref_default_walking_mode_names">
+    <item>Walking</item>
+    <item>Running</item>
+</string-array>
+<string-array name="pref_default_walking_mode_step_lenghts" translatable="false">
+    <item>0.5</item><!-- step length in meters -->
+    <item>0.7</item>
+</string-array>
+
+<string name="training_overview_empty">It seems like you didn\'t used the training functionality, yet. It\'s time to start your training!</string>
+<string name="training_input_message" />
+<string name="training_input_title">Training session</string>
+<string name="activity_title_training">فعالیت</string>
+<string name="hint_training_description">توضیحات</string>
+<string name="hint_training_title">تیتر</string>
+<string name="hint_training_feeling">احساسات:</string>
+<string name="training_card_calories">kcal</string>
+<string name="training_card_distance_km">km</string>
+<string name="training_card_duration">h</string>
+<string name="training_velocity">km/h</string>
+<string name="training_stop_button">پایان فعالیت</string>
+<string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+<string name="activity_summary_chart_legend_stepgoal">تعداد قدم های هدف گذاری شده</string>
+<string name="widget_config_data_set_title">کدام داده‌ها نمایش داده شود؟</string>
+<string name="action_distance_measurement">محاسبه فاصله</string>
+<string name="distance_measurement_stop_button">توقف محاسبه فاصله </string>
+<string name="distance_measurement_start_button">شروع محاسبه فاصله </string>
+<string name="joules">J</string>
+<string name="kilojoules">kJ</string>
+<string name="slide_5_title">بازرسی قدم ها</string>
+<string name="slide_5_desc">برنامه مراحل شما را بر اساس الگوریتم های مختلف تشخیص می دهد. در برخی از دستگاه ها می توانید حساسیت تشخیص مرحله را در تنظیمات تعریف کنید. علاوه بر این می توانید مراحلی را که بدون برنامه قدم برمی دارید اضافه کنید یا پله پستی را در نمودار فعالیت های روزانه تصحیح کنید.</string>
+<string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+<string name="slide_2_desc_three">در تنظیمات می توانید حالت های پیاده روی خود را با طول مراحل مختلف تعریف کنید.</string>
+<string name="help_walkingmodes_heading">روش پیاده‌روی</string>
+<string name="help_walkingmodes_selection">You can define your own walking modes like \'Running\' or \'Walking\' in the preferences. Each walking mode has its own step length.</string>
+<string name="help_training_heading">دوره‌های فعالیت </string>
+<string name="help_training_selection">The training sessions can be used to track your training performance. Each session tracks e.g. the training duration, the walked steps and distance.</string>
+<string name="help_distancemeasurement_heading">سنجش میزان فاصله</string>
+<string name="help_distancemeasurement_selection">The distance measurement feature allows you to measure the distance between the button press \'Start\' and \'Stop\'. The data will not be stored after app restarts. To persist the data you can use the training sessions.</string>
+<string name="help_correctsteps_heading">تصحیح دستی تعداد قدم ها</string>
+<string name="help_correctsteps_selection">You can modify the detected daily steps in daily report view. This allows you to add steps you walked without the app or to correct the detected number of steps.</string>
+<string name="slide_5_desc_two">Click on \'Preferences\' to set your step size and customize your personal data.</string>
+</resources>

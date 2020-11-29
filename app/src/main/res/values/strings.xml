@@ -30,16 +30,16 @@
     <string name="action_training">Training</string>
 
     <!-- AboutActivity-->
-    <string name="version_number">Version</string>
-    <string name="about_author">Author: </string>
+    <string name="version_number" translatable="false">Version</string>
+    <string name="about_author" translatable="false">Author: </string>
     <string name="about_author_names" translatable="false">Tobias Neidig </string>
-    <string name="about_author_contributors"> and contributors.</string>
+    <string name="about_author_contributors" translatable="false"> and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="more_info">More information can be found on:</string>
     <string name="about_third_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> (Apache 2 License).</string>
-    <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="privacy_friendly" translatable="false">This application belongs to the Privacy Friendly Apps group developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
-    <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
     <!-- ReportFragment -->
     <string name="month">Month</string>
@@ -64,15 +64,15 @@
     <string name="help_functionality_step_counter_summary">The step counter counts your daily steps in background and can be disabled in the settings.</string>
     <string name="help_functionality_notification_heading">Permanent Notification</string>
     <string name="help_functionality_notification">Notification</string>
-    <string name="help_functionality_notification_summary">The permanent notification is necessary to keep the step counter alive in background. The content of the notification can be chosen in the settings.</string>
+    <string name="help_functionality_notification_summary" translatable="false">The permanent notification is necessary to keep the step counter alive in background. The content of the notification can be chosen in the settings.</string>
     <string name="help_functionality_notification_delete">You can disable all notifications in system preferences.</string>
     <string name="help_functionality_motivation_alert">Motivation alert</string>
-    <string name="help_functionality_motivation_alert_summary">The app can show you motivation alerts if the achievement of your daily step goal is in danger. You can define the criterion, the time of day and the notification texts.</string>
-    <string name="help_privacy_heading">Privacy Info</string>
-    <string name="help_permission_boot_heading">Permission: Receive Boot Completed</string>
-    <string name="help_permission_boot_description">is used to start the step counter and set the notifications at boot time. If the permission is not granted you have to start the app manually once after boot to activate the app.</string>
-    <string name="help_permissions_selection">The permissions used by Privacy Friendly Pedometer can not be managed by the user in any Android version.</string>
-    <string name="help_permission_wake_heading">Permission: Wake Lock</string>
+    <string name="help_functionality_motivation_alert_summary" translatable="false">The app can show you motivation alerts if the achievement of your daily step goal is in danger. You can define the criterion, the time of day and the notification texts.</string>
+    <string name="help_privacy_heading" translatable="false">Privacy Info</string>
+    <string name="help_permission_boot_heading" translatable="false">Permission: Receive Boot Completed</string>
+    <string name="help_permission_boot_description" translatable="false">is used to start the step counter and set the notifications at boot time. If the permission is not granted you have to start the app manually once after boot to activate the app.</string>
+    <string name="help_permissions_selection" translatable="false">The permissions used by Privacy Friendly Pedometer can not be managed by the user in any Android version.</string>
+    <string name="help_permission_wake_heading" translatable="false">Permission: Wake Lock</string>
     <string name="help_permission_wake_description">is used to keep the CPU awake to count the steps in background.</string>
     <string name="help_permission_gps_heading">Permission: Precise location</string>
     <string name="help_permission_gps_description">is used to show your current walking speed on home screen. If the permission is not granted the walking speed will not be showed - there are no other implications.</string>
@@ -110,8 +110,8 @@
         <item>km</item>
         <item>mi</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km" translatable="false">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi" translatable="false">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
     <string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
     <string name="pref_title_unit_of_energy">Unit of energy</string>
     <string-array name="pref_keys_unit_of_energy">
@@ -124,7 +124,7 @@
     </string-array>
 
     <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please set your weight and gender.</string>
-    <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
+    <string name="pref_summary_notification_permanent" translatable="false">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
     <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please.</string>
 
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
@@ -225,7 +225,7 @@
 
     <!-- welcome dialog -->
     <string name="welcome">Welcome!</string>
-    <string name="welcome_text">Privacy Friendly Pedometer can count your steps in background and provides an overview about walked steps.</string>
+    <string name="welcome_text" translatable="false">Privacy Friendly Pedometer can count your steps in background and provides an overview about walked steps.</string>
     <string name="slide_2_title">Customize</string>
     <string name="slide_2_desc">To improve the calculation of the calories you have burned by walking please customize your personal settings.</string>
     <string name="slide_2_desc_two">You can switch your current walking modes using the context menu in the toolbar.</string>
@@ -301,9 +301,9 @@
     <string name="help_walkingmodes_heading">Walking Modes</string>
     <string name="help_walkingmodes_selection">You can define your own walking modes like \'Running\' or \'Walking\' in the preferences. Each walking mode has its own step length.</string>
     <string name="help_training_heading">Training Sessions</string>
-    <string name="help_training_selection">The training sessions can be used to track your training performance. Each session tracks e.g. the training duration, the walked steps and distance.</string>
+    <string name="help_training_selection" translatable="false">The training sessions can be used to track your training performance. Each session tracks e.g. the training duration, the walked steps and distance.</string>
     <string name="help_distancemeasurement_heading">Distance Measurement</string>
-    <string name="help_distancemeasurement_selection">The distance measurement feature allows you to measure the distance between the button press \'Start\' and \'Stop\'. The data will not be stored after app restarts. To persist the data you can use the training sessions.</string>
+    <string name="help_distancemeasurement_selection" translatable="false">The distance measurement feature allows you to measure the distance between the button press \'Start\' and \'Stop\'. The data will not be stored after app restarts. To persist the data you can use the training sessions.</string>
     <string name="help_correctsteps_heading">Correct steps manually</string>
     <string name="help_correctsteps_selection">You can modify the detected daily steps in daily report view. This allows you to add steps you walked without the app or to correct the detected number of steps.</string>
     <string name="slide_5_desc_two">Click on \'Preferences\' to set your step size and customize your personal data.</string>

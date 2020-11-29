@@ -17,7 +17,9 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -35,6 +37,7 @@ import java.util.List;
 
 public class HelpActivity extends BaseActivity {
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +54,15 @@ public class HelpActivity extends BaseActivity {
         generalExpandableListView.setAdapter(expandableListAdapter);
 
         overridePendingTransition(0, 0);
+
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+
     }
 
     @Override
     protected int getNavigationDrawerID() {
         return R.id.menu_help;
+
     }
 }

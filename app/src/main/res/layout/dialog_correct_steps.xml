@@ -22,7 +22,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_steps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -35,5 +35,5 @@
             android:inputType="number"
             android:lines="1"
             android:maxLength="5" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

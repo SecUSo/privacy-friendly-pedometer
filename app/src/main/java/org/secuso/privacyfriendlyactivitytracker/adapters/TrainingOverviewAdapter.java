@@ -19,9 +19,9 @@ package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;

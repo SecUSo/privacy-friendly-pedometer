@@ -20,6 +20,8 @@ package org.secuso.privacyfriendlyactivitytracker.activities;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import androidx.fragment.app.FragmentTransaction;
+
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.fragments.DailyReportFragment;
 import org.secuso.privacyfriendlyactivitytracker.fragments.MainFragment;
@@ -47,7 +49,7 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
 
         // Load first view
-        final android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, new MainFragment(), "MainFragment");
         fragmentTransaction.commit();
 

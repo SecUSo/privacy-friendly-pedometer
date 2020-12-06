@@ -33,8 +33,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -43,7 +43,6 @@ import org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
-import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;

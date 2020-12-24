@@ -38,7 +38,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
@@ -165,7 +165,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         if(message.isEmpty()){
             message = getString(R.string.notification_text_default);
         }
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HistoryActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mNotifyManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

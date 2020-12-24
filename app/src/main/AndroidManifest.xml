@@ -51,132 +51,131 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
+            android:name=".activities.HistoryActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.AboutActivity"
+            android:name=".activities.AboutActivity"
             android:label="@string/action_about"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+            android:parentActivityName=".activities.HistoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.HelpActivity"
+            android:name=".activities.HelpActivity"
             android:label="@string/action_help"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
+            android:parentActivityName=".activities.HistoryActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity"
+            android:name=".activities.TrainingActivity"
             android:label="@string/activity_title_training"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity">
+            android:parentActivityName=".activities.TrainingOverviewActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity"
+            android:name=".activities.TrainingOverviewActivity"
             android:label="@string/activity_title_training"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+            android:parentActivityName=".activities.HistoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity"
+            android:name=".activities.PreferencesActivity"
             android:label="@string/action_settings"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+            android:parentActivityName=".activities.HistoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.MotivationAlertTextsActivity"
+            android:name=".activities.MotivationAlertTextsActivity"
             android:label="@string/activity_title_motivation_alerts"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity">
+            android:parentActivityName=".activities.PreferencesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity"
-            android:label="@string/activity_title_walking_modes"
+            android:name=".activities.WalkingModesActivity"
             android:configChanges="orientation|screenSize|keyboard"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity">
+            android:label="@string/activity_title_walking_modes"
+            android:parentActivityName=".activities.PreferencesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModeLearningActivity"
+            android:name=".activities.WalkingModeLearningActivity"
             android:label="@string/activity_title_walking_modes"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity">
+            android:parentActivityName=".activities.WalkingModesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlyactivitytracker.activities.DistanceMeasurementActivity"
+            android:name=".activities.DistanceMeasurementActivity"
             android:label="@string/action_distance_measurement"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+            android:parentActivityName=".activities.HistoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity" />
         </activity>
-        <activity android:name="org.secuso.privacyfriendlyactivitytracker.activities.WidgetConfigureActivity">
+        <activity android:name=".activities.WidgetConfigureActivity">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnBootCompletedBroadcastReceiver">
+        <receiver android:name=".receivers.OnBootCompletedBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnShutdownBroadcastReceiver">
+        <receiver android:name=".receivers.OnShutdownBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <!-- this is for some htc devices (and others) -->
                 <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnPackageReplacedBroadcastReceiver">
+        <receiver android:name=".receivers.OnPackageReplacedBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="org.secuso.privacyfriendlyactivitytracker.receivers.StepCountPersistenceReceiver"
+            android:name=".receivers.StepCountPersistenceReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="org.secuso.privacyfriendlystepcounter.WALKING_MODE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="org.secuso.privacyfriendlyactivitytracker.receivers.WidgetReceiver" >
+        <receiver android:name=".receivers.WidgetReceiver">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_provider" />
         </receiver>
+        <receiver android:name=".receivers.MotivationAlertReceiver" />
+        <receiver android:name=".receivers.HardwareStepCountReceiver" />
 
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver"/>
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.HardwareStepCountReceiver"/>
-
-        <service android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepCounterService" />
-        <service android:name="org.secuso.privacyfriendlyactivitytracker.services.MovementSpeedService" />
-        <service android:name="org.secuso.privacyfriendlyactivitytracker.services.AccelerometerStepDetectorService" />
+        <service android:name=".services.HardwareStepCounterService" />
+        <service android:name=".services.MovementSpeedService" />
+        <service android:name=".services.AccelerometerStepDetectorService" />
         <service
-            android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepDetectorService"
+            android:name=".services.HardwareStepDetectorService"
             android:stopWithTask="false" />
     </application>
 

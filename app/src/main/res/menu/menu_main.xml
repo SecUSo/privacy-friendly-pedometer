@@ -17,7 +17,7 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity">
 
     <group android:id="@+id/menu_group_general" android:checkableBehavior="all">
         <item android:id="@+id/menu_home" android:title="@string/action_main" android:icon="@drawable/ic_directions_walk_65black_30dp"

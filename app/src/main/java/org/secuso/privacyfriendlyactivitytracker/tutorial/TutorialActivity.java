@@ -36,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity;
 
 /**
@@ -154,7 +154,7 @@ public class TutorialActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(TutorialActivity.this, MainActivity.class));
+        startActivity(new Intent(TutorialActivity.this, HistoryActivity.class));
         finish();
     }
 

@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+    tools:context="org.secuso.privacyfriendlyactivitytracker.activities.HistoryActivity">
 
     <include layout="@layout/toolbar"/>
 

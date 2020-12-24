@@ -159,7 +159,7 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
 
                 //FragmentManager fragmentManager = getSupportFragmentManager();
                 //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, HistoryActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 

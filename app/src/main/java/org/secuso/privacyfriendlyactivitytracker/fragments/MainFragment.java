@@ -2,18 +2,20 @@ package org.secuso.privacyfriendlyactivitytracker.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
@@ -44,10 +46,10 @@ public class MainFragment extends Fragment {
         }
         container.removeAllViews();
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        ViewPager viewPager = view.findViewById(R.id.pager);
         setupViewPager(viewPager);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         setHasOptionsMenu(true);
@@ -100,7 +102,7 @@ public class MainFragment extends Fragment {
         }
 
         @Override
-        public android.support.v4.app.Fragment getItem(int position) {
+        public androidx.fragment.app.Fragment getItem(int position) {
             return mFragmentList.get(position);
         }
 

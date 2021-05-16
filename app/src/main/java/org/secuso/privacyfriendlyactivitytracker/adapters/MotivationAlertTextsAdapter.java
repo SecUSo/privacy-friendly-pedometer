@@ -1,8 +1,6 @@
 package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 
@@ -84,13 +85,13 @@ public class MotivationAlertTextsAdapter extends RecyclerView.Adapter<Motivation
         // each data item is just a string in this case
         public TextView mTextView;
         public ImageButton mImageButton;
-        private View view;
+        private final View view;
 
         public ViewHolder(View v) {
             super(v);
             view = v;
-            mTextView = (TextView) v.findViewById(R.id.text);
-            mImageButton = (ImageButton) v.findViewById(R.id.card_menu);
+            mTextView = v.findViewById(R.id.text);
+            mImageButton = v.findViewById(R.id.card_menu);
             mImageButton.setOnClickListener(this);
             view.setOnClickListener(this);
         }

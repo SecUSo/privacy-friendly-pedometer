@@ -16,12 +16,14 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.SplashActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
@@ -145,7 +147,14 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mNotifyManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder mBuilder = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            mBuilder = new NotificationCompat.Builder(this, SplashActivity.CHANNEL_ID);
+        } else {
+            mBuilder = new NotificationCompat.Builder(this);
+        }
         mBuilder.setContentTitle(getString(R.string.app_name))
                 .setContentText(message)
                 .setTicker(message)

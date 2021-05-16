@@ -3,11 +3,6 @@ package org.secuso.privacyfriendlyactivitytracker.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +12,13 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.adapters.TrainingOverviewAdapter;
@@ -60,12 +62,12 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
             startTrainingActivity();
         }
 
-        mEmptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        mEmptyView = findViewById(R.id.empty_view);
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.training_overview_list);
+        RecyclerView mRecyclerView = findViewById(R.id.training_overview_list);
         if (mRecyclerView == null) {
             Log.e(LOG_CLASS, "Cannot find recycler view");
             return;
@@ -74,7 +76,7 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // init fab
-        FloatingActionButton mStartTrainingFAB = (FloatingActionButton) findViewById(R.id.start_training);
+        FloatingActionButton mStartTrainingFAB = findViewById(R.id.start_training);
         if (mStartTrainingFAB == null) {
             Log.e(LOG_CLASS, "Cannot find fab.");
             return;
@@ -172,9 +174,9 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         AlertDialog.Builder alert = new AlertDialog.Builder(TrainingOverviewActivity.this, R.style.AppTheme_Dialog);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogLayout = inflater.inflate(R.layout.dialog_training, null);
-        final EditText edittext = (EditText) dialogLayout.findViewById(R.id.input_name);
-        final EditText descriptionEditText = (EditText) dialogLayout.findViewById(R.id.input_description);
-        final RatingBar feelingBar = (RatingBar) dialogLayout.findViewById(R.id.input_feeling);
+        final EditText edittext = dialogLayout.findViewById(R.id.input_name);
+        final EditText descriptionEditText = dialogLayout.findViewById(R.id.input_description);
+        final RatingBar feelingBar = dialogLayout.findViewById(R.id.input_feeling);
         if (position != null) {
             edittext.setText(trainings.get(position).getName());
             descriptionEditText.setText(String.valueOf(trainings.get(position).getDescription()));

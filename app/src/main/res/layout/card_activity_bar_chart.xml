@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <!-- A CardView that contains a TextView -->
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,13 +48,14 @@
                     android:src="@drawable/ic_more_vert_black_24dp" />
 
             </RelativeLayout>
+
             <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

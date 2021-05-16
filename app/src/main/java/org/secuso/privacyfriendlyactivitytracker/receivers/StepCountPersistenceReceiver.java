@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
+
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
@@ -27,7 +28,7 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
      * The application context
      */
     private Context context;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -46,7 +47,7 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
         Log.i(LOG_CLASS, "Storing the steps");
         this.context = context.getApplicationContext();
         if (intent.hasExtra(WalkingModePersistenceHelper.BROADCAST_EXTRA_OLD_WALKING_MODE)) {
-            oldWalkingMode = WalkingModePersistenceHelper.getItem(intent.getLongExtra(WalkingModePersistenceHelper.BROADCAST_EXTRA_OLD_WALKING_MODE, (long) -1), context);
+            oldWalkingMode = WalkingModePersistenceHelper.getItem(intent.getLongExtra(WalkingModePersistenceHelper.BROADCAST_EXTRA_OLD_WALKING_MODE, -1), context);
         }
         if(oldWalkingMode == null){
             oldWalkingMode = WalkingModePersistenceHelper.getActiveMode(context);

@@ -7,14 +7,15 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -59,7 +60,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewVelocityTitle;
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -88,14 +89,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
         StepDetectionServiceHelper.startAllIfEnabled(this);
 
-        mTextViewSteps = (TextView) findViewById(R.id.training_steps);
-        mTextViewDistance = (TextView) findViewById(R.id.training_distance);
-        mTextViewDistanceTitle = (TextView) findViewById(R.id.training_distance_title);
-        mTextViewCalories = (TextView) findViewById(R.id.training_calories);
-        mTextViewDuration = (TextView) findViewById(R.id.training_duration);
-        mTextViewVelocity = (TextView) findViewById(R.id.training_velocity);
-        mTextViewVelocityTitle = (TextView) findViewById(R.id.training_velocity_title);
-        Button buttonStop = (Button) findViewById(R.id.training_stop_button);
+        mTextViewSteps = findViewById(R.id.training_steps);
+        mTextViewDistance = findViewById(R.id.training_distance);
+        mTextViewDistanceTitle = findViewById(R.id.training_distance_title);
+        mTextViewCalories = findViewById(R.id.training_calories);
+        mTextViewDuration = findViewById(R.id.training_duration);
+        mTextViewVelocity = findViewById(R.id.training_velocity);
+        mTextViewVelocityTitle = findViewById(R.id.training_velocity_title);
+        Button buttonStop = findViewById(R.id.training_stop_button);
         if (buttonStop != null) {
             buttonStop.setOnClickListener(this);
         }
@@ -219,7 +220,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         int seconds = (duration - hours * 3600 - minutes * 60);
         String durationText = String.format(getResources().getConfiguration().locale, "%02d:%02d:%02d", hours, minutes, seconds);
         mTextViewDuration.setText(durationText);
-        mTextViewVelocity.setText(String.valueOf(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometersPerHourToUsersVelocityUnit(UnitUtil.metersPerSecondToKilometersPerHour(this.training.getVelocity()), this))));
+        mTextViewVelocity.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometersPerHourToUsersVelocityUnit(UnitUtil.metersPerSecondToKilometersPerHour(this.training.getVelocity()), this)));
         mTextViewVelocityTitle.setText(UnitUtil.usersVelocityDescription(this));
     }
 

@@ -1,8 +1,6 @@
 package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
@@ -101,14 +102,14 @@ public class WalkingModesAdapter extends RecyclerView.Adapter<WalkingModesAdapte
         public TextView mTextViewStepLength;
         public ImageButton mImageButton;
         public boolean isActive;
-        private View view;
+        private final View view;
 
         public ViewHolder(View v) {
             super(v);
             view = v;
-            mTextViewName = (TextView) v.findViewById(R.id.name);
-            mTextViewStepLength = (TextView) v.findViewById(R.id.step_length);
-            mImageButton = (ImageButton) v.findViewById(R.id.card_menu);
+            mTextViewName = v.findViewById(R.id.name);
+            mTextViewStepLength = v.findViewById(R.id.step_length);
+            mImageButton = v.findViewById(R.id.card_menu);
             mImageButton.setOnClickListener(this);
             view.setOnClickListener(this);
         }

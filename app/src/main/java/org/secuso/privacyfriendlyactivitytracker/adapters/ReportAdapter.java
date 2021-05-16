@@ -2,9 +2,6 @@ package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -56,7 +57,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     private static final int TYPE_SUMMARY = 0;
     private static final int TYPE_DAY_CHART = 1;
     private static final int TYPE_CHART = 2;
-    private List<Object> mItems;
+    private final List<Object> mItems;
     private OnItemClickListener mItemClickListener;
 
     /**
@@ -380,13 +381,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
         public SummaryViewHolder(View itemView) {
             super(itemView);
-            mTitleTextView = (TextView) itemView.findViewById(R.id.period);
-            mStepsTextView = (TextView) itemView.findViewById(R.id.stepCount);
-            mDistanceTextView = (TextView) itemView.findViewById(R.id.distanceCount);
-            mCaloriesTextView = (TextView) itemView.findViewById(R.id.calorieCount);
-            mDistanceTitleTextView = (TextView) itemView.findViewById(R.id.distanceTitle);
-            mPrevButton = (ImageButton) itemView.findViewById(R.id.prev_btn);
-            mNextButton = (ImageButton) itemView.findViewById(R.id.next_btn);
+            mTitleTextView = itemView.findViewById(R.id.period);
+            mStepsTextView = itemView.findViewById(R.id.stepCount);
+            mDistanceTextView = itemView.findViewById(R.id.distanceCount);
+            mCaloriesTextView = itemView.findViewById(R.id.calorieCount);
+            mDistanceTitleTextView = itemView.findViewById(R.id.distanceTitle);
+            mPrevButton = itemView.findViewById(R.id.prev_btn);
+            mNextButton = itemView.findViewById(R.id.next_btn);
 
             mPrevButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -424,8 +425,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public AbstractChartViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
-            mTitleTextView = (TextView) itemView.findViewById(R.id.period);
-            mMenuButton = (ImageButton) itemView.findViewById(R.id.periodMoreButton);
+            mTitleTextView = itemView.findViewById(R.id.period);
+            mMenuButton = itemView.findViewById(R.id.periodMoreButton);
             mMenuButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -477,7 +478,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
         public ChartViewHolder(View itemView) {
             super(itemView);
-            mChart = (LineChart) itemView.findViewById(R.id.chart);
+            mChart = itemView.findViewById(R.id.chart);
             mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
             mChart.getAxisRight().setEnabled(false);
             mChart.setTouchEnabled(false);
@@ -492,7 +493,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
         public CombinedChartViewHolder(View itemView) {
             super(itemView);
-            mChart = (CombinedChart) itemView.findViewById(R.id.chart);
+            mChart = itemView.findViewById(R.id.chart);
             mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
             mChart.getAxisRight().setEnabled(false);
             mChart.setTouchEnabled(false);
@@ -506,7 +507,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
     public class ArrayListAxisValueFormatter implements AxisValueFormatter {
-        private List<String> values;
+        private final List<String> values;
 
         public ArrayListAxisValueFormatter(List<String> values) {
             this.values = values;
@@ -528,7 +529,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     public class DoubleValueFormatter implements ValueFormatter {
 
-        private DecimalFormat mFormat;
+        private final DecimalFormat mFormat;
 
         public DoubleValueFormatter(String formatPattern) {
             mFormat = new DecimalFormat(formatPattern);

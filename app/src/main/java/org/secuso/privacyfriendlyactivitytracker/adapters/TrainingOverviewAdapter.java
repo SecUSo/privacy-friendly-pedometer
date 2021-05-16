@@ -2,9 +2,6 @@ package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -16,6 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.PopupMenu;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.Training;
@@ -254,23 +255,23 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
         public TrainingSessionViewHolder(View v) {
             super(v);
             view = v;
-            mCardViewLayout = (CardView) v.findViewById(R.id.card_training_session);
-            mSmallLayout = (RelativeLayout) v.findViewById(R.id.card_training_session_small);
-            mExpandedLayout = (LinearLayout) v.findViewById(R.id.card_training_session_expanded);
-            mTextViewName = (TextView) v.findViewById(R.id.training_card_title);
-            mTextViewDescription = (TextView) v.findViewById(R.id.training_card_description);
-            mTextViewSteps = (TextView) v.findViewById(R.id.training_card_steps);
-            mTextViewDistance = (TextView) v.findViewById(R.id.training_card_distance);
-            mTextViewCalories = (TextView) v.findViewById(R.id.training_card_calories);
-            mTextViewDuration = (TextView) v.findViewById(R.id.training_card_duration);
-            mTextViewSmallSteps = (TextView) v.findViewById(R.id.training_small_card_steps);
-            mTextViewSmallDuration = (TextView) v.findViewById(R.id.training_small_card_duration);
-            mTextViewSmallDistance = (TextView) v.findViewById(R.id.training_small_card_distance);
-            mTextViewSmallName = (TextView) v.findViewById(R.id.training_small_card_name);
-            mTextViewDistanceTitle = (TextView) v.findViewById(R.id.distanceTitle);
-            mTextViewSmallDistanceTitle = (TextView) v.findViewById(R.id.distance_title_small);
-            mRatingBarFeeling = (RatingBar) v.findViewById(R.id.training_card_feeling);
-            mImageButton = (ImageButton) v.findViewById(R.id.training_card_menu);
+            mCardViewLayout = v.findViewById(R.id.card_training_session);
+            mSmallLayout = v.findViewById(R.id.card_training_session_small);
+            mExpandedLayout = v.findViewById(R.id.card_training_session_expanded);
+            mTextViewName = v.findViewById(R.id.training_card_title);
+            mTextViewDescription = v.findViewById(R.id.training_card_description);
+            mTextViewSteps = v.findViewById(R.id.training_card_steps);
+            mTextViewDistance = v.findViewById(R.id.training_card_distance);
+            mTextViewCalories = v.findViewById(R.id.training_card_calories);
+            mTextViewDuration = v.findViewById(R.id.training_card_duration);
+            mTextViewSmallSteps = v.findViewById(R.id.training_small_card_steps);
+            mTextViewSmallDuration = v.findViewById(R.id.training_small_card_duration);
+            mTextViewSmallDistance = v.findViewById(R.id.training_small_card_distance);
+            mTextViewSmallName = v.findViewById(R.id.training_small_card_name);
+            mTextViewDistanceTitle = v.findViewById(R.id.distanceTitle);
+            mTextViewSmallDistanceTitle = v.findViewById(R.id.distance_title_small);
+            mRatingBarFeeling = v.findViewById(R.id.training_card_feeling);
+            mImageButton = v.findViewById(R.id.training_card_menu);
             mImageButton.setOnClickListener(this);
             view.setOnClickListener(this);
         }
@@ -323,7 +324,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
 
         public MonthHeadlineViewHolder(View v) {
             super(v);
-            mTextViewName = (TextView) v.findViewById(R.id.training_month_headline);
+            mTextViewName = v.findViewById(R.id.training_month_headline);
         }
     }
 
@@ -337,12 +338,12 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
 
         public TrainingSummaryViewHolder(View v) {
             super(v);
-            mTextViewSteps = (TextView) v.findViewById(R.id.training_card_steps);
-            mTextViewDistance = (TextView) v.findViewById(R.id.training_card_distance);
-            mTextViewCalories = (TextView) v.findViewById(R.id.training_card_calories);
-            mTextViewDuration = (TextView) v.findViewById(R.id.training_card_duration);
-            mTextViewDistanceTitle = (TextView) v.findViewById(R.id.distanceTitle);
-            mTextViewSince = (TextView) v.findViewById(R.id.training_card_since);
+            mTextViewSteps = v.findViewById(R.id.training_card_steps);
+            mTextViewDistance = v.findViewById(R.id.training_card_distance);
+            mTextViewCalories = v.findViewById(R.id.training_card_calories);
+            mTextViewDuration = v.findViewById(R.id.training_card_duration);
+            mTextViewDistanceTitle = v.findViewById(R.id.distanceTitle);
+            mTextViewSince = v.findViewById(R.id.training_card_since);
 
         }
     }

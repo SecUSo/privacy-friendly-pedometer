@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
 
         // Load first view
-        final android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        final androidx.fragment.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, new MainFragment(), "MainFragment");
         fragmentTransaction.commit();
 

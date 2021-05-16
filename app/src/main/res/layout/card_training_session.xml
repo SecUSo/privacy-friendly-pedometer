@@ -6,7 +6,7 @@
     android:clickable="true"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_training_session"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -357,7 +357,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

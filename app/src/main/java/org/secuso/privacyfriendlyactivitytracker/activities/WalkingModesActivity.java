@@ -3,18 +3,20 @@ package org.secuso.privacyfriendlyactivitytracker.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.adapters.WalkingModesAdapter;
@@ -43,12 +45,12 @@ public class WalkingModesActivity extends AppCompatActivity implements WalkingMo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_walking_modes);
 
-        mEmptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        mEmptyView = findViewById(R.id.empty_view);
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.walking_modes_list);
+        RecyclerView mRecyclerView = findViewById(R.id.walking_modes_list);
         if (mRecyclerView == null) {
             Log.e(LOG_CLASS, "Cannot find recycler view");
             return;
@@ -57,7 +59,7 @@ public class WalkingModesActivity extends AppCompatActivity implements WalkingMo
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // init fab
-        FloatingActionButton mAddWalkingModeButton = (FloatingActionButton) findViewById(R.id.add_walking_mode_btn);
+        FloatingActionButton mAddWalkingModeButton = findViewById(R.id.add_walking_mode_btn);
         if (mAddWalkingModeButton == null) {
             Log.e(LOG_CLASS, "Cannot find fab.");
             return;
@@ -124,8 +126,8 @@ public class WalkingModesActivity extends AppCompatActivity implements WalkingMo
         AlertDialog.Builder alert = new AlertDialog.Builder(WalkingModesActivity.this, R.style.AppTheme_Dialog);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogLayout = inflater.inflate(R.layout.dialog_walking_mode, null);
-        final EditText edittext = (EditText) dialogLayout.findViewById(R.id.input_name);
-        final EditText stepLengthText = (EditText) dialogLayout.findViewById(R.id.step_length_edit);
+        final EditText edittext = dialogLayout.findViewById(R.id.input_name);
+        final EditText stepLengthText = dialogLayout.findViewById(R.id.step_length_edit);
         if (position != null) {
             edittext.setText(walkingModes.get(position).getName());
             stepLengthText.setText(String.valueOf(walkingModes.get(position).getStepLength()));

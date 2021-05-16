@@ -11,16 +11,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -65,12 +66,12 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     private Calendar day;
     private ActivitySummary activitySummary;
     private ActivityChart activityChart;
-    private List<Object> reports = new ArrayList<>();
+    private final List<Object> reports = new ArrayList<>();
     private boolean generatingReports;
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -78,7 +79,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         }
 
         @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {Log.e("SDF", "service connected");
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e("SDF", "service connected");
             myBinder = (AbstractStepDetectorService.StepDetectorBinder) service;
             generateReports(true);
         }
@@ -116,7 +118,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        mRecyclerView = view.findViewById(R.id.my_recycler_view);
 
         // specify an adapter
         // using sample data.

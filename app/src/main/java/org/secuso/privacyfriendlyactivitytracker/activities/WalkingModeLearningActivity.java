@@ -9,13 +9,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -43,12 +44,12 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
     private Long start = null;
     private int stepCountSaved;
     private int stepCount;
-    private double distance = 100;
+    private final double distance = 100;
 
     private TextView mTextViewSteps;
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -91,16 +92,16 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
         // Start step counter
         StepDetectionServiceHelper.startAllIfEnabled(this);
 
-        mTextViewSteps = (TextView) findViewById(R.id.walking_mode_learning_steps);
-        TextView textViewDistance = (TextView) findViewById(R.id.walking_mode_learning_distance);
-        if(textViewDistance != null) {
+        mTextViewSteps = findViewById(R.id.walking_mode_learning_steps);
+        TextView textViewDistance = findViewById(R.id.walking_mode_learning_distance);
+        if (textViewDistance != null) {
             textViewDistance.setText(String.valueOf(UnitUtil.metersToUsersLengthUnit(this.distance, this)));
         }
-        TextView textViewDistanceTitle = (TextView) findViewById(R.id.walking_mode_learning_distance_title);
-        if(textViewDistanceTitle != null) {
+        TextView textViewDistanceTitle = findViewById(R.id.walking_mode_learning_distance_title);
+        if (textViewDistanceTitle != null) {
             textViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionForMeters(this));
         }
-        Button buttonStop = (Button) findViewById(R.id.walking_mode_learning_stop_button);
+        Button buttonStop = findViewById(R.id.walking_mode_learning_stop_button);
         if (buttonStop != null) {
             buttonStop.setOnClickListener(this);
         }

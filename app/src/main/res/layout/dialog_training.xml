@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <EditText
             android:id="@+id/input_name"
             android:layout_width="match_parent"
@@ -15,19 +16,20 @@
             android:hint="@string/hint_training_title"
             android:lines="1"
             android:inputType="textAutoCorrect" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <EditText
             android:id="@+id/input_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textAutoCorrect"
-            android:hint="@string/hint_training_description"/>
-    </android.support.design.widget.TextInputLayout>
+            android:hint="@string/hint_training_description" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="wrap_content"

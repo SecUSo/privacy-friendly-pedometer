@@ -4,17 +4,19 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.adapters.MotivationAlertTextsAdapter;
@@ -44,12 +46,12 @@ public class MotivationAlertTextsActivity extends AppCompatActivity implements M
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_motivation_alert_texts);
 
-        mEmptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        mEmptyView = findViewById(R.id.empty_view);
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.motivation_text_list);
+        RecyclerView mRecyclerView = findViewById(R.id.motivation_text_list);
         if (mRecyclerView == null) {
             Log.e(LOG_CLASS, "Cannot find recycler view");
             return;
@@ -58,7 +60,7 @@ public class MotivationAlertTextsActivity extends AppCompatActivity implements M
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // init fab
-        FloatingActionButton mAddMotivationTextButton = (FloatingActionButton) findViewById(R.id.add_motivation_text_btn);
+        FloatingActionButton mAddMotivationTextButton = findViewById(R.id.add_motivation_text_btn);
         if (mAddMotivationTextButton == null) {
             Log.e(LOG_CLASS, "Cannot find fab.");
             return;

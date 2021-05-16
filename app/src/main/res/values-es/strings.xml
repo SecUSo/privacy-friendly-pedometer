@@ -190,4 +190,15 @@
     <string name="slide_2_title">Personalizar</string>
     <string name="slide_3_desc">Defina modos de andado personalizados y las notificaciones si su meta diaria está en peligro.</string>
     <string name="slide_3_title">Notificaciones</string>
+    <string name="export_csv_permission_needed">El permiso de almacenamiento es necesario para exportar un archivo CSV.</string>
+    <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
+    <string name="help_permission_foreground_heading">Permission: Foreground Service</string>
+    <string name="help_permission_storage_description">is needed to export your collected data as a CSV-file. This permission is only requested when you want to export your data.</string>
+    <string name="help_permission_storage_heading">Permission: Write External Storage</string>
+    <string name="pref_title_export_data">Exportar datos</string>
+    <string name="pref_summary_export_data">Exportar el recuento de pasos en un archivo csv.</string>
+    <string name="export_csv_header">Inicio;Fin;Pasos;Modo</string>
+    <string name="export_csv_begin">&lt;Inicie&gt;</string>
+    <string name="export_csv_error">Se ha producido un error durante la exportación</string>
+    <string name="export_csv_success">"CSV exportado en "</string>
 </resources>

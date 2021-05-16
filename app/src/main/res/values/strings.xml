@@ -243,6 +243,11 @@
     <string name="activity_summary_chart_legend_stepgoal">Stepgoal</string>
     <string name="export_csv_header">Start;End;Steps;Mode</string>
     <string name="export_csv_begin">&lt;begin&gt;</string>
-    <string name="export_csv_error">Error happen during export</string>
+    <string name="export_csv_error">Error happened during export</string>
     <string name="export_csv_success">"CSV exported at "</string>
+    <string name="export_csv_permission_needed">The storage permission is needed to export a CSV file.</string>
+    <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
+    <string name="help_permission_foreground_heading">Permission: Foreground Service</string>
+    <string name="help_permission_storage_description">is needed to export your collected data as a CSV-file. This permission is only requested when you want to export your data.</string>
+    <string name="help_permission_storage_heading">Permission: Write External Storage</string>
 </resources>

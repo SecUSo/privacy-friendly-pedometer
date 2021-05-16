@@ -180,4 +180,15 @@
     <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus wechseln, indem Sie sie in der Toolbar auswählen.</string>
     <string name="slide_3_title">Benachritigungen</string>
     <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
+    <string name="export_csv_permission_needed">Die Speicherberechtigung wird für den Export der CSV-Datei benötigt.</string>
+    <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
+    <string name="help_permission_foreground_heading">Permission: Foreground Service</string>
+    <string name="help_permission_storage_description">is needed to export your collected data as a CSV-file. This permission is only requested when you want to export your data.</string>
+    <string name="help_permission_storage_heading">Permission: Write External Storage</string>
+    <string name="pref_title_export_data">Daten exportieren</string>
+    <string name="pref_summary_export_data">Exportieren Sie ihre Schrittzähler-Daten als CSV-Datei.</string>
+    <string name="export_csv_header">Start;Ende;Schritte;Modus</string>
+    <string name="export_csv_begin">&lt;Anfang&gt;</string>
+    <string name="export_csv_error">Fehler beim Export aufgetreten</string>
+    <string name="export_csv_success">CSV exportiert unter</string>
 </resources>

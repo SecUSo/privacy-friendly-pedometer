@@ -196,4 +196,9 @@
     <string name="export_csv_error">Une erreur s\'est produite durant l\'export</string>
     <string name="export_csv_header">Début;Fin;Pas;Mode</string>
     <string name="export_csv_success">"CSV exportée à l'adresse "</string>
+    <string name="export_csv_permission_needed">L\'autorisation de stockage est nécessaire pour exporter un fichier CSV.</string>
+    <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
+    <string name="help_permission_foreground_heading">Permission: Foreground Service</string>
+    <string name="help_permission_storage_description">is needed to export your collected data as a CSV-file. This permission is only requested when you want to export your data.</string>
+    <string name="help_permission_storage_heading">Permission: Write External Storage</string>
 </resources>

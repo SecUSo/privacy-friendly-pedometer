@@ -1,0 +1,1 @@
+Schritte im Hintergrund oder während expliziter Trainings-Sequenzen zählen.

@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 import android.content.ComponentName;
@@ -27,7 +44,7 @@ import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistence
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,7 +60,12 @@ import java.util.TimerTask;
  * @author Tobias Neidig
  * @version 20160730
  */
+
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener {
+    /**
+     * Broadcast action identifier for messages broadcasted when new steps were detected
+     */
+    public static final String BROADCAST_ACTION_TRAINING_STOPPED = "org.secuso.privacyfriendlystepcounter.TRAINING_STOPPED";
     public static final String LOG_CLASS = TrainingActivity.class.getName();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private Map<Integer, WalkingMode> menuWalkingModes;
@@ -55,6 +77,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private TextView mTextViewDistance;
     private TextView mTextViewDistanceTitle;
     private TextView mTextViewCalories;
+    private TextView mTextViewCaloriesTitle;
     private TextView mTextViewDuration;
     private TextView mTextViewVelocity;
     private TextView mTextViewVelocityTitle;
@@ -87,12 +110,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             // Now wait for steps saved broadcast message and than create a new training session.
             // We have to wait to ensure, that only the steps since now are counted.
         }
-        StepDetectionServiceHelper.startAllIfEnabled(this);
-
         mTextViewSteps = findViewById(R.id.training_steps);
         mTextViewDistance = findViewById(R.id.training_distance);
         mTextViewDistanceTitle = findViewById(R.id.training_distance_title);
         mTextViewCalories = findViewById(R.id.training_calories);
+        mTextViewCaloriesTitle = (TextView) findViewById(R.id.training_calories_title);
         mTextViewDuration = findViewById(R.id.training_duration);
         mTextViewVelocity = findViewById(R.id.training_velocity);
         mTextViewVelocityTitle = findViewById(R.id.training_velocity_title);
@@ -211,17 +233,20 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         mTextViewSteps.setText(String.valueOf((int)this.training.getSteps()));
-        mTextViewDistance.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(this.training.getDistance()), this)));
-        mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(this));
-        mTextViewCalories.setText(String.format(getResources().getConfiguration().locale, "%.2f", this.training.getCalories()));
+        UnitHelper.FormattedUnitPair distance = UnitHelper.formatKilometers(UnitHelper.metersToKilometers(this.training.getDistance()), this);
+        UnitHelper.FormattedUnitPair calories = UnitHelper.formatCalories(UnitHelper.metersToKilometers(this.training.getCalories()), this);
+        mTextViewDistance.setText(distance.getValue());
+        mTextViewDistanceTitle.setText(distance.getUnit());
+        mTextViewCalories.setText(calories.getValue());
+        mTextViewCaloriesTitle.setText(calories.getUnit());
         int duration = this.training.getDuration();
         int hours = (duration / 3600);
         int minutes = (duration - hours * 3600) / 60;
         int seconds = (duration - hours * 3600 - minutes * 60);
         String durationText = String.format(getResources().getConfiguration().locale, "%02d:%02d:%02d", hours, minutes, seconds);
         mTextViewDuration.setText(durationText);
-        mTextViewVelocity.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometersPerHourToUsersVelocityUnit(UnitUtil.metersPerSecondToKilometersPerHour(this.training.getVelocity()), this)));
-        mTextViewVelocityTitle.setText(UnitUtil.usersVelocityDescription(this));
+        mTextViewVelocity.setText(String.format(getResources().getConfiguration().locale, "%.2f", UnitHelper.kilometersPerHourToUsersVelocityUnit(UnitHelper.metersPerSecondToKilometersPerHour(this.training.getVelocity()), this)));
+        mTextViewVelocityTitle.setText(UnitHelper.usersVelocityDescription(this));
     }
 
     /**
@@ -238,7 +263,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             this.mTimer = null;
         }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
-
+        // broadcast the end of training mode
+        Intent localIntent = new Intent(BROADCAST_ACTION_TRAINING_STOPPED);
+        // Broadcasts the Intent to receivers in this app.
+        LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
         StepDetectionServiceHelper.stopAllIfNotRequired(this);
         Intent intent = new Intent(this, TrainingOverviewActivity.class);
         startActivity(intent);
@@ -304,6 +332,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         training.setName(String.format(getResources().getConfiguration().locale, getString(R.string.training_default_title), WalkingModePersistenceHelper.getActiveMode(TrainingActivity.this).getName(), cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH)));
                         training.setDescription("");
                         training = TrainingPersistenceHelper.save(training, TrainingActivity.this);
+                        StepDetectionServiceHelper.startAllIfEnabled(getApplicationContext());
                     }
                     // continue with updating the view
                 case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:

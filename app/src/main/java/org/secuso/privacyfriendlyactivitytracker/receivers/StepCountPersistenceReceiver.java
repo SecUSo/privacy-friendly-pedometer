@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.receivers;
 
 import android.content.ComponentName;
@@ -21,6 +38,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
  * @author Tobias Neidig
  * @version 20160720
  */
+
 public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
     private static final String LOG_CLASS = StepCountPersistenceReceiver.class.getName();
     private WalkingMode oldWalkingMode;
@@ -37,8 +55,9 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             StepCountPersistenceHelper.storeStepCounts(service, context, oldWalkingMode);
-            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
             context.getApplicationContext().unbindService(mServiceConnection);
+            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
+            WidgetReceiver.forceWidgetUpdate(context);
         }
     };
 

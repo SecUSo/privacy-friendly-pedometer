@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.secuso.privacyfriendlyactivitytracker">
 
@@ -10,6 +27,8 @@
         android:smallScreens="true"
         android:xlargeScreens="true"/>
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -42,8 +61,7 @@
         <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.AboutActivity"
             android:label="@string/action_about"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
@@ -52,7 +70,6 @@
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.HelpActivity"
             android:label="@string/action_help"
             android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -93,6 +110,7 @@
         <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity"
             android:label="@string/activity_title_walking_modes"
+            android:configChanges="orientation|screenSize|keyboard"
             android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -105,6 +123,19 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.WalkingModesActivity" />
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlyactivitytracker.activities.DistanceMeasurementActivity"
+            android:label="@string/action_distance_measurement"
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
+        </activity>
+        <activity android:name="org.secuso.privacyfriendlyactivitytracker.activities.WidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
         </activity>
 
         <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnBootCompletedBroadcastReceiver">
@@ -132,9 +163,20 @@
                 <action android:name="org.secuso.privacyfriendlystepcounter.WALKING_MODE_CHANGED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="org.secuso.privacyfriendlyactivitytracker.receivers.WidgetReceiver" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_provider" />
+        </receiver>
 
         <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver"/>
+        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.HardwareStepCountReceiver"/>
 
+        <service android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepCounterService" />
+        <service android:name="org.secuso.privacyfriendlyactivitytracker.services.MovementSpeedService" />
         <service android:name="org.secuso.privacyfriendlyactivitytracker.services.AccelerometerStepDetectorService" />
         <service
             android:name="org.secuso.privacyfriendlyactivitytracker.services.HardwareStepDetectorService"

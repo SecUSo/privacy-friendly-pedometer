@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 
@@ -10,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -188,6 +206,23 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 //|| HelpFragment.class.getName().equals(fragmentName);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        for (int i = 0; i < permissions.length; i++) {
+            String permission = permissions[i];
+            int grantResult = grantResults[i];
+
+            if (permission.equals(Manifest.permission.ACCESS_COARSE_LOCATION) || permission.equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    // location permission was not granted - disable velocity setting.
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putBoolean(getString(R.string.pref_show_velocity), false);
+                    editor.apply();
+                }
+            }
+        }
+    }
     /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
@@ -207,6 +242,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             additionalSummaryTexts.put(getString(R.string.pref_accelerometer_threshold), getString(R.string.pref_summary_accelerometer_threshold));
 
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_length)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_energy)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_daily_step_goal)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_weight)));
             bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_gender)));
@@ -220,7 +256,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 // hide accelerometer threshold if hardware detection is used.
                 PreferenceScreen screen = getPreferenceScreen();
                 ListPreference accelerometerThresholdPref = (ListPreference) findPreference(getString(R.string.pref_accelerometer_threshold));
+                EditTextPreference accelerometerStepsThresholdPref = (EditTextPreference) findPreference(getString(R.string.pref_accelerometer_steps_threshold));
                 screen.removePreference(accelerometerThresholdPref);
+                screen.removePreference(accelerometerStepsThresholdPref);
             }
 
             Preference exportDataPreference = findPreference(getString(R.string.pref_export_data));
@@ -321,6 +359,16 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
                 } else {
                     StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+                }
+            }
+            // check for location permission
+            if (key.equals(getString(R.string.pref_show_velocity))) {
+                boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_show_velocity), false);
+                if (isEnabled) {
+                    if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                    }
                 }
             }
         }

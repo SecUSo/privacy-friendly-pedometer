@@ -1,22 +1,35 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.persistence;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Helper to save and restore walking modes from database.
  *
  * @author Tobias Neidig
- * @version 20160726
+ * @version 20170810
  */
 public class WalkingModePersistenceHelper {
 
@@ -28,28 +41,21 @@ public class WalkingModePersistenceHelper {
     public static final String BROADCAST_EXTRA_NEW_WALKING_MODE = "org.secuso.privacyfriendlystepcounter.EXTRA_NEW_WALKING_MODE";
     public static final String LOG_CLASS = WalkingModePersistenceHelper.class.getName();
 
-    private static SQLiteDatabase db = null;
-
     /**
+     * @deprecated Use {@link WalkingModeDbHelper#getAllWalkingModes()} instead.
+     *
      * Gets all not deleted walking modes from database
      *
      * @param context The application context
      * @return a list of walking modes
      */
     public static List<WalkingMode> getAllItems(Context context) {
-        Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED + " = ?", new String[]{String.valueOf(false)}, context);
-        List<WalkingMode> walkingModes = new ArrayList<>();
-        if (c == null) {
-            return walkingModes;
-        }
-        while (c.moveToNext()) {
-            walkingModes.add(WalkingMode.from(c));
-        }
-        c.close();
-        return walkingModes;
+        return new WalkingModeDbHelper(context).getAllWalkingModes();
     }
 
     /**
+     * @deprecated Use {@link WalkingModeDbHelper#getWalkingMode(int)} instead.
+     *
      * Gets the specific walking mode
      *
      * @param id      the id of the walking mode
@@ -57,20 +63,7 @@ public class WalkingModePersistenceHelper {
      * @return the requested walking mode or null
      */
     public static WalkingMode getItem(long id, Context context) {
-        Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry._ID + " = ?", new String[]{String.valueOf(id)}, context);
-        WalkingMode walkingMode = null;
-        if (c == null) {
-            return null;
-        }
-        if (c.getCount() == 0) {
-            walkingMode = null;
-        } else {
-            c.moveToFirst();
-            walkingMode = WalkingMode.from(c);
-        }
-
-        c.close();
-        return walkingMode;
+        return new WalkingModeDbHelper(context).getWalkingMode((int) id);
     }
 
     /**
@@ -104,6 +97,8 @@ public class WalkingModePersistenceHelper {
     }
 
     /**
+     * @deprecated Use {@link WalkingModeDbHelper#deleteWalkingMode(WalkingMode)} instead.
+     *
      * Deletes the given walking mode from database
      *
      * @param item    the item to delete
@@ -111,12 +106,8 @@ public class WalkingModePersistenceHelper {
      * @return true if deletion was successful else false
      */
     public static boolean delete(WalkingMode item, Context context) {
-        if (item == null || item.getId() <= 0) {
-            return false;
-        }
-        String selection = WalkingModeDbHelper.WalkingModeEntry._ID + " = ?";
-        String[] selectionArgs = {String.valueOf(item.getId())};
-        return (0 != getDB(context).delete(WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME, selection, selectionArgs));
+        new WalkingModeDbHelper(context).deleteWalkingMode(item);
+        return true;
     }
 
     /**
@@ -170,25 +161,20 @@ public class WalkingModePersistenceHelper {
     }
 
     /**
+     * @deprecated Use {@link WalkingModeDbHelper#getActiveWalkingMode} instead.
+     *
      * Gets the currently active walking mode
      *
      * @param context The application context
      * @return The walking mode with active-flag set
      */
     public static WalkingMode getActiveMode(Context context) {
-        Cursor c = getCursor(WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE + " = ?", new String[]{String.valueOf(true)}, context);
-        WalkingMode walkingMode;
-        if (c.getCount() == 0) {
-            walkingMode = null;
-        } else {
-            c.moveToFirst();
-            walkingMode = WalkingMode.from(c);
-        }
-        c.close();
-        return walkingMode;
+        return new WalkingModeDbHelper(context).getActiveWalkingMode();
     }
 
     /**
+     * @deprecated Use {@link WalkingModeDbHelper#addWalkingMode(WalkingMode)} instead.
+     *
      * Inserts the given walking mode as new entry.
      *
      * @param item    The walking mode which should be stored
@@ -196,14 +182,12 @@ public class WalkingModePersistenceHelper {
      * @return the inserted id
      */
     protected static long insert(WalkingMode item, Context context) {
-        ContentValues values = item.toContentValues();
-        return getDB(context).insert(
-                WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
-                null,
-                values);
+        return new WalkingModeDbHelper(context).addWalkingMode(item);
     }
 
     /**
+     * @deprecated Use {@link WalkingModeDbHelper#updateWalkingMode(WalkingMode)} instead.
+     *
      * Updates the given walking mode in database
      *
      * @param item    The walking mode to update
@@ -211,69 +195,6 @@ public class WalkingModePersistenceHelper {
      * @return the number of rows affected
      */
     protected static int update(WalkingMode item, Context context) {
-        ContentValues values = item.toContentValues();
-
-        String selection = WalkingModeDbHelper.WalkingModeEntry._ID + " = ?";
-        String[] selectionArgs = {String.valueOf(item.getId())};
-
-        return getDB(context).update(
-                WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-    }
-
-    /**
-     * Gets the database cursor for given selection arguments.
-     *
-     * @param selection     The selection query
-     * @param selectionArgs The arguments for selection query
-     * @param context       The application context
-     * @return the database cursor
-     */
-    protected static Cursor getCursor(String selection, String[] selectionArgs, Context context) {
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                WalkingModeDbHelper.WalkingModeEntry._ID,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_NAME,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_SIZE,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_STEP_FREQUENCY,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_ACTIVE,
-                WalkingModeDbHelper.WalkingModeEntry.COLUMN_NAME_IS_DELETED
-        };
-
-        // How you want the results sorted in the resulting Cursor
-        String sortOrder =
-                WalkingModeDbHelper.WalkingModeEntry._ID + " ASC";
-
-        return getDB(context).query(
-                WalkingModeDbHelper.WalkingModeEntry.TABLE_NAME,  // The table to query
-                projection,                                            // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
-        );
-    }
-
-
-    /**
-     * Returns the writable database
-     *
-     * @param context The application context
-     * @return a writable database object
-     */
-    protected static SQLiteDatabase getDB(Context context) {
-        if (WalkingModePersistenceHelper.db == null) {
-            WalkingModeDbHelper dbHelper = new WalkingModeDbHelper(context);
-            WalkingModePersistenceHelper.db = dbHelper.getWritableDatabase();
-        }
-        return WalkingModePersistenceHelper.db;
-    }
-
-    public static void setSQLiteDatabase(SQLiteDatabase db){
-        WalkingModePersistenceHelper.db = db;
+        return new WalkingModeDbHelper(context).updateWalkingMode(item);
     }
 }

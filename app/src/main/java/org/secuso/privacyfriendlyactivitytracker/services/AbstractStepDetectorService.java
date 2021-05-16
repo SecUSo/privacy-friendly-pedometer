@@ -23,11 +23,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.SplashActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.util.Calendar;
 import java.util.List;
@@ -39,6 +42,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160810
  */
+
 public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
@@ -137,11 +141,14 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         }
         if (showDistance) {
             message += (!message.isEmpty()) ? "\n" : "";
-            message += String.format(getString(R.string.notification_text_distance), UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(totalDistance), this), UnitUtil.usersLengthDescriptionShort(this));
+            message += String.format(getString(R.string.notification_text_distance), UnitHelper.kilometerToUsersLengthUnit(UnitHelper.metersToKilometers(totalDistance), this), UnitHelper.usersLengthDescriptionShort(this));
         }
         if (showCalories) {
             message += (!message.isEmpty()) ? "\n" : "";
             message += String.format(getString(R.string.notification_text_calories), totalCalories);
+        }
+        if(message.isEmpty()){
+            message = getString(R.string.notification_text_default);
         }
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
@@ -180,6 +187,14 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      */
     public abstract int getSensorType();
 
+    /**
+     * Whether the notification should be canceled when service dies.
+     * @return true if notification should be canceled else false
+     */
+    protected boolean cancelNotificationOnDestroy(){
+        return true;
+    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // currently doing nothing here.
@@ -189,35 +204,18 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public void onCreate() {
         super.onCreate();
         Log.i(LOG_TAG, "Creating service.");
-        // register for sensors
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
-
-        // Get daily goal(s) from preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
-        this.dailyStepGoal = Integer.parseInt(d);
-        sharedPref.registerOnSharedPreferenceChangeListener(this);
-
-        // register for steps-saved-event
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED));
-        // load step count from database
-        getStepsAtLastSave();
     }
 
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "Destroying service.");
         // release wake lock if any
-        if(mWakeLock != null){
-            releaseWakeLock();
-        }
+        acquireOrReleaseWakeLock();
         // Unregister sensor listeners
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
         // Cancel notification
-        if (mNotifyManager != null) {
+        if (mNotifyManager != null && cancelNotificationOnDestroy()) {
             mNotifyManager.cancel(NOTIFICATION_ID);
         }
         // Unregister shared preferences listeners
@@ -232,11 +230,31 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "Starting service.");
         startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean useWakeLock = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock), false);
-        if(mWakeLock == null && useWakeLock) {
-            acquireWakeLock();
+        acquireOrReleaseWakeLock();
+
+        if(!StepDetectionServiceHelper.isStepDetectionEnabled(getApplicationContext())){
+            stopSelf();
         }
+        // register for sensors
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
+
+        // Get daily goal(s) from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
+        this.dailyStepGoal = Integer.parseInt(d);
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+        // register for steps-saved-event
+        IntentFilter filterRefreshUpdate = new IntentFilter();
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED );
+        filterRefreshUpdate.addAction(TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+        // load step count from database
+        getStepsAtLastSave();
 
         return START_STICKY;
     }
@@ -262,12 +280,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
                 key.equals(getString(R.string.pref_notification_permanent_show_calories))) {
             updateNotification();
         } else if(key.equals(getString(R.string.pref_use_wake_lock))){
-            boolean useWakeLock = sharedPreferences.getBoolean(getString(R.string.pref_use_wake_lock), false);
-            if(useWakeLock && this.mWakeLock == null){
-                acquireWakeLock();
-            }else if(!useWakeLock && this.mWakeLock != null){
-                releaseWakeLock();
-            }
+            acquireOrReleaseWakeLock();
         }
     }
 
@@ -301,9 +314,22 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     /**
      * Updates or creates the progress notification
      */
-    private void updateNotification() {
+    protected void updateNotification() {
         Notification notification = buildNotification(this.stepCountFromTotalSteps());
         mNotifyManager.notify(NOTIFICATION_ID, notification);
+    }
+
+    private void acquireOrReleaseWakeLock(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean useWakeLock = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock), false);
+        boolean useWakeLockDuringTraining = sharedPref.getBoolean(getString(R.string.pref_use_wake_lock_during_training), true);
+        boolean isTrainingActive = TrainingPersistenceHelper.getActiveItem(getApplicationContext()) != null;
+        if(mWakeLock == null && (useWakeLock || (useWakeLockDuringTraining && isTrainingActive))) {
+            acquireWakeLock();
+        }
+        if(mWakeLock != null && !(useWakeLock || (useWakeLockDuringTraining && isTrainingActive))){
+            releaseWakeLock();
+        }
     }
 
     /**
@@ -364,10 +390,15 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
                 return;
             }
             switch (intent.getAction()) {
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED:
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED:
                 case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED:
                     // Steps were saved, reload step count from database
                     getStepsAtLastSave();
+                    updateNotification();
                     break;
+                case TrainingActivity.BROADCAST_ACTION_TRAINING_STOPPED:
+                    acquireOrReleaseWakeLock();
                 default:
             }
         }

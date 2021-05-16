@@ -1,9 +1,30 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +39,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
-import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
-import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Displays the main app view.
@@ -33,12 +51,21 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160601
  */
-public class MainFragment extends Fragment {
-    private Map<Integer, WalkingMode> menuWalkingModes;
+public class MainFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
+
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setSubtitle(R.string.action_main);
@@ -57,6 +84,20 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDetach(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
+        StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+        super.onDetach();
+    }
+
+    @Override
+    public void onPause(){
+        StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+        super.onPause();
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         new ViewPagerAdapter(null);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
@@ -67,30 +108,61 @@ public class MainFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_options_overview, menu);
+    }
+
+    @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        // Add the walking modes to option menu
-        menu.clear();
-        menuWalkingModes = new HashMap<>();
-        List<WalkingMode> walkingModes = WalkingModePersistenceHelper.getAllItems(getContext());
-        int i = 0;
-        for (WalkingMode walkingMode : walkingModes) {
-            int id = Menu.FIRST + (i++);
-            menuWalkingModes.put(id, walkingMode);
-            menu.add(0, id, Menu.NONE, walkingMode.getName()).setChecked(walkingMode.isActive());
-        }
-        menu.setGroupCheckable(0, true, true);
         super.onPrepareOptionsMenu(menu);
+
+        setPauseContinueMenuItemVisibility(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (!menuWalkingModes.containsKey(item.getItemId())) {
-            return false;
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPref.edit();
+        switch(item.getItemId()){
+            case R.id.menu_pause_step_detection:
+                editor.putBoolean(getString(R.string.pref_step_counter_enabled), false);
+                editor.apply();
+                StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+                return true;
+            case R.id.menu_continue_step_detection:
+                editor.putBoolean(getString(R.string.pref_step_counter_enabled), true);
+                editor.apply();
+                StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
+                return true;
+            default:
+                return false;
         }
-        // update active walking mode
-        WalkingMode walkingMode = menuWalkingModes.get(item.getItemId());
-        WalkingModePersistenceHelper.setActiveMode(walkingMode, getContext());
-        return true;
+    }
+
+    /**
+     * Sets the visibility of pause and continue buttons in given menu
+     * @param menu
+     */
+    private void setPauseContinueMenuItemVisibility(Menu menu){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        boolean isStepCounterEnabled = sharedPref.getBoolean(getString(R.string.pref_step_counter_enabled), true);
+        MenuItem continueStepDetectionMenuItem = menu.findItem(R.id.menu_continue_step_detection);
+        MenuItem pauseStepDetectionMenuItem = menu.findItem(R.id.menu_pause_step_detection);
+        if(isStepCounterEnabled){
+            continueStepDetectionMenuItem.setVisible(false);
+            pauseStepDetectionMenuItem.setVisible(true);
+        }else {
+            continueStepDetectionMenuItem.setVisible(true);
+            pauseStepDetectionMenuItem.setVisible(false);
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.pref_step_counter_enabled))){
+            this.getActivity().invalidateOptionsMenu();
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -124,7 +196,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
+        StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
         super.onAttach(activity);
     }
-
 }

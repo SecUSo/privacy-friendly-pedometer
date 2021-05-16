@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
@@ -20,7 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.Training;
-import org.secuso.privacyfriendlyactivitytracker.utils.UnitUtil;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,6 +50,7 @@ import java.util.List;
  * @author Tobias Neidig
  * @version 20160728
  */
+
 public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOverviewAdapter.ViewHolder> {
     public static final int VIEW_TYPE_TRAINING_SESSION = 0;
     public static final int VIEW_TYPE_MONTH_HEADLINE = 1;
@@ -88,24 +106,31 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Training item = mItems.get(position);
+        UnitHelper.FormattedUnitPair distance;
+        UnitHelper.FormattedUnitPair calories;
         switch (getItemViewType(position)) {
             case VIEW_TYPE_SUMMARY:
                 TrainingSummaryViewHolder trainingSummaryViewHolder = (TrainingSummaryViewHolder) holder;
+                distance = UnitHelper.formatKilometers(UnitHelper.metersToKilometers(item.getDistance()), trainingSummaryViewHolder.itemView.getContext());
+                calories = UnitHelper.formatCalories(item.getCalories(), trainingSummaryViewHolder.itemView.getContext());
                 if (trainingSummaryViewHolder.mTextViewSteps != null) {
                     trainingSummaryViewHolder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
                 }
                 if (trainingSummaryViewHolder.mTextViewDistance != null) {
-                    trainingSummaryViewHolder.mTextViewDistance.setText(String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSummaryViewHolder.itemView.getContext())));
+                    trainingSummaryViewHolder.mTextViewDistance.setText(distance.getValue());
                 }
                 if (trainingSummaryViewHolder.mTextViewCalories != null) {
-                    trainingSummaryViewHolder.mTextViewCalories.setText(String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", item.getCalories()));
+                    trainingSummaryViewHolder.mTextViewCalories.setText(calories.getValue());
                 }
                 if (trainingSummaryViewHolder.mTextViewDuration != null) {
                     String durationText = String.format(trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale, "%02d:%02d", ((item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
                     trainingSummaryViewHolder.mTextViewDuration.setText(durationText);
                 }
                 if (trainingSummaryViewHolder.mTextViewDistanceTitle != null) {
-                    trainingSummaryViewHolder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSummaryViewHolder.itemView.getContext()));
+                    trainingSummaryViewHolder.mTextViewDistanceTitle.setText(distance.getUnit());
+                }
+                if (trainingSummaryViewHolder.mTextViewCaloriesTitle != null) {
+                    trainingSummaryViewHolder.mTextViewCaloriesTitle.setText(calories.getUnit());
                 }
                 if(trainingSummaryViewHolder.mTextViewSince != null){
                     DateFormat df = new SimpleDateFormat("MMMM yyyy", trainingSummaryViewHolder.itemView.getResources().getConfiguration().locale);
@@ -124,6 +149,10 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                 break;
             case VIEW_TYPE_TRAINING_SESSION:
                 final TrainingSessionViewHolder trainingSessionViewHolder = (TrainingSessionViewHolder) holder;
+                distance = UnitHelper.formatKilometers(UnitHelper.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext());
+                calories = UnitHelper.formatCalories(item.getCalories(), trainingSessionViewHolder.itemView.getContext());
+                String durationText = String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%02d:%02d", ((item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
+
                 if (trainingSessionViewHolder.mTextViewName != null) {
                     trainingSessionViewHolder.mTextViewName.setText(item.getName());
                 }
@@ -134,12 +163,11 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                     trainingSessionViewHolder.mTextViewSteps.setText(String.valueOf((int) item.getSteps()));
                 }
                 if (trainingSessionViewHolder.mTextViewDistance != null) {
-                    trainingSessionViewHolder.mTextViewDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
+                    trainingSessionViewHolder.mTextViewDistance.setText(distance.getValue());
                 }
                 if (trainingSessionViewHolder.mTextViewCalories != null) {
-                    trainingSessionViewHolder.mTextViewCalories.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", item.getCalories()));
+                    trainingSessionViewHolder.mTextViewCalories.setText(calories.getValue());
                 }
-                String durationText = String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%02d:%02d", ((item.getDuration() / 3600)), ((item.getDuration() - (item.getDuration() / 3600) * 3600) / 60));
                 if (trainingSessionViewHolder.mTextViewDuration != null) {
                     trainingSessionViewHolder.mTextViewDuration.setText(durationText);
                 }
@@ -153,18 +181,20 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
                     trainingSessionViewHolder.mTextViewSmallDuration.setText(durationText);
                 }
                 if (trainingSessionViewHolder.mTextViewSmallDistance != null) {
-                    trainingSessionViewHolder.mTextViewSmallDistance.setText(String.format(trainingSessionViewHolder.itemView.getResources().getConfiguration().locale, "%.2f", UnitUtil.kilometerToUsersLengthUnit(UnitUtil.metersToKilometers(item.getDistance()), trainingSessionViewHolder.itemView.getContext())));
+                    trainingSessionViewHolder.mTextViewSmallDistance.setText(distance.getValue());
                 }
                 if (trainingSessionViewHolder.mTextViewSmallName != null) {
                     trainingSessionViewHolder.mTextViewSmallName.setText(item.getName());
                 }
                 if (trainingSessionViewHolder.mTextViewDistanceTitle != null) {
-                    trainingSessionViewHolder.mTextViewDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
+                    trainingSessionViewHolder.mTextViewDistanceTitle.setText(distance.getUnit());
                 }
                 if (trainingSessionViewHolder.mTextViewSmallDistanceTitle != null) {
-                    trainingSessionViewHolder.mTextViewSmallDistanceTitle.setText(UnitUtil.usersLengthDescriptionShort(trainingSessionViewHolder.itemView.getContext()));
+                    trainingSessionViewHolder.mTextViewSmallDistanceTitle.setText(distance.getUnit());
                 }
-
+                if (trainingSessionViewHolder.mTextViewCaloriesTitle != null) {
+                    trainingSessionViewHolder.mTextViewCaloriesTitle.setText(calories.getUnit());
+                }
                 if (trainingSessionViewHolder.mRatingBarFeeling != null) {
                     final boolean isExpanded = position == mExpandedPosition;
                     trainingSessionViewHolder.mExpandedLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
@@ -246,6 +276,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
 
         public TextView mTextViewDistanceTitle;
         public TextView mTextViewSmallDistanceTitle;
+        public TextView mTextViewCaloriesTitle;
 
         public RelativeLayout mSmallLayout;
         public LinearLayout mExpandedLayout;
@@ -270,6 +301,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             mTextViewSmallName = v.findViewById(R.id.training_small_card_name);
             mTextViewDistanceTitle = v.findViewById(R.id.distanceTitle);
             mTextViewSmallDistanceTitle = v.findViewById(R.id.distance_title_small);
+            mTextViewCaloriesTitle = (TextView) v.findViewById(R.id.calorieTitle);
             mRatingBarFeeling = v.findViewById(R.id.training_card_feeling);
             mImageButton = v.findViewById(R.id.training_card_menu);
             mImageButton.setOnClickListener(this);
@@ -334,6 +366,7 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
         public TextView mTextViewCalories;
         public TextView mTextViewDuration;
         public TextView mTextViewDistanceTitle;
+        public TextView mTextViewCaloriesTitle;
         public TextView mTextViewSince;
 
         public TrainingSummaryViewHolder(View v) {
@@ -342,7 +375,8 @@ public class TrainingOverviewAdapter extends RecyclerView.Adapter<TrainingOvervi
             mTextViewDistance = v.findViewById(R.id.training_card_distance);
             mTextViewCalories = v.findViewById(R.id.training_card_calories);
             mTextViewDuration = v.findViewById(R.id.training_card_duration);
-            mTextViewDistanceTitle = v.findViewById(R.id.distanceTitle);
+            mTextViewDistanceTitle = v.findViewById(R.id.training_distance_title);
+            mTextViewCaloriesTitle = (TextView) v.findViewById(R.id.calorieTitle);
             mTextViewSince = v.findViewById(R.id.training_card_since);
 
         }

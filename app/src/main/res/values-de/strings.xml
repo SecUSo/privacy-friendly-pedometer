@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
 <resources>
 
     <string name="app_name">Schrittzähler</string>
@@ -13,7 +30,7 @@
 
     <!--About -->
     <string name="about_affiliation">In Zusammenarbeit mit</string>
-    <string name="about_author">Auhor: </string>
+    <string name="about_author">"Autor: "</string>
     <string name="about_author_contributors"> und Mitwirkende.</string>
     <string name="more_info">Mehr Informationen unter:</string>
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt von der Technischen Universität Darmstadt. Quelltext lizenziert unter GPLv3. Bilder copyright TU Darmstadt und Google Inc.</string>
@@ -66,6 +83,7 @@
     <string name="notification_text_calories">%.2f Kalorien verbrannt.</string>
     <string name="notification_text_distance">%1$.2f %2$s gelaufen.</string>
     <string name="notification_text_steps">%1$s von %2$s Schritten gelaufen.</string>
+    <string name="notification_text_default">Schrittzähler aktiv.</string>
     <string name="operation_failed">Operation fehlgeschlagen.</string>
 
     <!-- Settings -->
@@ -96,6 +114,9 @@
     <string name="pref_summary_notification_permanent">Während die App Ihre Schritte zählt, wird eine Benachrichtigung angezeigt. Wählen Sie den Inhalt der Benachrichtigung:</string>
     <string name="pref_explanation_weight_and_gender">Geben Sie Ihr Gewicht und Geschlecht an, um die Kalorienberechnung zu verbessern.</string>
 
+    <string name="pref_title_show_velocity">Zeige Bewegungsgeschwindigkeit</string>
+    <string name="pref_summary_show_velocity">Die App zeigt auf der Tagesübersicht die aktuelle Bewegungsübersicht an. Dazu wird der Zugriff auf die aktuelle Position benötigt.</string>
+
     <string-array name="pref_keys_accelerometer_threshold">
         <item>sehr hoch</item>
         <item>höher</item>
@@ -110,8 +131,8 @@
         <item>Kilometer</item>
         <item>Meilen</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|Kilometer|km/h</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|Meilen|mph</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|Kilometer|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|Meilen|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
     <string-array name="pref_keys_gender">
         <item>weiblich</item>
         <item>männlich</item>
@@ -128,13 +149,17 @@
     <string-array name="pref_default_notification_motivation_alert_messages">
         <item>Los geht\'s! Es ist Zeit eine Runde zu laufen!</item>
     </string-array>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>Kalorien</item>
+        <item>Joule</item>
+    </string-array>
 
     <string name="save">Speichern</string>
     <string name="set">Übernehmen</string>
     <string name="since">seit</string>
     <string name="step_length">Schrittlänge:</string>
     <string name="steps">Schritte</string>
-    <string name="summary_card_calories">kcal</string>
+    <string name="summary_card_kilocalories">kcal</string>
 
     <!-- Training -->
     <string name="training_card_calories">kcal</string>
@@ -177,9 +202,42 @@
     <string name="welcome_text">Privacy Friendly Schrittzähler zählt Ihre täglichen Schritte und stellt Ihnen einen Überblick zur Verfügung.</string>
     <string name="slide_2_title">Personalisierung</string>
     <string name="slide_2_desc">Um die Berechnung der verbrannten Kalorien zu verbessern, können Sie bitte unter Einstellungen persönliche Werte eingeben.</string>
-    <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus wechseln, indem Sie sie in der Toolbar auswählen.</string>
+    <string name="slide_2_desc_two">Sie können Ihren aktuellen Laufmodus neben der Datumsanzeige wechseln.</string>
     <string name="slide_3_title">Benachritigungen</string>
+    <string name="slide_4_title">Widget</string>
+    <string name="slide_4_desc">Die App bietet Ihnen ein Widget an, welches Sie Ihrem Homescreen hinzufügen können. So bleiben Sie immer auf dem aktuellen Stand.</string>
+    <string name="summary_card_calories">cal</string>
+    <string name="continue_step_detection">Starte Schritterkennung</string>
+    <string name="correct_steps">Schrittzahl bearbeiten</string>
+    <string name="correct_steps_dialog_message">Geben Sie die korrigierte Schrittzahl ein.</string>
+    <string name="correct_steps_dialog_title">Schrittzahl bearbeiten</string>
+    <string name="hint_steps">Schrittzahl</string>
+    <string name="pause_step_detection">Pausiere Schritterkennung</string>
+    <string name="pref_summary_use_wake_lock_during_training">Zur besseren Erkennung der Schritte während des Trainings halte den Prozessor aktiv. Wenn Prozessor immer aktiv gehalten werden soll, ist diese Einstellung hinfällig</string>
+    <string name="pref_title_accelerometer_steps_threshold">Anzahl Schritte, bevor die Schritterfassung starten soll</string>
+    <string name="pref_title_use_wake_lock_during_training">Wachhalten während Training</string>
+    <string name="action_distance_measurement">Distanzmessung</string>
+    <string name="distance_measurement_start_button">Starte Messung</string>
+    <string name="distance_measurement_stop_button">Stoppe Messung</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="pref_title_unit_of_energy">Energieeinheit</string>
+    <string name="widget_config_data_set_title">Welche Daten sollen angezeigt werden?</string>
+    <string name="slide_5_title">Schritterkennung</string>
     <string name="slide_3_desc">Die App kann Sie benachrichtigen, wenn Ihr tägliches Schrittziel Gefahr droht, nicht erreicht zu werden. Sie finden dies in den Einstellungen.</string>
+    <string name="slide_2_desc_three">In den Einstellungen können eigene Laufmodi mit verschiedenen Schrittlängen eingestellt werden.</string>
+    <string name="slide_5_desc">Zur Schritterkennung nutzt die App verschiedene Algorithmen. Auf manchen Geräten ist es möglich, die Genauigkeit der Schritterkennung in den Einstellungen einzustellen. Zudem ist es in der Tagesansicht möglich Schritte nachträglich manuell hinzuzufügen oder die Schrittzahl zu korrigieren.</string>
+    <string name="slide_5_desc_two">Klicken Sie auf \'Einstellungen\' um Ihre persönlichen Daten und Schrittlängen zu bearbeiten.</string>
+    <string name="help_correctsteps_heading">Schrittzahl korrigieren</string>
+    <string name="help_correctsteps_selection">Die Anzahl der erfassten Schritte kann manuell in der täglichen Übersicht korrigiert werden. Dies kann beispielsweise dafür genutzt werden, um Schritte hinzuzufügen, die ohne die App gelaufen wurden oder fehlerhaft erfasste Schritte zu korrigieren.</string>
+    <string name="help_distancemeasurement_heading">Entfernungsmessung</string>
+    <string name="help_distancemeasurement_selection">Mit Hilfe der App können auch zurückgelegte Entfernungen grob gemessen werden. Dabei wird die Anzahl der Schritte nach dem Klick auf \'Start\' gezählt und anhand der Schrittlänge die Entfernung berechnet. Die gemessene Entfernung wird nicht dauerhaft gespeichert, dazu kann der Trainingsmodus genutzt werden.</string>
+    <string name="help_training_heading">Trainingsmodus</string>
+    <string name="help_training_selection">Mit Hilfe des Trainingsmodus können Trainingssitzungen aufgezeichnet werden. Jedes Training speichert dabei bspw. Informationen über die Dauer, Anzahl der Schritte, zurückgelegte Entfernung und Durchschnittsgeschwindigkeit.</string>
+    <string name="help_walkingmodes_heading">Laufmodi</string>
+    <string name="help_walkingmodes_selection">In den Einstellungen können eigene Laufmodi wie \'Rennen\' oder \'Gehen\' definiert werden. Jeder Modus hat seine eigene Schrittlänge und kann so zur Verbesserung der Entfernungsrechnung beitragen.</string>
+    <string name="help_permission_gps_heading">Berechtigung: \"Genauer Standort\"</string>
+    <string name="help_permission_gps_description">wird verwendet, um die aktuelle Bewegungsgeschwindigkeit auf der Startseite anzuzeigen. Wenn die Berechtigung nicht gestattet wird, wird die Geschwindigkeit nicht angezeigt. Dies keine Auswirkung auf andere Funktionen.</string>
     <string name="export_csv_permission_needed">Die Speicherberechtigung wird für den Export der CSV-Datei benötigt.</string>
     <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
     <string name="help_permission_foreground_heading">Permission: Foreground Service</string>

@@ -1,3 +1,20 @@
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
 <resources>
     <string name="app_name">Pedometer</string>
     <string name="app_name_long">Privacy Friendly Pedometer</string>
@@ -32,7 +49,14 @@
     <string name="calories">calories</string>
     <string name="activity_summary_subtitle">Summary of activities</string>
     <string name="activity_chart_summary_subtitle">Detailed summary of your activities</string>
-    <string name="summary_card_calories">kcal</string>
+    <string name="summary_card_kilocalories">kcal</string>
+    <string name="summary_card_calories">cal</string>
+    <string name="correct_steps">Correct steps</string>
+    <string name="correct_steps_dialog_title">Correct steps</string>
+    <string name="correct_steps_dialog_message">Please provide a new number of steps you walked.</string>
+    <string name="hint_steps">Number of steps</string>
+    <string name="pause_step_detection">Pause step detection</string>
+    <string name="continue_step_detection">Continue step detection</string>
 
     <!-- HelpActivity -->
     <string name="help_overview_heading">Overview</string>
@@ -50,6 +74,8 @@
     <string name="help_permissions_selection">The permissions used by Privacy Friendly Pedometer can not be managed by the user in any Android version.</string>
     <string name="help_permission_wake_heading">Permission: Wake Lock</string>
     <string name="help_permission_wake_description">is used to keep the CPU awake to count the steps in background.</string>
+    <string name="help_permission_gps_heading">Permission: Precise location</string>
+    <string name="help_permission_gps_description">is used to show your current walking speed on home screen. If the permission is not granted the walking speed will not be showed - there are no other implications.</string>
 
     <!-- Preferences -->
     <!-- general settings -->
@@ -64,6 +90,14 @@
     <string name="pref_title_use_wake_lock">Keep processor awake</string>
     <string name="pref_summary_use_wake_lock">On some devices the processor falls asleep and prevents counting steps. Enable this to keep the processor awake while counting steps - this may drain your battery!</string>
 
+    <string name="pref_use_wake_lock_during_training" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock_during_training</string>
+    <string name="pref_title_use_wake_lock_during_training">Wake lock during training</string>
+    <string name="pref_summary_use_wake_lock_during_training">For better results during training mode keep processor awake. If app should keep the processor awake at any time this is automatically the case.</string>
+
+    <string name="pref_show_velocity" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.show_velocity</string>
+    <string name="pref_title_show_velocity">Show current velocity</string>
+    <string name="pref_summary_show_velocity">The app shows your current velocity in daily report. Access to your location is required to calculate the exact velocity.</string>
+
     <string name="pref_default_daily_step_goal" translatable="false">10000</string>
     <string name="pref_title_daily_step_goal">Personal daily step goal</string>
     <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length</string>
@@ -76,8 +110,18 @@
         <item>km</item>
         <item>mi</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilometers|km/h</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|miles|mph</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
+    <string name="pref_title_unit_of_energy">Unit of energy</string>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>calories</item>
+        <item>joules</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_energy" translatable="false">
+        <item>cal</item>
+        <item>J</item>
+    </string-array>
 
     <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please set your weight and gender.</string>
     <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
@@ -121,7 +165,9 @@
         <item>1.25</item>
         <item>1.50</item>
     </string-array>
-
+    <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
+    <string name="pref_title_accelerometer_steps_threshold">Steps before counting starts</string>
+    <string name="pref_default_accelerometer_steps_threshold" translatable="false">10</string>
     <!-- /general settings -->
     <!-- notification settings -->
     <string name="pref_header_notifications">Notifications</string>
@@ -155,6 +201,9 @@
     </string-array>
     <!-- /notification settings -->
     <string name="pref_header_walking_modes">Walking modes</string>
+    <string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
+    <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
+    <string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
@@ -162,6 +211,7 @@
     <string name="notification_text_steps">%1$s of %2$s steps walked today.</string>
     <string name="notification_text_distance">%1$.2f %2$s walked today.</string>
     <string name="notification_text_calories">Burned %.2f kcal today.</string>
+    <string name="notification_text_default">Pedometer is active.</string>
     <!-- /Will be removed on next update -->
 
     <!-- others -->
@@ -184,7 +234,8 @@
     <string name="slide_2_desc">To improve the calculation of the calories you have burned by walking please customize your personal settings.</string>
     <string name="slide_2_desc_two">You can switch your current walking modes using the context menu in the toolbar.</string>
     <string name="slide_3_title">Notifications</string>
-    <string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+    <string name="slide_4_title">Widget</string>
+    <string name="slide_4_desc">Add a widget to your homescreen to stay up to date about your walked steps.</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <!-- /welcome dialog -->
@@ -241,6 +292,25 @@
     <string name="training_stop_button">End training now</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Stepgoal</string>
+    <string name="widget_config_data_set_title">Which data should be displayed?</string>
+    <string name="action_distance_measurement">Distance Measurement</string>
+    <string name="distance_measurement_stop_button">Stop distance measurement</string>
+    <string name="distance_measurement_start_button">Start distance measurement</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="slide_5_title">Step Detection</string>
+    <string name="slide_5_desc">The app detects your steps based on different algorithms. On some devices you can define the sensivity of step detection in settings. In addition to that you can add steps you walked without the app or correct the stepcount on daily activity chart.</string>
+    <string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
+    <string name="slide_2_desc_three">In the settings you can define your own walking modes with different step lengths.</string>
+    <string name="help_walkingmodes_heading">Walking Modes</string>
+    <string name="help_walkingmodes_selection">You can define your own walking modes like \'Running\' or \'Walking\' in the preferences. Each walking mode has its own step length.</string>
+    <string name="help_training_heading">Training Sessions</string>
+    <string name="help_training_selection">The training sessions can be used to track your training performance. Each session tracks e.g. the training duration, the walked steps and distance.</string>
+    <string name="help_distancemeasurement_heading">Distance Measurement</string>
+    <string name="help_distancemeasurement_selection">The distance measurement feature allows you to measure the distance between the button press \'Start\' and \'Stop\'. The data will not be stored after app restarts. To persist the data you can use the training sessions.</string>
+    <string name="help_correctsteps_heading">Correct steps manually</string>
+    <string name="help_correctsteps_selection">You can modify the detected daily steps in daily report view. This allows you to add steps you walked without the app or to correct the detected number of steps.</string>
+    <string name="slide_5_desc_two">Click on \'Preferences\' to set your step size and customize your personal data.</string>
     <string name="export_csv_header">Start;End;Steps;Mode</string>
     <string name="export_csv_begin">&lt;begin&gt;</string>
     <string name="export_csv_error">Error happened during export</string>

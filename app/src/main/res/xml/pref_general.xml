@@ -1,3 +1,20 @@
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:defaultValue="true"
@@ -17,6 +34,14 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_unit_of_length" />
     <ListPreference
+        android:defaultValue="cal"
+        android:entries="@array/pref_keys_unit_of_energy"
+        android:entryValues="@array/pref_values_unit_of_energy"
+        android:key="@string/pref_unit_of_energy"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_unit_of_energy" />
+    <ListPreference
         android:defaultValue="0.75"
         android:entries="@array/pref_keys_accelerometer_threshold"
         android:entryValues="@array/pref_values_accelerometer_threshold"
@@ -24,11 +49,30 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_accelerometer_threshold"/>
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_accelerometer_steps_threshold"
+        android:inputType="number"
+        android:key="@string/pref_accelerometer_steps_threshold"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_accelerometer_steps_threshold" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="@string/pref_use_wake_lock"
         android:summary="@string/pref_summary_use_wake_lock"
         android:title="@string/pref_title_use_wake_lock" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_use_wake_lock_during_training"
+        android:summary="@string/pref_summary_use_wake_lock_during_training"
+        android:title="@string/pref_title_use_wake_lock_during_training" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_show_velocity"
+        android:summary="@string/pref_summary_show_velocity"
+        android:title="@string/pref_title_show_velocity" />
     <Preference
         android:title="@string/pref_title_export_data"
         android:summary="@string/pref_summary_export_data"

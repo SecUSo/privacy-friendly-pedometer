@@ -27,7 +27,7 @@
     <string name="calories">calorías</string>
     <string name="activity_summary_subtitle">Resumen de actividades</string>
     <string name="activity_chart_summary_subtitle">Resumen detallado de sus actividades</string>
-    <string name="summary_card_calories">kcal</string>
+    <string name="summary_card_kilocalories">kcal</string>
 
     <!-- HelpFragment -->
     <string name="help_overview_heading">Resumen</string>
@@ -63,8 +63,8 @@
         <item>kilómetros</item>
         <item>millas</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilómetro|km/h</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|millas|mph</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilómetro|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|millas|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
 
     <string name="pref_explanation_weight_and_gender">Para mejorar los cálculos de las calorías por favor especifique su peso y género.</string>
     <string name="pref_summary_notification_permanent">La notificación permanente se muestra cuando la aplicación cuenta sus pasos en segundo plano. Puede personalizar lo que la aplicación debería mostrar.</string>
@@ -190,6 +190,7 @@
     <string name="slide_2_title">Personalizar</string>
     <string name="slide_3_desc">Defina modos de andado personalizados y las notificaciones si su meta diaria está en peligro.</string>
     <string name="slide_3_title">Notificaciones</string>
+    <string name="summary_card_calories">cal</string>
     <string name="export_csv_permission_needed">El permiso de almacenamiento es necesario para exportar un archivo CSV.</string>
     <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
     <string name="help_permission_foreground_heading">Permission: Foreground Service</string>

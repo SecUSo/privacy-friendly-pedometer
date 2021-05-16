@@ -28,7 +28,7 @@
     <string name="calories">calories</string>
     <string name="activity_summary_subtitle">Résumé des activités</string>
     <string name="activity_chart_summary_subtitle">Résumé détaillé de vos activités</string>
-    <string name="summary_card_calories">kcal</string>
+    <string name="summary_card_kilocalories">kcal</string>
 
     <!-- HelpActivity -->
     <string name="help_overview_heading">Vue d\'ensemble</string>
@@ -64,8 +64,8 @@
         <item>kilomètres</item>
         <item>miles</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilomètres|km/h</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|miles|mph</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilomètres|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
 
     <string name="pref_explanation_weight_and_gender">Pour améliorer le calcul des calories, veuillez indiquer votre poids et votre sexe.</string>
     <string name="pref_summary_notification_permanent">La notification permanente s\'affiche lorsque l\'application comptabilise vos pas en arrière-plan. Vous pouvez personnaliser ce que l\'application doit vous montrer.</string>
@@ -190,6 +190,7 @@
     <string name="training_stop_button">Terminer l\'entraînement</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Objectif de pas</string>
+    <string name="summary_card_calories">cal</string>
     <string name="pref_title_export_data">Exporter les données</string>
     <string name="pref_summary_export_data">Exporter votre nombre de pas au format CSV.</string>
     <string name="export_csv_begin">&lt;début&gt;</string>

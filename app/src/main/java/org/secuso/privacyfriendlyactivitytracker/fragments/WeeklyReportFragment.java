@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.fragments;
 
 import android.app.DatePickerDialog;
@@ -30,6 +47,7 @@ import org.secuso.privacyfriendlyactivitytracker.models.ActivityChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivityDayChart;
 import org.secuso.privacyfriendlyactivitytracker.models.ActivitySummary;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
+import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
@@ -38,10 +56,13 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Report-fragment for one specific day
@@ -55,7 +76,8 @@ import java.util.Map;
  * @author Tobias Neidig
  * @version 20160606
  */
-public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener {
+
+public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
     public static String LOG_TAG = WeeklyReportFragment.class.getName();
 
     private ReportAdapter mAdapter;
@@ -68,6 +90,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     private ActivityChart activityChart;
     private final List<Object> reports = new ArrayList<>();
     private boolean generatingReports;
+    private Map<Integer, WalkingMode> menuWalkingModes;
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
@@ -151,8 +174,10 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         if(day == null){
             day = Calendar.getInstance();
         }
-        Log.e("ASD", "Is today shown? " + isTodayShown());
-        Log.e("ASDF", "enabled?" + StepDetectionServiceHelper.isStepDetectionEnabled(getContext()));
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
@@ -163,13 +188,19 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     @Override
     public void onResume(){
         super.onResume();
+        if(day == null){
+            day = Calendar.getInstance();
+        }
+        if(!day.getTimeZone().equals(TimeZone.getDefault())) {
+            day = Calendar.getInstance();
+            generateReports(true);
+        }
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
         }
         registerReceivers();
     }
-
 
     @Override
     public void onDetach() {
@@ -186,7 +217,6 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         super.onPause();
     }
 
-
     @Override
     public void onDestroy() {
         unbindService();
@@ -199,11 +229,17 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         IntentFilter filterRefreshUpdate = new IntentFilter();
         filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_SAVED);
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED);
+        filterRefreshUpdate.addAction(StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, filterRefreshUpdate);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void unregisterReceivers(){
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private void bindService(){
@@ -225,15 +261,36 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         if(day == null){
             return false;
         }
+        Calendar start = getStartDay();
+        Calendar end = getEndDay();
+        return (start.before(day) || start.equals(day)) && end.after(day);
+    }
+
+    /**
+     * The start day is midnight of fist day of week.
+     * @return The start day of shown interval
+     */
+    private Calendar getStartDay(){
+        if(day == null){
+            return Calendar.getInstance();
+        }
         Calendar start = (Calendar) day.clone();
         start.set(Calendar.DAY_OF_WEEK, day.getFirstDayOfWeek());
         start.set(Calendar.MILLISECOND, 0);
         start.set(Calendar.SECOND, 0);
         start.set(Calendar.MINUTE, 0);
         start.set(Calendar.HOUR_OF_DAY, 0);
-        Calendar end = (Calendar) start.clone();
+        return start;
+    }
+
+    /**
+     * The end day is midnight of first day of next week.
+     * @return The end day of shown interval
+     */
+    private Calendar getEndDay(){
+        Calendar end = getStartDay();
         end.add(Calendar.WEEK_OF_YEAR, 1);
-        return (start.before(day) || start.equals(day)) && end.after(day);
+        return end;
     }
 
     /**
@@ -263,7 +320,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
             public void run() {
                 // Get all step counts for this day.
                 day.set(Calendar.DAY_OF_WEEK, day.getFirstDayOfWeek());
-                Calendar start = (Calendar) day.clone();
+                Calendar day_iterating = (Calendar) day.clone();
+                Calendar start  = (Calendar) day_iterating.clone();
                 SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM", locale);
                 Map<String, Double> stepData = new LinkedHashMap<>();
                 Map<String, Double> distanceData = new LinkedHashMap<>();
@@ -275,15 +333,15 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 double totalDistance = 0;
                 int totalCalories = 0;
                 for (int i = 0; i < 7; i++) {
-                    List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(start, context);
+                    List<StepCount> stepCounts = StepCountPersistenceHelper.getStepCountsForDay(day_iterating, context);
                     int steps = 0;
                     double distance = 0;
                     int calories = 0;
                     // add current steps if today is shown
                     if(isTodayShown() && myBinder != null
-                            && start.get(Calendar.YEAR) == now.get(Calendar.YEAR)
-                            && start.get(Calendar.MONTH) == now.get(Calendar.MONTH)
-                            && start.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)){
+                            && day_iterating.get(Calendar.YEAR) == now.get(Calendar.YEAR)
+                            && day_iterating.get(Calendar.MONTH) == now.get(Calendar.MONTH)
+                            && day_iterating.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)){
 
                         StepCount stepCountSinceLastSave = new StepCount();
                         stepCountSinceLastSave.setStepCount(myBinder.stepsSinceLastSave());
@@ -295,14 +353,14 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                         distance += stepCount.getDistance();
                         calories += stepCount.getCalories(context);
                     }
-                    stepData.put(formatDate.format(start.getTime()), (double) steps);
-                    distanceData.put(formatDate.format(start.getTime()), distance);
-                    caloriesData.put(formatDate.format(start.getTime()), (double) calories);
+                    stepData.put(formatDate.format(day_iterating.getTime()), (double) steps);
+                    distanceData.put(formatDate.format(day_iterating.getTime()), distance);
+                    caloriesData.put(formatDate.format(day_iterating.getTime()), (double) calories);
                     totalSteps += steps;
                     totalDistance += distance;
                     totalCalories += calories;
                     if (i != 6) {
-                        start.add(Calendar.DAY_OF_MONTH, 1);
+                        day_iterating.add(Calendar.DAY_OF_MONTH, 1);
                     }
                 }
 
@@ -313,7 +371,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.", locale);
                 SimpleDateFormat simpleDateMonthFormat = new SimpleDateFormat("dd. MMMM", locale);
 
-                String title = simpleDateFormat.format(day.getTime()) + " - " + simpleDateMonthFormat.format(start.getTime());
+                String title = simpleDateFormat.format(start.getTime()) + " - " + simpleDateMonthFormat.format(day_iterating.getTime());
 
                 // create view models
                 if (activitySummary == null) {
@@ -324,6 +382,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                     activitySummary.setDistance(totalDistance);
                     activitySummary.setCalories(totalCalories);
                     activitySummary.setTitle(title);
+                    activitySummary.setHasSuccessor(new Date().after(getEndDay().getTime()));
+                    activitySummary.setHasPredecessor(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).before(day.getTime()));
                 }
                 if (activityChart == null) {
                     activityChart = new ActivityChart(stepData, distanceData, caloriesData, title);
@@ -338,10 +398,17 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 String d = sharedPref.getString(context.getString(R.string.pref_daily_step_goal), "10000");
                 activityChart.setGoal(Integer.valueOf(d));
                 // notify ui
-                if (mAdapter != null && mRecyclerView != null && !mRecyclerView.isComputingLayout()) {
-                    mAdapter.notifyItemChanged(reports.indexOf(activitySummary));
-                    mAdapter.notifyItemChanged(reports.indexOf(activityChart));
-                    mAdapter.notifyDataSetChanged();
+                if (mAdapter != null && mRecyclerView != null && getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!mRecyclerView.isComputingLayout()) {
+                                mAdapter.notifyDataSetChanged();
+                            }else{
+                                Log.w(LOG_TAG, "Cannot inform adapter for changes - RecyclerView is computing layout.");
+                            }
+                        }
+                    });
                 } else {
                     Log.w(LOG_TAG, "Cannot inform adapter for changes.");
                 }
@@ -423,9 +490,46 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 }
             }
         }, year, month, day);
+        dialog.getDatePicker().setMaxDate(new Date().getTime()); // Max date is today
+        dialog.getDatePicker().setMinDate(StepCountPersistenceHelper.getDateOfFirstEntry(getContext()).getTime());
         dialog.show();
     }
 
+    @Override
+    public void inflateWalkingModeMenu(Menu menu) {
+        // Add the walking modes to option menu
+        menu.clear();
+        menuWalkingModes = new HashMap<>();
+        List<WalkingMode> walkingModes = WalkingModePersistenceHelper.getAllItems(getContext());
+        int i = 0;
+        for (WalkingMode walkingMode : walkingModes) {
+            int id = Menu.FIRST + (i++);
+            menuWalkingModes.put(id, walkingMode);
+            menu.add(0, id, Menu.NONE, walkingMode.getName()).setChecked(walkingMode.isActive());
+        }
+        menu.setGroupCheckable(0, true, true);
+    }
+
+    @Override
+    public void onWalkingModeClicked(int id) {
+        if (!menuWalkingModes.containsKey(id)) {
+            return;
+        }
+        // update active walking mode
+        WalkingMode walkingMode = menuWalkingModes.get(id);
+        WalkingModePersistenceHelper.setActiveMode(walkingMode, getContext());
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.pref_step_counter_enabled))){
+            if(!StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
+                unbindService();
+            }else if(this.isTodayShown()){
+                bindService();
+            }
+        }
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -451,6 +555,10 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 case WalkingModePersistenceHelper.BROADCAST_ACTION_WALKING_MODE_CHANGED:
                     // Steps were saved, reload step count from database
                     generateReports(true);
+                    break;
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_INSERTED:
+                case StepCountPersistenceHelper.BROADCAST_ACTION_STEPS_UPDATED:
+                    generateReports(false);
                     break;
                 default:
             }

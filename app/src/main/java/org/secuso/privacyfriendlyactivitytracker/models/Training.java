@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.models;
 
 import android.content.ContentValues;
@@ -12,6 +29,7 @@ import java.util.Calendar;
  * A walking mode has a user defined name and a custom step length.
  * Examples for walking modes are "running", "walking", "going"...
  */
+
 public class Training {
     private long id;
     private String name;
@@ -30,14 +48,14 @@ public class Training {
     public static Training from(Cursor c) {
         Training trainingSession = new Training();
         trainingSession.setId(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry._ID)));
-        trainingSession.setName(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_NAME)));
-        trainingSession.setDescription(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DESCRIPTION)));
-        trainingSession.setSteps(c.getInt(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_STEPS)));
-        trainingSession.setDistance(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DISTANCE)));
-        trainingSession.setCalories(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_CALORIES)));
-        trainingSession.setFeeling(c.getFloat(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_FEELING)));
-        trainingSession.setStart(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START)));
-        trainingSession.setEnd(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END)));
+        trainingSession.setName(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_NAME)));
+        trainingSession.setDescription(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_DESCRIPTION)));
+        trainingSession.setSteps(c.getInt(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_STEPS)));
+        trainingSession.setDistance(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_DISTANCE)));
+        trainingSession.setCalories(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_CALORIES)));
+        trainingSession.setFeeling(c.getFloat(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_FEELING)));
+        trainingSession.setStart(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_START)));
+        trainingSession.setEnd(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_END)));
         return trainingSession;
     }
 
@@ -146,14 +164,14 @@ public class Training {
 
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_NAME, this.getName());
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DESCRIPTION, this.getDescription());
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_STEPS, this.getSteps());
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_DISTANCE, String.valueOf(this.getDistance()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_CALORIES, String.valueOf(this.getCalories()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_FEELING, String.valueOf(this.getFeeling()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_START, String.valueOf(this.getStart()));
-        values.put(TrainingDbHelper.TrainingSessionEntry.COLUMN_NAME_END, String.valueOf(this.getEnd()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_NAME, this.getName());
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_DESCRIPTION, this.getDescription());
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_STEPS, this.getSteps());
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_DISTANCE, String.valueOf(this.getDistance()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_CALORIES, String.valueOf(this.getCalories()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_FEELING, String.valueOf(this.getFeeling()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_START, String.valueOf(this.getStart()));
+        values.put(TrainingDbHelper.TrainingSessionEntry.KEY_END, String.valueOf(this.getEnd()));
         return values;
     }
 }

@@ -1,3 +1,20 @@
+/*
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 import android.content.Intent;
@@ -23,8 +40,10 @@ import org.secuso.privacyfriendlyactivitytracker.R;
 
 
 /**
- * Created by Chris on 04.07.2016.
+ * @author Christopher Beckmann
+ * @version 20160704
  */
+
 public class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     // delay to launch nav drawer item, to allow close animation to play
@@ -150,6 +169,10 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
                 break;
             case R.id.menu_training:
                 intent = new Intent(this, TrainingOverviewActivity.class);
+                createBackStack(intent);
+                break;
+            case R.id.menu_distance_measurement:
+                intent = new Intent(this, DistanceMeasurementActivity.class);
                 createBackStack(intent);
                 break;
             case R.id.menu_about:

@@ -190,4 +190,10 @@
     <string name="training_stop_button">Terminer l\'entraînement</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Objectif de pas</string>
+    <string name="pref_title_export_data">Exporter les données</string>
+    <string name="pref_summary_export_data">Exporter votre nombre de pas au format CSV.</string>
+    <string name="export_csv_begin">&lt;début&gt;</string>
+    <string name="export_csv_error">Une erreur s\'est produite durant l\'export</string>
+    <string name="export_csv_header">Début;Fin;Pas;Mode</string>
+    <string name="export_csv_success">"CSV exportée à l'adresse "</string>
 </resources>

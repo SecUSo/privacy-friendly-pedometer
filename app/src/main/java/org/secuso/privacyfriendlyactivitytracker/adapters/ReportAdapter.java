@@ -19,6 +19,7 @@ package org.secuso.privacyfriendlyactivitytracker.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -338,7 +339,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 summaryViewHolder.mPrevButton.setVisibility(summaryData.isHasPredecessor() ? View.VISIBLE : View.INVISIBLE);
                 if(summaryData.getCurrentSpeed() != null){
                     summaryViewHolder.mVelocityContainer.setVisibility(View.VISIBLE);
-                    summaryViewHolder.mVelocityTextView.setText(String.valueOf(UnitHelper.formatKilometersPerHour(UnitHelper.metersPerSecondToKilometersPerHour(summaryData.getCurrentSpeed()), summaryViewHolder.context)));
+                    summaryViewHolder.mVelocityTextView.setText(UnitHelper.formatKilometersPerHour(UnitHelper.metersPerSecondToKilometersPerHour(summaryData.getCurrentSpeed()), summaryViewHolder.context));
                 }else{
                     summaryViewHolder.mVelocityContainer.setVisibility(View.GONE);
                 }
@@ -432,18 +433,18 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             mStepsTextView = itemView.findViewById(R.id.stepCount);
             mDistanceTextView = itemView.findViewById(R.id.distanceCount);
             mCaloriesTextView = itemView.findViewById(R.id.calorieCount);
-            mVelocityTextView = (TextView) itemView.findViewById(R.id.speed);
-            mVelocityContainer = (RelativeLayout) itemView.findViewById(R.id.speedContainer);
+            mVelocityTextView = itemView.findViewById(R.id.speed);
+            mVelocityContainer = itemView.findViewById(R.id.speedContainer);
             mDistanceTitleTextView = itemView.findViewById(R.id.distanceTitle);
-            mCaloriesTitleTextView = (TextView) itemView.findViewById(R.id.calorieTitle);
+            mCaloriesTitleTextView = itemView.findViewById(R.id.calorieTitle);
             mPrevButton = itemView.findViewById(R.id.prev_btn);
             mNextButton = itemView.findViewById(R.id.next_btn);
-            mMenuButton = (ImageButton) itemView.findViewById(R.id.periodMoreButton);
+            mMenuButton = itemView.findViewById(R.id.periodMoreButton);
 
             mMenuButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                showPopup(mMenuButton, context);
+                    showPopup(mMenuButton, context);
                 }
             });
 

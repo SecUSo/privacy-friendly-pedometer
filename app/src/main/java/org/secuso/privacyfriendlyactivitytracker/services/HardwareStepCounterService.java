@@ -23,8 +23,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.TriggerEventListener;
 import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
@@ -96,7 +97,7 @@ public class HardwareStepCounterService extends AbstractStepDetectorService{
 
         // Save new steps
         StepCount stepCount = new StepCount();
-        stepCount.setStepCount((int) count);
+        stepCount.setStepCount(count);
         stepCount.setWalkingMode(new WalkingModeDbHelper(this).getActiveWalkingMode());
         stepCount.setEndTime(Calendar.getInstance().getTime().getTime());
         new StepCountDbHelper(this).addStepCount(stepCount);

@@ -19,6 +19,7 @@ package org.secuso.privacyfriendlyactivitytracker.persistence;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.util.Log;
@@ -203,7 +204,7 @@ public class StepCountPersistenceHelper {
             return new ArrayList<>();
         }
         Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
-                new String[]{StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT, StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP, StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE},
+                new String[]{StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT, StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP, StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE},
                 "", new String[]{}, null, null, null);
         List<StepCount> steps = new ArrayList<>();
         long start = 0;
@@ -211,10 +212,10 @@ public class StepCountPersistenceHelper {
         while (c.moveToNext()) {
             StepCount s = new StepCount();
             s.setStartTime(start);
-            s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_TIMESTAMP)));
-            s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_STEP_COUNT)));
+            s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT)));
             //Log.w("ASDF", "Getting walking mode " + c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)));
-            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)), context));
+            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE)), context));
             steps.add(s);
             start = s.getEndTime();
             sum += s.getStepCount();

@@ -26,14 +26,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
@@ -73,7 +74,7 @@ public class DistanceMeasurementActivity extends AppCompatActivity implements Vi
     private Button buttonStop;
 
     private AbstractStepDetectorService.StepDetectorBinder myBinder;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -93,13 +94,13 @@ public class DistanceMeasurementActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distance_measurement);
 
-        mTextViewDistance = (TextView) findViewById(R.id.distance);
-        mTextViewDistanceTitle = (TextView) findViewById(R.id.distance_title);
-        buttonStop = (Button) findViewById(R.id.stop_button);
+        mTextViewDistance = findViewById(R.id.distance);
+        mTextViewDistanceTitle = findViewById(R.id.distance_title);
+        buttonStop = findViewById(R.id.stop_button);
         if (buttonStop != null) {
             buttonStop.setOnClickListener(this);
         }
-        buttonStart = (Button) findViewById(R.id.start_button);
+        buttonStart = findViewById(R.id.start_button);
         if (buttonStart != null) {
             buttonStart.setOnClickListener(this);
         }

@@ -27,8 +27,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.os.Environment;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -71,7 +71,8 @@ import java.util.Map;
  */
 public class PreferencesActivity extends AppCompatPreferenceActivity {
     private static Map<String, String> additionalSummaryTexts;
-    static int REQUEST_EXTERNAL_STORAGE = 1;
+    static int REQUEST_EXTERNAL_STORAGE = 2;
+    static int REQUEST_LOCATION = 1;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -207,21 +208,31 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
-        for (int i = 0; i < permissions.length; i++) {
-            String permission = permissions[i];
-            int grantResult = grantResults[i];
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                exportCSVafterPermissionGranted();
+            } else {
+                Toast.makeText(this, getString(R.string.export_csv_permission_needed), Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (requestCode == REQUEST_LOCATION) {
+            for (int i = 0; i < permissions.length; i++) {
+                String permission = permissions[i];
+                int grantResult = grantResults[i];
 
-            if (permission.equals(Manifest.permission.ACCESS_COARSE_LOCATION) || permission.equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                    // location permission was not granted - disable velocity setting.
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putBoolean(getString(R.string.pref_show_velocity), false);
-                    editor.apply();
+                if (permission.equals(Manifest.permission.ACCESS_COARSE_LOCATION) || permission.equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        // location permission was not granted - disable velocity setting.
+                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean(getString(R.string.pref_show_velocity), false);
+                        editor.apply();
+                    }
                 }
             }
         }
+
     }
     /**
      * This fragment shows general preferences only. It is used when the
@@ -303,7 +314,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         }
 
         void generateCSVToExport() {
-            SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String path = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
             File csvFile = new File(Environment.getExternalStorageDirectory(), path);
             //Get List of StepCounts
@@ -367,7 +378,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 if (isEnabled) {
                     if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                             ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
                     }
                 }
             }
@@ -431,18 +442,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            exportCSVafterPermissionGranted();
-        } else {
-            Toast.makeText(this, getString(R.string.export_csv_permission_needed), Toast.LENGTH_SHORT).show();
-        }
-    }
 
     void exportCSVafterPermissionGranted() {
-        SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String path = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
         File csvFile = new File(Environment.getExternalStorageDirectory(), path);
         //Get List of StepCounts

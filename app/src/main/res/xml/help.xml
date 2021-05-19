@@ -61,6 +61,10 @@
             android:summary="@string/help_permission_foreground_description"
             android:title="@string/help_permission_foreground_heading"
             android:selectable="false" />
+        <Preference
+            android:summary="@string/help_permission_gps_description"
+            android:title="@string/help_permission_gps_heading"
+            android:selectable="false" />
     </PreferenceCategory>
 
 </PreferenceScreen>

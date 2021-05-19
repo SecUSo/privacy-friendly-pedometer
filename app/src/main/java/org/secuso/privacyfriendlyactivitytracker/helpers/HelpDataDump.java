@@ -35,7 +35,7 @@ import java.util.List;
 
 public class HelpDataDump {
 
-    private Context context;
+    private final Context context;
 
     public HelpDataDump(Context context) {
         this.context = context;
@@ -86,9 +86,17 @@ public class HelpDataDump {
         wakePermission.add(context.getResources().getString(R.string.help_permission_wake_description));
         expandableListDetail.put(context.getResources().getString(R.string.help_permission_wake_heading), wakePermission);
 
+        List<String> foregroundPermission = new ArrayList<>();
+        foregroundPermission.add(context.getResources().getString(R.string.help_permission_foreground_description));
+        expandableListDetail.put(context.getResources().getString(R.string.help_permission_foreground_heading), foregroundPermission);
+
         List<String> gpsPermission = new ArrayList<>();
         gpsPermission.add(context.getResources().getString(R.string.help_permission_gps_description));
         expandableListDetail.put(context.getResources().getString(R.string.help_permission_gps_heading), gpsPermission);
+
+        List<String> storagePermission = new ArrayList<>();
+        storagePermission.add(context.getResources().getString(R.string.help_permission_storage_description));
+        expandableListDetail.put(context.getResources().getString(R.string.help_permission_storage_heading), storagePermission);
 
         return expandableListDetail;
     }

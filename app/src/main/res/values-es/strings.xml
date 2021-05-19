@@ -42,7 +42,7 @@
     <string name="help_privacy_heading">Infomación sobre privacidad</string>
     <string name="help_permission_boot_heading">Permiso: Ejecutarse al inicio</string>
     <string name="help_permission_boot_description">se usa para iniciar el contador de pasos y mostrar las notificaciones al inicio. Si no se otorga el permiso, debe abrir la aplicación manualmente una vez tras iniciar el dispositivo para activar la aplicación.</string>
-    <string name="help_permissions_selection">Los permisos usados por Podómetro con Privacidad no pueden ser administrados por el usuario en ninguna versión de Android.</string>
+    <string name="help_permissions_selection">Los permisos de almacenamiento y gps utilizados por Privacy Friendly Pedometer pueden ser gestionados por el usuario en las versiones de Android 6+.</string>
     <string name="help_permission_wake_heading">Permiso: Impedir que el teléfono entre en modo de suspensión</string>
     <string name="help_permission_wake_description">se usa para mantener la CPU "despierta" para contar los pasos en segundo plano.</string>
 
@@ -67,7 +67,7 @@
     <string name="unit_of_length_mi">0.621371|mi|millas|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
 
     <string name="pref_explanation_weight_and_gender">Para mejorar los cálculos de las calorías por favor especifique su peso y género.</string>
-    <string name="pref_summary_notification_permanent">La notificación permanente se muestra cuando la aplicación cuenta sus pasos en segundo plano. Puede personalizar lo que la aplicación debería mostrar.</string>
+    <string name="pref_notification_permanent">La notificación permanente se muestra cuando la aplicación cuenta sus pasos en segundo plano. Puede personalizar lo que la aplicación debería mostrar.</string>
     <string name="pref_summary_accelerometer_threshold">La aplicación usa el acelerómetro de su dispositivo. Para detectar mejor los pasos, por favor ajuste la sensibilidad.</string>
 
     <string name="pref_title_weight">Peso</string>
@@ -193,13 +193,49 @@
     <string name="summary_card_calories">cal</string>
     <string name="export_csv_permission_needed">El permiso de almacenamiento es necesario para exportar un archivo CSV.</string>
     <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
-    <string name="help_permission_foreground_heading">Permission: Foreground Service</string>
-    <string name="help_permission_storage_description">is needed to export your collected data as a CSV-file. This permission is only requested when you want to export your data.</string>
-    <string name="help_permission_storage_heading">Permission: Write External Storage</string>
+    <string name="help_permission_foreground_heading">Permiso: Servicio de primer plano</string>
+    <string name="help_permission_storage_description">es necesario para exportar los datos recogidos como un archivo CSV. Este permiso sólo se solicita cuando se desea exportar los datos.</string>
+    <string name="help_permission_storage_heading">Permiso: Escritura en el almacenamiento externo</string>
     <string name="pref_title_export_data">Exportar datos</string>
     <string name="pref_summary_export_data">Exportar el recuento de pasos en un archivo csv.</string>
     <string name="export_csv_header">Inicio;Fin;Pasos;Modo</string>
     <string name="export_csv_begin">&lt;Inicie&gt;</string>
     <string name="export_csv_error">Se ha producido un error durante la exportación</string>
     <string name="export_csv_success">"CSV exportado en "</string>
+    <string name="correct_steps">Editar la cuenta de pasos</string>
+    <string name="correct_steps_dialog_title">Editar la cuenta de pasos</string>
+    <string name="correct_steps_dialog_message">Introduzca el recuento de pasos corregido.</string>
+    <string name="hint_steps">Número de pasos</string>
+    <string name="pause_step_detection">Detección de pasos de pausa</string>
+    <string name="continue_step_detection">Detección del paso inicial</string>
+    <string name="help_permission_gps_heading">Permiso: Localización precisa</string>
+    <string name="help_permission_gps_description">se utiliza para mostrar la velocidad actual de la marcha en la pantalla de inicio. Si no se concede el permiso, no se mostrará la velocidad de marcha - no hay otras implicaciones.</string>
+    <string name="pref_title_use_wake_lock_during_training">Mantenerse despierto durante el ejercicio</string>
+    <string name="pref_summary_use_wake_lock_during_training">Para obtener mejores resultados durante el modo de ejercicio, mantenga el procesador despierto. Si la aplicación debe mantener el procesador despierto en cualquier momento, este es el caso automáticamente.</string>
+    <string name="pref_title_show_velocity">Mostrar velocidad actual</string>
+    <string name="pref_summary_show_velocity">La aplicación muestra tu velocidad actual en un informe diario. Para calcular la velocidad exacta es necesario tener acceso a tu localización.</string>
+    <string name="pref_title_unit_of_energy">Unidad de energía</string>
+    <string name="pref_summary_notification_permanent" translatable="false">La notificación permanente se muestra cuando la aplicación cuenta tus pasos en segundo plano. Puedes personalizar lo que la aplicación debe mostrarte.</string>
+    <string name="pref_title_accelerometer_steps_threshold">Pasos antes de empezar a contar</string>
+    <string name="notification_text_default">Podómetro activo.</string>
+    <string name="slide_4_title">Widget</string>
+    <string name="slide_4_desc">Añade un widget a tu pantalla de inicio para estar al día de tus pasos caminados.</string>
+    <string name="widget_config_data_set_title">¿Qué datos deben mostrarse?</string>
+    <string name="action_distance_measurement">Medición de la distancia</string>
+    <string name="distance_measurement_stop_button">Detener la medición</string>
+    <string name="distance_measurement_start_button">Inicio de la medición</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="slide_5_title">Detección de pasos</string>
+    <string name="slide_2_desc_three">En los ajustes puedes definir tus propios modos de caminar con diferentes longitudes de paso.</string>
+    <string name="slide_5_desc">La aplicación detecta tus pasos basándose en diferentes algoritmos. En algunos dispositivos puedes definir la sensibilidad de la detección de pasos en los ajustes. Además, puedes añadir los pasos que has dado sin la aplicación o corregir el recuento de pasos en el gráfico de actividad diaria.</string>
+    <string name="help_walkingmodes_heading">Modos de caminar</string>
+    <string name="help_walkingmodes_selection">Puedes definir tus propios modos de caminar como \"Correr\" o \"Caminar\" en las preferencias. Cada modo de caminar tiene su propia longitud de paso.</string>
+    <string name="help_training_heading">Sesiones de formación</string>
+    <string name="help_training_selection">Las sesiones de entrenamiento pueden utilizarse para hacer un seguimiento de tu rendimiento en el entrenamiento. Cada sesión registra, por ejemplo, la duración del entrenamiento, los pasos caminados y la distancia.</string>
+    <string name="help_distancemeasurement_heading">Medición de la distancia</string>
+    <string name="help_distancemeasurement_selection">La función de medición de la distancia le permite medir la distancia entre la pulsación del botón \"Inicio\" y \"Parada\". Los datos no se almacenarán después de reiniciar la aplicación. Para conservar los datos puedes utilizar las sesiones de entrenamiento.</string>
+    <string name="help_correctsteps_heading">Número de paso correcto</string>
+    <string name="help_correctsteps_selection">Puedes modificar los pasos diarios detectados en la vista del informe diario. Esto le permite añadir los pasos que ha caminado sin la aplicación o corregir el número de pasos detectado.</string>
+    <string name="slide_5_desc_two">Haz clic en \"Preferencias\" para establecer el tamaño de tu paso y personalizar tus datos personales.</string>
 </resources>

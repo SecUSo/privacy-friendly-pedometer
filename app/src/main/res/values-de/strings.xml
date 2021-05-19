@@ -63,7 +63,7 @@
     <string name="help_permission_boot_heading">Berechtigung "Startvorgang abgeschlossen"</string>
     <string name="help_privacy_heading">Datenschutz-Info</string>
 
-    <string name="help_permissions_selection">Die Berechtigungen, die von Privacy Friendly Schrittzähler verwendet werden, können in keiner Android-Version durch den Benutzer verwaltet werden.</string>
+    <string name="help_permissions_selection">Die vom Privacy Friendly Pedometer verwendeten Speicher- und GPS-Berechtigungen können in Android-Versionen ab 6 vom Benutzer verwaltet werden.</string>
     <string name="help_permission_wake_heading">Berechtigung "Ruhezustand deaktivieren"</string>
     <string name="help_permission_wake_description">wird verwendet, um Schritte auch im Ruhezustand zählen zu können.</string>
 
@@ -240,13 +240,14 @@
     <string name="help_permission_gps_description">wird verwendet, um die aktuelle Bewegungsgeschwindigkeit auf der Startseite anzuzeigen. Wenn die Berechtigung nicht gestattet wird, wird die Geschwindigkeit nicht angezeigt. Dies keine Auswirkung auf andere Funktionen.</string>
     <string name="export_csv_permission_needed">Die Speicherberechtigung wird für den Export der CSV-Datei benötigt.</string>
     <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
-    <string name="help_permission_foreground_heading">Permission: Foreground Service</string>
-    <string name="help_permission_storage_description">is needed to export your collected data as a CSV-file. This permission is only requested when you want to export your data.</string>
-    <string name="help_permission_storage_heading">Permission: Write External Storage</string>
+    <string name="help_permission_foreground_heading">Berechtigung: Vordergrunddienst</string>
+    <string name="help_permission_storage_description">wird benötigt, um Ihre gesammelten Daten als CSV-Datei zu exportieren. Diese Berechtigung wird nur angefordert, wenn Sie Ihre Daten exportieren möchten.</string>
+    <string name="help_permission_storage_heading">Berechtigung: In externen Speicher schreiben</string>
     <string name="pref_title_export_data">Daten exportieren</string>
     <string name="pref_summary_export_data">Exportieren Sie ihre Schrittzähler-Daten als CSV-Datei.</string>
     <string name="export_csv_header">Start;Ende;Schritte;Modus</string>
     <string name="export_csv_begin">&lt;Anfang&gt;</string>
     <string name="export_csv_error">Fehler beim Export aufgetreten</string>
     <string name="export_csv_success">CSV exportiert unter</string>
+    <string name="pref_notification_permanent">Die permanente Benachrichtigung wird angezeigt, wenn die App im Hintergrund Ihre Schritte zählt. Sie können anpassen, was die App anzeigen soll.</string>
 </resources>

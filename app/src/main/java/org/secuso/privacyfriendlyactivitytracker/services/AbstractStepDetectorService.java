@@ -176,6 +176,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
             mBuilder = new NotificationCompat.Builder(this, SplashActivity.CHANNEL_ID);
+            mBuilder.setOnlyAlertOnce(true);
         } else {
             mBuilder = new NotificationCompat.Builder(this);
         }

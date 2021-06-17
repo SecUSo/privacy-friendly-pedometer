@@ -18,7 +18,7 @@ import org.secuso.privacyfriendlybackup.api.pfa.IBackupCreator;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 
 public class BackupCreator implements IBackupCreator {
@@ -30,7 +30,7 @@ public class BackupCreator implements IBackupCreator {
         ((PFAPedometerApplication) context.getApplicationContext()).lock();
 
         Log.d("PFA BackupCreator", "createBackup() started");
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, Charset.forName("UTF-8"));
         JsonWriter writer = new JsonWriter(outputStreamWriter);
         writer.setIndent("");
 
@@ -58,16 +58,12 @@ public class BackupCreator implements IBackupCreator {
             dataBase3.close();
 
 
-            writer.endObject();
-
             Log.d("PFA BackupCreator", "Writing preferences");
             writer.name("preferences");
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             PreferenceUtil.writePreferences(writer, pref);
 
-
             writer.endObject();
-
             writer.close();
         } catch (Exception e) {
             Log.e("PFA BackupCreator", "Error occurred", e);

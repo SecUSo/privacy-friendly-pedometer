@@ -51,6 +51,7 @@ public class BackupRestorer implements IBackupRestorer {
         // copy file to correct location
         File databaseFile = context.getDatabasePath("restoreDatabase");
         File oldDBFile = context.getDatabasePath(dbName);
+        oldDBFile.delete();
         FileUtil.copyFile(databaseFile, context.getDatabasePath(dbName));
         databaseFile.delete();
     }
@@ -64,26 +65,27 @@ public class BackupRestorer implements IBackupRestorer {
             String name = reader.nextName();
 
             switch (name) {
-                case "step_counter_enabled":
-                case "use_wake_lock":
-                case "use_wake_lock_during_training":
-                case "show_velocity":
-                case "notification_permanent_show_steps":
-                case "notification_permanent_show_distance":
-                case "notification_permanent_show_calories":
-                case "notification_motivation_alert_enabled":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.step_counter_enabled":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock_during_training":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.show_velocity":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_steps":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_distance":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_calories":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_enabled":
 
                     pref.edit().putBoolean(name, reader.nextBoolean()).apply();
                     break;
-                case "unit_of_length":
-                case "unit_of_energy":
-                case "accelerometer_threshold":
-                case "accelerometer_steps_threshold":
-                case "daily_step_goal":
-                case "weight":
-                case "gender":
-                case "notification_motivation_alert_criterion":
-                case "notification_motivation_alert_time":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_threshold":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.daily_step_goal":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.weight":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.gender":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts":
                     pref.edit().putString(name, reader.nextString()).apply();
                     break;
                 default:

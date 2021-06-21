@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlyactivitytracker.backup;
+package org.secuso.privacyfriendlyactivitytracker;
 
 import android.app.Activity;
 import android.app.Application;
@@ -8,6 +8,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.work.Configuration;
 
+import org.secuso.privacyfriendlyactivitytracker.backup.BackupCreator;
+import org.secuso.privacyfriendlyactivitytracker.backup.BackupRestorer;
 import org.secuso.privacyfriendlybackup.api.pfa.BackupManager;
 
 import java.lang.ref.WeakReference;

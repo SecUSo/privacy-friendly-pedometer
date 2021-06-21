@@ -37,7 +37,7 @@
 
     <application
         android:allowBackup="true"
-        android:name=".backup.PFAPedometerApplication"
+        android:name=".PFAPedometerApplication"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"

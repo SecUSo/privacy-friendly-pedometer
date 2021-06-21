@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import org.secuso.privacyfriendlyactivitytracker.PFAPedometerApplication;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModeDbHelper;

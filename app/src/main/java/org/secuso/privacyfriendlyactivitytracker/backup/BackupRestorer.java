@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class BackupRestorer implements IBackupRestorer {
 
@@ -76,6 +79,7 @@ public class BackupRestorer implements IBackupRestorer {
 
                     pref.edit().putBoolean(name, reader.nextBoolean()).apply();
                     break;
+
                 case "org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length":
                 case "org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy":
                 case "org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_threshold":
@@ -84,10 +88,27 @@ public class BackupRestorer implements IBackupRestorer {
                 case "org.secuso.privacyfriendlyactivitytracker.pref.weight":
                 case "org.secuso.privacyfriendlyactivitytracker.pref.gender":
                 case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion":
-                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time":
-                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts":
-                    pref.edit().putString(name, reader.nextString()).apply();
+
+                    pref.edit().putString(name,reader.nextString() ).apply();
                     break;
+
+                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time":
+                case "org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp":
+
+                    pref.edit().putLong(name, reader.nextLong()).apply();
+                    break;
+
+                case "org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts":
+
+                    reader.beginArray();
+                    List<String> alertTexts = new ArrayList<>();
+                    while(reader.hasNext()) {
+                        alertTexts.add(reader.nextString());
+                    }
+                    reader.endArray();
+                    pref.edit().putStringSet("org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts", new HashSet<>(alertTexts)).apply();
+                    break;
+
                 default:
                     throw new RuntimeException("Unknown preference " + name);
             }

@@ -19,9 +19,11 @@ package org.secuso.privacyfriendlyactivitytracker.tutorial;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,9 @@ import androidx.viewpager.widget.ViewPager;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
@@ -66,6 +71,18 @@ public class TutorialActivity extends AppCompatActivity {
             launchHomeScreen();
             finish();
         }
+
+        //set default settings in preferences
+        PreferenceManager.setDefaultValues(this,R.xml.pref_general, true);
+        PreferenceManager.setDefaultValues(this,R.xml.pref_notification, true);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putStringSet(this.getString(R.string.pref_notification_motivation_alert_texts), new HashSet<>(Arrays.asList(getResources().getStringArray(R.array.pref_default_notification_motivation_alert_messages))));
+        editor.apply();
+
+        editor.putLong(this.getString(R.string.pref_notification_motivation_alert_time), 64800000).apply();
+
 
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {

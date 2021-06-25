@@ -150,6 +150,10 @@ public class BackupRestorer implements IBackupRestorer {
 
             reader.endObject();
 
+            StepCountDbHelper.invalidateReference();
+            TrainingDbHelper.invalidateReference();
+            WalkingModeDbHelper.invalidateReference();
+
             return true;
         } catch (Exception e) {
             return false;

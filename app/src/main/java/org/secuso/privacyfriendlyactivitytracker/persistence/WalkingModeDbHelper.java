@@ -84,6 +84,10 @@ public class WalkingModeDbHelper extends SQLiteOpenHelper {
         return db;
     }
 
+    public static void invalidateReference(){
+        db = null;
+    }
+
     public WalkingModeDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;

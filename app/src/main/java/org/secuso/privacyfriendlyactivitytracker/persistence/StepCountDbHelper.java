@@ -76,6 +76,10 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         return db;
     }
 
+    public static void invalidateReference(){
+        db = null;
+    }
+
     public StepCountDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -254,4 +258,6 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         public static final String KEY_WALKING_MODE = StepCountDbHelper.KEY_WALKING_MODE;
         public static final String KEY_TIMESTAMP = KEY_WALKING_MODE;
     }
+
+
 }

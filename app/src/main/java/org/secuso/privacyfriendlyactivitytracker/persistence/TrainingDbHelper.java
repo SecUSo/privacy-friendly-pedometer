@@ -84,6 +84,10 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
         return db;
     }
 
+    public static void invalidateReference(){
+        db = null;
+    }
+
     public TrainingDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

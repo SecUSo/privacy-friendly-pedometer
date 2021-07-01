@@ -172,7 +172,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                this.onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

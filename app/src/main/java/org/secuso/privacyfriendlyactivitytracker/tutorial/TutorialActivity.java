@@ -70,18 +70,20 @@ public class TutorialActivity extends AppCompatActivity {
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();
             finish();
+        } else {
+            //set default settings in preferences
+            PreferenceManager.setDefaultValues(this,R.xml.pref_general, true);
+            PreferenceManager.setDefaultValues(this,R.xml.pref_notification, true);
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putStringSet(this.getString(R.string.pref_notification_motivation_alert_texts), new HashSet<>(Arrays.asList(getResources().getStringArray(R.array.pref_default_notification_motivation_alert_messages))));
+            editor.apply();
+
+            editor.putLong(this.getString(R.string.pref_notification_motivation_alert_time), 64800000).apply();
         }
 
-        //set default settings in preferences
-        PreferenceManager.setDefaultValues(this,R.xml.pref_general, true);
-        PreferenceManager.setDefaultValues(this,R.xml.pref_notification, true);
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putStringSet(this.getString(R.string.pref_notification_motivation_alert_texts), new HashSet<>(Arrays.asList(getResources().getStringArray(R.array.pref_default_notification_motivation_alert_messages))));
-        editor.apply();
-
-        editor.putLong(this.getString(R.string.pref_notification_motivation_alert_time), 64800000).apply();
 
 
         // Making notification bar transparent

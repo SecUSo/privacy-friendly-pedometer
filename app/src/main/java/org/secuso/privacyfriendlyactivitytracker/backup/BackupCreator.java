@@ -13,6 +13,7 @@ import org.secuso.privacyfriendlyactivitytracker.PFAPedometerApplication;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModeDbHelper;
+import org.secuso.privacyfriendlyactivitytracker.tutorial.PrefManager;
 import org.secuso.privacyfriendlybackup.api.backup.DatabaseUtil;
 import org.secuso.privacyfriendlybackup.api.backup.PreferenceUtil;
 import org.secuso.privacyfriendlybackup.api.pfa.IBackupCreator;
@@ -63,6 +64,11 @@ public class BackupCreator implements IBackupCreator {
             writer.name("preferences");
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             PreferenceUtil.writePreferences(writer, pref);
+
+            writer.name("tutorial_preferences");
+            pref = context.getSharedPreferences(PrefManager.PREF_NAME, 0);
+            PreferenceUtil.writePreferences(writer, pref);
+
 
             writer.endObject();
             writer.close();

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import static org.secuso.privacyfriendlyactivitytracker.tutorial.PrefManager.PREF_NAME;
+
 public class BackupRestorer implements IBackupRestorer {
 
     private void readDatabase(@NonNull JsonReader reader, @NonNull Context context, String dbName) throws IOException {
@@ -59,7 +61,7 @@ public class BackupRestorer implements IBackupRestorer {
         databaseFile.delete();
     }
 
-    private void readPreferences(@NonNull JsonReader reader, @NonNull Context context) throws IOException {
+    private void readDefaultPreferences(@NonNull JsonReader reader, @NonNull Context context) throws IOException {
         reader.beginObject();
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -140,7 +142,10 @@ public class BackupRestorer implements IBackupRestorer {
                         readDatabase(reader, context, WalkingModeDbHelper.DATABASE_NAME);
                         break;
                     case "preferences":
-                        readPreferences(reader, context);
+                        readDefaultPreferences(reader, context);
+                        break;
+                    case "tutorial_preferences":
+                        readTutorialPreferences(reader, context);
                         break;
                     default:
                         throw new RuntimeException("Can not parse type " + type);
@@ -158,5 +163,23 @@ public class BackupRestorer implements IBackupRestorer {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private void readTutorialPreferences(@NonNull JsonReader reader, @NonNull Context context) throws IOException {
+        reader.beginObject();
+
+        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, 0);
+
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+
+            if (name.equals("IsFirstTimeLaunch")) {
+                pref.edit().putBoolean(name, reader.nextBoolean()).apply();
+            }else{
+                throw new RuntimeException("Unknown preference " + name);
+            }
+        }
+
+        reader.endObject();
     }
 }

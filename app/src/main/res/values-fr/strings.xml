@@ -113,7 +113,7 @@
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
-    <string name="notification_text_steps">%1$s sur %2$s pas effectués aujourd\'hui.</string>
+    <string name="notification_text_steps">%1$d sur %2$d pas effectués aujourd\'hui.</string>
     <string name="notification_text_distance">%1$.2f %2$s marché(s) aujourd\'hui.</string>
     <string name="notification_text_calories">%.2f kcal brûlées aujourd\'hui</string>
     <!-- /Will be removed on next update -->

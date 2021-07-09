@@ -208,7 +208,7 @@
 
     <!-- Will be removed on next update -->
     <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.daily_step_goal</string>
-    <string name="notification_text_steps">%1$s of %2$s steps walked today.</string>
+    <string name="notification_text_steps">%1$d of %2$d steps walked today.</string>
     <string name="notification_text_distance">%1$.2f %2$s walked today.</string>
     <string name="notification_text_calories">Burned %.2f kcal today.</string>
     <string name="notification_text_default">Pedometer is active.</string>

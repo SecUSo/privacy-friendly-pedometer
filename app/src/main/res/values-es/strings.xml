@@ -112,7 +112,7 @@
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
-    <string name="notification_text_steps">%1$s de %2$s pasos andados hoy.</string>
+    <string name="notification_text_steps">%1$d de %2$d pasos andados hoy.</string>
     <string name="notification_text_distance">%1$.2f %2$s andados hoy.</string>
     <string name="notification_text_calories">Quemadas %.2f calorías hoy.</string>
     <!-- /Will be removed on next update -->

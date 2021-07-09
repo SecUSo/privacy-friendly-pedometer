@@ -82,7 +82,7 @@
     <string name="motivation_alert_notification_title">Schrittzähler</string>
     <string name="notification_text_calories">%.2f Kalorien verbrannt.</string>
     <string name="notification_text_distance">%1$.2f %2$s gelaufen.</string>
-    <string name="notification_text_steps">%1$s von %2$s Schritten gelaufen.</string>
+    <string name="notification_text_steps">%1$d von %2$d Schritten gelaufen.</string>
     <string name="notification_text_default">Schrittzähler aktiv.</string>
     <string name="operation_failed">Operation fehlgeschlagen.</string>
 

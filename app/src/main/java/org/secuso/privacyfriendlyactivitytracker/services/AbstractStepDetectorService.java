@@ -17,7 +17,6 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.services;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -35,6 +34,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -60,7 +60,7 @@ import java.util.List;
  * @version 20160810
  */
 
-public abstract class AbstractStepDetectorService extends IntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public abstract class AbstractStepDetectorService extends JobIntentService implements SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Broadcast action identifier for messages broadcasted when new steps were detected
@@ -108,10 +108,9 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
-     * @param name Used to name the worker thread, important only for debugging.
      */
-    public AbstractStepDetectorService(String name) {
-        super(name);
+    public AbstractStepDetectorService() {
+        super();
     }
 
     /**
@@ -171,7 +170,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mNotifyManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
@@ -282,10 +281,6 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
         return this.mBinder;
     }
 
-    @Override
-    public void onHandleIntent(Intent intent) {
-        // currently doing nothing here.
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -322,7 +317,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
      *
      * @return total_steps since last save as stepCount object
      */
-    private StepCount stepCountFromTotalSteps() {
+    protected StepCount stepCountFromTotalSteps() {
         StepCount stepCount = new StepCount();
         stepCount.setStepCount(total_steps);
         stepCount.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getApplicationContext())); // use current walking mode
@@ -356,7 +351,7 @@ public abstract class AbstractStepDetectorService extends IntentService implemen
     private void acquireWakeLock(){
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         if(mWakeLock == null || !mWakeLock.isHeld()) {
-            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "StepDetectorWakeLock");
+            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "pfPedometer:StepDetectorWakeLock");
             mWakeLock.acquire();
         }
     }

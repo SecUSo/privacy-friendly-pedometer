@@ -18,12 +18,15 @@
 package org.secuso.privacyfriendlyactivitytracker.services;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.R;
 
 import java.util.Arrays;
@@ -59,17 +62,8 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
      * Creates an AccelerometerStepDetectorService.
      */
     public AccelerometerStepDetectorService() {
-        this("");
+        super();
         // required empty constructor
-    }
-
-    /**
-     * Creates an AccelerometerStepDetectorService.
-     *
-     * @param name Name for the worker thread, use it for debugging purposes
-     */
-    public AccelerometerStepDetectorService(String name) {
-        super(name);
     }
 
     @Override
@@ -78,6 +72,10 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         accelerometerThreshold = Float.parseFloat(sharedPref.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
         validStepsThreshold = Integer.parseInt(sharedPref.getString(getString(R.string.pref_accelerometer_steps_threshold), "10"));
+    }
+
+    @Override
+    protected void onHandleWork(@NonNull @NotNull Intent intent) {
     }
 
     @Override

@@ -18,7 +18,9 @@
 package org.secuso.privacyfriendlyactivitytracker.services;
 
 import android.Manifest;
-import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,17 +34,26 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.JobIntentService;
+import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.R;
+import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.SplashActivity;
+import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
+
+import static org.secuso.privacyfriendlyactivitytracker.activities.SplashActivity.CHANNEL_ID;
 
 /**
  * @author Tobias Neidig
  * @version 20160810
  */
 
-public class MovementSpeedService extends IntentService implements LocationListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class MovementSpeedService extends JobIntentService implements LocationListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Broadcast action identifier for messages broadcasted when new speed is detected
@@ -60,19 +71,15 @@ public class MovementSpeedService extends IntentService implements LocationListe
     private double curTime = 0;
     private double oldLat = 0.0;
     private double oldLon = 0.0;
+    private int MOVEMENT_NOTIFICATION_ID = 2;
+    private NotificationManager mNotifyManager;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
-     * @param name Used to name the worker thread, important only for debugging.
      */
-    public MovementSpeedService(String name) {
-        super(name);
-    }
-
     public MovementSpeedService() {
-        this("");
-        // required empty constructor
+        super();
     }
 
     @Override
@@ -80,6 +87,7 @@ public class MovementSpeedService extends IntentService implements LocationListe
         //your code here
         Log.i(LOG_TAG, "Location changed");
         calculateSpeed(location);
+        mNotifyManager.notify(MOVEMENT_NOTIFICATION_ID, buildNotification());
     }
 
     @Override
@@ -101,6 +109,33 @@ public class MovementSpeedService extends IntentService implements LocationListe
     public void onCreate() {
         super.onCreate();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        startForeground(MOVEMENT_NOTIFICATION_ID, buildNotification());
+    }
+
+    private Notification buildNotification(){
+        mNotifyManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        NotificationCompat.Builder mBuilder = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            mBuilder = new NotificationCompat.Builder(this, SplashActivity.CHANNEL_ID);
+            mBuilder.setOnlyAlertOnce(true);
+        } else {
+            mBuilder = new NotificationCompat.Builder(this);
+        }
+                mBuilder.setSmallIcon(R.drawable.ic_directions_walk_65black_30dp);
+        if (speed !=null){
+            mBuilder.setContentTitle(UnitHelper.formatKilometersPerHour(UnitHelper.metersPerSecondToKilometersPerHour(speed),getApplicationContext()));
+        }
+
+        mBuilder.setContentIntent(pIntent);
+        mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
+        mBuilder.setPriority(NotificationCompat.PRIORITY_MIN);
+        return mBuilder.build();
     }
 
     @Override
@@ -108,6 +143,10 @@ public class MovementSpeedService extends IntentService implements LocationListe
         Log.i(LOG_TAG, "Destroying MovementSpeedService.");
         this.mLocationManager.removeUpdates(this);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onHandleWork(@NonNull @NotNull Intent intent) {
     }
 
     @Override
@@ -119,16 +158,10 @@ public class MovementSpeedService extends IntentService implements LocationListe
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
                 providerName != null) {
             mLocationManager.requestLocationUpdates(providerName, 0, 0, this);
-        }else{
-
         }
         return START_STICKY;
     }
 
-    @Override
-    public void onHandleIntent(Intent intent) {
-        // currently doing nothing here.
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

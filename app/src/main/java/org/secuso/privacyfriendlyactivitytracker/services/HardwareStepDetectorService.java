@@ -18,9 +18,12 @@
 package org.secuso.privacyfriendlyactivitytracker.services;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
+import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 
 /**
@@ -38,21 +41,16 @@ public class HardwareStepDetectorService extends AbstractStepDetectorService {
      */
     private float mStepOffset = -1;
 
-    /**
-     * Creates an HardwareStepDetectorService.
-     */
-    public HardwareStepDetectorService(){
-        this("");
-        // required empty constructor
+    @Override
+    protected void onHandleWork(@NonNull @NotNull Intent intent) {
     }
 
     /**
      * Creates an HardwareStepDetectorService.
      *
-     * @param name Name for the worker thread, use it for debugging purposes
      */
-    public HardwareStepDetectorService(String name) {
-        super(name);
+    public HardwareStepDetectorService() {
+        super();
     }
 
     @Override

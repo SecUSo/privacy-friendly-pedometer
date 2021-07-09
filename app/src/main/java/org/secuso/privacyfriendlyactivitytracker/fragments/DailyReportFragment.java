@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -42,6 +43,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AlertDialog;
 
+import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.adapters.ReportAdapter;
@@ -182,7 +184,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -284,7 +286,11 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         boolean isVelocityEnabled = sharedPref.getBoolean(getString(R.string.pref_show_velocity), false);
         if(movementSpeedBinder == null && isVelocityEnabled){
             Intent serviceIntent = new Intent(getContext(), MovementSpeedService.class);
-            getActivity().getApplicationContext().startService(serviceIntent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                getActivity().startForegroundService(serviceIntent);
+            } else {
+                getActivity().startService(serviceIntent);
+            }
             getActivity().getApplicationContext().bindService(serviceIntent, mMovementSpeedServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
@@ -579,7 +585,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext(), R.style.AppTheme_Dialog);
             LayoutInflater inflater = getActivity().getLayoutInflater();
             final View dialogLayout = inflater.inflate(R.layout.dialog_correct_steps, null);
-            final EditText edittext = (EditText) dialogLayout.findViewById(R.id.steps);
+            final EditText edittext = dialogLayout.findViewById(R.id.steps);
             edittext.setText(String.valueOf(getStepCountInclNonSavedSteps(day)));
             alert.setMessage(getString(R.string.correct_steps_dialog_message));
             alert.setTitle(getString(R.string.correct_steps_dialog_title));

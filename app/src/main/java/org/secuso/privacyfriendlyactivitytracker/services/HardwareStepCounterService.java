@@ -25,8 +25,10 @@ import android.hardware.TriggerEventListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountDbHelper;
@@ -48,16 +50,17 @@ public class HardwareStepCounterService extends AbstractStepDetectorService{
     private static final String LOG_TAG = HardwareStepCounterService.class.getName();
     protected TriggerEventListener listener;
 
-    public HardwareStepCounterService(){
-        super("");
-    }
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
-     * @param name Used to name the worker thread, important only for debugging.
      */
-    public HardwareStepCounterService(String name) {
-        super(name);
+    public HardwareStepCounterService() {
+        super();
+    }
+
+    @Override
+    protected void onHandleWork(@NonNull @NotNull Intent intent) {
     }
 
     @Override

@@ -126,7 +126,12 @@ public class StepDetectionServiceHelper {
     public static void startStepDetection(Context context) {
         Log.i(LOG_CLASS, "Started step detection service.");
         Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.getApplicationContext().startForegroundService(stepDetectorServiceIntent);
+        } else {
             context.getApplicationContext().startService(stepDetectorServiceIntent);
+        }
         WidgetReceiver.forceWidgetUpdate(context);
     }
 

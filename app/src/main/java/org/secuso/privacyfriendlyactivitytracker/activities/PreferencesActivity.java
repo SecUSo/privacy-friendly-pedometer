@@ -263,6 +263,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.registerOnSharedPreferenceChangeListener(this);
 
+            /*
             if (AndroidVersionHelper.supportsStepDetector(getActivity().getPackageManager()) && sharedPref.getBoolean(getString(R.string.pref_use_step_hardware), false) ) {
                 // hide accelerometer threshold if hardware detection is used.
                 PreferenceScreen screen = getPreferenceScreen();
@@ -271,6 +272,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 screen.removePreference(accelerometerThresholdPref);
                 screen.removePreference(accelerometerStepsThresholdPref);
             }
+
+             */
 
             Preference exportDataPreference = findPreference(getString(R.string.pref_export_data));
             exportDataPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -377,12 +380,11 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
             // If step counting method is changed, old service needs to stop and settings view recreated
             if (key.equals(getString(R.string.pref_use_step_hardware))){
-                StepDetectionServiceHelper.cancelPersistenceService(true, context);
-                StepDetectionServiceHelper.stopStepDetection(context);
-                StepDetectionServiceHelper.stopHardwareStepCounter(context);
-
-                StepDetectionServiceHelper.startAllIfEnabled(context);
-                getActivity().recreate();
+                //StepDetectionServiceHelper.cancelPersistenceService(true, context);
+                //StepDetectionServiceHelper.stopStepDetection(context);
+                //StepDetectionServiceHelper.stopHardwareStepCounter(context);
+                StepDetectionServiceHelper.stopAllIfNotRequired(true, context);
+                //StepDetectionServiceHelper.startAllIfEnabled(context);
             }
 
             // check for location permission

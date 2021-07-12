@@ -26,6 +26,7 @@
         android:defaultValue="false"
         android:key="@string/pref_use_step_hardware"
         android:summary="@string/pref_summary_use_step_hardware"
+        android:disableDependentsState="true"
         android:title="@string/pref_title_use_step_hardware" />
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
@@ -39,6 +40,7 @@
         android:key="@string/pref_accelerometer_threshold"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
+        android:dependency="@string/pref_use_step_hardware"
         android:title="@string/pref_title_accelerometer_threshold"/>
     <EditTextPreference
         android:defaultValue="@string/pref_default_accelerometer_steps_threshold"
@@ -48,6 +50,7 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:dependency="@string/pref_use_step_hardware"
         android:title="@string/pref_title_accelerometer_steps_threshold" />
     <ListPreference
         android:defaultValue="km"

@@ -17,8 +17,13 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
+
+import org.secuso.privacyfriendlyactivitytracker.R;
 
 /**
  *
@@ -46,10 +51,11 @@ public class AndroidVersionHelper {
      * Decides whether the hardware step counter should be used. In this case the step counter-service
      * will not show any notification and update the step count not in real time. This helps to save
      * energy and increases the accuracy - but is only available on some devices.
-     * @param pm An instance of the android PackageManager
+     * @param context An instance of the originating Context
      * @return true if hardware step counter should and can be used.
      */
-    public static boolean isHardwareStepCounterEnabled(PackageManager pm){
-        return supportsStepDetector(pm);
+    public static boolean isHardwareStepCounterEnabled(Context context){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return supportsStepDetector(context.getPackageManager()) && sharedPref.getBoolean(context.getString(R.string.pref_use_step_hardware), false);
     }
 }

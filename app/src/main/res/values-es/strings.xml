@@ -238,4 +238,6 @@
     <string name="help_correctsteps_heading">Número de paso correcto</string>
     <string name="help_correctsteps_selection">Puedes modificar los pasos diarios detectados en la vista del informe diario. Esto le permite añadir los pasos que ha caminado sin la aplicación o corregir el número de pasos detectado.</string>
     <string name="slide_5_desc_two">Haz clic en \"Preferencias\" para establecer el tamaño de tu paso y personalizar tus datos personales.</string>
+    <string name="pref_summary_use_step_hardware">Some phones have built-in step counting hardware. This can reduce battery usage and increase precision. However, it does not work reliably on all devices with our app. Disable if steps are not counted.</string>
+    <string name="pref_title_use_step_hardware">Use phone step counting hardware</string>
 </resources>

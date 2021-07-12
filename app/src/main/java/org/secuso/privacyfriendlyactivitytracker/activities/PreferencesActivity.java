@@ -263,7 +263,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.registerOnSharedPreferenceChangeListener(this);
 
-            if (AndroidVersionHelper.supportsStepDetector(getActivity().getPackageManager())) {
+            if (AndroidVersionHelper.supportsStepDetector(getActivity().getPackageManager()) && sharedPref.getBoolean(getString(R.string.pref_use_step_hardware), false) ) {
                 // hide accelerometer threshold if hardware detection is used.
                 PreferenceScreen screen = getPreferenceScreen();
                 ListPreference accelerometerThresholdPref = (ListPreference) findPreference(getString(R.string.pref_accelerometer_threshold));
@@ -363,21 +363,34 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Context context = getActivity().getApplicationContext();
+
             // Detect changes on preferences and update our internal variable
             if (key.equals(getString(R.string.pref_step_counter_enabled))) {
                 boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_step_counter_enabled), true);
                 if (isEnabled) {
-                    StepDetectionServiceHelper.startAllIfEnabled(getActivity().getApplicationContext());
+                    StepDetectionServiceHelper.startAllIfEnabled(context);
                 } else {
-                    StepDetectionServiceHelper.stopAllIfNotRequired(getActivity().getApplicationContext());
+                    StepDetectionServiceHelper.stopAllIfNotRequired(context);
                 }
             }
+
+            // If step counting method is changed, old service needs to stop and settings view recreated
+            if (key.equals(getString(R.string.pref_use_step_hardware))){
+                StepDetectionServiceHelper.cancelPersistenceService(true, context);
+                StepDetectionServiceHelper.stopStepDetection(context);
+                StepDetectionServiceHelper.stopHardwareStepCounter(context);
+
+                StepDetectionServiceHelper.startAllIfEnabled(context);
+                getActivity().recreate();
+            }
+
             // check for location permission
             if (key.equals(getString(R.string.pref_show_velocity))) {
                 boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_show_velocity), false);
                 if (isEnabled) {
-                    if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
                     }
                 }

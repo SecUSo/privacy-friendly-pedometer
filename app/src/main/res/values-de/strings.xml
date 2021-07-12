@@ -250,4 +250,6 @@
     <string name="export_csv_error">Fehler beim Export aufgetreten</string>
     <string name="export_csv_success">CSV exportiert unter</string>
     <string name="pref_notification_permanent">Die permanente Benachrichtigung wird angezeigt, wenn die App im Hintergrund Ihre Schritte zählt. Sie können anpassen, was die App anzeigen soll.</string>
+    <string name="pref_summary_use_step_hardware">Some phones have built-in step counting hardware. This can reduce battery usage and increase precision. However, it does not work reliably on all devices with our app. Disable if steps are not counted.</string>
+    <string name="pref_title_use_step_hardware">Use phone step counting hardware</string>
 </resources>

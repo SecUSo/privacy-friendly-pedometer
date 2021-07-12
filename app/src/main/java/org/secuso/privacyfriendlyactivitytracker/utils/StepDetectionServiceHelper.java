@@ -33,6 +33,8 @@ import org.secuso.privacyfriendlyactivitytracker.receivers.HardwareStepCountRece
 import org.secuso.privacyfriendlyactivitytracker.receivers.MotivationAlertReceiver;
 import org.secuso.privacyfriendlyactivitytracker.receivers.StepCountPersistenceReceiver;
 import org.secuso.privacyfriendlyactivitytracker.receivers.WidgetReceiver;
+import org.secuso.privacyfriendlyactivitytracker.services.AccelerometerStepDetectorService;
+import org.secuso.privacyfriendlyactivitytracker.services.HardwareStepDetectorService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -60,7 +62,7 @@ public class StepDetectionServiceHelper {
         Log.i(LOG_CLASS, "Start of all services requested");
         // Start the step detection if enabled or training is active
         if (isStepDetectionEnabled(context)) {
-            if(forceRealTimeStepDetection || isRealTimeStepDetectionRequired(context) || !AndroidVersionHelper.isHardwareStepCounterEnabled(context.getPackageManager())) {
+            if(forceRealTimeStepDetection || isRealTimeStepDetectionRequired(context) || !AndroidVersionHelper.isHardwareStepCounterEnabled(context)) {
                 Log.i(LOG_CLASS, "Start step detection");
                 StepDetectionServiceHelper.startStepDetection(context);
                 // schedule stepCountPersistenceService
@@ -96,7 +98,7 @@ public class StepDetectionServiceHelper {
             }
             StepDetectionServiceHelper.stopHardwareStepCounter(context);
         }else{
-            if(!isRealTimeStepDetectionRequired(context) && AndroidVersionHelper.isHardwareStepCounterEnabled(context.getPackageManager())){
+            if(!isRealTimeStepDetectionRequired(context) && AndroidVersionHelper.isHardwareStepCounterEnabled(context)){
                 Log.i(LOG_CLASS, "Stopping realtime step detection and scheduling hardware step counter");
                 // if step detection is required but no real time step count is necessary and hw step counter
                 // is available we stop the real time step detection and enable the hardware step counter.
@@ -125,7 +127,7 @@ public class StepDetectionServiceHelper {
      */
     public static void startStepDetection(Context context) {
         Log.i(LOG_CLASS, "Started step detection service.");
-        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.getApplicationContext().startForegroundService(stepDetectorServiceIntent);
@@ -142,9 +144,13 @@ public class StepDetectionServiceHelper {
      */
     public static void stopStepDetection(Context context){
         Log.i(LOG_CLASS, "Stopping step detection service.");
-        Intent stepDetectorServiceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
-        if(!context.getApplicationContext().stopService(stepDetectorServiceIntent)){
-            Log.w(LOG_CLASS, "Stopping of service failed or it is not running.");
+        Intent hardwareStepDetectorServiceIntent = new Intent(context, HardwareStepDetectorService.class);
+        Intent accelerometerStepDetectorServiceIntent = new Intent(context, AccelerometerStepDetectorService.class);
+        if(!context.getApplicationContext().stopService(hardwareStepDetectorServiceIntent)){
+            Log.w(LOG_CLASS, "Stopping of HARDWARE service failed or it is not running.");
+        }
+        if(!context.getApplicationContext().stopService(accelerometerStepDetectorServiceIntent)){
+            Log.w(LOG_CLASS, "Stopping of ACCELEROMETER service failed or it is not running.");
         }
     }
 

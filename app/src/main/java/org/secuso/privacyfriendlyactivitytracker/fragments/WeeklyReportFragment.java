@@ -243,7 +243,7 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     }
 
     private void bindService(){
-        Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
+        Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext()));
         getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 

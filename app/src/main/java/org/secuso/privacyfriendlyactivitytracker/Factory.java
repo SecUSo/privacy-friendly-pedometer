@@ -17,7 +17,10 @@
 */
 package org.secuso.privacyfriendlyactivitytracker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.services.AccelerometerStepDetectorService;
@@ -37,11 +40,13 @@ public class Factory {
      * Returns the class of the step detector service which should be used
      *
      * The used step detector service depends on different soft- and hardware preferences.
-     * @param pm An instance of the android PackageManager
+     * @param context An instance of the calling Context
      * @return The class of step detector
      */
-    public static Class<? extends AbstractStepDetectorService> getStepDetectorServiceClass(PackageManager pm){
-        if(pm != null && AndroidVersionHelper.supportsStepDetector(pm)) {
+    public static Class<? extends AbstractStepDetectorService> getStepDetectorServiceClass(Context context){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        PackageManager pm = context.getPackageManager();
+        if(pm != null && AndroidVersionHelper.supportsStepDetector(pm) && sharedPref.getBoolean(context.getString(R.string.pref_use_step_hardware), false)) {
             return HardwareStepDetectorService.class;
         }else{
             return AccelerometerStepDetectorService.class;

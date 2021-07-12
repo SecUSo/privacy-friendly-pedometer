@@ -117,7 +117,7 @@ public class HardwareStepCounterService extends AbstractStepDetectorService{
     @Override
     public int getSensorType() {
         Log.i(LOG_TAG, "getSensorType STEP_COUNTER");
-        if (AndroidVersionHelper.isHardwareStepCounterEnabled(this.getPackageManager())) {
+        if (AndroidVersionHelper.isHardwareStepCounterEnabled(this)) {
             return Sensor.TYPE_STEP_COUNTER;
         } else {
             return 0;

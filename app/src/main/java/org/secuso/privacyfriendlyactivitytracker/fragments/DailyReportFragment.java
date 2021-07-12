@@ -269,7 +269,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
 
     private void bindService(){
         if(myBinder == null) {
-            Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext().getPackageManager()));
+            Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext()));
             getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
@@ -638,7 +638,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(getString(R.string.pref_step_counter_enabled))){
+        if(key.equals(getString(R.string.pref_step_counter_enabled)) || key.equals(getString(R.string.pref_use_step_hardware))){
             if(!StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
                 unbindService();
             }else if(this.isTodayShown()){

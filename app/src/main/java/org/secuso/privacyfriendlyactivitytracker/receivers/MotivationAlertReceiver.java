@@ -90,7 +90,7 @@ public class MotivationAlertReceiver extends WakefulBroadcastReceiver {
         }
 
         // bind to service
-        Intent serviceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context.getPackageManager()));
+        Intent serviceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context));
         context.getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 

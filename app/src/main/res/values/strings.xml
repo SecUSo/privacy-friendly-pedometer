@@ -321,4 +321,7 @@
     <string name="help_permission_storage_description">is needed to export your collected data as a CSV-file. This permission is only requested when you want to export your data.</string>
     <string name="help_permission_storage_heading">Permission: Write External Storage</string>
     <string name="pref_notification_permanent">The permanent notification is displayed when the application counts your steps in the background. You can customize what the application should display.</string>
+    <string name="pref_use_step_hardware" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_step_hardware</string>
+    <string name="pref_summary_use_step_hardware">Some phones have built-in step counting hardware. This can reduce battery usage and increase precision. However, it does not work reliably on all devices with our app. Disable if steps are not counted.</string>
+    <string name="pref_title_use_step_hardware">Use phone step counting hardware</string>
 </resources>

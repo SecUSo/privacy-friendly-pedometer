@@ -128,7 +128,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
         // Bind to stepDetector
-        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
+        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this));
         getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         this.getStepCounts();
         this.updateData();
@@ -152,7 +152,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
+        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this));
         getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         // Force refresh of view.
         this.getStepCounts();

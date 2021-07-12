@@ -129,7 +129,7 @@ public class WalkingModeLearningActivity extends AppCompatActivity implements Vi
         filterRefreshUpdate.addAction(AbstractStepDetectorService.BROADCAST_ACTION_STEPS_DETECTED);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filterRefreshUpdate);
         // Bind to stepDetector
-        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this.getPackageManager()));
+        Intent serviceIntent = new Intent(this, Factory.getStepDetectorServiceClass(this));
         getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 
         this.getStepCounts();

@@ -160,7 +160,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(getString(R.string.pref_step_counter_enabled))){
+        if(key.equals(getString(R.string.pref_step_counter_enabled)) || key.equals(getString(R.string.pref_use_step_hardware))){
             this.getActivity().invalidateOptionsMenu();
         }
     }

@@ -22,25 +22,16 @@
         android:summary="@string/pref_summary_step_counter_enabled"
         android:title="@string/pref_title_step_counter_enabled" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_use_step_hardware"
+        android:summary="@string/pref_summary_use_step_hardware"
+        android:title="@string/pref_title_use_step_hardware" />
+
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    <ListPreference
-        android:defaultValue="km"
-        android:entries="@array/pref_keys_unit_of_length"
-        android:entryValues="@array/pref_values_unit_of_length"
-        android:key="@string/pref_unit_of_length"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_unit_of_length" />
-    <ListPreference
-        android:defaultValue="cal"
-        android:entries="@array/pref_keys_unit_of_energy"
-        android:entryValues="@array/pref_values_unit_of_energy"
-        android:key="@string/pref_unit_of_energy"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_unit_of_energy" />
+
     <ListPreference
         android:defaultValue="0.75"
         android:entries="@array/pref_keys_accelerometer_threshold"
@@ -58,6 +49,22 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_accelerometer_steps_threshold" />
+    <ListPreference
+        android:defaultValue="km"
+        android:entries="@array/pref_keys_unit_of_length"
+        android:entryValues="@array/pref_values_unit_of_length"
+        android:key="@string/pref_unit_of_length"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_unit_of_length" />
+    <ListPreference
+        android:defaultValue="cal"
+        android:entries="@array/pref_keys_unit_of_energy"
+        android:entryValues="@array/pref_values_unit_of_energy"
+        android:key="@string/pref_unit_of_energy"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_unit_of_energy" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="@string/pref_use_wake_lock"

@@ -35,7 +35,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -75,6 +74,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     static int REQUEST_EXTERNAL_STORAGE = 2;
     static int REQUEST_LOCATION = 1;
     static int REQUEST_ACTIVITY = 3;
+
+    private GeneralPreferenceFragment generalPreferenceFragment;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -236,12 +237,18 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         }
         if (requestCode == REQUEST_ACTIVITY){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //TODO switch step counting (call function which is also called on general pref switching)
+                if (generalPreferenceFragment !=null){
+                    generalPreferenceFragment.saveStepsAndRestartService();
+                    generalPreferenceFragment.checkHardwareStepUse(true);
+                }
             } else {
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean(getString(R.string.pref_use_step_hardware), false);
                 editor.apply();
+                if (generalPreferenceFragment !=null){
+                    generalPreferenceFragment.checkHardwareStepUse(false);
+                }
             }
         }
 
@@ -267,6 +274,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
+
+            ((PreferencesActivity) getActivity()).generalPreferenceFragment = this;
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -294,17 +303,6 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.registerOnSharedPreferenceChangeListener(this);
 
-            /*
-            if (AndroidVersionHelper.supportsStepDetector(getActivity().getPackageManager()) && sharedPref.getBoolean(getString(R.string.pref_use_step_hardware), false) ) {
-                // hide accelerometer threshold if hardware detection is used.
-                PreferenceScreen screen = getPreferenceScreen();
-                ListPreference accelerometerThresholdPref = (ListPreference) findPreference(getString(R.string.pref_accelerometer_threshold));
-                EditTextPreference accelerometerStepsThresholdPref = (EditTextPreference) findPreference(getString(R.string.pref_accelerometer_steps_threshold));
-                screen.removePreference(accelerometerThresholdPref);
-                screen.removePreference(accelerometerStepsThresholdPref);
-            }
-
-             */
 
             stepCounterEnabledPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -325,15 +323,21 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     if(enable) {
 
                         if (AndroidVersionHelper.supportsStepDetector(getActivity().getApplicationContext().getPackageManager())) {
-                            if(verifyActivityPermissions(getActivity())){
-                                return true;
+
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                if(verifyActivityPermissions(getActivity())) {
+                                    checkHardwareStepUse(true);
+                                }
                             }
+                            return true;
+
                         } else {
                             Toast.makeText(getActivity(), R.string.pref_use_step_hardware_not_available, Toast.LENGTH_SHORT).show();
+                            checkHardwareStepUse(false);
                             return false;
                         }
                     }
-
+                    checkHardwareStepUse(false);
                     return false;
                 }
             });
@@ -348,6 +352,11 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
+        }
+
+        private void checkHardwareStepUse(Boolean checked) {
+            final SwitchPreference hardwarePreference = (SwitchPreference) findPreference(getString(R.string.pref_use_step_hardware));
+            if (hardwarePreference!=null) hardwarePreference.setChecked(checked);
         }
 
         private void saveStepsAndRestartService() {

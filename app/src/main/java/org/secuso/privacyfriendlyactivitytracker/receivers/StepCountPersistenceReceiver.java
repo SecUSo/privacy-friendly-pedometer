@@ -58,6 +58,9 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
             context.getApplicationContext().unbindService(mServiceConnection);
             StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
             WidgetReceiver.forceWidgetUpdate(context);
+            if(mSaveListener != null) {
+                mSaveListener.onSaveDone();
+            }
         }
     };
 
@@ -74,6 +77,21 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
         // bind to service
         Intent serviceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context));
         context.getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
-
     }
+
+    public interface ISaveListener {
+        void onSaveDone();
+    }
+
+    private static ISaveListener mSaveListener = null;
+
+    public static void registerSaveListener(ISaveListener listener) {
+        mSaveListener = listener;
+    }
+
+    public static void unregisterSaveListener() {
+        mSaveListener = null;
+    }
+
+
 }

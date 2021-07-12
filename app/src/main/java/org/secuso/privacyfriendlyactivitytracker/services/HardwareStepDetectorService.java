@@ -23,6 +23,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 
@@ -41,10 +43,6 @@ public class HardwareStepDetectorService extends AbstractStepDetectorService {
      */
     private float mStepOffset = -1;
 
-    @Override
-    protected void onHandleWork(@NonNull @NotNull Intent intent) {
-    }
-
     /**
      * Creates an HardwareStepDetectorService.
      *
@@ -52,6 +50,9 @@ public class HardwareStepDetectorService extends AbstractStepDetectorService {
     public HardwareStepDetectorService() {
         super();
     }
+
+    @Override
+    protected void onHandleWork(@NonNull Intent intent) {}
 
     @Override
     public void onSensorChanged(SensorEvent event) {

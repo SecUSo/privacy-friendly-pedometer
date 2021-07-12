@@ -240,4 +240,5 @@
     <string name="slide_5_desc_two">Haz clic en \"Preferencias\" para establecer el tamaño de tu paso y personalizar tus datos personales.</string>
     <string name="pref_summary_use_step_hardware">Algunos teléfonos llevan incorporado el hardware de recuento de pasos. Esto puede reducir el uso de la batería y aumentar la precisión. Sin embargo, no funciona de forma fiable en todos los dispositivos con nuestra aplicación. Desactivar si no se cuentan los pasos.</string>
     <string name="pref_title_use_step_hardware">Verwenden Sie die Schrittzähler-Hardware des Telefons</string>
+    <string name="pref_use_step_hardware_not_available">This device does not support hardware step counting.</string>
 </resources>

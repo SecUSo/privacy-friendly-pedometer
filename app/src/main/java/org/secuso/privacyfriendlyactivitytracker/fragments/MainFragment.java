@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -43,6 +44,8 @@ import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelpe
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.secuso.privacyfriendlyactivitytracker.R.id.menu_pause_step_detection;
 
 /**
  * Displays the main app view.
@@ -195,7 +198,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(@NonNull Activity activity) {
         StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
         super.onAttach(activity);
     }

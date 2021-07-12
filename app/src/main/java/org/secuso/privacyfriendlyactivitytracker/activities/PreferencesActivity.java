@@ -28,15 +28,14 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -47,6 +46,7 @@ import androidx.core.app.ActivityCompat;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.receivers.StepCountPersistenceReceiver;
 import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
@@ -252,6 +252,16 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+        private Preference exportDataPreference;
+        private Preference lengthUnitPreference;
+        private Preference energyUnitPreference;
+        private Preference dailyStepGoalPreference;
+        private Preference weightPreference;
+        private Preference genderPreference;
+        private Preference accelThresholdPreference;
+        private Preference useStepHardwarePreference;
+        private Preference stepCounterEnabledPreference;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -264,13 +274,22 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             // guidelines.
             additionalSummaryTexts.put(getString(R.string.pref_accelerometer_threshold), getString(R.string.pref_summary_accelerometer_threshold));
 
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_length)));
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_unit_of_energy)));
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_daily_step_goal)));
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_weight)));
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_gender)));
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_accelerometer_threshold)));
+            lengthUnitPreference = findPreference(getString(R.string.pref_unit_of_length));
+            stepCounterEnabledPreference = findPreference(getString(R.string.pref_step_counter_enabled));
+            energyUnitPreference = findPreference(getString(R.string.pref_unit_of_energy));
+            dailyStepGoalPreference = findPreference(getString(R.string.pref_daily_step_goal));
+            weightPreference = findPreference(getString(R.string.pref_weight));
+            genderPreference = findPreference(getString(R.string.pref_gender));
+            accelThresholdPreference = findPreference(getString(R.string.pref_accelerometer_threshold));
+            exportDataPreference = findPreference(getString(R.string.pref_export_data));
+            useStepHardwarePreference = findPreference(getString(R.string.pref_use_step_hardware));
 
+            bindPreferenceSummaryToValue(lengthUnitPreference);
+            bindPreferenceSummaryToValue(energyUnitPreference);
+            bindPreferenceSummaryToValue(dailyStepGoalPreference);
+            bindPreferenceSummaryToValue(weightPreference);
+            bindPreferenceSummaryToValue(genderPreference);
+            bindPreferenceSummaryToValue(accelThresholdPreference);
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.registerOnSharedPreferenceChangeListener(this);
@@ -287,7 +306,38 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
              */
 
-            Preference exportDataPreference = findPreference(getString(R.string.pref_export_data));
+            stepCounterEnabledPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    StepCountPersistenceReceiver.unregisterSaveListener();
+                    return true;
+                }
+            });
+
+            useStepHardwarePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    SwitchPreference pref = (SwitchPreference) preference;
+                    Boolean enable = pref.isChecked();
+
+                    saveStepsAndRestartService();
+
+                    if(enable) {
+
+                        if (AndroidVersionHelper.supportsStepDetector(getActivity().getApplicationContext().getPackageManager())) {
+                            if(verifyActivityPermissions(getActivity())){
+                                return true;
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), R.string.pref_use_step_hardware_not_available, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                    }
+
+                    return false;
+                }
+            });
+
             exportDataPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -298,6 +348,25 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
+        }
+
+        private void saveStepsAndRestartService() {
+            final Context context = getActivity().getApplicationContext();
+
+            StepCountPersistenceReceiver.registerSaveListener(new StepCountPersistenceReceiver.ISaveListener() {
+                @Override
+                public void onSaveDone() {
+                    //Log.d("save", "save done");
+                    StepCountPersistenceReceiver.unregisterSaveListener();
+
+                    if(context != null) {
+                        StepDetectionServiceHelper.startAllIfEnabled(true, context);
+                    }
+                }
+            });
+
+            StepDetectionServiceHelper.cancelPersistenceService(true, context);
+            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
         }
 
         /**
@@ -415,28 +484,6 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     StepDetectionServiceHelper.startAllIfEnabled(context);
                 } else {
                     StepDetectionServiceHelper.stopAllIfNotRequired(context);
-                }
-            }
-
-            // If step counting method is changed, old service needs to stop and settings view recreated
-            if (key.equals(getString(R.string.pref_use_step_hardware))){
-                if(sharedPreferences.getBoolean(getString(R.string.pref_use_step_hardware), false)) {
-                    if (AndroidVersionHelper.supportsStepDetector(getActivity().getApplicationContext().getPackageManager())) {
-                        if(verifyActivityPermissions(getActivity())){
-                            //TODO switch step counting method call
-                        }
-                    } else {
-                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putBoolean(getString(R.string.pref_use_step_hardware), false);
-                        editor.apply();
-                        final SwitchPreference switchPreference = (SwitchPreference) findPreference(getString(R.string.pref_use_step_hardware));
-                        switchPreference.setChecked(false);
-                        //TODO Toast
-                    }
-                } else {
-                    final SwitchPreference switchPreference = (SwitchPreference) findPreference(getString(R.string.pref_use_step_hardware));
-                    switchPreference.setChecked(false);
                 }
             }
 

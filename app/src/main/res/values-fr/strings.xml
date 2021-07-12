@@ -240,5 +240,5 @@
     <string name="pref_notification_permanent">La notification permanente s\'affiche lorsque l\'application compte vos pas en arrière-plan. Vous pouvez personnaliser ce que l\'application doit afficher.</string>
     <string name="pref_summary_use_step_hardware">Certains téléphones intègrent un système de comptage des pas. Cela peut réduire l\'utilisation de la batterie et augmenter la précision. Cependant, il ne fonctionne pas de manière fiable sur tous les appareils avec notre application. Désactiver si les pas ne sont pas comptés.</string>
     <string name="pref_title_use_step_hardware">Utilizar el hardware de recuento de pasos del teléfono</string>
-    <string name="pref_use_step_hardware_not_available">This device does not support hardware step counting.</string>
+    <string name="pref_use_step_hardware_not_available">Cet appareil ne prend pas en charge le comptage matériel des pas.</string>
 </resources>

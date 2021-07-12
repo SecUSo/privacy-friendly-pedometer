@@ -35,6 +35,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -73,6 +74,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     private static Map<String, String> additionalSummaryTexts;
     static int REQUEST_EXTERNAL_STORAGE = 2;
     static int REQUEST_LOCATION = 1;
+    static int REQUEST_ACTIVITY = 3;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -232,6 +234,16 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 }
             }
         }
+        if (requestCode == REQUEST_ACTIVITY){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //TODO switch step counting (call function which is also called on general pref switching)
+            } else {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean(getString(R.string.pref_use_step_hardware), false);
+                editor.apply();
+            }
+        }
 
     }
     /**
@@ -316,6 +328,34 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             return true;
         }
 
+
+        /**
+         * Checks if the app has permission to access hardware step counter
+         * <p>
+         * If the app does not has permission then the user will be prompted to grant permission
+         *
+         * @param activity
+         */
+        private boolean verifyActivityPermissions(Activity activity) {
+            String[] PERMISSION_ACTIVITY = {
+                    Manifest.permission.ACTIVITY_RECOGNITION
+            };
+
+            // Check if we have permission
+            int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACTIVITY_RECOGNITION);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        activity,
+                        PERMISSION_ACTIVITY,
+                        REQUEST_ACTIVITY
+                );
+                return false;
+            }
+            return true;
+        }
+
         void generateCSVToExport() {
             SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String path = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
@@ -380,11 +420,24 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
             // If step counting method is changed, old service needs to stop and settings view recreated
             if (key.equals(getString(R.string.pref_use_step_hardware))){
-                //StepDetectionServiceHelper.cancelPersistenceService(true, context);
-                //StepDetectionServiceHelper.stopStepDetection(context);
-                //StepDetectionServiceHelper.stopHardwareStepCounter(context);
-                StepDetectionServiceHelper.stopAllIfNotRequired(true, context);
-                //StepDetectionServiceHelper.startAllIfEnabled(context);
+                if(sharedPreferences.getBoolean(getString(R.string.pref_use_step_hardware), false)) {
+                    if (AndroidVersionHelper.supportsStepDetector(getActivity().getApplicationContext().getPackageManager())) {
+                        if(verifyActivityPermissions(getActivity())){
+                            //TODO switch step counting method call
+                        }
+                    } else {
+                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean(getString(R.string.pref_use_step_hardware), false);
+                        editor.apply();
+                        final SwitchPreference switchPreference = (SwitchPreference) findPreference(getString(R.string.pref_use_step_hardware));
+                        switchPreference.setChecked(false);
+                        //TODO Toast
+                    }
+                } else {
+                    final SwitchPreference switchPreference = (SwitchPreference) findPreference(getString(R.string.pref_use_step_hardware));
+                    switchPreference.setChecked(false);
+                }
             }
 
             // check for location permission
@@ -395,6 +448,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                             ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
                     }
+                } else {
+                    final SwitchPreference velocityPreference = (SwitchPreference) findPreference(getString(R.string.pref_show_velocity));
+                    if (velocityPreference!=null) velocityPreference.setChecked(false);
                 }
             }
         }

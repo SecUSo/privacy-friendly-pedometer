@@ -255,7 +255,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
         // register for sensors
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
 
         // Get daily goal(s) from preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);

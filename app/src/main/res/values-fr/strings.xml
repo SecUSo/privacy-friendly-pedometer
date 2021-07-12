@@ -238,6 +238,6 @@
     <string name="help_correctsteps_selection">Vous pouvez modifier les pas quotidiens détectés dans la vue du rapport quotidien. Cela vous permet d\'ajouter les pas que vous avez effectués sans l\'application ou de corriger le nombre de pas détectés.</string>
     <string name="slide_5_desc_two">Cliquez sur \"Préférences\" pour définir votre taille de pas et personnaliser vos données personnelles.</string>
     <string name="pref_notification_permanent">La notification permanente s\'affiche lorsque l\'application compte vos pas en arrière-plan. Vous pouvez personnaliser ce que l\'application doit afficher.</string>
-    <string name="pref_summary_use_step_hardware">Some phones have built-in step counting hardware. This can reduce battery usage and increase precision. However, it does not work reliably on all devices with our app. Disable if steps are not counted.</string>
-    <string name="pref_title_use_step_hardware">Use phone step counting hardware</string>
+    <string name="pref_summary_use_step_hardware">Certains téléphones intègrent un système de comptage des pas. Cela peut réduire l\'utilisation de la batterie et augmenter la précision. Cependant, il ne fonctionne pas de manière fiable sur tous les appareils avec notre application. Désactiver si les pas ne sont pas comptés.</string>
+    <string name="pref_title_use_step_hardware">Utilizar el hardware de recuento de pasos del teléfono</string>
 </resources>

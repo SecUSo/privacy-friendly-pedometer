@@ -19,6 +19,7 @@ package org.secuso.privacyfriendlyactivitytracker.services;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -30,6 +31,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -78,7 +80,8 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
     /**
      * The notification id used for permanent step count notification
      */
-    public static final int NOTIFICATION_ID = 1;
+    public static String CHANNEL_ID = "pedometer";
+    public static final int NOTIFICATION_ID = 42;
     private static final String LOG_TAG = AbstractStepDetectorService.class.getName();
     private final IBinder mBinder = new StepDetectorBinder();
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver();
@@ -175,7 +178,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-            mBuilder = new NotificationCompat.Builder(this, SplashActivity.CHANNEL_ID);
+            mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
             mBuilder.setOnlyAlertOnce(true);
         } else {
             mBuilder = new NotificationCompat.Builder(this);
@@ -185,7 +188,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
                 .setTicker(message)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(getString(R.string.app_name)))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
-                .setSmallIcon(R.drawable.ic_directions_walk_65black_30dp);
+                .setSmallIcon(R.drawable.ic_stat_directions_walk);
         mBuilder.setContentIntent(pIntent);
         mBuilder.setProgress(this.dailyStepGoal, totalSteps, false);
         mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
@@ -220,6 +223,8 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
 
     @Override
     public void onCreate() {
+        createNotificationChannel();
+        startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
         super.onCreate();
         Log.i(LOG_TAG, "Creating service.");
     }
@@ -247,7 +252,6 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOG_TAG, "Starting service.");
-        startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
         acquireOrReleaseWakeLock();
 
         if(!StepDetectionServiceHelper.isStepDetectionEnabled(getApplicationContext())){
@@ -416,6 +420,22 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
                     acquireOrReleaseWakeLock();
                 default:
             }
+        }
+    }
+
+    void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.app_name);
+            String description = getString(R.string.app_name_long);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

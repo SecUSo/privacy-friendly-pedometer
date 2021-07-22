@@ -19,6 +19,7 @@ package org.secuso.privacyfriendlyactivitytracker.services;
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -30,6 +31,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -43,10 +45,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
-import org.secuso.privacyfriendlyactivitytracker.activities.SplashActivity;
 import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
-import static org.secuso.privacyfriendlyactivitytracker.activities.SplashActivity.CHANNEL_ID;
+import static org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService.CHANNEL_ID;
+
 
 /**
  * @author Tobias Neidig
@@ -71,7 +73,7 @@ public class MovementSpeedService extends JobIntentService implements LocationLi
     private double curTime = 0;
     private double oldLat = 0.0;
     private double oldLon = 0.0;
-    private int MOVEMENT_NOTIFICATION_ID = 2;
+    private int MOVEMENT_NOTIFICATION_ID = 43;
     private NotificationManager mNotifyManager;
 
     /**
@@ -107,10 +109,10 @@ public class MovementSpeedService extends JobIntentService implements LocationLi
 
     @Override
     public void onCreate() {
+        createNotificationChannel();
+        startForeground(MOVEMENT_NOTIFICATION_ID, buildNotification());
         super.onCreate();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        startForeground(MOVEMENT_NOTIFICATION_ID, buildNotification());
     }
 
     private Notification buildNotification(){
@@ -122,12 +124,12 @@ public class MovementSpeedService extends JobIntentService implements LocationLi
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-            mBuilder = new NotificationCompat.Builder(this, SplashActivity.CHANNEL_ID);
+            mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
             mBuilder.setOnlyAlertOnce(true);
         } else {
             mBuilder = new NotificationCompat.Builder(this);
         }
-                mBuilder.setSmallIcon(R.drawable.ic_directions_walk_65black_30dp);
+                mBuilder.setSmallIcon(R.drawable.ic_stat_directions_walk);
         if (speed !=null){
             mBuilder.setContentTitle(UnitHelper.formatKilometersPerHour(UnitHelper.metersPerSecondToKilometersPerHour(speed),getApplicationContext()));
         }
@@ -244,6 +246,22 @@ public class MovementSpeedService extends JobIntentService implements LocationLi
         public Float getSpeed() { return MovementSpeedService.this.speed; } // TODO
         public MovementSpeedService getService() {
             return MovementSpeedService.this;
+        }
+    }
+
+    void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.app_name);
+            String description = getString(R.string.app_name_long);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

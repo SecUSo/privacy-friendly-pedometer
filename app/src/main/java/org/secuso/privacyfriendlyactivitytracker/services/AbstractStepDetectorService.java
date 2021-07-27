@@ -193,6 +193,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
         mBuilder.setProgress(this.dailyStepGoal, totalSteps, false);
         mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
         mBuilder.setPriority(NotificationCompat.PRIORITY_MIN);
+        mBuilder.setSilent(true);
         return mBuilder.build();
     }
 

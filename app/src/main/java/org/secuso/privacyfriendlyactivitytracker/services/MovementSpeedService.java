@@ -133,7 +133,7 @@ public class MovementSpeedService extends JobIntentService implements LocationLi
         if (speed !=null){
             mBuilder.setContentTitle(UnitHelper.formatKilometersPerHour(UnitHelper.metersPerSecondToKilometersPerHour(speed),getApplicationContext()));
         }
-
+        mBuilder.setSilent(true);
         mBuilder.setContentIntent(pIntent);
         mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
         mBuilder.setPriority(NotificationCompat.PRIORITY_MIN);

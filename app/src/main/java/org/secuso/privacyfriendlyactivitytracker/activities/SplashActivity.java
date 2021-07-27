@@ -17,15 +17,11 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.tutorial.TutorialActivity;
 
 /**

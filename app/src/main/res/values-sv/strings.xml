@@ -1,0 +1,295 @@
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="app_name">Stegräknare</string>
+    <string name="app_name_long">Sekretessvänlig Stegräknare</string>
+
+    <!-- Menu Items-->
+    <string name="action_help">Hjälp</string>
+    <string name="action_about">Om</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="action_main">Stegräknare</string>
+    <string name="action_training">Träning</string>
+
+    <!-- AboutActivity-->
+    <string name="version_number">Version</string>
+    <string name="about_author">"Upphovsman: "</string>
+    <string name="about_author_contributors">" and medarbetare."</string>
+    <string name="about_affiliation">I anslutning till</string>
+    <string name="more_info">Mer information finns på:</string>
+    <string name="about_third_party_libs">Appen använder <a href="https://github.com/PhilJay/MPAndroidChart"> MPAndroidChart från Philipp Jahoda </a> (Apache 2 -licens).</string>
+    <string name="privacy_friendly">Denna applikation tillhör gruppen Privacy Friendly Apps som utvecklats av Technische Universität Darmstadt. Källkod licensierad enligt GPLv3. Bilder upphovsrätt TU Darmstadt och Google Inc.</string>
+    <string name="url"><a href="https://www.secuso.org/pfa"> SECUSO-webbplats </a></string>
+
+    <!-- ReportFragment -->
+    <string name="month">Månad</string>
+    <string name="week">Vecka</string>
+    <string name="day">Dag</string>
+    <string name="steps">Steg</string>
+    <string name="calories">kalorier</string>
+    <string name="activity_summary_subtitle">Sammanfattning av aktiviteter</string>
+    <string name="activity_chart_summary_subtitle">Detaljerad sammanfattning av dina aktiviteter</string>
+    <string name="summary_card_kilocalories">kcal</string>
+    <string name="summary_card_calories">cal</string>
+    <string name="correct_steps">Rätt steg</string>
+    <string name="correct_steps_dialog_title">Rätt steg</string>
+    <string name="correct_steps_dialog_message">Ange ett nytt antal steg du gick.</string>
+    <string name="hint_steps">Antal steg</string>
+    <string name="pause_step_detection">Pausa stegdetektering</string>
+    <string name="continue_step_detection">Fortsätt stegdetektering</string>
+
+    <!-- HelpActivity -->
+    <string name="help_overview_heading">Översikt</string>
+    <string name="help_intro">Den här appen kan räkna dina steg i bakgrunden, ger dig en överblick över dina steg och låter dig definiera anpassade gånglägen och meddelanden om du inte uppnått ditt dagliga stegmål.</string>
+    <string name="help_functionality_step_counter_summary">Stegräknaren räknar dina dagliga steg i bakgrunden och kan inaktiveras i inställningarna.</string>
+    <string name="help_functionality_notification_heading">Permanent Meddelande</string>
+    <string name="help_functionality_notification">Meddelande</string>
+    <string name="help_functionality_notification_summary">Den permanenta aviseringen är nödvändig för att hålla stegräknaren vid liv i bakgrunden. Meddelandets innehåll kan väljas i inställningarna.</string>
+    <string name="help_functionality_notification_delete">Du kan inaktivera alla aviseringar i systeminställningar.</string>
+    <string name="help_functionality_motivation_alert">Motiveringsvarning</string>
+    <string name="help_functionality_motivation_alert_summary">Appen kan visa dig motivationsvarningar om uppnåendet av ditt dagliga stegmål är i fara. Du kan definiera kriteriet, tiden på dagen och meddelandetexterna.</string>
+    <string name="help_privacy_heading">Sekretessinformation</string>
+    <string name="help_permission_boot_heading">Behörighet: Ta Emot Start Slutförd</string>
+    <string name="help_permission_boot_description">används för att starta stegräknaren och ställa in aviseringarna vid starttid. Om tillståndet inte beviljas måste du starta appen manuellt en gång efter start för att aktivera appen.</string>
+    <string name="help_permissions_selection">Lagrings- och gps -behörigheter som används av Privacy Friendly Pedometer kan hanteras av användaren i Android -versioner av 6+.</string>
+    <string name="help_permission_wake_heading">Behörighet: Wake Lock</string>
+    <string name="help_permission_wake_description">används för att hålla CPU: n vaken för att räkna stegen i bakgrunden.</string>
+    <string name="help_permission_gps_heading">Behörighet: Exakt läge</string>
+    <string name="help_permission_gps_description">används för att visa din nuvarande gånghastighet på startskärmen. Om tillståndet inte beviljas kommer gånghastigheten inte att visas - det finns inga andra konsekvenser.</string>
+
+    <!-- Preferences -->
+    <!-- general settings -->
+    <string name="pref_header_general">Allmänt</string>
+    <string name="pref_group_title_personal_settings">Anpassning</string>
+
+    <string name="pref_title_step_counter_enabled">Permanent stegräknare</string>
+    <string name="pref_summary_step_counter_enabled">Appen räknar dina steg i bakgrunden.</string>
+
+    <string name="pref_title_use_wake_lock">Håll processorn vaken</string>
+    <string name="pref_summary_use_wake_lock">På vissa enheter somnar processorn och förhindrar att räkna steg. Aktivera detta för att hålla processorn vaken medan du räknar steg - detta kan tömma batteriet!</string>
+
+    <string name="pref_title_use_wake_lock_during_training">\"Wake lock\" under träning</string>
+    <string name="pref_summary_use_wake_lock_during_training">För bättre resultat under träningsläge, håll processorn vaken. Om appen skulle hålla processorn vaken när som helst är detta det automatiskt fallet.</string>
+
+    <string name="pref_title_show_velocity">Visa aktuell hastighet</string>
+    <string name="pref_summary_show_velocity">Appen visar din nuvarande hastighet i den dagliga rapporten. Tillgång till din plats krävs för att beräkna den exakta hastigheten.</string>
+
+    <string name="pref_title_daily_step_goal">Personligt dagligt stegmål</string>
+    <string name="pref_title_unit_of_length">Enhet för längd</string>
+    <string-array name="pref_keys_unit_of_length">
+        <item>kilometer</item>
+        <item>miles</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_length" translatable="false">
+        <item>km</item>
+        <item>mi</item>
+    </string-array>
+    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="pref_title_unit_of_energy">Energienhet</string>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>calories</item>
+        <item>joules</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_energy" translatable="false">
+        <item>cal</item>
+        <item>J</item>
+    </string-array>
+
+    <string name="pref_explanation_weight_and_gender">För att förbättra beräkningen av kalorierna, ställ in din vikt och kön.</string>
+    <string name="pref_summary_accelerometer_threshold">Appen använder accelerometern på din enhet. För att optimera stegdetekteringen, justera känsligheten.</string>
+
+    <string name="pref_title_export_data">Exportera data</string>
+    <string name="pref_summary_export_data">Exportera stegräkning till csv -fil.</string>
+
+    <string name="pref_title_weight">Vikt (kg)</string>
+
+    <string name="pref_title_gender">Kön</string>
+    <string-array name="pref_keys_gender">
+        <item>female</item>
+        <item>male</item>
+    </string-array>
+    <string-array name="pref_values_gender" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="pref_title_accelerometer_threshold">Känslighet</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>very high</item>
+        <item>higher</item>
+        <item>high</item>
+        <item>normal</item>
+        <item>low</item>
+        <item>lower</item>
+        <item>very low</item>
+    </string-array>
+    <string-array name="pref_values_accelerometer_threshold" translatable="false">
+        <item>0.125</item>
+        <item>0.25</item>
+        <item>0.50</item>
+        <item>0.75</item>
+        <item>1.00</item>
+        <item>1.25</item>
+        <item>1.50</item>
+    </string-array>
+    <string name="pref_title_accelerometer_steps_threshold">Steg innan räkningen börjar</string>
+    <!-- /general settings -->
+    <!-- notification settings -->
+    <string name="pref_header_notifications">Meddelanden</string>
+    <string name="pref_group_title_permanent_notification">Permanent Meddelande</string>
+    <string name="pref_group_title_motivation_alert">Motiveringsvarning</string>
+
+    <string name="pref_title_notification_permanent_show_steps">Visa antal steg som gicks idag</string>
+    <string name="pref_title_notification_permanent_show_distance">Visa sträcka som gåtts idag</string>
+    <string name="pref_title_notification_permanent_show_calories">Visa antal kalorier</string>
+
+    <string name="pref_title_notification_motivation_alert_enabled">Aktivera motivationsvarning</string>
+    <string name="pref_title_notification_motivation_alert_time">Varningstid för motivation</string>
+    <string name="pref_title_notification_motivation_alert_texts">Motiveringsanmälan texter</string>
+    <string name="pref_title_notification_motivation_alert_criterion">Kriterium för motiveringsvarning</string>
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>less than 90&#65285; of daily step goal</item>
+        <item>less than 70&#65285; of daily step goal</item>
+        <item>less than 50&#65285; of daily step goal</item>
+    </string-array>
+    <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
+        <item>90</item>
+        <item>70</item>
+        <item>50</item>
+    </string-array>
+    <!-- /notification settings -->
+    <string name="pref_header_walking_modes">Gånglägen</string>
+    <!-- /Preferences -->
+
+    <!-- Will be removed on next update -->
+    <string name="notification_text_steps">%1$d av %2$d steg gått idag.</string>
+    <string name="notification_text_distance">%1 $ .2f %2$s gått idag.</string>
+    <string name="notification_text_calories">Förbrände %.2f kcal idag.</string>
+    <string name="notification_text_default">Stegräknaren är aktiv.</string>
+    <!-- /Will be removed on next update -->
+
+    <!-- others -->
+    <string name="action_calories">Kalorier</string>
+    <string name="action_distance">Avstånd</string>
+    <string name="action_steps">Steg</string>
+    <string name="set">Ange</string>
+    <string name="save">Spara</string>
+    <string name="edit">Redigera</string>
+    <string name="delete">Ta bort</string>
+    <string name="operation_failed">Operationen misslyckades</string>
+    <string name="since">sedan</string>
+    <string name="okay">Okej</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">Välkommen!</string>
+    <string name="welcome_text">Sekretessvänlig stegräknare kan räkna dina steg i bakgrunden och ger en översikt över steg som gåtts.</string>
+    <string name="slide_2_title">Anpassa</string>
+    <string name="slide_2_desc">För att förbättra beräkningen av kalorierna du har bränt genom att gå, anpassa dina personliga inställningar.</string>
+    <string name="slide_2_desc_two">Du kan byta dina nuvarande gånglägen med hjälp av snabbmenyn i verktygsfältet.</string>
+    <string name="slide_3_title">Meddelanden</string>
+    <string name="slide_4_title">Widget</string>
+    <string name="slide_4_desc">Lägg till en widget på startskärmen för att hålla dig uppdaterad om dina steg.</string>
+    <string name="next">Nästa</string>
+    <string name="skip">Hoppa över</string>
+    <!-- /welcome dialog -->
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Come on, it\'s time to walk!</item>
+    </string-array>
+    <string name="motivation_alert_empty">Ange anpassade varningsmeddelanden när uppnåendet av ditt dagliga stegmål är i fara.  Det kommer ingen varning om det inte finns något meddelande.</string>
+    <string name="motivation_alert_input_title">Ange motivationsmeddelande</string>
+    <string name="motivation_alert_input_message">Ställ in din egen anpassade motivationsvarning. Appen meddelar dig slumpmässigt med en av dina texter.</string>
+    <string name="motivation_alert_input_empty">Tomma motivationsvarningar är värdelösa, eller hur?</string>
+    <string name="activity_title_motivation_alerts">Motiveringsvarningar</string>
+    <string name="motivation_alert_notification_title">Stegräknare</string>
+
+    <!-- walking modes -->
+    <string name="activity_title_walking_modes">Gånglägen</string>
+    <string name="walking_mode_input_title">Gångläge</string>
+    <string name="walking_mode_input_message">Ställ in ditt anpassade gångläge:</string>
+    <string name="walking_mode_at_least_one_is_required">Minst ett gångläge krävs.</string>
+    <string name="walking_mode_cannot_delete_active_one">Det går inte att ta bort ett aktivt gångläge.</string>
+    <string name="walking_mode_set_active">Ange som aktiv</string>
+    <string name="walking_mode_menu_learn">Lär dig</string>
+    <string name="walking_mode_learning_distance_description">Avstånd att gå:</string>
+    <string name="walking_mode_learning_steps_description">Steg som gåtts:</string>
+    <string name="walking_mode_learning_stop">Avsluta inlärningsläge</string>
+    <string name="walking_mode_learning_description">Applikationen kan lära sig avståndet per steg. Gå den angivna sträckan och tryck på slutet om du är klar.</string>
+    <string name="step_length">Steglängd:</string>
+    <string name="walking_mode_active_ext"> (active)</string>
+    <string name="walking_mode_input_empty">Namn och steglängd krävs. Snälla Fyll i!</string>
+    <string name="hint_walking_mode_name">Namn</string>
+    <string name="hint_walking_mode_step_length">Steglängd (meter)</string>
+    <string-array name="pref_default_walking_mode_names">
+        <item>Walking</item>
+        <item>Running</item>
+    </string-array>
+    <string-array name="pref_default_walking_mode_step_lenghts" translatable="false">
+        <item>0.5</item><!-- step length in meters -->
+        <item>0.7</item>
+    </string-array>
+
+    <string name="training_overview_empty">Det verkar som om du inte använde träningsfunktionen ännu. Det är dags att börja träna!</string>
+    <string name="training_input_message" />
+    <string name="training_input_title">Träningspass</string>
+    <string name="activity_title_training">Utbildning</string>
+    <string name="hint_training_description">Beskrivning</string>
+    <string name="hint_training_title">Titel</string>
+    <string name="hint_training_feeling">Känsla:</string>
+    <string name="training_card_calories">kcal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+    <string name="training_velocity">km/h</string>
+    <string name="training_stop_button">Avsluta träningen nu</string>
+    <string name="training_default_title">%1$s %4 $ 02d.%3 $ 02d.%2 $ 04d</string>
+    <string name="activity_summary_chart_legend_stepgoal">Stegmål</string>
+    <string name="widget_config_data_set_title">Vilken data ska visas?</string>
+    <string name="action_distance_measurement">Avståndsmätning</string>
+    <string name="distance_measurement_stop_button">Stoppa avståndsmätning</string>
+    <string name="distance_measurement_start_button">Starta avståndsmätning</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="slide_5_title">Stegdetektering</string>
+    <string name="slide_5_desc">Appen upptäcker dina steg baserat på olika algoritmer. På vissa enheter kan du definiera känsligheten för stegdetektering i inställningar. Utöver det kan du lägga till steg du gick utan appen eller korrigera stegräkningen i det dagliga aktivitetsdiagrammet.</string>
+    <string name="slide_3_desc">Definiera anpassade gånglägen och meddelanden om uppnåendet av ditt dagliga stegmål är i fara.</string>
+    <string name="slide_2_desc_three">I inställningarna kan du definiera dina egna gånglägen med olika steglängder.</string>
+    <string name="help_walkingmodes_heading">Vandringslägen</string>
+    <string name="help_walkingmodes_selection">Du kan definiera dina egna gånglägen som \'Springa\' eller \'Gå\' i inställningarna. Varje gångläge har sin egen steglängd.</string>
+    <string name="help_training_heading">Träningspass</string>
+    <string name="help_training_selection">Träningspassen kan användas för att spåra dina träningsprestationer. Varje session spårar t.ex. träningens varaktighet, gångstegen och distans.</string>
+    <string name="help_distancemeasurement_heading">Avståndsmätning</string>
+    <string name="help_distancemeasurement_selection">Med avståndsmätningsfunktionen kan du mäta avståndet mellan knapptryckningen "Start" och "Stopp". Data lagras inte efter att appen startats om. För att behålla data kan du använda träningspassen.</string>
+    <string name="help_correctsteps_heading">Rätta steg manuellt</string>
+    <string name="help_correctsteps_selection">Du kan ändra de upptäckta dagliga stegen i den dagliga rapportvyn. Detta låter dig lägga till steg du gick utan appen eller korrigera det upptäckta antalet steg.</string>
+    <string name="slide_5_desc_two">Klicka på "Inställningar" för att ställa in din stegstorlek och anpassa dina personuppgifter.</string>
+    <string name="export_csv_header">Start; Slut; Steg; Läge</string>
+    <string name="export_csv_begin">& lt; börja & gt;</string>
+    <string name="export_csv_error">Fel uppstod under export</string>
+    <string name="export_csv_success">"CSV exporteras till"</string>
+    <string name="export_csv_permission_needed">Lagringsbehörighet krävs för att exportera en CSV -fil.</string>
+    <string name="help_permission_foreground_description">behövs för den kontinuerliga tjänsten på Android 9 eller högre.</string>
+    <string name="help_permission_foreground_heading">Behörighet: Förgrundservice</string>
+    <string name="help_permission_storage_description">behövs för att exportera dina insamlade data som en CSV-fil. Detta tillstånd begärs endast när du vill exportera dina data.</string>
+    <string name="help_permission_storage_heading">Behörighet: Skriv Extern Lagring</string>
+    <string name="pref_notification_permanent">Den permanenta aviseringen visas när programmet räknar dina steg i bakgrunden. Du kan anpassa vad programmet ska visa.</string>
+    <string name="pref_summary_use_step_hardware">Vissa telefoner har inbyggd stegräkningshårdvara. Detta kan minska batterianvändningen och öka precisionen. Det fungerar dock inte pålitligt på alla enheter med vår app. Inaktivera om steg inte räknas.</string>
+    <string name="pref_title_use_step_hardware">Använd telefonens inbyggda stegräkning (hårdvara)</string>
+    <string name="pref_use_step_hardware_not_available">Den här enheten stöder inte räkning med inbyggda stegräkning (hårdvara)</string>
+</resources>

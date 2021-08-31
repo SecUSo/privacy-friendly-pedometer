@@ -280,7 +280,7 @@
     <string name="help_correctsteps_selection">Du kan ändra de upptäckta dagliga stegen i den dagliga rapportvyn. Detta låter dig lägga till steg du gick utan appen eller korrigera det upptäckta antalet steg.</string>
     <string name="slide_5_desc_two">Klicka på "Inställningar" för att ställa in din stegstorlek och anpassa dina personuppgifter.</string>
     <string name="export_csv_header">Start; Slut; Steg; Läge</string>
-    <string name="export_csv_begin">& lt; börja & gt;</string>
+    <string name="export_csv_begin">&lt;börja&gt;</string>
     <string name="export_csv_error">Fel uppstod under export</string>
     <string name="export_csv_success">"CSV exporteras till"</string>
     <string name="export_csv_permission_needed">Lagringsbehörighet krävs för att exportera en CSV -fil.</string>

@@ -205,7 +205,7 @@ public class StepCountPersistenceHelper {
         }
         Cursor c = getDB(context).query(StepCountDbHelper.StepCountEntry.TABLE_NAME,
                 new String[]{StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT, StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP, StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE},
-                "", new String[]{}, null, null, null);
+                "", new String[]{}, null, null, StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP + " ASC");
         List<StepCount> steps = new ArrayList<>();
         long start = 0;
         int sum = 0;

@@ -1,1 +1,1 @@
-Schritte im Hintergrund oder während expliziter Trainings-Sequenzen zählen.
+(SECUSO) Ein simpler Schrittzähler ohne Werbung und unnütze Berechtigungen

@@ -1,1 +1,1 @@
-Counts your steps in background. Customize daily goals, notifications + modes
+(SECUSO) Counts your steps in the background. Customize daily goals.

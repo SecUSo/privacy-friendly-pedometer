@@ -110,7 +110,7 @@
     <string name="pref_title_use_wake_lock">Prozessor wach halten</string>
     <string name="pref_summary_use_wake_lock">Abhängig vom Gerät wird der Prozessor bei ausgeschaltetem Display in Ruhezustand versetzt. Dies hat ungenaue Schrittzahlen zur Folge die durch Wachhalten vermieden werden, kann aber zu erhöhtem Akkuverbrauch führen.</string>
 
-    <string name="pref_summary_accelerometer_threshold">Die App nutzt den Beschleunigungssensor Ihres Geräts, um die Schritt zu erkennen. Passen Sie die Empfindlichkeit des Sensors an, um die Schritterkennung zu verbessern.</string>
+    <string name="pref_summary_accelerometer_threshold">Die App nutzt den Beschleunigungssensor Ihres Geräts, um die Schritte zu erkennen. Passen Sie die Empfindlichkeit des Sensors an, um die Schritterkennung zu verbessern.</string>
     <string name="pref_summary_notification_permanent">Während die App Ihre Schritte zählt, wird eine Benachrichtigung angezeigt. Wählen Sie den Inhalt der Benachrichtigung:</string>
     <string name="pref_explanation_weight_and_gender">Geben Sie Ihr Gewicht und Geschlecht an, um die Kalorienberechnung zu verbessern.</string>
 

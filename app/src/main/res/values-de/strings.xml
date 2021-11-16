@@ -154,6 +154,15 @@
         <item>Joule</item>
     </string-array>
 
+    <string-array name="pref_keys_counter_frequency">
+        <item>2 Stunden</item>
+        <item>1 Stunde</item>
+        <item>30 Minuten</item>
+        <item>15 Minuten</item>
+        <item>5 Minuten</item>
+        <item>Nur Echtzeit-Schrittzähler verwenden</item>
+    </string-array>
+
     <string name="save">Speichern</string>
     <string name="set">Übernehmen</string>
     <string name="since">seit</string>

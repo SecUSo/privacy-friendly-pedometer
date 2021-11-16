@@ -35,6 +35,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -361,7 +362,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
         private void saveStepsAndRestartService() {
             final Context context = getActivity().getApplicationContext();
-
+/*
             StepCountPersistenceReceiver.registerSaveListener(new StepCountPersistenceReceiver.ISaveListener() {
                 @Override
                 public void onSaveDone() {
@@ -375,7 +376,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             });
 
             StepDetectionServiceHelper.cancelPersistenceService(true, context);
-            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
+            StepDetectionServiceHelper.stopAllIfNotRequired(false, context);*/
+            StepDetectionServiceHelper.restartStepDetection(context);
         }
 
         /**
@@ -485,6 +487,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             Context context = getActivity().getApplicationContext();
+            Log.d("preference check","pref changed: "+key);
+
 
             // Detect changes on preferences and update our internal variable
             if (key.equals(getString(R.string.pref_step_counter_enabled))) {
@@ -508,6 +512,15 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     final SwitchPreference velocityPreference = (SwitchPreference) findPreference(getString(R.string.pref_show_velocity));
                     if (velocityPreference!=null) velocityPreference.setChecked(false);
                 }
+            }
+
+            if (key.equals(getString(R.string.pref_use_step_hardware))) {
+                boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_use_step_hardware), true);
+                findPreference(getString(R.string.pref_hw_background_counter_frequency)).setEnabled(isEnabled);
+            }
+
+            if (key.equals(getString(R.string.pref_hw_background_counter_frequency))) {
+                saveStepsAndRestartService();
             }
         }
     }

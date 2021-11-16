@@ -167,6 +167,14 @@
         <item>Andando</item>
         <item>Corriendo</item>
     </string-array>
+    <string-array name="pref_keys_counter_frequency">
+        <item>2 horas</item>
+        <item>1 horas</item>
+        <item>30 minutos</item>
+        <item>15 minutos</item>
+        <item>5 minutos</item>
+        <item>Utilizar sólo el detector de pasos en tiempo real</item>
+    </string-array>
 
     <string name="training_overview_empty">Parece que no ha usado la funcionalidad de aprendizaje, aún. ¡Es hora de comenzar su entrenamiento!</string>
     <string name="training_input_message" />

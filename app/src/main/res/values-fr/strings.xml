@@ -88,6 +88,14 @@
         <item>plus faible</item>
         <item>très faible</item>
     </string-array>
+    <string-array name="pref_keys_counter_frequency">
+        <item>2 heures</item>
+        <item>1 heures</item>
+        <item>30 minutes</item>
+        <item>15 minutes</item>
+        <item>5 minutes</item>
+        <item>Utiliser uniquement le détecteur de pas en temps réel</item>
+    </string-array>
 
     <!-- /general settings -->
     <!-- notification settings -->

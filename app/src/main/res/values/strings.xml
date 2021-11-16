@@ -171,6 +171,7 @@
         <item>30 mins</item>
         <item>15 mins</item>
         <item>5 mins</item>
+        <item>Use realtime step detector only</item>
     </string-array>
     <string-array name="pref_values_counter_frequency">
         <item>7200000</item>
@@ -178,6 +179,7 @@
         <item>1800000</item>
         <item>900000</item>
         <item>300000</item>
+        <item>0</item>
     </string-array>
     <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
     <string name="pref_title_accelerometer_steps_threshold">Steps before counting starts</string>

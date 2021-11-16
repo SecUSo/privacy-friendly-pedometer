@@ -181,6 +181,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onAttach WeeklyFragment");
+
         }
         registerReceivers();
     }
@@ -198,6 +200,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onResume WeeklyFragment");
+
         }
         registerReceivers();
     }
@@ -205,6 +209,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     @Override
     public void onDetach() {
         unbindService();
+        Log.d("service cycle", "UNbound service in onDetach WeeklyFragment");
+
         mListener = null;
         unregisterReceivers();
         super.onDetach();
@@ -213,6 +219,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     @Override
     public void onPause(){
         unbindService();
+        Log.d("service cycle", "UNbound service in onPause WeeklyFragment");
+
         unregisterReceivers();
         super.onPause();
     }
@@ -220,6 +228,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     @Override
     public void onDestroy() {
         unbindService();
+        Log.d("service cycle", "UNbound service in onDestroy WeeklyFragment");
+
         unregisterReceivers();
         super.onDestroy();
     }
@@ -245,6 +255,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
     private void bindService(){
         Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext()));
         getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        StepDetectionServiceHelper.startAllIfEnabled(true, getContext());
+
     }
 
     private void unbindService(){
@@ -459,6 +471,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         this.generateReports(false);
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onPrevClicked WeeklyFragment");
+
         }
     }
 
@@ -468,6 +482,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         this.generateReports(false);
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onNExtClicked WeeklyFragment");
+
         }
     }
 
@@ -487,6 +503,8 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
                 WeeklyReportFragment.this.generateReports(false);
                 if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
                     bindService();
+                    Log.d("service cycle", "bound service in onDateSet WeeklyFragment");
+
                 }
             }
         }, year, month, day);
@@ -525,8 +543,12 @@ public class WeeklyReportFragment extends Fragment implements ReportAdapter.OnIt
         if(key.equals(getString(R.string.pref_step_counter_enabled))){
             if(!StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
                 unbindService();
+                Log.d("service cycle", "UNbound service in PREFERENCEchanged WeeklyFragment");
+
             }else if(this.isTodayShown()){
                 bindService();
+                Log.d("service cycle", "bound service in PREFERENCEchanged WeeklyFragment");
+
             }
         }
     }

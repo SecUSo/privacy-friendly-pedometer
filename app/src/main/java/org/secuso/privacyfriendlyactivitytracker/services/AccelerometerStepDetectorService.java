@@ -70,16 +70,21 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
     public void onCreate() {
         super.onCreate();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Log.d("service cycle","accelerometer created");
         accelerometerThreshold = Float.parseFloat(sharedPref.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));
         validStepsThreshold = Integer.parseInt(sharedPref.getString(getString(R.string.pref_accelerometer_steps_threshold), "10"));
     }
 
     @Override
     protected void onHandleWork(@NonNull @NotNull Intent intent) {
+        Log.d("service cycle","accelerometer HANDLEWORK");
+
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+      //  Log.d("service cycle","accelerometer sensor change");
+
         if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
             return;
         }
@@ -263,6 +268,8 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Log.d("service cycle","accelerometer preference changed");
+
         super.onSharedPreferenceChanged(sharedPreferences, key);
         if (key.equals(getString(R.string.pref_accelerometer_threshold))) {
             accelerometerThreshold = Float.parseFloat(sharedPreferences.getString(getString(R.string.pref_accelerometer_threshold), "0.75"));

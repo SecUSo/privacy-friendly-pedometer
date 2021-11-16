@@ -227,12 +227,12 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
         createNotificationChannel();
         startForeground(NOTIFICATION_ID, buildNotification(this.stepCountFromTotalSteps()));
         super.onCreate();
-        Log.i(LOG_TAG, "Creating service.");
+        Log.i(LOG_TAG, "Creating service cycle."+ this.getClass().getName());
     }
 
     @Override
     public void onDestroy() {
-        Log.i(LOG_TAG, "Destroying service.");
+        Log.i(LOG_TAG, "Destroying service cycle."+ this.getClass().getName());
         // release wake lock if any
         acquireOrReleaseWakeLock();
         // Unregister sensor listeners
@@ -252,7 +252,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(LOG_TAG, "Starting service.");
+        Log.i(LOG_TAG, "Starting service cycle." + this.getClass().getName());
         acquireOrReleaseWakeLock();
 
         if(!StepDetectionServiceHelper.isStepDetectionEnabled(getApplicationContext())){

@@ -59,7 +59,9 @@ public class StepDetectionServiceHelper {
     }
 
     public static void startAllIfEnabled(boolean forceRealTimeStepDetection, Context context){
-        Log.i(LOG_CLASS, "Start of all services requested");
+        Log.d("service cycle", "HELPER startALL");
+
+        Log.i(LOG_CLASS, "Start of all service requested");
         // Start the step detection if enabled or training is active
         if (isStepDetectionEnabled(context)) {
             if(forceRealTimeStepDetection || isRealTimeStepDetectionRequired(context) || !AndroidVersionHelper.isHardwareStepCounterEnabled(context)) {
@@ -68,6 +70,8 @@ public class StepDetectionServiceHelper {
                 // schedule stepCountPersistenceService
                 StepDetectionServiceHelper.schedulePersistenceService(context);
             }else{
+                Log.d("service cycle", "COUNTER not realtime");
+
                 Log.i(LOG_CLASS, "Schedule hardware step counter request");
                 StepDetectionServiceHelper.startHardwareStepCounter(context);
             }
@@ -86,6 +90,8 @@ public class StepDetectionServiceHelper {
     }
 
     public static void stopAllIfNotRequired(boolean forceSave, Context context){
+        Log.d("service cycle", "HELPER stopALL");
+
         // Start the step detection if enabled or training is active
         if (!isStepDetectionEnabled(context)) {
             Log.i(LOG_CLASS, "Stopping all services");
@@ -120,6 +126,16 @@ public class StepDetectionServiceHelper {
             cancelMotivationAlert(context);
         }
     }
+
+
+    public static void restartStepDetection(Context context){
+        startPersistenceService(context);
+        stopStepDetection(context);
+        startAllIfEnabled(context);
+    }
+
+
+
     /**
      * Starts the step detection service
      *
@@ -163,9 +179,12 @@ public class StepDetectionServiceHelper {
         calendar.setTime(new Date());
         calendar.add(Calendar.MINUTE, 5);
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        Long updateInterval = Long.valueOf(sharedPref.getString(context.getString(R.string.pref_hw_background_counter_frequency), "3600000"));
+
         // Set inexact repeating alarm
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HOUR, sender);
-        Log.i(LOG_CLASS, "Scheduled hardware step counter alert at start time " + calendar.toString());
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), updateInterval, sender);
+        Log.i(LOG_CLASS, "Scheduled hardware step counter alert at start time " + calendar.getTime().toLocaleString());
     }
 
     public static void stopHardwareStepCounter(Context context){
@@ -196,8 +215,8 @@ public class StepDetectionServiceHelper {
         calendar.add(Calendar.MINUTE, (30-mod));
 
         // Set repeating alarm
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HOUR, sender);
-        Log.i(LOG_CLASS, "Scheduled repeating persistence service at start time " + calendar.toString());
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HALF_HOUR, sender);
+        Log.i(LOG_CLASS, "Scheduled repeating persistence service at start time " + calendar.getTime().toGMTString());
     }
 
     /**
@@ -253,7 +272,8 @@ public class StepDetectionServiceHelper {
         boolean isWalkingModeLearningActive = sharedPref.getBoolean(context.getString(R.string.pref_walking_mode_learning_active), false);
         boolean isDistanceMeasurementActive = sharedPref.getLong(context.getString(R.string.pref_distance_measurement_start_timestamp), -1) > 0;
         boolean isTrainingActive = (TrainingPersistenceHelper.getActiveItem(context) != null);
-        return isTrainingActive || isWalkingModeLearningActive || isDistanceMeasurementActive;
+        boolean isBackgroundCountingDisabled = Long.valueOf(sharedPref.getString(context.getString(R.string.pref_hw_background_counter_frequency), "3600000")) == 0;
+        return isTrainingActive || isWalkingModeLearningActive || isDistanceMeasurementActive || isBackgroundCountingDisabled;
 
     }
 
@@ -298,7 +318,7 @@ public class StepDetectionServiceHelper {
         }else{
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }
-        Log.i(LOG_CLASS, "Scheduled motivation alert at start time " + calendar.toString());
+        Log.i(LOG_CLASS, "Scheduled motivation alert at start time " + calendar.getTime().toGMTString());
     }
 
     /**

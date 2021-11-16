@@ -74,6 +74,8 @@ public class StepCountPersistenceHelper {
         StepCount lastStoredStepCount = stepCountDbHelper.getLatestStepCount();
         Calendar calendarOneHourAgo = Calendar.getInstance();
         calendarOneHourAgo.add(Calendar.HOUR, -1);
+
+        //TODO include end of day case, where step count should not be combined with new end time
         if(lastStoredStepCount == null || lastStoredStepCount.getEndTime() < calendarOneHourAgo.getTime().getTime() ||
                 lastStoredStepCount.getWalkingMode() != null && walkingMode != null && walkingMode.getId() != lastStoredStepCount.getWalkingMode().getId()) {
             // create new step count if non is stored or last stored step count is older than an hour

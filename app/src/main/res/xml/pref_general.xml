@@ -28,6 +28,15 @@
         android:summary="@string/pref_summary_use_step_hardware"
         android:disableDependentsState="true"
         android:title="@string/pref_title_use_step_hardware" />
+    <ListPreference
+        android:defaultValue="3600000"
+        android:key="@string/pref_hw_background_counter_frequency"
+        android:summary="@string/pref_counter_frequency_summary"
+        android:entries="@array/pref_keys_counter_frequency"
+        android:entryValues="@array/pref_values_counter_frequency"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_counter_frequency_title"/>
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->

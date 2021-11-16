@@ -165,6 +165,20 @@
         <item>1.25</item>
         <item>1.50</item>
     </string-array>
+    <string-array name="pref_keys_counter_frequency">
+        <item>2 hours</item>
+        <item>1 hour</item>
+        <item>30 mins</item>
+        <item>15 mins</item>
+        <item>5 mins</item>
+    </string-array>
+    <string-array name="pref_values_counter_frequency">
+        <item>7200000</item>
+        <item>3600000</item>
+        <item>1800000</item>
+        <item>900000</item>
+        <item>300000</item>
+    </string-array>
     <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
     <string name="pref_title_accelerometer_steps_threshold">Steps before counting starts</string>
     <string name="pref_default_accelerometer_steps_threshold" translatable="false">10</string>
@@ -204,6 +218,7 @@
     <string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
     <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
     <string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
+    <string name="pref_hw_background_counter_frequency" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_background_counter_frequency</string>
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
@@ -325,4 +340,6 @@
     <string name="pref_summary_use_step_hardware">Some phones have built-in step counting hardware. This can reduce battery usage and increase precision. However, it does not work reliably on all devices with our app. Disable if steps are not counted.</string>
     <string name="pref_title_use_step_hardware">Use phone\'s step counting hardware</string>
     <string name="pref_use_step_hardware_not_available">This device does not support hardware step counting.</string>
+    <string name="pref_counter_frequency_summary">Set the frequency of the background hardware step counter to return a value.</string>
+    <string name="pref_counter_frequency_title">Background Counter Return Frequency</string>
 </resources>

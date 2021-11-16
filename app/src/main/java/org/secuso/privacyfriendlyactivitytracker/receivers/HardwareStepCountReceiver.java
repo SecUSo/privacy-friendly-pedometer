@@ -35,6 +35,8 @@ public class HardwareStepCountReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
+        Log.d("service cycle", "COUNTER receiver started");
+
         Log.i(LOG_CLASS, "Received hardware step count alarm");
         Intent serviceIntent = new Intent(context, HardwareStepCounterService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

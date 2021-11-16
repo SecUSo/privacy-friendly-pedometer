@@ -154,6 +154,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onCreate DailyFragment");
         }
     }
 
@@ -201,6 +202,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         }
         if(isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
             bindService();
+            Log.d("service cycle", "bound service in onAttach DailyFragment");
+
         }
         registerReceivers();
         bindMovementSpeedService();
@@ -218,6 +221,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         }
         if(isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
             bindService();
+            Log.d("service cycle", "bound service in onResume DailyFragment");
         }
         registerReceivers();
         bindMovementSpeedService();
@@ -226,6 +230,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     @Override
     public void onDetach() {
         unbindService();
+        Log.d("service cycle", "UNbound service in onDetach DailyFragment");
+
         unbindMovementSpeedService();
         unregisterReceivers();
         mListener = null;
@@ -235,6 +241,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     @Override
     public void onPause(){
         unbindService();
+        Log.d("service cycle", "UNbound service in onPause DailyFragment");
         unbindMovementSpeedService();
         unregisterReceivers();
         super.onPause();
@@ -243,6 +250,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
     @Override
     public void onDestroy() {
         unbindService();
+        Log.d("service cycle", "UNbound service in onDestroy DailyFragment");
         unbindMovementSpeedService();
         unregisterReceivers();
         super.onDestroy();
@@ -272,6 +280,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext()));
             getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         }
+        StepDetectionServiceHelper.startAllIfEnabled(true, getContext());
     }
 
     private void unbindService(){
@@ -522,6 +531,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         this.generateReports(false);
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onPrevClicked DailyFragment");
         }
     }
 
@@ -531,6 +541,8 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         this.generateReports(false);
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onNextClicked DailyFragment");
+
         }
     }
 
@@ -550,6 +562,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
                 DailyReportFragment.this.generateReports(false);
                 if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
                     bindService();
+                    Log.d("service cycle", "bound service in onDateSet DailyFragment");
                 }
             }
         }, year, month, day);
@@ -641,8 +654,12 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
         if(key.equals(getString(R.string.pref_step_counter_enabled)) || key.equals(getString(R.string.pref_use_step_hardware))){
             if(!StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
                 unbindService();
+                Log.d("servicecycle", "UNbound service in PREFERENCEchanged DailyFragment");
+
             }else if(this.isTodayShown()){
                 bindService();
+                Log.d("servicecycle", "bound service in PREFERENCEchanged DailyFragment");
+
             }
         }
     }

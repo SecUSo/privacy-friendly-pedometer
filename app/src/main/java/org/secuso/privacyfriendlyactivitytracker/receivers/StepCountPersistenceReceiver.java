@@ -56,6 +56,8 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
         public void onServiceConnected(ComponentName name, IBinder service) {
             StepCountPersistenceHelper.storeStepCounts(service, context, oldWalkingMode);
             context.getApplicationContext().unbindService(mServiceConnection);
+            Log.d("service cycle", "UNbound service in onServiceConnected PERSISTENCEReceiver");
+
             StepDetectionServiceHelper.stopAllIfNotRequired(false, context);
             WidgetReceiver.forceWidgetUpdate(context);
             if(mSaveListener != null) {
@@ -77,6 +79,8 @@ public class StepCountPersistenceReceiver extends WakefulBroadcastReceiver {
         // bind to service
         Intent serviceIntent = new Intent(context, Factory.getStepDetectorServiceClass(context));
         context.getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        Log.d("service cycle", "bound service in onReceive PERSISTENCEReceiver");
+
     }
 
     public interface ISaveListener {

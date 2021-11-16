@@ -176,6 +176,8 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onAttach MonthlyFragment");
+
         }
         registerReceivers();
     }
@@ -193,6 +195,8 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         // Bind to stepDetector if today is shown
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onResume MonthlyFragment");
+
         }
         registerReceivers();
     }
@@ -200,6 +204,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     @Override
     public void onDetach() {
         unbindService();
+        Log.d("service cycle", "UNbound service in onDetach MonthlyFragment");
         mListener = null;
         unregisterReceivers();
         super.onDetach();
@@ -208,6 +213,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     @Override
     public void onPause() {
         unbindService();
+        Log.d("service cycle", "UNbound service in onPause MonthlyFragment");
         unregisterReceivers();
         super.onPause();
     }
@@ -215,6 +221,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     @Override
     public void onDestroy() {
         unbindService();
+        Log.d("service cycle", "UNbound service in onDestroy MonthlyFragment");
         unregisterReceivers();
         super.onDestroy();
     }
@@ -222,6 +229,7 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
     private void bindService() {
         Intent serviceIntent = new Intent(getContext(), Factory.getStepDetectorServiceClass(getContext()));
         getActivity().getApplicationContext().bindService(serviceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        StepDetectionServiceHelper.startAllIfEnabled(true, getContext());
     }
 
     private void unbindService() {
@@ -448,6 +456,8 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         this.generateReports(false);
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onPrevClicked MonthlyFragment");
+
         }
     }
 
@@ -457,6 +467,8 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         this.generateReports(false);
         if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
             bindService();
+            Log.d("service cycle", "bound service in onNextClicked MonthlyFragment");
+
         }
     }
 
@@ -476,6 +488,8 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
                 MonthlyReportFragment.this.generateReports(false);
                 if (isTodayShown() && StepDetectionServiceHelper.isStepDetectionEnabled(getContext())) {
                     bindService();
+                    Log.d("service cycle", "bound service in onDateSet MonthlyFragment");
+
                 }
             }
         }, year, month, day);
@@ -514,8 +528,12 @@ public class MonthlyReportFragment extends Fragment implements ReportAdapter.OnI
         if(key.equals(getString(R.string.pref_step_counter_enabled))|| key.equals(getString(R.string.pref_use_step_hardware))){
             if(!StepDetectionServiceHelper.isStepDetectionEnabled(getContext())){
                 unbindService();
+                Log.d("service cycle", "UNbound service in PREFERENCEchanged MonthlyFragment");
+
             }else if(this.isTodayShown()){
                 bindService();
+                Log.d("service cycle", "bound service in PREFERENCEchanged MonthlyFragment");
+
             }
         }
     }

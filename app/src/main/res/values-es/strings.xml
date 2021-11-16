@@ -241,4 +241,6 @@
     <string name="pref_summary_use_step_hardware">Algunos teléfonos llevan incorporado el hardware de recuento de pasos. Esto puede reducir el uso de la batería y aumentar la precisión. Sin embargo, no funciona de forma fiable en todos los dispositivos con nuestra aplicación. Desactivar si no se cuentan los pasos.</string>
     <string name="pref_title_use_step_hardware">Verwenden Sie die Schrittzähler-Hardware des Telefons</string>
     <string name="pref_use_step_hardware_not_available">Este dispositivo no admite el recuento de pasos por hardware.</string>
+    <string name="pref_counter_frequency_summary">Establece la frecuencia del contador de pasos del hardware de fondo para devolver un valor.</string>
+    <string name="pref_counter_frequency_title">Frecuencia de actualización de contador de fondo</string>
 </resources>

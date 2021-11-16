@@ -241,4 +241,6 @@
     <string name="pref_summary_use_step_hardware">Certains téléphones intègrent un système de comptage des pas. Cela peut réduire l\'utilisation de la batterie et augmenter la précision. Cependant, il ne fonctionne pas de manière fiable sur tous les appareils avec notre application. Désactiver si les pas ne sont pas comptés.</string>
     <string name="pref_title_use_step_hardware">Utilizar el hardware de recuento de pasos del teléfono</string>
     <string name="pref_use_step_hardware_not_available">Cet appareil ne prend pas en charge le comptage matériel des pas.</string>
+    <string name="pref_counter_frequency_summary">Régler la fréquence du compteur de pas matériel en arrière-plan pour qu\'il renvoie une valeur.</string>
+    <string name="pref_counter_frequency_title">Fréquence de retour du compteur de fond</string>
 </resources>

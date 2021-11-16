@@ -253,4 +253,6 @@
     <string name="pref_summary_use_step_hardware">Einige Telefone verfügen über eine eingebaute Hardware zur Schrittzählung. Dies kann den Akkuverbrauch reduzieren und die Genauigkeit erhöhen. Sie funktioniert jedoch nicht auf allen Geräten zuverlässig mit unserer App. Deaktivieren Sie es, wenn keine Schritte gezählt werden.</string>
     <string name="pref_title_use_step_hardware">Verwenden Sie die Schrittzähler-Hardware des Telefons</string>
     <string name="pref_use_step_hardware_not_available">Dieses Gerät unterstützt Hardware-Schrittzählungen nicht.</string>
+    <string name="pref_counter_frequency_summary">Legen Sie die Aktualisierungs-Häufigkeit des Hardware-Schrittzählers im Hintergrund fest.</string>
+    <string name="pref_counter_frequency_title">Hintergrundzähler Aktualisierungsfrequenz</string>
 </resources>

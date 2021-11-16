@@ -304,6 +304,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             sharedPref.registerOnSharedPreferenceChangeListener(this);
 
+            //correctly set background counting enabled or not
+            findPreference(getString(R.string.pref_hw_background_counter_frequency)).setEnabled(sharedPref.getBoolean(getString(R.string.pref_use_step_hardware), true));
+
 
             stepCounterEnabledPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override

@@ -175,12 +175,12 @@ public class StepDetectionServiceHelper {
         PendingIntent sender = PendingIntent.getBroadcast(context, 2, hardwareStepCounterServiceIntent, 0);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        Long updateInterval = Long.valueOf(sharedPref.getString(context.getString(R.string.pref_hw_background_counter_frequency), "3600000"));
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.MINUTE, 5);
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        Long updateInterval = Long.valueOf(sharedPref.getString(context.getString(R.string.pref_hw_background_counter_frequency), "3600000"));
 
         // Set inexact repeating alarm
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), updateInterval, sender);
@@ -216,7 +216,23 @@ public class StepDetectionServiceHelper {
 
         // Set repeating alarm
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), AlarmManager.INTERVAL_HALF_HOUR, sender);
-        Log.i(LOG_CLASS, "Scheduled repeating persistence service at start time " + calendar.getTime().toGMTString());
+        Log.i(LOG_CLASS, "Scheduled repeating persistence service at start time " + calendar.getTime().toString());
+
+
+        //TODO find out if this replaces the other alarm or not
+        // End of day save
+        PendingIntent endSender = PendingIntent.getBroadcast(context, 2, stepCountPersistenceServiceIntent, 0);
+        Calendar daysEnd = Calendar.getInstance();
+        daysEnd.set(Calendar.HOUR_OF_DAY, 23);
+        daysEnd.set(Calendar.MINUTE, 59);
+        daysEnd.set(Calendar.SECOND, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            am.setExact(AlarmManager.RTC_WAKEUP, daysEnd.getTime().getTime(), endSender);
+        } else{
+            am.set(AlarmManager.RTC_WAKEUP, daysEnd.getTime().getTime(), endSender);
+        }
+        Log.i(LOG_CLASS, "Scheduled end of day persistence service at time " + daysEnd.getTime().toString());
+
     }
 
     /**

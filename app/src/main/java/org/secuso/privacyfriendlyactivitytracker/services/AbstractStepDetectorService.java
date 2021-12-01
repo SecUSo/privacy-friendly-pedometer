@@ -236,7 +236,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
         // release wake lock if any
         acquireOrReleaseWakeLock();
         // Unregister sensor listeners
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        SensorManager sensorManager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
         sensorManager.unregisterListener(this);
         // Cancel notification
         if (mNotifyManager != null && cancelNotificationOnDestroy()) {
@@ -259,7 +259,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
             stopSelf();
         }
         // register for sensors
-        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        SensorManager sensorManager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
 

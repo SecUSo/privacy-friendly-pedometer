@@ -17,20 +17,21 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.receivers;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import org.secuso.privacyfriendlyactivitytracker.services.HardwareStepCounterService;
+import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 /**
  * @author Tobias Neidig
  * @version 20170811
  */
-public class HardwareStepCountReceiver extends WakefulBroadcastReceiver {
+public class HardwareStepCountReceiver extends BroadcastReceiver {
     private static final String LOG_CLASS = HardwareStepCountReceiver.class.getName();
 
     @Override
@@ -44,5 +45,7 @@ public class HardwareStepCountReceiver extends WakefulBroadcastReceiver {
         } else {
             context.startService(serviceIntent);
         }
+
+        StepDetectionServiceHelper.startHardwareStepCounter(context);
     }
 }

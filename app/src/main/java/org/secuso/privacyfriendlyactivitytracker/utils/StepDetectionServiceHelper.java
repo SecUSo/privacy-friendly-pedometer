@@ -180,11 +180,17 @@ public class StepDetectionServiceHelper {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.MINUTE, 5);
+        calendar.add(Calendar.MILLISECOND, updateInterval.intValue());
+        Log.i(LOG_CLASS, " update FREQUENCY " + updateInterval.intValue());
 
-        // Set inexact repeating alarm
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), updateInterval, sender);
-        Log.i(LOG_CLASS, "Scheduled hardware step counter alert at start time " + calendar.getTime().toLocaleString());
+
+        // Set exact alarm
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), sender);
+        } else {
+            am.set(AlarmManager.RTC_WAKEUP, calendar.getTime().getTime(), sender);
+        }
+        Log.i(LOG_CLASS, "Scheduled hardware step counter alert at time " + calendar.getTime().toLocaleString());
     }
 
     public static void stopHardwareStepCounter(Context context){
@@ -219,9 +225,9 @@ public class StepDetectionServiceHelper {
         Log.i(LOG_CLASS, "Scheduled repeating persistence service at start time " + calendar.getTime().toString());
 
 
-        //TODO find out if this replaces the other alarm or not
+        //TODO find out if this replaces the other alarm or not - should not with different requestCode!
         // End of day save
-        PendingIntent endSender = PendingIntent.getBroadcast(context, 2, stepCountPersistenceServiceIntent, 0);
+        PendingIntent endSender = PendingIntent.getBroadcast(context, 5, stepCountPersistenceServiceIntent, 0);
         Calendar daysEnd = Calendar.getInstance();
         daysEnd.set(Calendar.HOUR_OF_DAY, 23);
         daysEnd.set(Calendar.MINUTE, 59);

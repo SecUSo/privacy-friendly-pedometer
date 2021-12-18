@@ -26,6 +26,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
 import org.jetbrains.annotations.NotNull;
 import org.secuso.privacyfriendlyactivitytracker.R;
 
@@ -259,11 +260,6 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
             }
         }
         return numIrregularAccelerationValues < mLastStepAccelerationDeltas.length * 0.2;
-    }
-
-    @Override
-    public int getSensorType() {
-        return Sensor.TYPE_ACCELEROMETER;
     }
 
     @Override

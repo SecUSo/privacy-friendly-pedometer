@@ -306,6 +306,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
             //correctly set background counting enabled or not
             findPreference(getString(R.string.pref_hw_background_counter_frequency)).setEnabled(sharedPref.getBoolean(getString(R.string.pref_use_step_hardware), true));
+            findPreference(getString(R.string.pref_which_step_hardware)).setEnabled(sharedPref.getBoolean(getString(R.string.pref_use_step_hardware), true));
 
 
             stepCounterEnabledPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -520,9 +521,13 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             if (key.equals(getString(R.string.pref_use_step_hardware))) {
                 boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.pref_use_step_hardware), true);
                 findPreference(getString(R.string.pref_hw_background_counter_frequency)).setEnabled(isEnabled);
+                findPreference(getString(R.string.pref_which_step_hardware)).setEnabled(isEnabled);
             }
 
-            if (key.equals(getString(R.string.pref_hw_background_counter_frequency))) {
+            if (key.equals(getString(R.string.pref_hw_background_counter_frequency)) && sharedPreferences.getString(getString(R.string.pref_which_step_hardware), "0").equals("0")) {
+                saveStepsAndRestartService();
+            }
+            if (key.equals(getString(R.string.pref_which_step_hardware))) {
                 saveStepsAndRestartService();
             }
         }

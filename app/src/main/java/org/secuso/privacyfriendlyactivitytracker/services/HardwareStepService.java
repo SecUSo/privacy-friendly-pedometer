@@ -17,16 +17,11 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.services;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import org.jetbrains.annotations.NotNull;
-import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 
 /**
  * Uses the hardware step counter sensor to detect steps.
@@ -36,7 +31,7 @@ import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
  * @version 20160522
  */
 
-public class HardwareStepDetectorService extends AbstractStepDetectorService {
+public class HardwareStepService extends AbstractStepDetectorService {
     /**
      * Number of steps which the user went today
      * This is used when step counter is used.
@@ -47,7 +42,7 @@ public class HardwareStepDetectorService extends AbstractStepDetectorService {
      * Creates an HardwareStepDetectorService.
      *
      */
-    public HardwareStepDetectorService() {
+    public HardwareStepService() {
         super();
     }
 
@@ -73,16 +68,6 @@ public class HardwareStepDetectorService extends AbstractStepDetectorService {
                 // Set offset to current value so we know it at next event
                 mStepOffset = event.values[0];
                 break;
-        }
-    }
-
-    @SuppressLint("InlinedApi")
-    @Override
-    public int getSensorType() {
-        if (AndroidVersionHelper.supportsStepDetector(getPackageManager())) {
-            return Sensor.TYPE_STEP_DETECTOR;
-        } else {
-            return 0;
         }
     }
 }

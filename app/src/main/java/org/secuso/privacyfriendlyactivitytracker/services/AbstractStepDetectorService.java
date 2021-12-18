@@ -17,7 +17,6 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.services;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -43,12 +42,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
-import org.secuso.privacyfriendlyactivitytracker.activities.SplashActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
+import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.UnitHelper;
 
@@ -202,14 +201,6 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
     public abstract void onSensorChanged(SensorEvent event);
 
     /**
-     * The sensor type(s) on which the step detection service should listen
-     *
-     * @return Type of sensors requested
-     * @see SensorManager#getDefaultSensor
-     */
-    public abstract int getSensorType();
-
-    /**
      * Whether the notification should be canceled when service dies.
      * @return true if notification should be canceled else false
      */
@@ -246,6 +237,7 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPref.unregisterOnSharedPreferenceChangeListener(this);
         // Force save of step count
+        StepCountPersistenceHelper.storeStepCounts(this.mBinder, getApplicationContext(), WalkingModePersistenceHelper.getActiveMode(getApplicationContext()));
         // StepDetectionServiceHelper.startPersistenceService(this);
         super.onDestroy();
     }
@@ -258,13 +250,33 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
         if(!StepDetectionServiceHelper.isStepDetectionEnabled(getApplicationContext())){
             stopSelf();
         }
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean counter = Integer.valueOf(sharedPref.getString(this.getString(R.string.pref_which_step_hardware), "0")) == 0;
+
         // register for sensors
-        SensorManager sensorManager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
-        Sensor sensor = sensorManager.getDefaultSensor(this.getSensorType());
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+        if(!AndroidVersionHelper.isHardwareStepCounterEnabled(this)){
+            //use accelerometer
+            SensorManager sensorManager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+            Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        } else if(counter) {
+            SensorManager sensorManager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+            Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Long updateInterval = Long.valueOf(sharedPref.getString(this.getString(R.string.pref_hw_background_counter_frequency), "3600000"));
+                sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL, updateInterval.intValue());
+            } else {
+                sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+            }
+        } else {
+            SensorManager sensorManager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
+            Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+        }
+
 
         // Get daily goal(s) from preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String d = sharedPref.getString(getString(R.string.pref_daily_step_goal), "10000");
         this.dailyStepGoal = Integer.parseInt(d);
         sharedPref.registerOnSharedPreferenceChangeListener(this);

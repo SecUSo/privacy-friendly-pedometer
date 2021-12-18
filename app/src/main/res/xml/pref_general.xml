@@ -29,6 +29,15 @@
         android:disableDependentsState="true"
         android:title="@string/pref_title_use_step_hardware" />
     <ListPreference
+        android:defaultValue="0"
+        android:key="@string/pref_which_step_hardware"
+        android:summary="@string/pref_which_step_hardware_summary"
+        android:entries="@array/pref_keys_which_step_hardware"
+        android:entryValues="@array/pref_values_which_step_hardware"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_which_step_hardware_title"/>
+    <ListPreference
         android:defaultValue="3600000"
         android:key="@string/pref_hw_background_counter_frequency"
         android:summary="@string/pref_counter_frequency_summary"

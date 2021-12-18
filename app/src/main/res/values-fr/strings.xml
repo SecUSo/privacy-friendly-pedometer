@@ -94,7 +94,12 @@
         <item>30 minutes</item>
         <item>15 minutes</item>
         <item>5 minutes</item>
-        <item>Utiliser uniquement le détecteur de pas en temps réel</item>
+        <item>Aucun retard n'est autorisé</item>
+    </string-array>
+
+    <string-array name="pref_keys_which_step_hardware">
+        <item>Compteur de pas</item>
+        <item>Détecteur de pas</item>
     </string-array>
 
     <!-- /general settings -->
@@ -251,4 +256,6 @@
     <string name="pref_use_step_hardware_not_available">Cet appareil ne prend pas en charge le comptage matériel des pas.</string>
     <string name="pref_counter_frequency_summary">Régler la fréquence du compteur de pas matériel en arrière-plan pour qu\'il renvoie une valeur.</string>
     <string name="pref_counter_frequency_title">Fréquence de retour du compteur de fond</string>
+    <string name="pref_which_step_hardware_summary">Choisissez entre le compteur de pas (plus précis) et le détecteur de pas (plus rapide).</string>
+    <string name="pref_which_step_hardware_title">Choix du matériel de détection des étapes</string>
 </resources>

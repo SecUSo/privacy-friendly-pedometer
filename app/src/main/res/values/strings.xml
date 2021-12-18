@@ -171,7 +171,7 @@
         <item>30 mins</item>
         <item>15 mins</item>
         <item>5 mins</item>
-        <item>Use realtime step detector only</item>
+        <item>No delay allowed</item>
     </string-array>
     <string-array name="pref_values_counter_frequency">
         <item>7200000</item>
@@ -180,6 +180,14 @@
         <item>900000</item>
         <item>300000</item>
         <item>0</item>
+    </string-array>
+    <string-array name="pref_keys_which_step_hardware">
+        <item>Step counter</item>
+        <item>Step detector</item>
+    </string-array>
+    <string-array name="pref_values_which_step_hardware">
+        <item>0</item>
+        <item>1</item>
     </string-array>
     <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
     <string name="pref_title_accelerometer_steps_threshold">Steps before counting starts</string>
@@ -221,6 +229,7 @@
     <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
     <string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
     <string name="pref_hw_background_counter_frequency" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_background_counter_frequency</string>
+    <string name="pref_which_step_hardware" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.which_step_hardware</string>
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
@@ -344,4 +353,6 @@
     <string name="pref_use_step_hardware_not_available">This device does not support hardware step counting.</string>
     <string name="pref_counter_frequency_summary">Set the frequency of the background hardware step counter to return a value.</string>
     <string name="pref_counter_frequency_title">Background Counter Return Frequency</string>
+    <string name="pref_which_step_hardware_summary">Choose between step counter (more accurate) and step detector (faster).</string>
+    <string name="pref_which_step_hardware_title">Step Detection Hardware Choice</string>
 </resources>

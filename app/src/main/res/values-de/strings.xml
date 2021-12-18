@@ -160,7 +160,12 @@
         <item>30 Minuten</item>
         <item>15 Minuten</item>
         <item>5 Minuten</item>
-        <item>Nur Echtzeit-Schrittzähler verwenden</item>
+        <item>Keine Verzögerung erlaubt</item>
+    </string-array>
+
+    <string-array name="pref_keys_which_step_hardware">
+        <item>Schrittzähler</item>
+        <item>Schritt-Detektor</item>
     </string-array>
 
     <string name="save">Speichern</string>
@@ -264,4 +269,6 @@
     <string name="pref_use_step_hardware_not_available">Dieses Gerät unterstützt Hardware-Schrittzählungen nicht.</string>
     <string name="pref_counter_frequency_summary">Legen Sie die Aktualisierungs-Häufigkeit des Hardware-Schrittzählers im Hintergrund fest.</string>
     <string name="pref_counter_frequency_title">Hintergrundzähler Aktualisierungsfrequenz</string>
+    <string name="pref_which_step_hardware_summary">Wählen Sie zwischen Schrittzähler (genauer) und Schrittdetektor (schneller).</string>
+    <string name="pref_which_step_hardware_title">Auswahl der Hardware für die Schritterkennung</string>
 </resources>

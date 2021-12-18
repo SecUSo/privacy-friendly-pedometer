@@ -173,7 +173,12 @@
         <item>30 minutos</item>
         <item>15 minutos</item>
         <item>5 minutos</item>
-        <item>Utilizar sólo el detector de pasos en tiempo real</item>
+        <item>No se permite ningún retraso</item>
+    </string-array>
+
+    <string-array name="pref_keys_which_step_hardware">
+        <item>Contador de pasos</item>
+        <item>Detector de pasos</item>
     </string-array>
 
     <string name="training_overview_empty">Parece que no ha usado la funcionalidad de aprendizaje, aún. ¡Es hora de comenzar su entrenamiento!</string>
@@ -251,4 +256,6 @@
     <string name="pref_use_step_hardware_not_available">Este dispositivo no admite el recuento de pasos por hardware.</string>
     <string name="pref_counter_frequency_summary">Establece la frecuencia del contador de pasos del hardware de fondo para devolver un valor.</string>
     <string name="pref_counter_frequency_title">Frecuencia de actualización de contador de fondo</string>
+    <string name="pref_which_step_hardware_summary">Elija entre el contador de pasos (más preciso) y el detector de pasos (más rápido).</string>
+    <string name="pref_which_step_hardware_title">Elección del hardware de detección de pasos</string>
 </resources>

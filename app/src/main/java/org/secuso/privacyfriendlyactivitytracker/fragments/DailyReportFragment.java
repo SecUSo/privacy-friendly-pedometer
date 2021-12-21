@@ -618,23 +618,27 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int steps_new = Integer.parseInt(edittext.getText().toString());
-                    int steps_saved = getStepCountInclNonSavedSteps(day);
-                    int diff = steps_new - steps_saved;
-                    StepCount stepCount = StepCountPersistenceHelper.getLastStepCountEntryForDay(day, getContext());
-                    if(stepCount == null){
-                        stepCount = new StepCount();
-                        stepCount.setStartTime(day.getTime().getTime());
-                        stepCount.setEndTime(day.getTime().getTime());
-                        stepCount.setStepCount(diff);
-                        stepCount.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getContext()));
-                        StepCountPersistenceHelper.storeStepCount(stepCount, getContext());
-                    }else {
-                        stepCount.setStepCount(stepCount.getStepCount() + diff);
-                        StepCountPersistenceHelper.updateStepCount(stepCount, getContext());
+                    try {
+                        int steps_new = Integer.parseInt(edittext.getText().toString());
+                        int steps_saved = getStepCountInclNonSavedSteps(day);
+                        int diff = steps_new - steps_saved;
+                        StepCount stepCount = StepCountPersistenceHelper.getLastStepCountEntryForDay(day, getContext());
+                        if(stepCount == null){
+                            stepCount = new StepCount();
+                            stepCount.setStartTime(day.getTime().getTime());
+                            stepCount.setEndTime(day.getTime().getTime());
+                            stepCount.setStepCount(diff);
+                            stepCount.setWalkingMode(WalkingModePersistenceHelper.getActiveMode(getContext()));
+                            StepCountPersistenceHelper.storeStepCount(stepCount, getContext());
+                        }else {
+                            stepCount.setStepCount(stepCount.getStepCount() + diff);
+                            StepCountPersistenceHelper.updateStepCount(stepCount, getContext());
+                        }
+                        generateReports(false);
+                        alertDialog.dismiss();
+                    }catch (NumberFormatException e){
+                        alertDialog.dismiss();
                     }
-                    generateReports(false);
-                    alertDialog.dismiss();
                 }
             });
         }

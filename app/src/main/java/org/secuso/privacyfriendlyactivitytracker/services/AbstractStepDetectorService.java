@@ -346,8 +346,10 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
      * Updates or creates the progress notification
      */
     protected void updateNotification() {
-        Notification notification = buildNotification(this.stepCountFromTotalSteps());
-        mNotifyManager.notify(NOTIFICATION_ID, notification);
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean(this.getString(R.string.pref_step_counter_enabled), true)){
+            Notification notification = buildNotification(this.stepCountFromTotalSteps());
+            mNotifyManager.notify(NOTIFICATION_ID, notification);
+        }
     }
 
     private void acquireOrReleaseWakeLock(){

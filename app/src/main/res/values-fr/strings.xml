@@ -94,7 +94,7 @@
         <item>30 minutes</item>
         <item>15 minutes</item>
         <item>5 minutes</item>
-        <item>Aucun retard n'est autorisé</item>
+        <item>Aucun retard n\'est autorisé</item>
     </string-array>
 
     <string-array name="pref_keys_which_step_hardware">

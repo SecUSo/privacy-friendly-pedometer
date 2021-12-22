@@ -20,6 +20,7 @@ package org.secuso.privacyfriendlyactivitytracker.tutorial;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -239,6 +240,27 @@ public class TutorialActivity extends AppCompatActivity {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater.inflate(layouts[position], container, false);
+            if(position+1 == layouts.length){
+                TextView list = view.findViewById(R.id.tutorial_detectors);
+                StringBuffer sb = new StringBuffer();
+                sb.append("\n- ");
+                sb.append(getApplicationContext().getString(R.string.accelerometer));
+                PackageManager pm = getApplicationContext().getPackageManager();
+                if(pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_DETECTOR)) {
+                    sb.append("\n- ");
+                    sb.append(getApplicationContext().getString(R.string.step_detector));
+                    //set hardware use to true
+                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean(getApplicationContext().getString(R.string.pref_use_step_hardware), true).apply();
+                }
+                if(pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)) {
+                    sb.append("\n- ");
+                    sb.append(getApplicationContext().getString(R.string.step_counter));
+                    //set hardware use to true
+                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean(getApplicationContext().getString(R.string.pref_use_step_hardware), true).apply();
+                }
+                list.setText(sb.toString());
+            }
+
             container.addView(view);
 
             return view;

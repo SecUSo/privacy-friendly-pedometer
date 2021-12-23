@@ -6,8 +6,8 @@ android {
         applicationId 'org.secuso.privacyfriendlyactivitytracker'
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 12
-        versionName "2.4"
+        versionCode 13
+        versionName "2.5"
     }
     buildTypes {
         release {

@@ -15,8 +15,8 @@ Further development requires Android Studio, we recommend to use at least versio
 
 ### API Reference
 
-Minimum SDK: 16
-Target SDK: 25
+Minimum SDK: 17
+Target SDK: 30
 
 ## License
 
@@ -49,6 +49,7 @@ Markus Hau<br />
 Github-Users: <br />
 tobiasneidig<br />
 Yonjuni (Karola Marky)<br />
-licaon-kter 
+licaon-kter<br />
+sleep-yearning (Noah Schlegel)
 
 

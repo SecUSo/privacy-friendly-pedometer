@@ -15,7 +15,7 @@
     <string name="about_affiliation">En colaboración con:</string>
     <string name="more_info">Puede encontrar más información en:</string>
     <string name="about_third_party_libs">La aplicación usa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licencia Apache 2).</string>
-    <string name="privacy_friendly">Esta aplicación pertenece al grupo Aplicaciones con Privacidad desarolladas por Technische Universität Darmstadt. El código fuente está bajo la licencia GPLv3. Las imágenes tienen Copyright TU Darmstadt y Google Inc.</string>
+    <string name="privacy_friendly">Esta aplicación pertenece al grupo Aplicaciones con Privacidad desarolladas por grupo de investigación SECUSO. El código fuente está bajo la licencia GPLv3. Las imágenes tienen Copyright SECUSO y Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Página Web-SECUSO</a></string>
 
 
@@ -241,7 +241,7 @@
     <string name="kilojoules">kJ</string>
     <string name="slide_5_title">Detección de pasos</string>
     <string name="slide_2_desc_three">En los ajustes puedes definir tus propios modos de caminar con diferentes longitudes de paso.</string>
-    <string name="slide_5_desc">La aplicación detecta tus pasos basándose en diferentes algoritmos. En algunos dispositivos puedes definir la sensibilidad de la detección de pasos en los ajustes. Además, puedes añadir los pasos que has dado sin la aplicación o corregir el recuento de pasos en el gráfico de actividad diaria.</string>
+    <string name="slide_5_desc">Su máquina admite los siguientes métodos de detección de pasos:</string>
     <string name="help_walkingmodes_heading">Modos de caminar</string>
     <string name="help_walkingmodes_selection">Puedes definir tus propios modos de caminar como \"Correr\" o \"Caminar\" en las preferencias. Cada modo de caminar tiene su propia longitud de paso.</string>
     <string name="help_training_heading">Sesiones de formación</string>
@@ -258,4 +258,12 @@
     <string name="pref_counter_frequency_title">Frecuencia de actualización de contador de fondo</string>
     <string name="pref_which_step_hardware_summary">Elija entre el contador de pasos (más preciso) y el detector de pasos (más rápido).</string>
     <string name="pref_which_step_hardware_title">Elección del hardware de detección de pasos</string>
+    <string name="slide_5_desc2">Si observa incoherencias o problemas con el recuento, pruebe otros métodos si están disponibles o cambie los parámetros de recuento del acelerómetro. También puedes añadir los pasos que has caminado sin la aplicación o corregir el recuento de pasos en el resumen de la actividad diaria. Para más información sobre los métodos de recuento, consulte \'Ayuda>Métodos\\u00A0de\\u00A0recuento\'.</string>
+    <string name="accelerometer">Acelerómetro</string>
+    <string name="step_detector">Detector de pasos</string>
+    <string name="step_counter">Contador de pasos</string>
+    <string name="help_counting_heading">Métodos de recuento</string>
+    <string name="help_counting">Los diferentes dispositivos Android tienen diferentes capacidades de hardware. Nuestra aplicación está diseñada para funcionar en la mayoría de los dispositivos utilizando cualquier hardware disponible. Si tu dispositivo admite diferentes métodos, puedes probarlos y comparar.</string>
+    <string name="help_counting_accelerometer">Casi todos los dispositivos Android tienen un acelerómetro incorporado. Mediante el análisis de sus datos, la aplicación intenta detectar eventos de paso. Hay una serie de parámetros que se pueden cambiar en los ajustes cuando se utiliza el método del acelerómetro.</string>
+    <string name="help_counting_hardware">Muchos dispositivos Android también admiten hardware especial para pasos, como un podómetro y un detector de pasos. Pueden ser más fiables que el acelerómetro porque están diseñados específicamente para registrar eventos de pasos. Sin embargo, como los dispositivos Android son muy diferentes, no está garantizado que funcionen mejor. El detector es una forma rápida de detectar eventos de pasos, mientras que el contador realiza un análisis posterior para aumentar la precisión de los pasos reales dados.</string>
 </resources>

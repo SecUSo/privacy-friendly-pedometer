@@ -49,6 +49,12 @@ public class HelpDataDump {
         general.add(context.getResources().getString(R.string.help_functionality_step_counter_summary));
         expandableListDetail.put(context.getResources().getString(R.string.help_overview_heading), general);
 
+        List<String> counting = new ArrayList<>();
+        counting.add(context.getResources().getString(R.string.help_counting));
+        counting.add(context.getResources().getString(R.string.help_counting_accelerometer));
+        counting.add(context.getResources().getString(R.string.help_counting_hardware));
+        expandableListDetail.put(context.getResources().getString(R.string.help_counting_heading), counting);
+
         List<String> notifications = new ArrayList<>();
         notifications.add(context.getResources().getString(R.string.help_functionality_notification_summary));
         notifications.add(context.getResources().getString(R.string.help_functionality_notification_delete));

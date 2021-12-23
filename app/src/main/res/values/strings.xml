@@ -37,7 +37,7 @@
     <string name="about_affiliation">In affiliation with</string>
     <string name="more_info">More information can be found on:</string>
     <string name="about_third_party_libs">The app uses <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart from Philipp Jahoda</a> (Apache 2 License).</string>
-    <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by the research group SECUSO. Sourcecode licensed under GPLv3. Images copyright SECUSO and Google Inc.</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
     <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
@@ -305,7 +305,7 @@
     </string-array>
 
     <string name="training_overview_empty">It seems like you didn\'t used the training functionality, yet. It\'s time to start your training!</string>
-    <string name="training_input_message" />
+    <string name="training_input_message" translatable="false" />
     <string name="training_input_title">Training session</string>
     <string name="activity_title_training">Training</string>
     <string name="hint_training_description">Description</string>
@@ -325,7 +325,7 @@
     <string name="joules">J</string>
     <string name="kilojoules">kJ</string>
     <string name="slide_5_title">Step Detection</string>
-    <string name="slide_5_desc">The app detects your steps based on different algorithms. On some devices you can define the sensivity of step detection in settings. In addition to that you can add steps you walked without the app or correct the stepcount on daily activity chart.</string>
+    <string name="slide_5_desc">Your device supports the following methods for step detection:</string>
     <string name="slide_3_desc">Define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
     <string name="slide_2_desc_three">In the settings you can define your own walking modes with different step lengths.</string>
     <string name="help_walkingmodes_heading">Walking Modes</string>
@@ -355,4 +355,12 @@
     <string name="pref_counter_frequency_title">Background Counter Return Frequency</string>
     <string name="pref_which_step_hardware_summary">Choose between step counter (more accurate) and step detector (faster).</string>
     <string name="pref_which_step_hardware_title">Step Detection Hardware Choice</string>
+    <string name="slide_5_desc2">If you experience inconsistencies or problems with the counting try out different methods if available or tweak the parameters of accelerometer counting. In addition to that you can add steps you walked without the app or correct the stepcount on daily activity chart. More information on the counting methods can be found under \'Help>Counting\u00A0Methods\'.</string>
+    <string name="accelerometer">Accelerometer</string>
+    <string name="step_detector">Step Detector</string>
+    <string name="step_counter">Step Counter</string>
+    <string name="help_counting_heading">Counting methods</string>
+    <string name="help_counting">Different Android devices possess different hardware capabilities. Our app is designed to work on most devices while using the respective available hardware. Feel free to try and compare different methods if your device supports them.</string>
+    <string name="help_counting_accelerometer">Almost every Android device has an accelerometer built in. By analyzing its data, the app tries to detect step events. There are a number of parameters which you can modify in the settings when using the accelerometer method.</string>
+    <string name="help_counting_hardware">Many Android devices also support specific step hardware like a step counter and step detector. They can be more reliable than the accelerometer because they are specifically designed to register step events. However, since Android devices are very diverse it is not guaranteed to work best. The detector is a fast way to detect step events while the counter does some post-processing to increase certainty about actual steps taken.</string>
 </resources>

@@ -7,7 +7,7 @@ The Privacy Friendly Pedometer stores the user's step count per hour. The user c
 
 ## Motivation
 
-Privacy Friendly Pedometer belongs to the group of [Privacy Friendly Apps](https://www.secuso.informatik.tu-darmstadt.de/en/secuso-home/research/results/privacy-friendly-apps/) and has therefore been optimized with respect to user's privacy.
+Privacy Friendly Pedometer belongs to the group of [Privacy Friendly Apps](https://www.secuso.org/pfa) and has therefore been optimized with respect to user's privacy.
 
 ## Building
 

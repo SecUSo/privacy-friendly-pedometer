@@ -241,11 +241,14 @@ public class TutorialActivity extends AppCompatActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             if(position+1 == layouts.length){
+                PackageManager pm = getApplicationContext().getPackageManager();
+
                 TextView list = view.findViewById(R.id.tutorial_detectors);
                 StringBuffer sb = new StringBuffer();
-                sb.append("\n- ");
-                sb.append(getApplicationContext().getString(R.string.accelerometer));
-                PackageManager pm = getApplicationContext().getPackageManager();
+                if(pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
+                    sb.append("\n- ");
+                    sb.append(getApplicationContext().getString(R.string.accelerometer));
+                }
                 if(pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_DETECTOR)) {
                     sb.append("\n- ");
                     sb.append(getApplicationContext().getString(R.string.step_detector));

@@ -17,8 +17,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="org.secuso.privacyfriendlyactivitytracker">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <supports-screens
         android:anyDensity="true"
@@ -44,6 +43,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
+            android:exported="true"
             android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -135,25 +135,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
         </activity>
-        <activity android:name="org.secuso.privacyfriendlyactivitytracker.activities.WidgetConfigureActivity">
+        <activity
+            android:name="org.secuso.privacyfriendlyactivitytracker.activities.WidgetConfigureActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnBootCompletedBroadcastReceiver">
+        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnBootCompletedBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnShutdownBroadcastReceiver">
+        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnShutdownBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <!-- this is for some htc devices (and others) -->
                 <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnPackageReplacedBroadcastReceiver">
+        <receiver android:name="org.secuso.privacyfriendlyactivitytracker.receivers.OnPackageReplacedBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
@@ -167,7 +172,8 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="org.secuso.privacyfriendlyactivitytracker.receivers.WidgetReceiver" >
+            android:name="org.secuso.privacyfriendlyactivitytracker.receivers.WidgetReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

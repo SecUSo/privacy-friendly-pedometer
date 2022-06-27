@@ -51,10 +51,8 @@ For showing charts the app uses [MPAndroidChart](https://github.com/PhilJay/MPAn
 App-Icon: <br />
 Markus Hau<br />
 
-Github-Users: <br />
-tobiasneidig<br />
-Yonjuni (Karola Marky)<br />
-licaon-kter<br />
-sleep-yearning (Noah Schlegel)
+<a href="https://github.com/SecUSo/privacy-friendly-pedometer/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=SecUSo/privacy-friendly-pedometer&max=100&columns=20" />
+</a>
 
 

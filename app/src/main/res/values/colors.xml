@@ -33,6 +33,7 @@
 
     <!-- dots active colors -->
     <color name="dot_light_screen">#448bb2</color>
+    <color name="ic_background">#3680BB</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen</item>

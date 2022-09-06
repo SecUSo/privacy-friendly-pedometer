@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.JsonReader;
 
 import androidx.annotation.NonNull;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountDbHelper;
 import org.secuso.privacyfriendlyactivitytracker.persistence.TrainingDbHelper;
@@ -41,7 +42,8 @@ public class BackupRestorer implements IBackupRestorer {
         if (!n2.equals("content")) {
             throw new RuntimeException("Unknown value " + n2);
         }
-        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath("restoreDatabase"), null);
+        DatabaseUtil.deleteRoomDatabase(context, "restoreDatabase");
+        SupportSQLiteDatabase db = DatabaseUtil.getSupportSQLiteOpenHelper(context, "restoreDatabase", version).getWritableDatabase();
         db.beginTransaction();
         db.setVersion(version);
 

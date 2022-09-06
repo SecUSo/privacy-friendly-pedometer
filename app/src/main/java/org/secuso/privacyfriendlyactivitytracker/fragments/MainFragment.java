@@ -112,6 +112,13 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        ((MainActivity)requireActivity()).requestPermission();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_options_overview, menu);

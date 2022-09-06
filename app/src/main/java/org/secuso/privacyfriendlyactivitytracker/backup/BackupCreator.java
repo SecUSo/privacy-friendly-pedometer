@@ -2,12 +2,12 @@ package org.secuso.privacyfriendlyactivitytracker.backup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.JsonWriter;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import org.secuso.privacyfriendlyactivitytracker.PFAPedometerApplication;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountDbHelper;
@@ -26,7 +26,7 @@ import java.nio.charset.Charset;
 public class BackupCreator implements IBackupCreator {
 
     @Override
-    public void writeBackup(@NonNull Context context, @NonNull OutputStream outputStream) {
+    public boolean writeBackup(@NonNull Context context, @NonNull OutputStream outputStream) {
         // lock application, so no changes can be made as long as this backup is created
         // depending on the size of the application - this could take a bit
         ((PFAPedometerApplication) context.getApplicationContext()).lock();
@@ -38,21 +38,23 @@ public class BackupCreator implements IBackupCreator {
 
         try {
             writer.beginObject();
-            SQLiteDatabase dataBase1 = SQLiteDatabase.openDatabase(context.getDatabasePath(StepCountDbHelper.DATABASE_NAME).getPath(), null, SQLiteDatabase.OPEN_READONLY);
+
+            SupportSQLiteDatabase dataBase1 = DatabaseUtil.getSupportSQLiteOpenHelper(context, StepCountDbHelper.DATABASE_NAME).getReadableDatabase();
 
             Log.d("PFA BackupCreator", "Writing StepCount database");
             writer.name("database_stepCount");
             DatabaseUtil.writeDatabase(writer, dataBase1);
             dataBase1.close();
 
-            SQLiteDatabase dataBase2 = SQLiteDatabase.openDatabase(context.getDatabasePath(TrainingDbHelper.DATABASE_NAME).getPath(), null, SQLiteDatabase.OPEN_READONLY);
+
+            SupportSQLiteDatabase dataBase2 = DatabaseUtil.getSupportSQLiteOpenHelper(context, TrainingDbHelper.DATABASE_NAME).getReadableDatabase();
 
             Log.d("PFA BackupCreator", "Writing Training database");
             writer.name("database_trainings");
             DatabaseUtil.writeDatabase(writer, dataBase2);
             dataBase2.close();
 
-            SQLiteDatabase dataBase3 = SQLiteDatabase.openDatabase(context.getDatabasePath(WalkingModeDbHelper.DATABASE_NAME).getPath(), null, SQLiteDatabase.OPEN_READONLY);
+            SupportSQLiteDatabase dataBase3 = DatabaseUtil.getSupportSQLiteOpenHelper(context, WalkingModeDbHelper.DATABASE_NAME).getReadableDatabase();
 
             Log.d("PFA BackupCreator", "Writing WalkingMode database");
             writer.name("database_walkingMode");
@@ -69,16 +71,19 @@ public class BackupCreator implements IBackupCreator {
             pref = context.getSharedPreferences(PrefManager.PREF_NAME, 0);
             PreferenceUtil.writePreferences(writer, pref);
 
-
             writer.endObject();
             writer.close();
+
+            Log.d("PFA BackupCreator", "Backup created successfully");
+
+            ((PFAPedometerApplication) context.getApplicationContext()).release();
+            return true;
         } catch (Exception e) {
             Log.e("PFA BackupCreator", "Error occurred", e);
             e.printStackTrace();
+
+            ((PFAPedometerApplication) context.getApplicationContext()).release();
+            return false;
         }
-
-        Log.d("PFA BackupCreator", "Backup created successfully");
-
-        ((PFAPedometerApplication) context.getApplicationContext()).release();
     }
 }

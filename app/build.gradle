@@ -1,18 +1,48 @@
 apply plugin: 'com.android.application'
 
+def pfaFile = rootProject.file('pfa.properties')
+
 android {
+
+    signingConfigs {
+        if (pfaFile.exists()) {
+            'pfa-key' {
+                def pfa = new Properties()
+                pfa.load(new FileInputStream(pfaFile))
+
+                storePassword pfa['storePassword']
+                keyAlias pfa['keyAlias']
+                keyPassword pfa['keyPassword']
+                storeFile file(pfa['storeFile'])
+            }
+        }
+    }
+
     compileSdkVersion 32
     defaultConfig {
         applicationId 'org.secuso.privacyfriendlyactivitytracker'
         minSdkVersion 17
         targetSdkVersion 32
-        versionCode 13
-        versionName "2.5"
+        versionCode 14
+        versionName "3.0"
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "pfa-pedometer-${variant.name}-v${variant.versionName}.apk"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            if (pfaFile.exists()) {
+                signingConfig signingConfigs.'pfa-key'
+            }
         }
     }
     productFlavors {

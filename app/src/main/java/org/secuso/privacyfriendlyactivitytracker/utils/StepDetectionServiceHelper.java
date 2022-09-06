@@ -154,7 +154,7 @@ public class StepDetectionServiceHelper {
      */
     public static void schedulePersistenceService(Context context) {
         Intent stepCountPersistenceServiceIntent = new Intent(context, StepCountPersistenceReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 2, stepCountPersistenceServiceIntent, 0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 2, stepCountPersistenceServiceIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         // Fire at next half hour
@@ -173,7 +173,7 @@ public class StepDetectionServiceHelper {
 
         //TODO find out if this replaces the other alarm or not - should not with different requestCode!
         // End of day save
-        PendingIntent endSender = PendingIntent.getBroadcast(context, 5, stepCountPersistenceServiceIntent, 0);
+        PendingIntent endSender = PendingIntent.getBroadcast(context, 5, stepCountPersistenceServiceIntent, PendingIntent.FLAG_IMMUTABLE);
         Calendar daysEnd = Calendar.getInstance();
         daysEnd.set(Calendar.HOUR_OF_DAY, 23);
         daysEnd.set(Calendar.MINUTE, 59);
@@ -198,7 +198,7 @@ public class StepDetectionServiceHelper {
             startPersistenceService(context);
         }
         Intent stepCountPersistenceServiceIntent = new Intent(context, StepCountPersistenceReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 2, stepCountPersistenceServiceIntent, 0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 2, stepCountPersistenceServiceIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(sender);
     }
@@ -246,7 +246,7 @@ public class StepDetectionServiceHelper {
     public static void setMotivationAlert(Context context){
         Log.i(LOG_CLASS, "Setting motivation alert alarm");
         Intent motivationAlertIntent = new Intent(context, MotivationAlertReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, 0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -280,7 +280,7 @@ public class StepDetectionServiceHelper {
     public static void cancelMotivationAlert(Context context){
         Log.i(LOG_CLASS, "Canceling motivation alert alarm");
         Intent motivationAlertIntent = new Intent(context, MotivationAlertReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, 0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, 1, motivationAlertIntent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(sender);
     }

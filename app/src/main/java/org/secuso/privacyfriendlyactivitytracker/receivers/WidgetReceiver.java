@@ -68,22 +68,22 @@ public class WidgetReceiver extends AppWidgetProvider {
             int dataSet = sharedPref.getInt(context.getString(R.string.pref_widget_data_set) + appWidgetId, -1);
             // Create an Intent to launch SplashActivity on click on widget
             Intent intent = new Intent(context, SplashActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             rv.setOnClickPendingIntent(R.id.widget, pendingIntent);
             // add intents to buttons
             intent = new Intent(context, WidgetReceiver.class);
             intent.setAction(PAUSE_STEP_DETECTION_ACTION);
-            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             rv.setOnClickPendingIntent(R.id.pause_step_detection, pendingIntent);
 
             intent = new Intent(context, WidgetReceiver.class);
             intent.setAction(CONTINUE_STEP_DETECTION_ACTION);
-            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             rv.setOnClickPendingIntent(R.id.continue_step_detection, pendingIntent);
 
             intent = new Intent(context, TrainingActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             rv.setOnClickPendingIntent(R.id.start_training, pendingIntent);
 
             switch (dataSet){

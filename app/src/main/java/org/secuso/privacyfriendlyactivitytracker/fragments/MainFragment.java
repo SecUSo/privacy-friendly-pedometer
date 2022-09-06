@@ -40,6 +40,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
+import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.util.ArrayList;
@@ -136,6 +137,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             case R.id.menu_continue_step_detection:
                 editor.putBoolean(getString(R.string.pref_step_counter_enabled), true);
                 editor.apply();
+                ((MainActivity)requireActivity()).requestPermission();
                 StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
                 return true;
             default:

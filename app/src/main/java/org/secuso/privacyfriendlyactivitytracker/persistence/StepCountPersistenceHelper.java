@@ -79,9 +79,10 @@ public class StepCountPersistenceHelper {
         StepCount lastStoredStepCount = stepCountDbHelper.getLatestStepCount();;
         long currentTime = Calendar.getInstance().getTimeInMillis();
         long currentUpdateIntervalStartTime = currentTime - (updateInterval > 0 ? currentTime % updateInterval : 0);
-        if(lastStoredStepCount == null || lastStoredStepCount.getEndTime() < currentUpdateIntervalStartTime  ||
+        if(lastStoredStepCount == null || (lastStoredStepCount.getEndTime() < currentUpdateIntervalStartTime && stepCountSinceLastSave + lastStoredStepCount.getStepCount() > 0) ||
                 lastStoredStepCount.getWalkingMode() != null && walkingMode != null && walkingMode.getId() != lastStoredStepCount.getWalkingMode().getId()) {
-            // create new step count if none is stored or last one was saved before the current update interval
+            // create new step count if none is stored or last one was saved before the current update interval and there are new staps to save
+            // (the time interval of the previous step count may only be extended if it had 0 steps and there are 0 steps to add)
             StepCount stepCount = new StepCount();
             stepCount.setWalkingMode(walkingMode);
             stepCount.setStepCount(stepCountSinceLastSave);

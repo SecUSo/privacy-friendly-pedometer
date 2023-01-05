@@ -256,7 +256,7 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         public static final String TABLE_NAME = StepCountDbHelper.TABLE_NAME;
         public static final String KEY_STEP_COUNT = StepCountDbHelper.KEY_STEP_COUNT;
         public static final String KEY_WALKING_MODE = StepCountDbHelper.KEY_WALKING_MODE;
-        public static final String KEY_TIMESTAMP = KEY_WALKING_MODE;
+        public static final String KEY_TIMESTAMP = StepCountDbHelper.KEY_TIMESTAMP;
     }
 
 

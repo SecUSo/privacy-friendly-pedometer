@@ -150,9 +150,9 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         while (c.moveToNext()) {
             StepCount s = new StepCount();
             s.setStartTime(start);
-            s.setEndTime(c.getLong(c.getColumnIndex(KEY_TIMESTAMP)));
-            s.setStepCount(c.getInt(c.getColumnIndex(KEY_STEP_COUNT)));
-            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndex(KEY_WALKING_MODE))));
+            s.setEndTime(c.getLong(c.getColumnIndexOrThrow(KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndexOrThrow(KEY_STEP_COUNT)));
+            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndexOrThrow(KEY_WALKING_MODE))));
             steps.add(s);
             start = s.getEndTime();
         }
@@ -172,9 +172,9 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         StepCount s = null;
         while (c.moveToNext()) {
             s = new StepCount();
-            s.setEndTime(c.getLong(c.getColumnIndex(KEY_TIMESTAMP)));
-            s.setStepCount(c.getInt(c.getColumnIndex(KEY_STEP_COUNT)));
-            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndex(KEY_WALKING_MODE))));
+            s.setEndTime(c.getLong(c.getColumnIndexOrThrow(KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndexOrThrow(KEY_STEP_COUNT)));
+            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndexOrThrow(KEY_WALKING_MODE))));
         }
         c.close();
         return s;
@@ -192,9 +192,9 @@ public class StepCountDbHelper  extends SQLiteOpenHelper {
         StepCount s = null;
         while (c.moveToNext()) {
             s = new StepCount();
-            s.setEndTime(c.getLong(c.getColumnIndex(KEY_TIMESTAMP)));
-            s.setStepCount(c.getInt(c.getColumnIndex(KEY_STEP_COUNT)));
-            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndex(KEY_WALKING_MODE))));
+            s.setEndTime(c.getLong(c.getColumnIndexOrThrow(KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndexOrThrow(KEY_STEP_COUNT)));
+            s.setWalkingMode(walkingModeDbHelper.getWalkingMode(c.getInt(c.getColumnIndexOrThrow(KEY_WALKING_MODE))));
         }
         c.close();
         return s;

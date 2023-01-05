@@ -38,12 +38,12 @@ public class WalkingMode {
 
     public static WalkingMode from(Cursor c) {
         WalkingMode alarmItem = new WalkingMode();
-        alarmItem.setId(c.getLong(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry._ID)));
-        alarmItem.setName(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_NAME)));
-        alarmItem.setStepLength(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_SIZE)));
-        alarmItem.setStepFrequency(c.getDouble(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_FREQUENCY)));
-        alarmItem.setIsActive(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_ACTIVE))));
-        alarmItem.setIsDeleted(Boolean.valueOf(c.getString(c.getColumnIndex(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_DELETED))));
+        alarmItem.setId(c.getLong(c.getColumnIndexOrThrow(WalkingModeDbHelper.WalkingModeEntry._ID)));
+        alarmItem.setName(c.getString(c.getColumnIndexOrThrow(WalkingModeDbHelper.WalkingModeEntry.KEY_NAME)));
+        alarmItem.setStepLength(c.getDouble(c.getColumnIndexOrThrow(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_SIZE)));
+        alarmItem.setStepFrequency(c.getDouble(c.getColumnIndexOrThrow(WalkingModeDbHelper.WalkingModeEntry.KEY_STEP_FREQUENCY)));
+        alarmItem.setIsActive(Boolean.valueOf(c.getString(c.getColumnIndexOrThrow(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_ACTIVE))));
+        alarmItem.setIsDeleted(Boolean.valueOf(c.getString(c.getColumnIndexOrThrow(WalkingModeDbHelper.WalkingModeEntry.KEY_IS_DELETED))));
         return alarmItem;
     }
 

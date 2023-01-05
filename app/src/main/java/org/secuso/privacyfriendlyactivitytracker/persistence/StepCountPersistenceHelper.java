@@ -219,10 +219,10 @@ public class StepCountPersistenceHelper {
         while (c.moveToNext()) {
             StepCount s = new StepCount();
             s.setStartTime(start);
-            s.setEndTime(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP)));
-            s.setStepCount(c.getInt(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT)));
-            //Log.w("ASDF", "Getting walking mode " + c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)));
-            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndex(StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE)), context));
+            s.setEndTime(c.getLong(c.getColumnIndexOrThrow(StepCountDbHelper.StepCountEntry.KEY_TIMESTAMP)));
+            s.setStepCount(c.getInt(c.getColumnIndexOrThrow(StepCountDbHelper.StepCountEntry.KEY_STEP_COUNT)));
+            //Log.w("ASDF", "Getting walking mode " + c.getLong(c.getColumnIndexOrThrow(StepCountDbHelper.StepCountEntry.COLUMN_NAME_WALKING_MODE)));
+            s.setWalkingMode(WalkingModePersistenceHelper.getItem(c.getLong(c.getColumnIndexOrThrow(StepCountDbHelper.StepCountEntry.KEY_WALKING_MODE)), context));
             steps.add(s);
             start = s.getEndTime();
             sum += s.getStepCount();

@@ -19,13 +19,16 @@ package org.secuso.privacyfriendlyactivitytracker.persistence;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.models.WalkingMode;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
@@ -71,23 +74,25 @@ public class StepCountPersistenceHelper {
         // Get the steps since last save
         int stepCountSinceLastSave = myBinder.stepsSinceLastSave();
 
-        StepCount lastStoredStepCount = stepCountDbHelper.getLatestStepCount();
-        Calendar calendarOneHourAgo = Calendar.getInstance();
-        calendarOneHourAgo.add(Calendar.HOUR, -1);
-
-        //TODO include end of day case, where step count should not be combined with new end time
-        if(lastStoredStepCount == null || lastStoredStepCount.getEndTime() < calendarOneHourAgo.getTime().getTime() ||
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        long updateInterval = Long.parseLong(sharedPref.getString(context.getString(R.string.pref_hw_background_counter_frequency), "3600000"));
+        StepCount lastStoredStepCount = stepCountDbHelper.getLatestStepCount();;
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long currentUpdateIntervalStartTime = currentTime - (updateInterval > 0 ? currentTime % updateInterval : 0);
+        if(lastStoredStepCount == null || (lastStoredStepCount.getEndTime() < currentUpdateIntervalStartTime && stepCountSinceLastSave + lastStoredStepCount.getStepCount() > 0) ||
                 lastStoredStepCount.getWalkingMode() != null && walkingMode != null && walkingMode.getId() != lastStoredStepCount.getWalkingMode().getId()) {
-            // create new step count if non is stored or last stored step count is older than an hour
+            // create new step count if none is stored or last one was saved before the current update interval and there are new staps to save
+            // (the time interval of the previous step count may only be extended if it had 0 steps and there are 0 steps to add)
             StepCount stepCount = new StepCount();
             stepCount.setWalkingMode(walkingMode);
             stepCount.setStepCount(stepCountSinceLastSave);
-            stepCount.setEndTime(Calendar.getInstance().getTime().getTime());
+            stepCount.setEndTime(currentTime);
             stepCountDbHelper.addStepCount(stepCount);
-        }else{
+            Log.i(LOG_CLASS, "Creating new step count");
+        } else {
             lastStoredStepCount.setStepCount(lastStoredStepCount.getStepCount() + stepCountSinceLastSave);
             long oldEndTime = lastStoredStepCount.getEndTime();
-            lastStoredStepCount.setEndTime(Calendar.getInstance().getTime().getTime());
+            lastStoredStepCount.setEndTime(currentTime);
             stepCountDbHelper.updateStepCount(lastStoredStepCount, oldEndTime);
             Log.i(LOG_CLASS, "Updating last stored step count - not creating a new one");
         }

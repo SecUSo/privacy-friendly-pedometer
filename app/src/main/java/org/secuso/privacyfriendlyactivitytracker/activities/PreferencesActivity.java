@@ -443,7 +443,10 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         void generateCSVToExport() {
             SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String path = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
-            File csvFile = new File(Environment.getExternalStorageDirectory(), path);
+            File csvFile = new File((android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT ?
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) :
+                    Environment.getExternalStorageDirectory()), path);
+
             //Get List of StepCounts
             List<StepCount> steps = StepCountPersistenceHelper.getStepCountsForever(getActivity());
             try {

@@ -452,6 +452,9 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             try {
                 if (csvFile.exists())
                     csvFile.delete();
+                File parentDir = new File(csvFile.getParent());
+                if (!parentDir.exists())
+                    parentDir.mkdirs();
                 csvFile.createNewFile();
                 //Generate the file
                 PrintWriter csvWriter = new PrintWriter(csvFile);

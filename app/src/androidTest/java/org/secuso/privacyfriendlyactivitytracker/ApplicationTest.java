@@ -1,20 +1,36 @@
 package org.secuso.privacyfriendlyactivitytracker;
 
-import static junit.framework.TestCase.assertEquals;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import android.Manifest;
 
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.rule.GrantPermissionRule;
+
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.secuso.privacyfriendlyactivitytracker.tutorial.TutorialActivity;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-@RunWith(AndroidJUnit4.class)
 public class ApplicationTest {
+    @Rule
+    public ActivityScenarioRule<TutorialActivity> activityRule =
+            new ActivityScenarioRule<>(TutorialActivity.class);
+
+    @Rule
+    public GrantPermissionRule activityRecognitionPermission = (android.os.Build.VERSION.SDK_INT >= 29 ? GrantPermissionRule.grant(Manifest.permission.ACTIVITY_RECOGNITION) : null);
+    @Rule
+    public GrantPermissionRule foregroundServicePermission = (android.os.Build.VERSION.SDK_INT >= 34 ? GrantPermissionRule.grant(Manifest.permission.FOREGROUND_SERVICE_HEALTH) : null);
+    @Rule
+    public GrantPermissionRule postNotificatuionsPermission = (android.os.Build.VERSION.SDK_INT >= 32 ? GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS) : null);
+
     @Test
-    public void instrumentationTest() throws Exception {
-        assertEquals("org.secuso.privacyfriendlyactivitytracker", InstrumentationRegistry.getInstrumentation().getTargetContext().getPackageName());
+    public void canStartApp() {
+        onView(withText(R.string.skip)).perform(ViewActions.click());
+        onView(withText(R.string.day)).perform(ViewActions.click());
+        onView(withText(R.string.day)).check(ViewAssertions.matches(ViewMatchers.isSelected()));
     }
 }

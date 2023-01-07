@@ -59,12 +59,14 @@ public class AccelerometerStepDetectorService extends AbstractStepDetectorServic
     private int validStepsThreshold = 0;
     //private float[]
 
+    public static AccelerometerStepDetectorService accelerometerStepDetectorService;
     /**
      * Creates an AccelerometerStepDetectorService.
      */
     public AccelerometerStepDetectorService() {
         super();
         // required empty constructor
+        accelerometerStepDetectorService = this;
     }
 
     @Override

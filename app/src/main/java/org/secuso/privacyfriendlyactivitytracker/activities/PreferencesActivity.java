@@ -51,8 +51,9 @@ import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -269,6 +270,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
         private Preference accelThresholdPreference;
         private Preference useStepHardwarePreference;
         private Preference stepCounterEnabledPreference;
+        private static String LOG_TAG = GeneralPreferenceFragment.class.getName();
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -440,21 +442,20 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             return true;
         }
 
-        void generateCSVToExport() {
+        public File generateCSVToExport() {
+            final Context context = getActivity().getApplicationContext();
             SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-            String path = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
-            File csvFile = new File((android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT ?
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) :
-                    Environment.getExternalStorageDirectory()), path);
+            String csvFileName = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
 
             //Get List of StepCounts
             List<StepCount> steps = StepCountPersistenceHelper.getStepCountsForever(getActivity());
             try {
-                if (csvFile.exists())
-                    csvFile.delete();
-                csvFile.createNewFile();
+                File csvFile = new File(Environment.getExternalStoragePublicDirectory(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT ?
+                        Environment.DIRECTORY_DOCUMENTS : context.getResources().getString(R.string.app_name)), csvFileName);
+                csvFile.getParentFile().mkdirs();
+                Log.i(LOG_TAG, "Exporting steps to: " + csvFile.getAbsolutePath());
                 //Generate the file
-                PrintWriter csvWriter = new PrintWriter(csvFile);
+                OutputStreamWriter csvWriter = new OutputStreamWriter(new FileOutputStream(csvFile));
                 //Add the header
                 csvWriter.write(getString(R.string.export_csv_header) + "\r\n");
                 //Populate the file
@@ -468,10 +469,12 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 csvWriter.close();
                 //Display message
                 Toast.makeText(getActivity(), getString(R.string.export_csv_success) + " " + csvFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+                return csvFile;
             } catch (IOException e) {
                 Toast.makeText(getActivity(), getString(R.string.export_csv_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+            return null;
         }
 
         @Override
@@ -595,33 +598,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
 
     void exportCSVafterPermissionGranted() {
-        SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        String path = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
-        File csvFile = new File(Environment.getExternalStorageDirectory(), path);
-        //Get List of StepCounts
-        List<StepCount> steps = StepCountPersistenceHelper.getStepCountsForever(this);
-        try {
-            if (csvFile.exists())
-                csvFile.delete();
-            csvFile.createNewFile();
-            //Generate the file
-            PrintWriter csvWriter = new PrintWriter(csvFile);
-            //Add the header
-            csvWriter.write(getString(R.string.export_csv_header) + "\r\n");
-            //Populate the file
-            String dateFormat = "yyyy-MM-dd HH:mm:ss";
-            for (StepCount s : steps) {
-                String startDate = s.getStartTime() == 0 ? getString(R.string.export_csv_begin) : DateFormat.format(dateFormat, new Date(s.getStartTime())).toString();
-                String endDate = DateFormat.format(dateFormat, new Date(s.getEndTime())).toString();
-                csvWriter.write(startDate + ";" + endDate + ";" + s.getStepCount() + ";" + s.getWalkingMode().getName() + "\r\n");
-            }
-            csvWriter.close();
-            //Display message
-            Toast.makeText(this, getString(R.string.export_csv_success) + " " + csvFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(this, getString(R.string.export_csv_error), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        generalPreferenceFragment.generateCSVToExport();
     }
 
     /**

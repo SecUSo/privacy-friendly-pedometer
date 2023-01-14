@@ -47,15 +47,15 @@ public class Training {
 
     public static Training from(Cursor c) {
         Training trainingSession = new Training();
-        trainingSession.setId(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry._ID)));
-        trainingSession.setName(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_NAME)));
-        trainingSession.setDescription(c.getString(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_DESCRIPTION)));
-        trainingSession.setSteps(c.getInt(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_STEPS)));
-        trainingSession.setDistance(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_DISTANCE)));
-        trainingSession.setCalories(c.getDouble(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_CALORIES)));
-        trainingSession.setFeeling(c.getFloat(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_FEELING)));
-        trainingSession.setStart(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_START)));
-        trainingSession.setEnd(c.getLong(c.getColumnIndex(TrainingDbHelper.TrainingSessionEntry.KEY_END)));
+        trainingSession.setId(c.getLong(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry._ID)));
+        trainingSession.setName(c.getString(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_NAME)));
+        trainingSession.setDescription(c.getString(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_DESCRIPTION)));
+        trainingSession.setSteps(c.getInt(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_STEPS)));
+        trainingSession.setDistance(c.getDouble(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_DISTANCE)));
+        trainingSession.setCalories(c.getDouble(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_CALORIES)));
+        trainingSession.setFeeling(c.getFloat(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_FEELING)));
+        trainingSession.setStart(c.getLong(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_START)));
+        trainingSession.setEnd(c.getLong(c.getColumnIndexOrThrow(TrainingDbHelper.TrainingSessionEntry.KEY_END)));
         return trainingSession;
     }
 

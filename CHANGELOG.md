@@ -1,7 +1,19 @@
 # Changelog
 
+<a name="v3.0.1"></a>
+## [Pedometer (Privacy Friendly) v3.0.1](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v3.0.1) - 01 Feb 2023
+
+- Fixes/improvements for storing the step counts in DB  (Saving frequency from settings has more effect now)
+- Various improvements to CSV exports (date+time, newer APIs)
+- Fixed all linting errors (replaced getColumnIndex with getColumnIndexOrThrow)
+- Added automated CI test to the project
+
+
+[Changes][v3.0.1]
+
+
 <a name="v3.0.0"></a>
-## [Pedometer (Privacy Friendly) v3.0.0 (v3.0.0)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v3.0.0) - 06 Sep 2022
+## [Pedometer (Privacy Friendly) v3.0.0](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v3.0.0) - 06 Sep 2022
 
 ## What's Changed
 * Reworked step detection 
@@ -16,7 +28,7 @@
 
 
 <a name="v2.4"></a>
-## [Pedometer (Privacy Friendly) v2.4 (v2.4)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v2.4) - 12 Jul 2021
+## [Pedometer (Privacy Friendly) v2.4](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v2.4) - 12 Jul 2021
 
 - Made hardware step detection optional and opt-in since some devices are not compatible
 - Added permission for physical activity (necessary from SKD 29+)
@@ -27,7 +39,7 @@
 
 
 <a name="v2.3"></a>
-## [Pedometer (Privacy Friendly) v2.3 (v2.3)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v2.3) - 09 Jul 2021
+## [Pedometer (Privacy Friendly) v2.3](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v2.3) - 09 Jul 2021
 
 - Updated Service backend to work on newer Android versions
 - Dependency updates
@@ -36,7 +48,7 @@
 
 
 <a name="v2.2"></a>
-## [Pedometer (Privacy Friendly) v2.2 (v2.2)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v2.2) - 02 Jul 2021
+## [Pedometer (Privacy Friendly) v2.2](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v2.2) - 02 Jul 2021
 
 Functionality:
 - Added option to export to CSV file
@@ -61,7 +73,7 @@ Other improvements:
 
 
 <a name="v1.0.5"></a>
-## [Privacy Friendly Pedometer v1.0.5 (v1.0.5)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.5) - 07 Mar 2017
+## [Privacy Friendly Pedometer v1.0.5](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.5) - 07 Mar 2017
 
 - Minor Bug Fixes
 - Manifest refinement
@@ -71,7 +83,7 @@ Other improvements:
 
 
 <a name="v1.0.4"></a>
-## [Privacy Friendly Pedometer v1.0.4 (v1.0.4)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.4) - 23 Dec 2016
+## [Privacy Friendly Pedometer v1.0.4](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.4) - 23 Dec 2016
 
 - Minor Bug Fixes
 
@@ -80,7 +92,7 @@ Other improvements:
 
 
 <a name="v1.0.3"></a>
-## [Privacy Friendly Pedometer v1.0.3 (v1.0.3)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.3) - 14 Dec 2016
+## [Privacy Friendly Pedometer v1.0.3](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.3) - 14 Dec 2016
 
 - Minor Bug Fixes
 - Welcome dialog replaced with tutorial
@@ -101,7 +113,7 @@ Other improvements:
 
 
 <a name="v1.0.1"></a>
-## [Privacy Friendly Pedometer v1.0.1 (v1.0.1)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.1) - 10 Nov 2016
+## [Privacy Friendly Pedometer v1.0.1](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0.1) - 10 Nov 2016
 
 Improvement of device support
 Improvement of help page
@@ -111,7 +123,7 @@ Improvement of help page
 
 
 <a name="v1.0"></a>
-## [Privacy Friendly Pedometer v1.0 (v1.0)](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0) - 04 Nov 2016
+## [Privacy Friendly Pedometer v1.0](https://github.com/SecUSo/privacy-friendly-pedometer/releases/tag/v1.0) - 04 Nov 2016
 
 The Privacy Friendly Pedometer can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger. The App requires minimal permissions (Run at startup and prevent phone from sleeping). It belongs to the group of Privacy Friendly Apps from the research group SECUSO (Security, Usability and Society) by the Technische Universität Darmstadt, Germany.
 
@@ -119,6 +131,7 @@ The Privacy Friendly Pedometer can count your steps in background, provides you 
 [Changes][v1.0]
 
 
+[v3.0.1]: https://github.com/SecUSo/privacy-friendly-pedometer/compare/v3.0.0...v3.0.1
 [v3.0.0]: https://github.com/SecUSo/privacy-friendly-pedometer/compare/v2.4...v3.0.0
 [v2.4]: https://github.com/SecUSo/privacy-friendly-pedometer/compare/v2.3...v2.4
 [v2.3]: https://github.com/SecUSo/privacy-friendly-pedometer/compare/v2.2...v2.3
@@ -130,4 +143,4 @@ The Privacy Friendly Pedometer can count your steps in background, provides you 
 [v1.0.1]: https://github.com/SecUSo/privacy-friendly-pedometer/compare/v1.0...v1.0.1
 [v1.0]: https://github.com/SecUSo/privacy-friendly-pedometer/tree/v1.0
 
- <!-- Generated by https://github.com/rhysd/changelog-from-release -->
+<!-- Generated by https://github.com/rhysd/changelog-from-release v3.7.0 -->

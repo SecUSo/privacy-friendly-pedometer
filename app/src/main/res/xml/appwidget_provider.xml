@@ -21,7 +21,7 @@
     android:minHeight="40dp"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/widget_1x1"
-    android:resizeMode="horizontal"
+    android:resizeMode="vertical|horizontal"
     android:widgetCategory="home_screen"
     android:configure="org.secuso.privacyfriendlyactivitytracker.activities.WidgetConfigureActivity">
 </appwidget-provider>

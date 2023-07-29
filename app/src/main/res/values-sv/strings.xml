@@ -112,6 +112,7 @@
     </string-array>
 
     <string name="pref_explanation_weight_and_gender">För att förbättra beräkningen av kalorierna, ställ in din vikt och kön.</string>
+    <string name="pref_summary_notification_permanent">Det permanenta meddelandet visas när appen räknar dina steg i bakgrunden. Du kan anpassa vad appen ska visa dig.</string>
     <string name="pref_summary_accelerometer_threshold">Appen använder accelerometern på din enhet. För att optimera stegdetekteringen, justera känsligheten.</string>
 
     <string name="pref_title_export_data">Exportera data</string>
@@ -258,7 +259,7 @@
     <string name="training_card_duration">h</string>
     <string name="training_velocity">km/h</string>
     <string name="training_stop_button">Avsluta träningen nu</string>
-    <string name="training_default_title">%1$s %4 $ 02d.%3 $ 02d.%2 $ 04d</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Stegmål</string>
     <string name="widget_config_data_set_title">Vilken data ska visas?</string>
     <string name="action_distance_measurement">Avståndsmätning</string>
@@ -292,4 +293,18 @@
     <string name="pref_summary_use_step_hardware">Vissa telefoner har inbyggd stegräkningshårdvara. Detta kan minska batterianvändningen och öka precisionen. Det fungerar dock inte pålitligt på alla enheter med vår app. Inaktivera om steg inte räknas.</string>
     <string name="pref_title_use_step_hardware">Använd telefonens inbyggda stegräkning (hårdvara)</string>
     <string name="pref_use_step_hardware_not_available">Den här enheten stöder inte räkning med inbyggda stegräkning (hårdvara)</string>
+    <string name="pref_counter_frequency_summary">Ställ in frekvensen för bakgrundshårdvarans stegräknare så att den returnerar ett värde.</string>
+    <string name="pref_counter_frequency_title">Bakgrundsräknare Returfrekvens</string>
+    <string name="pref_which_step_hardware_summary">Välj mellan stegräknare (mer exakt) och stegdetektor (snabbare).</string>
+    <string name="pref_which_step_hardware_title">Val av hårdvara för stegdetektering</string>
+    <string name="slide_5_desc2">Om du upplever inkonsekvenser eller problem med räkningen kan du prova andra metoder om sådana finns tillgängliga eller justera parametrarna för accelerometerräkningen. Dessutom kan du lägga till steg som du har gått utan appen eller korrigera stegräkningen i diagrammet över dagliga aktiviteter. Mer information om räknemetoderna finns under \"Hjälp>Räkning\\u00A0Metoder\".</string>
+    <string name="accelerometer">Accelerationssensor</string>
+    <string name="step_detector">Stegdetektor</string>
+    <string name="step_counter">Stegräknare</string>
+    <string name="help_counting_heading">Räknemetoder</string>
+    <string name="help_counting">Olika Android-enheter har olika hårdvarukapacitet. Vår app är utformad för att fungera på de flesta enheter med hjälp av respektive tillgänglig hårdvara. Du är välkommen att prova och jämföra olika metoder om din enhet stöder dem.</string>
+    <string name="help_counting_accelerometer">Nästan alla Android-enheter har en inbyggd accelerometer. Genom att analysera dess data försöker appen upptäcka steghändelser. Det finns ett antal parametrar som du kan ändra i inställningarna när du använder accelerometermetoden.</string>
+    <string name="help_counting_hardware">Många Android-enheter har också stöd för specifik steghårdvara som stegräknare och stegdetektor. De kan vara mer tillförlitliga än accelerometern eftersom de är särskilt utformade för att registrera steghändelser. Eftersom Android-enheter är väldigt olika är det dock inte säkert att de fungerar bäst. Detektorn är ett snabbt sätt att upptäcka steghändelser medan räknaren gör viss efterbearbetning för att öka säkerheten om de faktiska steg som tagits.</string>
+    <string name="dialog_permission_activity_recognition">Behörigheten Aktivitetsigenkänning krävs för åtkomst till stegdata.</string>
+    <string name="dialog_permission_activity_recognition_2">Tillståndet nekades flera gånger. Du måste aktivera tillståndet manuellt via enhetens inställningar.</string>
 </resources>

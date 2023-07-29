@@ -20,9 +20,6 @@
     <string name="app_name">Krokomierz</string>
     <string name="app_name_long">Krokomierz Przyjazny Prywatności</string>
 
-    <string name="navigation_drawer_open" translatable="false">Otwórz pasek nawigacji</string>
-    <string name="navigation_drawer_close" translatable="false">Zamknij pasek nawigacji</string>
-
     <!-- Menu Items-->
     <string name="action_help">Pomoc</string>
     <string name="action_about">O aplikacji</string>
@@ -33,14 +30,12 @@
     <!-- AboutActivity-->
     <string name="version_number">Wersja</string>
     <string name="about_author">Autor: </string>
-    <string name="about_author_names" translatable="false">Tobias Neidig </string>
     <string name="about_author_contributors"> i współpracownicy.</string>
     <string name="about_affiliation">W powiązaniu z</string>
     <string name="more_info">Więcej informacji można znaleźć na:</string>
     <string name="about_third_party_libs">Aplikacja używa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart od Philipp Jahoda</a> (Apache 2 License).</string>
     <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowanej przez Technische Universität Darmstadt. Kod źródłowy na licencji GPLv3. Prawa autorskie do zdjęć TU Darmstadt i Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Strona internetowa</a></string>
-    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repozytorium</a></string>
 
     <!-- ReportFragment -->
     <string name="month">Miesiąc</string>
@@ -83,25 +78,19 @@
     <string name="pref_header_general">Ogólne</string>
     <string name="pref_group_title_personal_settings">Personalizacja</string>
 
-    <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.step_counter_enabled</string>
     <string name="pref_title_step_counter_enabled">Ciągły licznik kroków</string>
     <string name="pref_summary_step_counter_enabled">Aplikacja zlicza Twoje kroki w tle.</string>
 
-    <string name="pref_use_wake_lock" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock</string>
     <string name="pref_title_use_wake_lock">Utrzymuj procesor w stanie czuwania</string>
     <string name="pref_summary_use_wake_lock">Na niektórych urządzeniach procesor zasypia i zapobiega zliczaniu kroków. Włącz to, aby utrzymać procesor w stanie czuwania podczas liczenia kroków - może to spowodować wyczerpanie baterii!</string>
 
-    <string name="pref_use_wake_lock_during_training" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock_during_training</string>
     <string name="pref_title_use_wake_lock_during_training">Czuwanie podczas treningu</string>
     <string name="pref_summary_use_wake_lock_during_training">Aby uzyskać lepsze wyniki w trybie treningu, należy pozostawić procesor w stanie czuwania. Jeśli aplikacja powinna zatrzymać procesor w dowolnym momencie, to robi to automatycznie.</string>
 
-    <string name="pref_show_velocity" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.show_velocity</string>
     <string name="pref_title_show_velocity">Pokaż aktualną prędkość</string>
     <string name="pref_summary_show_velocity">Aplikacja pokazuje aktualną prędkość w dziennym raporcie. Do obliczenia dokładnej prędkości wymagany jest dostęp do Twojej lokalizacji.</string>
 
-    <string name="pref_default_daily_step_goal" translatable="false">10000</string>
     <string name="pref_title_daily_step_goal">Osobisty dzienny cel kroków</string>
-    <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length</string>
     <string name="pref_title_unit_of_length">Jednostka długości</string>
     <string-array name="pref_keys_unit_of_length">
         <item>kilometr</item>
@@ -113,7 +102,6 @@
     </string-array>
     <string name="unit_of_length_km">1|km|kilometr|km/h|1000|m</string><!-- 1km = 1km -->
     <string name="unit_of_length_mi">0.621371|mi|mila|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
-    <string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
     <string name="pref_title_unit_of_energy">Jednostka energii</string>
     <string-array name="pref_keys_unit_of_energy">
         <item>kaloria</item>
@@ -128,11 +116,8 @@
     <string name="pref_summary_notification_permanent">Stałe powiadomienia są wyświetlane, gdy aplikacja zlicza Twoje kroki w tle. Możesz dostosować, co aplikacja powinna Ci pokazać.</string>
     <string name="pref_summary_accelerometer_threshold">Aplikacja korzysta z akcelerometru urządzenia. Aby zoptymalizować wykrywanie kroków, wyreguluj czułość.</string>
 
-    <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Waga (kg)</string>
-    <string name="pref_default_weight" translatable="false">65.0</string>
 
-    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.gender</string>
     <string name="pref_title_gender">Płeć</string>
     <string-array name="pref_keys_gender">
         <item>żeńska</item>
@@ -142,7 +127,6 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    <string name="pref_accelerometer_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_threshold</string>
     <string name="pref_title_accelerometer_threshold">Czułość</string>
     <string-array name="pref_keys_accelerometer_threshold">
         <item>bardzo wysoka</item>
@@ -162,29 +146,20 @@
         <item>1.25</item>
         <item>1.50</item>
     </string-array>
-    <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
     <string name="pref_title_accelerometer_steps_threshold">Kroki przed rozpoczęciem liczenia</string>
-    <string name="pref_default_accelerometer_steps_threshold" translatable="false">10</string>
     <!-- /general settings -->
     <!-- notification settings -->
     <string name="pref_header_notifications">Powiadomienia</string>
     <string name="pref_group_title_permanent_notification">Stałe powiadomienia</string>
     <string name="pref_group_title_motivation_alert">Alarm motywacyjny</string>
 
-    <string name="pref_notification_permanent_show_steps" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_steps</string>
     <string name="pref_title_notification_permanent_show_steps">Pokaż liczbę kroków, które dzisiaj przeszedłeś</string>
-    <string name="pref_notification_permanent_show_distance" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_distance</string>
     <string name="pref_title_notification_permanent_show_distance">Pokaż pokonaną dzisiaj odległość</string>
-    <string name="pref_notification_permanent_show_calories" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_calories</string>
     <string name="pref_title_notification_permanent_show_calories">Pokaż liczbę kalorii</string>
 
-    <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_enabled</string>
     <string name="pref_title_notification_motivation_alert_enabled">Włącz alert motywacyjny</string>
-    <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time</string>
     <string name="pref_title_notification_motivation_alert_time">Czas alertu motywacji</string>
-    <string name="pref_notification_motivation_alert_texts" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts</string>
     <string name="pref_title_notification_motivation_alert_texts">Teksty powiadomień motywacyjnych</string>
-    <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
     <string name="pref_title_notification_motivation_alert_criterion">Kryterium alarmu motywacji</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
         <item>mniej niż 90&#65285; z dziennego celu kroków</item>
@@ -198,14 +173,10 @@
     </string-array>
     <!-- /notification settings -->
     <string name="pref_header_walking_modes">Sposoby poruszania się</string>
-    <string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
-    <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
-    <string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
     <!-- /Preferences -->
 
     <!-- Will be removed on next update -->
-    <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.daily_step_goal</string>
-    <string name="notification_text_steps">Pokonany dystans %1$s z %2$s kroków.</string>
+    <string name="notification_text_steps">Pokonany dystans %1$d z %2$d kroków.</string>
     <string name="notification_text_distance">Pokonany dystans %1$.2f %2$s</string>
     <string name="notification_text_calories">Spalono %.2f kcal.</string>
     <string name="notification_text_default">Krokomierz jest aktywny.</string>
@@ -260,7 +231,6 @@
     <string name="walking_mode_learning_steps_description">Przeszedłeś Kroków:</string>
     <string name="walking_mode_learning_stop">Zakończ tryb nauki</string>
     <string name="walking_mode_learning_description">Aplikacja może nauczyć się odległości poprzez kroki. Proszę przejść określoną odległość i nacisnąć koniec, jeśli skończyłeś.</string>
-    <string name="pref_walking_mode_learning_active" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.walking_mode_learning_active</string>
     <string name="step_length">Długość kroku:</string>
     <string name="walking_mode_active_ext"> (aktywne)</string>
     <string name="walking_mode_input_empty">Nazwa i długość kroku są wymagane. Proszę wypełnić!</string>
@@ -308,4 +278,33 @@
     <string name="help_correctsteps_heading">Ręczna korekta kroków</string>
     <string name="help_correctsteps_selection">Możesz modyfikować wykryte codzienne czynności w widoku dziennego raportu. Dzięki temu możesz dodać kroki, które przeszedłeś bez aplikacji lub poprawić wykrytą liczbę kroków.</string>
     <string name="slide_5_desc_two">Stuknij \'Preferencje\', aby ustawić rozmiar kroku i dostosować swoje dane osobowe.</string>
+    <string name="pref_title_export_data">Eksport danych</string>
+    <string name="pref_summary_export_data">Eksportuj liczbę kroków do pliku csv.</string>
+    <string name="export_csv_header">Start;End;Steps;Mode</string>
+    <string name="export_csv_begin">&lt;begin&gt;</string>
+    <string name="export_csv_error">Wystąpił błąd podczas eksportu</string>
+    <string name="export_csv_success">CSV wyeksportowany jako</string>
+    <string name="export_csv_permission_needed">Uprawnienie do przechowywania jest wymagane do wyeksportowania pliku CSV.</string>
+    <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
+    <string name="help_permission_foreground_heading">Zezwolenie: Nowa wiedza</string>
+    <string name="help_permission_storage_description">jest wymagane, aby wyeksportować zebrane dane jako plik CSV. To uprawnienie jest wymagane tylko wtedy, gdy chcesz wyeksportować swoje dane.</string>
+    <string name="help_permission_storage_heading">"Uprawnienie: Zapis w pamięci zewnętrznej "</string>
+    <string name="pref_notification_permanent">Stałe powiadomienie jest wyświetlane, gdy aplikacja zlicza kroki w tle. Możesz dostosować, co aplikacja ma wyświetlać.</string>
+    <string name="pref_summary_use_step_hardware">Niektóre telefony mają wbudowaną funkcję liczenia kroków. Może to zmniejszyć zużycie baterii i zwiększyć precyzję. Nie działa to jednak niezawodnie na wszystkich urządzeniach z naszą aplikacją. Wyłącz, jeśli kroki nie są liczone.</string>
+    <string name="pref_title_use_step_hardware">Korzystanie z funkcji liczenia kroków w telefonie</string>
+    <string name="pref_use_step_hardware_not_available">To urządzenie nie obsługuje sprzętowego zliczania kroków.</string>
+    <string name="pref_counter_frequency_summary">Ustaw częstotliwość sprzętowego licznika kroków w tle, aby zwracał wartość.</string>
+    <string name="pref_counter_frequency_title">Częstotliwość powrotu licznika tła</string>
+    <string name="pref_which_step_hardware_summary">Wybierz pomiędzy licznikiem kroków (dokładniejszy) i detektorem kroków (szybszy).</string>
+    <string name="pref_which_step_hardware_title">Wybór sprzętu do wykrywania kroków</string>
+    <string name="slide_5_desc2">Jeśli wystąpią niespójności lub problemy z liczeniem, wypróbuj inne metody, jeśli są dostępne, lub dostosuj parametry liczenia akcelerometru. Ponadto możesz dodać kroki, które przeszedłeś bez aplikacji lub skorygować liczbę kroków na wykresie dziennej aktywności. Więcej informacji na temat metod liczenia znajdziesz w sekcji \"Pomoc>Liczenie\\u00A0Metody\".</string>
+    <string name="accelerometer">Czujnik przyspieszenia</string>
+    <string name="step_detector">Detektor kroków</string>
+    <string name="step_counter">Licznik kroków</string>
+    <string name="help_counting_heading">Metody liczenia</string>
+    <string name="help_counting">Różne urządzenia z Androidem mają różne możliwości sprzętowe. Nasza aplikacja została zaprojektowana tak, aby działać na większości urządzeń przy użyciu odpowiedniego dostępnego sprzętu. Możesz wypróbować i porównać różne metody, jeśli Twoje urządzenie je obsługuje.</string>
+    <string name="help_counting_accelerometer">Prawie każde urządzenie z Androidem ma wbudowany akcelerometr. Analizując jego dane, aplikacja próbuje wykryć zdarzenia kroków. Istnieje szereg parametrów, które możesz zmodyfikować w ustawieniach podczas korzystania z metody akcelerometru.</string>
+    <string name="help_counting_hardware">Wiele urządzeń z systemem Android obsługuje również specjalny sprzęt do pomiaru kroków, taki jak licznik kroków i detektor kroków. Mogą one być bardziej niezawodne niż akcelerometr, ponieważ są specjalnie zaprojektowane do rejestrowania zdarzeń kroków. Ponieważ jednak urządzenia z Androidem są bardzo zróżnicowane, nie ma gwarancji, że będą działać najlepiej. Detektor jest szybkim sposobem wykrywania zdarzeń kroków, podczas gdy licznik wykonuje pewne przetwarzanie końcowe, aby zwiększyć pewność co do faktycznie wykonanych kroków.</string>
+    <string name="dialog_permission_activity_recognition">Uprawnienie Rozpoznawanie aktywności jest wymagane, aby uzyskać dostęp do danych kroku.</string>
+    <string name="dialog_permission_activity_recognition_2">Uprawnienie zostało wielokrotnie odrzucone. Konieczne będzie ręczne włączenie uprawnienia w ustawieniach urządzenia.</string>
 </resources>

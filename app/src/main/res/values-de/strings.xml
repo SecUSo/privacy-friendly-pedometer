@@ -180,7 +180,6 @@
     <string name="training_card_distance_km">km</string>
     <string name="training_card_duration">h</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
-    <string name="training_input_message"> </string>
     <string name="training_input_title">Trainingseinheit</string>
     <string name="training_overview_empty">So wie es aussieht, haben Sie die Trainingsfunktionalität noch nicht verwendet. Legen Sie gleich los!</string>
     <string name="training_stop_button">Beende Trainingseinheit</string>

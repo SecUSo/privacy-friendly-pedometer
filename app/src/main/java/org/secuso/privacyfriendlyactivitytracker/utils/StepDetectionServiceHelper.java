@@ -179,7 +179,11 @@ public class StepDetectionServiceHelper {
         daysEnd.set(Calendar.MINUTE, 59);
         daysEnd.set(Calendar.SECOND, 0);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setExact(AlarmManager.RTC_WAKEUP, daysEnd.getTime().getTime(), endSender);
+            try {
+                am.setExact(AlarmManager.RTC_WAKEUP, daysEnd.getTime().getTime(), endSender);
+            } catch (SecurityException e) {
+                Log.e(LOG_CLASS, "Could not schedule end of day persistence service. " + e.getMessage());
+            }
         } else{
             am.set(AlarmManager.RTC_WAKEUP, daysEnd.getTime().getTime(), endSender);
         }
@@ -264,9 +268,17 @@ public class StepDetectionServiceHelper {
 
         // Set alarm
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            try {
+                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            } catch (SecurityException e) {
+                Log.e(LOG_CLASS, "Could not schedule motivation alert. " + e.getMessage());
+            }
         }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            try {
+                am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            }  catch (SecurityException e) {
+                Log.e(LOG_CLASS, "Could not schedule motivation alert. " + e.getMessage());
+            }
         }else{
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         }

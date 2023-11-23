@@ -19,12 +19,16 @@ package org.secuso.privacyfriendlyactivitytracker.activities;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,6 +38,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.provider.OpenableColumns;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
@@ -51,9 +56,10 @@ import org.secuso.privacyfriendlyactivitytracker.utils.AndroidVersionHelper;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,6 +82,8 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     static int REQUEST_EXTERNAL_STORAGE = 2;
     static int REQUEST_LOCATION = 1;
     static int REQUEST_ACTIVITY = 3;
+
+    private static final int CREATE_FILE = 4;
 
     private GeneralPreferenceFragment generalPreferenceFragment;
 
@@ -213,6 +221,23 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (requestCode == CREATE_FILE && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                Uri uri = resultData.getData();
+                try (OutputStream out = getContentResolver().openOutputStream(uri)) {
+                    GeneralPreferenceFragment.writeStepsToCSVOutputStream(generalPreferenceFragment, out,
+                            StepCountPersistenceHelper.getStepCountsForever(getApplicationContext()), generalPreferenceFragment.getDocumentUriDisplayName(uri));
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -259,7 +284,6 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         private Preference exportDataPreference;
         private Preference lengthUnitPreference;
@@ -353,7 +377,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     //Check if you have the permission
-                    if (verifyStoragePermissions(getActivity())) {
+                    if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT || verifyStoragePermissions(getActivity()) )  {
                         generateCSVToExport();
                     }
                     return true;
@@ -442,39 +466,63 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             return true;
         }
 
-        public File generateCSVToExport() {
+         private static void writeStepsToCSVOutputStream(GeneralPreferenceFragment generalPreferenceFragment, OutputStream outputStream, List<StepCount> steps, String fileName) throws IOException {
+            //Add the header
+            outputStream.write((generalPreferenceFragment.getString(R.string.export_csv_header) + "\r\n").getBytes());
+            //Populate the file
+            String dateFormat = "yyyy-MM-dd HH:mm:ss";
+            for (StepCount s : steps) {
+                String startDate = s.getStartTime() == 0 ? generalPreferenceFragment.getString(R.string.export_csv_begin) : DateFormat.format(dateFormat, new Date(s.getStartTime())).toString();
+                String endDate = DateFormat.format(dateFormat, new Date(s.getEndTime())).toString();
+                outputStream.write((startDate + ";" + endDate + ";" + s.getStepCount() + ";" + s.getWalkingMode().getName() + "\r\n").getBytes());
+            }
+            outputStream.close();
+            Toast.makeText(generalPreferenceFragment.getActivity(), generalPreferenceFragment.getString(R.string.export_csv_success) + " " + fileName, Toast.LENGTH_SHORT).show();
+        }
+
+        public String getDocumentUriDisplayName(Uri uri) {
+            Cursor cursor = getActivity().getContentResolver()
+                    .query(uri, null, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    // Note it's called "Display Name". This is
+                    // provider-specific, and might not necessarily be the file name.
+                    @SuppressLint("Range") String displayName = cursor.getString(
+                            cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    return displayName;
+                }
+            } finally {
+                cursor.close();
+            }
+            return null;
+        }
+
+        public void generateCSVToExport() {
             final Context context = getActivity().getApplicationContext();
             SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-            String csvFileName = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis()) + ".csv";
+            String csvFileName = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis());
 
-            //Get List of StepCounts
-            List<StepCount> steps = StepCountPersistenceHelper.getStepCountsForever(getActivity());
             try {
-                File csvFile = new File(Environment.getExternalStoragePublicDirectory(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT ?
-                        Environment.DIRECTORY_DOCUMENTS : context.getResources().getString(R.string.app_name)), csvFileName);
-                csvFile.getParentFile().mkdirs();
-                Log.i(LOG_TAG, "Exporting steps to: " + csvFile.getAbsolutePath());
-                //Generate the file
-                OutputStreamWriter csvWriter = new OutputStreamWriter(new FileOutputStream(csvFile));
-                //Add the header
-                csvWriter.write(getString(R.string.export_csv_header) + "\r\n");
-                //Populate the file
-                String dateFormat = "yyyy-MM-dd HH:mm:ss";
-                for(StepCount s : steps)
-                {
-                    String startDate = s.getStartTime() == 0 ? getString(R.string.export_csv_begin) : DateFormat.format(dateFormat, new Date(s.getStartTime())).toString();
-                    String endDate = DateFormat.format(dateFormat, new Date(s.getEndTime())).toString();
-                    csvWriter.write(startDate + ";" + endDate + ";" + s.getStepCount() + ";" + s.getWalkingMode().getName() + "\r\n");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("text/csv");
+                    intent.putExtra(Intent.EXTRA_TITLE, csvFileName);
+                    // Optionally, specify a URI for the directory that should be opened in
+                    // the system file picker when your app creates the document.
+                    // intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
+                    getActivity().startActivityForResult(intent, CREATE_FILE);
+                } else {
+                    List<StepCount> steps = StepCountPersistenceHelper.getStepCountsForever(getActivity());
+                    File csvFile = new File(Environment.getExternalStoragePublicDirectory(context.getResources().getString(R.string.app_name)), csvFileName);
+                    csvFile.getParentFile().mkdirs();
+                    OutputStream out = new FileOutputStream(csvFile);
+                    writeStepsToCSVOutputStream(this, out, steps, csvFileName + ".csv");
                 }
-                csvWriter.close();
-                //Display message
-                Toast.makeText(getActivity(), getString(R.string.export_csv_success) + " " + csvFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-                return csvFile;
             } catch (IOException e) {
                 Toast.makeText(getActivity(), getString(R.string.export_csv_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-            return null;
         }
 
         @Override
@@ -543,7 +591,6 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {

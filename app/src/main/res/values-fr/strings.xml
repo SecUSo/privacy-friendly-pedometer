@@ -209,7 +209,7 @@
     <string name="export_csv_begin">&lt;début&gt;</string>
     <string name="export_csv_error">Une erreur s\'est produite durant l\'export</string>
     <string name="export_csv_header">Début;Fin;Pas;Mode</string>
-    <string name="export_csv_success">"CSV exportée à l'adresse "</string>
+    <string name="export_csv_success">"CSV exportée sous "</string>
     <string name="export_csv_permission_needed">L\'autorisation de stockage est nécessaire pour exporter un fichier CSV.</string>
     <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
     <string name="help_permission_foreground_heading">Permission: Service de premier plan</string>

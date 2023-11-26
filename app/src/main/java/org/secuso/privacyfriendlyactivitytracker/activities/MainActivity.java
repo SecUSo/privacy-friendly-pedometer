@@ -18,6 +18,7 @@
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,7 +55,6 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // init preferences
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
@@ -64,9 +64,6 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
         fragmentTransaction.replace(R.id.content_frame, new MainFragment(), "MainFragment");
         fragmentTransaction.commit();
 
-        // Start step detection if enabled and not yet started
-        StepDetectionServiceHelper.startAllIfEnabled(this);
-        //Log.i(LOG_TAG, "MainActivity initialized");
     }
 
     @Override
@@ -74,9 +71,11 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
         return R.id.menu_home;
     }
 
-    public void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACTIVITY_RECOGNITION }, ACTIVITY_RECOGNITION);
+    public static void requestPermission(Activity context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && ContextCompat.checkSelfPermission(context, Manifest.permission.FOREGROUND_SERVICE_HEALTH) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(context, new String[]{ Manifest.permission.FOREGROUND_SERVICE_HEALTH, Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.BODY_SENSORS}, ACTIVITY_RECOGNITION);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(context, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(context, new String[]{ Manifest.permission.ACTIVITY_RECOGNITION}, ACTIVITY_RECOGNITION);
         }
     }
 
@@ -96,10 +95,14 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
                 } else {
                     builder.setMessage(R.string.dialog_permission_activity_recognition);
                     builder.setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                        requestPermission();
+                        requestPermission(this);
                         dialogInterface.dismiss();
                     });
                 }
+                // Start step detection if enabled and not yet started
+                StepDetectionServiceHelper.startAllIfEnabled(this);
+                //Log.i(LOG_TAG, "MainActivity initialized");
+
                 builder.create().show();
             }
         }

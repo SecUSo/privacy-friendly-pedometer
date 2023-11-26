@@ -72,6 +72,7 @@ public class TutorialActivity extends AppCompatActivity {
             launchHomeScreen();
             finish();
         } else {
+            MainActivity.requestPermission(this);
             //set default settings in preferences
             PreferenceManager.setDefaultValues(this,R.xml.pref_general, true);
             PreferenceManager.setDefaultValues(this,R.xml.pref_notification, true);

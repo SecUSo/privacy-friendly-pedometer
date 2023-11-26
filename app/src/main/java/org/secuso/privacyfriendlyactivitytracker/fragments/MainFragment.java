@@ -115,7 +115,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     public void onResume() {
         super.onResume();
 
-        ((MainActivity)requireActivity()).requestPermission();
+        ((MainActivity)requireActivity()).requestPermission(requireActivity());
     }
 
     @Override
@@ -144,7 +144,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             case R.id.menu_continue_step_detection:
                 editor.putBoolean(getString(R.string.pref_step_counter_enabled), true);
                 editor.apply();
-                ((MainActivity)requireActivity()).requestPermission();
+                ((MainActivity)requireActivity()).requestPermission(requireActivity());
                 StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
                 return true;
             default:

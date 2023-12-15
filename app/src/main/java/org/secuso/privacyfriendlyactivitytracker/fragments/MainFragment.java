@@ -41,6 +41,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.PermissionRequestActivity;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
 
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
     public void onResume() {
         super.onResume();
 
-        ((MainActivity)requireActivity()).requestPermission(requireActivity());
+        ((MainActivity)requireActivity()).askPermissions();
     }
 
     @Override
@@ -144,7 +145,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             case R.id.menu_continue_step_detection:
                 editor.putBoolean(getString(R.string.pref_step_counter_enabled), true);
                 editor.apply();
-                ((MainActivity)requireActivity()).requestPermission(requireActivity());
+                ((PermissionRequestActivity)requireActivity()).askPermissions();
                 StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
                 return true;
             default:
@@ -208,6 +209,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
 
     @Override
     public void onAttach(@NonNull Activity activity) {
+        ((MainActivity)requireActivity()).askPermissions();
         StepDetectionServiceHelper.startAllIfEnabled(true, getActivity().getApplicationContext());
         super.onAttach(activity);
     }

@@ -17,6 +17,7 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.tutorial;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,12 +36,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.PermissionRequestActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity;
 
 import java.util.Arrays;
@@ -52,7 +53,7 @@ import java.util.HashSet;
  * @version 20161214
  */
 
-public class TutorialActivity extends AppCompatActivity {
+public class TutorialActivity extends PermissionRequestActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -65,14 +66,12 @@ public class TutorialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();
             finish();
         } else {
-            MainActivity.requestPermission(this);
             //set default settings in preferences
             PreferenceManager.setDefaultValues(this,R.xml.pref_general, true);
             PreferenceManager.setDefaultValues(this,R.xml.pref_notification, true);
@@ -150,6 +149,7 @@ public class TutorialActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];

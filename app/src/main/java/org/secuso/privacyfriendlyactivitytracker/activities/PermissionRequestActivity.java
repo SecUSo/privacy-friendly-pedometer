@@ -1,6 +1,7 @@
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
+import org.secuso.privacyfriendlyactivitytracker.tutorial.TutorialActivity;
 
 public class PermissionRequestActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getSimpleName();
@@ -24,6 +26,7 @@ public class PermissionRequestActivity extends AppCompatActivity {
 
     int alreadyAskedForActivityRecognition = 0;
     int alreadyAskedForOther = 0;
+    private boolean launchMainActivityAfterPermissionsGranted;
 
     void multiplePermissionsCallback(java.util.Map<String, Boolean> isGranted) {
         if (isGranted.containsValue(false)) {
@@ -50,13 +53,21 @@ public class PermissionRequestActivity extends AppCompatActivity {
                 }
             }
         }
+        if (hasActivityRecognitionPermission()) {
+            if (launchMainActivityAfterPermissionsGranted) {
+                launchMainActivityAfterPermissionsGranted = false;
+                Log.d(TAG, "Activity recognition permission was granted, launching main activity");
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
+        }
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
         multiplePermissionLauncher = registerForActivityResult(multiplePermissionsContract, this::multiplePermissionsCallback);
-        askPermissions(multiplePermissionLauncher);
+        // askPermissions(multiplePermissionLauncher);
     }
 
     private void askPermissions(ActivityResultLauncher<String[]> multiplePermissionLauncher) {
@@ -74,6 +85,11 @@ public class PermissionRequestActivity extends AppCompatActivity {
         askPermissions(multiplePermissionLauncher);
     }
 
+    public void askPermissionsAndLaunch() {
+        launchMainActivityAfterPermissionsGranted = true;
+        askPermissions(multiplePermissionLauncher);
+    }
+
     private boolean hasPermissions(String[] permissions) {
         if (permissions != null) {
             for (String permission : permissions) {
@@ -86,5 +102,9 @@ public class PermissionRequestActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    protected boolean hasActivityRecognitionPermission() {
+        return (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || hasPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}));
     }
 }

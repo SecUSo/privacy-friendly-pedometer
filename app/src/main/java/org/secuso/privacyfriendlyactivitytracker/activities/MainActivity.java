@@ -17,6 +17,7 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
@@ -27,6 +28,7 @@ import org.secuso.privacyfriendlyactivitytracker.fragments.DailyReportFragment;
 import org.secuso.privacyfriendlyactivitytracker.fragments.MainFragment;
 import org.secuso.privacyfriendlyactivitytracker.fragments.MonthlyReportFragment;
 import org.secuso.privacyfriendlyactivitytracker.fragments.WeeklyReportFragment;
+import org.secuso.privacyfriendlyactivitytracker.tutorial.TutorialActivity;
 
 /**
  * Main view incl. navigation drawer and fragments
@@ -41,7 +43,10 @@ public class MainActivity extends BaseActivity implements DailyReportFragment.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (!hasActivityRecognitionPermission()) {
+            startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+            finish();
+        }
         setContentView(R.layout.activity_main);
         // init preferences
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);

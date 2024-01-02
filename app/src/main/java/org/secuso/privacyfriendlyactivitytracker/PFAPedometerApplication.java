@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.multidex.MultiDexApplication;
 import androidx.work.Configuration;
 
 import org.secuso.privacyfriendlyactivitytracker.backup.BackupCreator;
@@ -15,7 +16,7 @@ import org.secuso.privacyfriendlybackup.api.pfa.BackupManager;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class PFAPedometerApplication extends Application implements Configuration.Provider {
+public class PFAPedometerApplication extends MultiDexApplication implements Configuration.Provider {
 
     @Override
     public void onCreate() {

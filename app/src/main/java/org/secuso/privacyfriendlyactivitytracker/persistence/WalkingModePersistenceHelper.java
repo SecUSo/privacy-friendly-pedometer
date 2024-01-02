@@ -150,6 +150,7 @@ public class WalkingModePersistenceHelper {
         boolean success = save(mode, context).isActive();
         // broadcast the event
         Intent localIntent = new Intent(BROADCAST_ACTION_WALKING_MODE_CHANGED);
+        localIntent.setPackage(context.getApplicationContext().getPackageName());
         localIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         if (currentActiveMode != null) {
             localIntent.putExtra(BROADCAST_EXTRA_OLD_WALKING_MODE, currentActiveMode.getId());

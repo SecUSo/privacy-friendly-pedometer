@@ -35,12 +35,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.TaskStackBuilder;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import org.secuso.privacyfriendlyactivitytracker.R;
 import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
+import org.secuso.privacyfriendlyactivitytracker.activities.PermissionRequestActivity;
 import org.secuso.privacyfriendlyactivitytracker.activities.PreferencesActivity;
 
 import java.util.Arrays;
@@ -52,7 +53,7 @@ import java.util.HashSet;
  * @version 20161214
  */
 
-public class TutorialActivity extends AppCompatActivity {
+public class TutorialActivity extends PermissionRequestActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -65,13 +66,12 @@ public class TutorialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
-        if (!prefManager.isFirstTimeLaunch()) {
+        if (!prefManager.isFirstTimeLaunch() && hasActivityRecognitionPermission()) {
             launchHomeScreen();
             finish();
-        } else {
+        } else if(prefManager.isFirstTimeLaunch()) {
             //set default settings in preferences
             PreferenceManager.setDefaultValues(this,R.xml.pref_general, true);
             PreferenceManager.setDefaultValues(this,R.xml.pref_notification, true);
@@ -150,6 +150,7 @@ public class TutorialActivity extends AppCompatActivity {
         });
     }
 
+
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
 
@@ -175,14 +176,28 @@ public class TutorialActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(TutorialActivity.this, MainActivity.class));
-        finish();
+        if (hasActivityRecognitionPermission()) {
+            startActivity(new Intent(TutorialActivity.this, MainActivity.class));
+            finish();
+        } else {
+            askPermissionsAndLaunch();
+            viewPager.setCurrentItem(layouts.length - 1);
+            // startActivity(new Intent(TutorialActivity.this, PermissionRequestActivity.class));
+        }
+        // startActivity(new Intent(TutorialActivity.this, MainActivity.class));
     }
 
     private void launchPref() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(TutorialActivity.this, PreferencesActivity.class));
-        finish();
+        Intent intent = new Intent(TutorialActivity.this, PreferencesActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            TaskStackBuilder builder = TaskStackBuilder.create(this);
+            builder.addNextIntentWithParentStack(intent);
+            builder.startActivities();
+        } else {
+            startActivity(intent);
+            finish();
+        }
     }
 
     //  viewpager change listener

@@ -44,7 +44,7 @@ import org.secuso.privacyfriendlyactivitytracker.R;
  * @version 20160704
  */
 
-public class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
+public class BaseActivity extends PermissionRequestActivity implements OnNavigationItemSelectedListener {
 
     // delay to launch nav drawer item, to allow close animation to play
     static final int NAVDRAWER_LAUNCH_DELAY = 250;

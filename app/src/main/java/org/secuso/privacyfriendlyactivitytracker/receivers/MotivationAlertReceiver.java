@@ -17,7 +17,10 @@
 */
 package org.secuso.privacyfriendlyactivitytracker.receivers;
 
+import static org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService.CHANNEL_ID;
+
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +37,7 @@ import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import org.secuso.privacyfriendlyactivitytracker.Factory;
 import org.secuso.privacyfriendlyactivitytracker.R;
+import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
 import org.secuso.privacyfriendlyactivitytracker.persistence.StepCountPersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
 import org.secuso.privacyfriendlyactivitytracker.utils.StepDetectionServiceHelper;
@@ -127,12 +131,18 @@ public class MotivationAlertReceiver extends WakefulBroadcastReceiver {
         Collections.shuffle(motivationTexts);
         String motivationText = motivationTexts.get(0);
 
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
         // Build the notification
         NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context.getApplicationContext())
                 .setSmallIcon(R.drawable.ic_walk_black_24dp)
                 .setContentTitle(context.getString(R.string.motivation_alert_notification_title))
+                .setAutoCancel(true)
+                .setChannelId(CHANNEL_ID)
+                .setContentIntent(pIntent)
                 .setContentText(motivationText)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setLights(ContextCompat.getColor(context, R.color.colorPrimary), 1000, 1000);

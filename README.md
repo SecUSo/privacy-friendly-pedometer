@@ -27,6 +27,10 @@ Further development requires Android Studio, we recommend to use the latest vers
 Minimum SDK: 17
 Target SDK: 31
 
+## Data Backup
+
+You can use the [Privacy Friendly Backup app](https://github.com/SecUSo/privacy-friendly-backup) to backup and restore this application's data. This can also be used to migrate your data to a new phone.
+
 ## License
 
 Privacy Friendly Pedometer is licensed under the GPLv3.<br>

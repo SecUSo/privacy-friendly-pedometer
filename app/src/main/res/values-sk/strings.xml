@@ -1,0 +1,368 @@
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="app_name">Pedometer</string>
+    <string name="app_name_long">Krokomer šetrný k vášmu súkromiu</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <!-- Menu Items-->
+    <string name="action_help">Pomocník</string>
+    <string name="action_about">O aplikácii</string>
+    <string name="action_settings">Nastavenia</string>
+    <string name="action_main">Krokomer</string>
+    <string name="action_training">Tréning</string>
+
+    <!-- AboutActivity-->
+    <string name="version_number">Verzia</string>
+    <string name="about_author">Autor: </string>
+    <string name="about_author_names" translatable="false">Noah Schlegel, Tobias Neidig </string>
+    <string name="about_author_contributors"> a ostatní prispievatelia.</string>
+    <string name="about_affiliation">V spolupráci s</string>
+    <string name="more_info">Viac informácií získate na:</string>
+    <string name="about_third_party_libs">Aplikácia používa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart od autora Philipp Jahoda</a> (Licencia Apache 2).</string>
+    <string name="privacy_friendly">Táto aplikácia je zo skupiny aplikácií Privacy Friendly Apps vyvíjanej vedeckou skupinou SECUSO. Zdrojový kód je licencovaný pod GPLv3. Autorské práva na obrázky SECUSO a Google Inc.</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
+    <string name="url"><a href="https://www.secuso.org/pfa">Webstránka skupiny SECUSO</a></string>
+
+    <!-- ReportFragment -->
+    <string name="month">Mesiac</string>
+    <string name="week">Týždeň</string>
+    <string name="day">Deň</string>
+    <string name="steps">Krokov</string>
+    <string name="calories">kalórií</string>
+    <string name="activity_summary_subtitle">Súhrn aktivity</string>
+    <string name="activity_chart_summary_subtitle">Podrobný súhrn vašich aktivít</string>
+    <string name="summary_card_kilocalories">kcal</string>
+    <string name="summary_card_calories">cal</string>
+    <string name="correct_steps">Upraviť kroky</string>
+    <string name="correct_steps_dialog_title">Upraviť kroky</string>
+    <string name="correct_steps_dialog_message">Prosím zadajte správny počet krokov, ktoré ste prešli.</string>
+    <string name="hint_steps">Počet krokov</string>
+    <string name="pause_step_detection">Pozastaviť zisťovanie krokov</string>
+    <string name="continue_step_detection">Pokračovať v zisťovaní krokov</string>
+
+    <!-- HelpActivity -->
+    <string name="help_overview_heading">Prehľad</string>
+    <string name="help_intro">Táto aplikácia dokáže počítať vaše kroky na pozadí, poskytuje vám prehľad o prejdených krokoch a umožňuje definovať vlastné režimy chôdze a upozornenia, ak je dosiahnutie vášho denného cieľa krokov ohrozené.</string>
+    <string name="help_functionality_step_counter_summary">Počítadlo krokov počíta vaše denné kroky na pozadí a možno ho vypnúť v nastaveniach.</string>
+    <string name="help_functionality_notification_heading">Trvalé upozornenie</string>
+    <string name="help_functionality_notification">Upozornenie</string>
+    <string name="help_functionality_notification_summary">Trvalé upozornenie je potrebné na udržanie funkčnosti počítadla krokov na pozadí. Obsah oznámenia si môžete prispôsobiť v nastaveniach.</string>
+    <string name="help_functionality_notification_delete">Všetky upozornenia môžete zakázať v systémovej aplikácii Nastavenia.</string>
+    <string name="help_functionality_motivation_alert">Motivačné upozornenie</string>
+    <string name="help_functionality_motivation_alert_summary">Aplikácia vám môže zobraziť motivačné upozornenia, ak je dosiahnutie vášho denného cieľa krokov ohrozené. Môžete definovať kritérium, denný čas a texty upozornení.</string>
+    <string name="help_privacy_heading">Súkromie</string>
+    <string name="help_permission_boot_heading">Oprávnenie: Spustiť po úspešnom spustení</string>
+    <string name="help_permission_boot_description">používa sa na spustenie počítadla krokov a nastavenie oznámení pri štarte systému. Ak povolenie nie je udelené, musíte aplikáciu raz po spustení systému spustiť ručne, aby sa aktivovala.</string>
+    <string name="help_permissions_selection">Oprávnenia pristupovať k úložisku a gps, ktoré používa Krokomer šetrný k vášmu súkromiu, je možné spravovať vo verziách systému Android 6+.</string>
+    <string name="help_permission_wake_heading">Oprávnenie: zostať prebudený</string>
+    <string name="help_permission_wake_description">používa sa na udržiavanie procesora v bdelom stave, aby počítanie krokov bežalo správne na pozadí.</string>
+    <string name="help_permission_gps_heading">Oprávnenie: Presná poloha</string>
+    <string name="help_permission_gps_description">používa sa na zobrazenie aktuálnej rýchlosti chôdze na domovskej obrazovke. Ak povolenie nie je udelené, rýchlosť chôdze sa nezobrazí - nemá to žiadne iné dôsledky.</string>
+
+    <!-- Preferences -->
+    <!-- general settings -->
+    <string name="pref_header_general">Všeobecné</string>
+    <string name="pref_group_title_personal_settings">Osobné</string>
+
+    <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.step_counter_enabled</string>
+    <string name="pref_title_step_counter_enabled">Nepretržité počítanie krokov</string>
+    <string name="pref_summary_step_counter_enabled">Aplikácia počíta vaše kroky na pozadí.</string>
+
+    <string name="pref_use_wake_lock" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock</string>
+    <string name="pref_title_use_wake_lock">Udržať procesor v bdelom stave</string>
+    <string name="pref_summary_use_wake_lock">Na niektorých zariadeniach môže uspávanie procesora ovplyvniť počítanie krokov na pozadí. Povoľte toto nastavenie na kompenzácie takejto situácie - Negatívne ovplyvní spotrebu batérie!</string>
+
+    <string name="pref_use_wake_lock_during_training" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock_during_training</string>
+    <string name="pref_title_use_wake_lock_during_training">Udržať procesor v bdelom stave pri tréningu</string>
+    <string name="pref_summary_use_wake_lock_during_training">Pri tréningu sú obyčajne vyžadované presnejšie merania, preto je možné toto nastaviť zvlášť. Ak je aktívne predchádzajúce nastavenie, toto nemá vplyv.</string>
+
+    <string name="pref_show_velocity" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.show_velocity</string>
+    <string name="pref_title_show_velocity">Zobraziť aktuálnu rýchlosť</string>
+    <string name="pref_summary_show_velocity">V dennom prehľade aplikácia zobrazí vašu aktuálnu rýchlosť. Vyžaduje sa prístup k presnej polohe.</string>
+
+    <string name="pref_default_daily_step_goal" translatable="false">10000</string>
+    <string name="pref_title_daily_step_goal">Osobný denný cieľ krokov</string>
+    <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length</string>
+    <string name="pref_title_unit_of_length">Jednotka dĺžky</string>
+    <string-array name="pref_keys_unit_of_length">
+        <item>kilometre</item>
+        <item>míle</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_length" translatable="false">
+        <item>km</item>
+        <item>mi</item>
+    </string-array>
+    <string name="unit_of_length_km">1|km|kilometer|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|míle|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
+    <string name="pref_title_unit_of_energy">Jednotka energie</string>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>kalórie</item>
+        <item>joule</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_energy" translatable="false">
+        <item>cal</item>
+        <item>J</item>
+    </string-array>
+
+    <string name="pref_explanation_weight_and_gender">Na zlepšenie výpočtu kalórií nastavte svoju hmotnosť a pohlavie.</string>
+    <string name="pref_summary_notification_permanent">Trvalé upozornenie sa zobrazí, keď aplikácia počíta vaše kroky na pozadí. Môžete si prispôsobiť, čo vám má aplikácia zobrazovať.</string>
+    <string name="pref_summary_accelerometer_threshold">Aplikácia využíva akcelerometer vášho zariadenia. Ak chcete optimalizovať zisťovanie krokov, nastavte citlivosť.</string>
+
+    <string name="pref_export_data" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.exportdata</string>
+    <string name="pref_title_export_data">Exportovať údaje</string>
+    <string name="pref_summary_export_data">Exportovať počty krokov do súboru .csv.</string>
+
+    <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
+    <string name="pref_title_weight">Váha (kg)</string>
+    <string name="pref_default_weight" translatable="false">65.0</string>
+
+    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.gender</string>
+    <string name="pref_title_gender">Pohlavie</string>
+    <string-array name="pref_keys_gender">
+        <item>žena</item>
+        <item>muž</item>
+    </string-array>
+    <string-array name="pref_values_gender" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="pref_accelerometer_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_threshold</string>
+    <string name="pref_title_accelerometer_threshold">Citlivosť</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>veľmi vysoká</item>
+        <item>vyššia</item>
+        <item>vysoká</item>
+        <item>normálna</item>
+        <item>nízka</item>
+        <item>nižšia</item>
+        <item>veľmi nízka</item>
+    </string-array>
+    <string-array name="pref_values_accelerometer_threshold" translatable="false">
+        <item>0.125</item>
+        <item>0.25</item>
+        <item>0.50</item>
+        <item>0.75</item>
+        <item>1.00</item>
+        <item>1.25</item>
+        <item>1.50</item>
+    </string-array>
+    <string-array name="pref_keys_counter_frequency">
+        <item>2 hodiny</item>
+        <item>1 hodina</item>
+        <item>30 minút</item>
+        <item>15 minút</item>
+        <item>5 minút</item>
+        <item>žiadne oneskorenie nepovolené</item>
+    </string-array>
+    <string-array name="pref_values_counter_frequency">
+        <item>7200000</item>
+        <item>3600000</item>
+        <item>1800000</item>
+        <item>900000</item>
+        <item>300000</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="pref_keys_which_step_hardware">
+        <item>Počítadlo krokov</item>
+        <item>Detektor krokov</item>
+    </string-array>
+    <string-array name="pref_values_which_step_hardware">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
+    <string name="pref_title_accelerometer_steps_threshold">Počet krokov pred spustením počítadla</string>
+    <string name="pref_default_accelerometer_steps_threshold" translatable="false">10</string>
+    <!-- /general settings -->
+    <!-- notification settings -->
+    <string name="pref_header_notifications">Upozornenia</string>
+    <string name="pref_group_title_permanent_notification">Trvalé upozornenie</string>
+    <string name="pref_group_title_motivation_alert">Motivačné upozornenie</string>
+
+    <string name="pref_notification_permanent_show_steps" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_steps</string>
+    <string name="pref_title_notification_permanent_show_steps">Zobrazovať počet dnes prejdených krokov</string>
+    <string name="pref_notification_permanent_show_distance" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_distance</string>
+    <string name="pref_title_notification_permanent_show_distance">Zobrazovať dnes prejdenú vzdialenosť</string>
+    <string name="pref_notification_permanent_show_calories" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_calories</string>
+    <string name="pref_title_notification_permanent_show_calories">Zobraziť počet kalórií</string>
+
+    <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_enabled</string>
+    <string name="pref_title_notification_motivation_alert_enabled">Povoliť motivačné upozornenia</string>
+    <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time</string>
+    <string name="pref_title_notification_motivation_alert_time">Čas motivačného upozornenia</string>
+    <string name="pref_notification_motivation_alert_texts" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts</string>
+    <string name="pref_title_notification_motivation_alert_texts">Texty motivačných upozornení</string>
+    <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
+    <string name="pref_title_notification_motivation_alert_criterion">Kritérium pre motivačné upozornenie</string>
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>menej než 90&#65285; denného cieľa</item>
+        <item>menej než 70&#65285; denného cieľa</item>
+        <item>menej než 50&#65285; denného cieľa</item>
+    </string-array>
+    <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
+        <item>90</item>
+        <item>70</item>
+        <item>50</item>
+    </string-array>
+    <!-- /notification settings -->
+    <string name="pref_header_walking_modes">Režimi chôdze</string>
+    <string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
+    <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
+    <string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
+    <string name="pref_hw_background_counter_frequency" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_background_counter_frequency</string>
+    <string name="pref_which_step_hardware" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.which_step_hardware</string>
+    <!-- /Preferences -->
+
+    <!-- Will be removed on next update -->
+    <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.daily_step_goal</string>
+    <string name="notification_text_steps">%1$d z %2$d dnes prejdených krokov.</string>
+    <string name="notification_text_distance">%1$.2f %2$s prejdených dnes.</string>
+    <string name="notification_text_calories">Dnes spálených %.2f kcal.</string>
+    <string name="notification_text_default">Krokomer aktívny.</string>
+    <!-- /Will be removed on next update -->
+
+    <!-- others -->
+    <string name="action_calories">Kalórie</string>
+    <string name="action_distance">Vzdialenosť</string>
+    <string name="action_steps">Kroky</string>
+    <string name="set">Nastaviť</string>
+    <string name="save">Uložiť</string>
+    <string name="edit">Upraviť</string>
+    <string name="delete">Vymazať</string>
+    <string name="operation_failed">Operácia zlyhala</string>
+    <string name="since">od</string>
+    <string name="okay">OK</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">Vitajte!</string>
+    <string name="welcome_text">Krokomer šetrný k súkromiu dokáže počítať vaše kroky na pozadí a poskytuje prehľad o prejdených krokoch.</string>
+    <string name="slide_2_title">Prispôsobenie</string>
+    <string name="slide_2_desc">Ak chcete zlepšiť výpočet kalórií, ktoré ste spálili pri chôdzi, prispôsobte si osobné nastavenia.</string>
+    <string name="slide_2_desc_two">Aktuálne režimy chôdze môžete prepínať pomocou kontextovej ponuky na paneli nástrojov.</string>
+    <string name="slide_3_title">Upozornenia</string>
+    <string name="slide_4_title">Miniaplikácia</string>
+    <string name="slide_4_desc">Pridajte si miniaplikáciu na domovskú obrazovku, aby ste mali aktuálne informácie o prejdených krokoch.</string>
+    <string name="next">Ďalej</string>
+    <string name="skip">Preskočiť</string>
+    <!-- /welcome dialog -->
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>No tak, je čas ísť!</item>
+    </string-array>
+    <string name="motivation_alert_empty">Nastavte si vlastné upozornenia, keď je dosiahnutie denného cieľa krokov ohrozené.\n\nAk neexistuje žiadna správa, nezobrazí sa žiadne upozornenie.</string>
+    <string name="motivation_alert_input_title">Nastaviť text motivačného upozornenia</string>
+    <string name="motivation_alert_input_message">Nastavte si vlastné motivačné upozornenie. Aplikácia vás náhodne upozorní jedným z vašich textov.</string>
+    <string name="motivation_alert_input_empty">Prázdne motivačné upozornenia sú zbytočné, však?</string>
+    <string name="activity_title_motivation_alerts">Motivačné upozornenia</string>
+    <string name="motivation_alert_notification_title">Počítadlo krokov</string>
+
+    <!-- walking modes -->
+    <string name="activity_title_walking_modes">Režimy chôdze</string>
+    <string name="walking_mode_input_title">Režim chôdze</string>
+    <string name="walking_mode_input_message">Nastavte si vlastný režim chôdze:</string>
+    <string name="walking_mode_at_least_one_is_required">Je potrebné nastaviť aspoň jeden režim chôdze.</string>
+    <string name="walking_mode_cannot_delete_active_one">Aktívny režim chôdze nie je možné zmazať.</string>
+    <string name="walking_mode_set_active">Nastaviť ako aktívny</string>
+    <string name="walking_mode_menu_learn">Naučiť</string>
+    <string name="walking_mode_learning_distance_description">Vzdialenosť, ktorú je potrebné prejsť:</string>
+    <string name="walking_mode_learning_steps_description">Počet prejdených krokov:</string>
+    <string name="walking_mode_learning_stop">Ukončiť učenie</string>
+    <string name="walking_mode_learning_description">Aplikácia sa dokáže naučiť vzdialenosť vášho kroku. Prejdite zadanú vzdialenosť a ak ste skončili, stlačte tlačidlo ukončiť.</string>
+    <string name="pref_walking_mode_learning_active" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.walking_mode_learning_active</string>
+    <string name="step_length">Dĺžka kroku:</string>
+    <string name="walking_mode_active_ext"> (aktívny)</string>
+    <string name="walking_mode_input_empty">Vyžaduje sa názov a dĺžka kroku. Prosím, vyplňte!</string>
+    <string name="hint_walking_mode_name">Názov</string>
+    <string name="hint_walking_mode_step_length">Dĺžka kroku (v metroch)</string>
+    <string-array name="pref_default_walking_mode_names">
+        <item>Chôdza</item>
+        <item>Beh</item>
+    </string-array>
+    <string-array name="pref_default_walking_mode_step_lenghts" translatable="false">
+        <item>0.5</item><!-- step length in meters -->
+        <item>0.7</item>
+    </string-array>
+
+    <string name="training_overview_empty">Zdá sa, že ste ešte nepoužili funkciu tréning. Je čas začať s tréningom!</string>
+    <string name="training_input_message" translatable="false" />
+    <string name="training_input_title">Tréningová aktivita</string>
+    <string name="activity_title_training">Tréning</string>
+    <string name="hint_training_description">Popis</string>
+    <string name="hint_training_title">Názov</string>
+    <string name="hint_training_feeling">Pocity:</string>
+    <string name="training_card_calories">kcal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+    <string name="training_velocity">km/h</string>
+    <string name="training_stop_button">Ukončiť tréning</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+    <string name="activity_summary_chart_legend_stepgoal">Cieľ krokov</string>
+    <string name="widget_config_data_set_title">Ktoré údaje si želáte zobrazovať?</string>
+    <string name="action_distance_measurement">Meranie vzdialenosti</string>
+    <string name="distance_measurement_stop_button">Zastaviť meranie vzdialenosti</string>
+    <string name="distance_measurement_start_button">Spustiť meranie vzdialenosti</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="slide_5_title">Zisťovanie krokov</string>
+    <string name="slide_5_desc">Vaše zariadenie podporuje nasledujúce metódy detekcie krokov:</string>
+    <string name="slide_3_desc">Definujte vlastné režimy chôdze a upozornenia, ak je dosiahnutie denného cieľa krokov ohrozené.</string>
+    <string name="slide_2_desc_three">V nastaveniach môžete definovať vlastné režimy chôdze s rôznymi dĺžkami krokov.</string>
+    <string name="help_walkingmodes_heading">Režimy chôdze</string>
+    <string name="help_walkingmodes_selection">V nastaveniach môžete definovať vlastné režimy chôdze, napríklad \'Beh\' alebo \'Chôdza\'. Každý režim chôdze má vlastnú dĺžku kroku.</string>
+    <string name="help_training_heading">Tréningové aktivity</string>
+    <string name="help_training_selection">Tréningy môžete použiť na sledovanie svojich tréningových výkonov. Každá aktivita sleduje napr. trvanie tréningu, prejdené kroky a vzdialenosť.</string>
+    <string name="help_distancemeasurement_heading">Meranie vzdialenosti</string>
+    <string name="help_distancemeasurement_selection">Funkcia merania vzdialenosti umožňuje merať vzdialenosť medzi stlačením tlačidla \'Start\' a \'Stop\'. Údaje sa po reštarte aplikácie neuložia. Na uchovanie údajov môžete použiť tréningové aktivity.</string>
+    <string name="help_correctsteps_heading">Opravte počet krokov ručne</string>
+    <string name="help_correctsteps_selection">Zistené denné kroky môžete upraviť v zobrazení denného prehľadu. Môžete tak pridať kroky, ktoré ste prešli bez aplikácie, alebo opraviť zistený počet krokov.</string>
+    <string name="slide_5_desc_two">Kliknutím na \'Settings\' nastavte veľkosť kroku a prispôsobte svoje osobné údaje.</string>
+    <string name="export_csv_header">Začiatok;Koniec;Počet krokov;Režim</string>
+    <string name="export_csv_begin">&lt;begin&gt;</string>
+    <string name="export_csv_error">Počas exportu sa vyskytla chyba</string>
+    <string name="export_csv_success">"CSV export sa uložil do súboru "</string>
+    <string name="export_csv_permission_needed">Na export súboru CSV sa vyžaduje oprávnenie pristupovať k úložisku.</string>
+    <string name="help_permission_foreground_description">je potrebné pre nepretržitú službu v systéme Android 9 alebo novšom.</string>
+    <string name="help_permission_foreground_heading">Oprávnenie: služba v popredí</string>
+    <string name="help_permission_storage_description">je potrebné na export zozbieraných údajov do súboru CSV. Toto povolenie sa vyžaduje len vtedy, keď chcete exportovať svoje údaje.</string>
+    <string name="help_permission_storage_heading">Oprávnenie: Zapisovať do externého úložiska</string>
+    <string name="pref_notification_permanent">Trvalé upozornenie sa zobrazí, keď aplikácia počíta vaše kroky na pozadí. Môžete si prispôsobiť, čo má aplikácia zobrazovať.</string>
+    <string name="pref_use_step_hardware" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_step_hardware</string>
+    <string name="pref_summary_use_step_hardware">Niektoré telefóny majú zabudovaný hardvér určený na počítanie krokov. To môže znížiť spotrebu batérie a zvýšiť presnosť. Nefunguje to však spoľahlivo na všetkých zariadeniach. Ak sa kroky nepočítajú správne, deaktivujte toto nastavenie.</string>
+    <string name="pref_title_use_step_hardware">Používajte hardvér na počítanie krokov zabudovaný v zariadení</string>
+    <string name="pref_use_step_hardware_not_available">Toto zariadenie nepodporuje hardvérové počítanie krokov.</string>
+    <string name="pref_counter_frequency_summary">Nastavenie frekvencie hardvérového krokového počítadla na pozadí.</string>
+    <string name="pref_counter_frequency_title">Frekvencia návratu hodnoty z hardvéru</string>
+    <string name="pref_which_step_hardware_summary">Vyberte si medzi počítadlom krokov (presnejšie) a detektorom krokov (rýchlejšie).</string>
+    <string name="pref_which_step_hardware_title">Výber hardvéru na detekciu krokov</string>
+    <string name="slide_5_desc2">Ak sa vyskytnú nezrovnalosti alebo problémy s počítaním, vyskúšajte iné metódy, ak sú k dispozícii, alebo upravte parametre počítania akcelerometrom. Okrem toho môžete pridať kroky, ktoré ste prešli bez aplikácie, alebo opraviť počet krokov v grafe dennej aktivity. Viac informácií o metódach počítania nájdete v časti \'Pomocník>Počítanie\u00A0Metódy\'.</string>
+    <string name="accelerometer">Akcelerometer</string>
+    <string name="step_detector">Detektor krokov</string>
+    <string name="step_counter">Počítadlo krokov</string>
+    <string name="help_counting_heading">Metódy počítania</string>
+    <string name="help_counting">Rôzne zariadenia so systémom Android majú rôzne hardvérové možnosti. Naša aplikácia je navrhnutá tak, aby fungovala na väčšine zariadení s využitím príslušného dostupného hardvéru. Neváhajte vyskúšať a porovnať rôzne metódy, ak ich vaše zariadenie podporuje.</string>
+    <string name="help_counting_accelerometer">Takmer každé zariadenie so systémom Android má zabudovaný akcelerometer. Analýzou jeho údajov sa aplikácia snaží zistiť počet krokov. Pri použití metódy akcelerometra existuje niekoľko parametrov, ktoré môžete upraviť v nastaveniach.</string>
+    <string name="help_counting_hardware">Mnohé zariadenia so systémom Android podporujú aj špecifický krokový hardvér, ako je počítadlo krokov a detektor krokov. Môžu byť spoľahlivejšie ako akcelerometer, pretože sú špeciálne navrhnuté na registráciu krokových udalostí. Keďže však zariadenia so systémom Android sú veľmi rôznorodé, nie je zaručené, že budú fungovať najlepšie. Detektor je rýchly spôsob detekcie krokových udalostí, zatiaľ čo počítadlo vykonáva určité následné spracovanie na zvýšenie istoty o skutočne vykonaných krokoch.</string>
+    <string name="dialog_permission_activity_recognition">Na prístup k údajom o krokoch je potrebné udeliť prístup k vašej telesnej aktivite.</string>
+    <string name="dialog_permission_activity_recognition_2">Povolenie bolo viackrát zamietnuté. Oprávnenie budete musieť povoliť manuálne prostredníctvom nastavení zariadenia.</string>
+</resources>

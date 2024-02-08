@@ -370,4 +370,5 @@
     <string name="a11y_prev">Previous</string>
     <string name="a11y_next">Next</string>
     <string name="a11y_start_training">Start training</string>
+    <string name="a11y_walking_modes">Walking modes</string>
 </resources>

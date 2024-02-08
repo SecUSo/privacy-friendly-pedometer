@@ -366,4 +366,8 @@
     <string name="dialog_permission_activity_recognition">The Activity Recognition permission is needed to access step data.</string>
     <string name="dialog_permission_activity_recognition_2">The permission was denied multiple times. You will need to enable the permission manually though the the device settings.</string>
     <string name="a11y_options">Options</string>
+    <string name="a11y_add">Add</string>
+    <string name="a11y_prev">Previous</string>
+    <string name="a11y_next">Next</string>
+    <string name="a11y_start_training">Start training</string>
 </resources>

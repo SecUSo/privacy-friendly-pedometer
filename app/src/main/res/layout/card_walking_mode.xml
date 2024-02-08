@@ -104,7 +104,7 @@
                 style="@style/SimpleImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@android:string/untitled"
+                android:contentDescription="@string/a11y_options"
                 android:src="@drawable/ic_more_vert_black_24dp" />
 
         </LinearLayout>

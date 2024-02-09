@@ -50,15 +50,12 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.rule.GrantPermissionRule;
 
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.secuso.privacyfriendlyactivitytracker.activities.MainActivity;
 import org.secuso.privacyfriendlyactivitytracker.models.StepCount;
 import org.secuso.privacyfriendlyactivitytracker.persistence.WalkingModePersistenceHelper;
 import org.secuso.privacyfriendlyactivitytracker.services.AbstractStepDetectorService;
@@ -68,6 +65,7 @@ import org.secuso.privacyfriendlyactivitytracker.tutorial.TutorialActivity;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
+import java.util.Objects;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StepTest {
@@ -135,15 +133,15 @@ public class StepTest {
         final int minStepDelta = 10;
 
         onView(withText(R.string.day)).perform(ViewActions.click());
-        int stepCountBefore = Integer.parseInt(getText(TestUtils.withIndex(withId(R.id.stepCount), 1)));
+        int stepCountBefore = Integer.parseInt(Objects.requireNonNull(getText(TestUtils.withIndex(withId(R.id.stepCount), 1))));
         fakeSteps(40);
-        int stepCountAfter = Integer.parseInt(getText(TestUtils.withIndex(withId(R.id.stepCount), 1)));
+        int stepCountAfter = Integer.parseInt(Objects.requireNonNull(getText(TestUtils.withIndex(withId(R.id.stepCount), 1))));
         int stepsSinceLastSave = myBinder.stepsSinceLastSave();
         assertThat(stepsSinceLastSave, is(stepCountAfter - stepCountBefore));
-        onView(TestUtils.withIndex(withId(R.id.stepCount), 1)).check(matches(greaterOrEqual(stepCountBefore + minStepDelta - 1)));
+        onView(Objects.requireNonNull(TestUtils.withIndex(withId(R.id.stepCount), 1))).check(matches(Objects.requireNonNull(greaterOrEqual(stepCountBefore + minStepDelta - 1))));
 
         onView(withText(R.string.week)).perform(ViewActions.click());
-        onView(TestUtils.withIndex(withId(R.id.stepCount), 1)).check(matches(greaterOrEqual(stepCountAfter)));
+        onView(Objects.requireNonNull(TestUtils.withIndex(withId(R.id.stepCount), 1))).check(matches(Objects.requireNonNull(greaterOrEqual(stepCountAfter))));
     }
 
     private SensorEvent getEvent() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {

@@ -1,7 +1,28 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+
 def pfaFile = rootProject.file('pfa.properties')
+
+def getAvailableLocales() {
+    def tree = fileTree(dir: 'src/main/res', include: '**/strings.xml')
+    return tree.collect {
+        def lang = it.getParentFile().getName() - "values-" - "values"
+
+        // We want a name which would be understood by Locale::forLanguageTag, so we should do
+        // do a simple conversion for an edge case:
+        //   "pt-rBR" -> "pt-BR"
+        //   "zh-rCN" -> "zh-CN"
+        //   and so on
+        lang = lang.replace("-r", "-")
+
+        if (lang.empty) {
+            lang = "en"
+        }
+
+        lang
+    }
+}
 
 android {
     namespace 'org.secuso.privacyfriendlyactivitytracker'
@@ -28,6 +49,11 @@ android {
         versionCode 16
         versionName "3.1.0"
         multiDexEnabled true
+
+    def escapedLocales = getAvailableLocales().collect { "\"" + it + "\"" }
+        buildConfigField "String[]", "AVAILABLE_LOCALES", String.format("{ %s }", escapedLocales.join(","))
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     applicationVariants.all { variant ->
@@ -54,7 +80,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
 }
+
+gradle.taskGraph.whenReady { taskGraph ->
+    project(':backup-api') {
+        tasks.named('compileDebugAndroidTestKotlin').configure {
+            enabled = false
+        }
+    }
+}
+
 
 repositories {
     maven { url "https://jitpack.io" }
@@ -70,6 +108,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
     implementation 'androidx.multidex:multidex:2.0.1'  //with androidx libraries
+    implementation 'androidx.test.ext:junit:1.1.5'
+    implementation 'androidx.test.espresso:espresso-contrib:3.5.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.5.2'
@@ -81,5 +121,9 @@ dependencies {
 
     implementation 'androidx.sqlite:sqlite-ktx:2.4.0'
     implementation 'androidx.sqlite:sqlite-framework:2.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    androidTestImplementation("com.github.YarikSOffice:lingver:1.3.0")
 }
 

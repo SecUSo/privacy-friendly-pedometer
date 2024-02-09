@@ -335,4 +335,10 @@
     <string name="help_counting_hardware">Mnohé zariadenia so systémom Android podporujú aj špecifický krokový hardvér, ako je počítadlo krokov a detektor krokov. Môžu byť spoľahlivejšie ako akcelerometer, pretože sú špeciálne navrhnuté na registráciu krokových udalostí. Keďže však zariadenia so systémom Android sú veľmi rôznorodé, nie je zaručené, že budú fungovať najlepšie. Detektor je rýchly spôsob detekcie krokových udalostí, zatiaľ čo počítadlo vykonáva určité následné spracovanie na zvýšenie istoty o skutočne vykonaných krokoch.</string>
     <string name="dialog_permission_activity_recognition">Na prístup k údajom o krokoch je potrebné udeliť prístup k vašej telesnej aktivite.</string>
     <string name="dialog_permission_activity_recognition_2">Povolenie bolo viackrát zamietnuté. Oprávnenie budete musieť povoliť manuálne prostredníctvom nastavení zariadenia.</string>
+    <string name="a11y_options">Možnosti</string>
+    <string name="a11y_add">Pridať</string>
+    <string name="a11y_prev">Predchádzajúci</string>
+    <string name="a11y_next">Nasledujúci</string>
+    <string name="a11y_start_training">Spustiť tréning</string>
+    <string name="a11y_walking_modes">Režimy chôdze</string>
 </resources>

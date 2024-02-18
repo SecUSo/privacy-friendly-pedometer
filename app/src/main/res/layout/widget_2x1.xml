@@ -65,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
+            android:contentDescription="@string/pause_step_detection"
             android:src="@android:drawable/ic_media_pause" />
 
         <ImageButton
@@ -72,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
+            android:contentDescription="@string/continue_step_detection"
             android:src="@android:drawable/ic_media_play"
             android:visibility="gone" />
     </LinearLayout>

@@ -70,6 +70,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/a11y_add"
         android:src="@drawable/ic_bell_plus_white_24dp"
         app:layout_anchor="@id/motivation_text_list"
         app:layout_anchorGravity="bottom|right|end" />

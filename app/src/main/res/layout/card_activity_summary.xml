@@ -49,6 +49,7 @@
                     style="@style/SimpleImageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/a11y_prev"
                     android:src="@drawable/ic_chevron_left_black_24dp"/>
 
                 <RelativeLayout
@@ -79,11 +80,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/a11y_next"
                     android:src="@drawable/ic_chevron_right_black_24dp" />
                 <ImageButton
                     android:id="@+id/periodMoreButton"
                     style="@style/SimpleImageButton"
                     android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/a11y_walking_modes"
                     android:src="@drawable/ic_more_vert_black_24dp" />
             </LinearLayout>
 

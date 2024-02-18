@@ -280,4 +280,10 @@
     <string name="help_counting_hardware">Viele Android-Geräte unterstützen auch spezielle Schritt-Hardware wie einen Schrittzähler und einen Schrittdetektor. Sie können zuverlässiger sein als der Beschleunigungssensor, da sie speziell für die Registrierung von Schritt-Ereignissen konzipiert sind. Da Android-Geräte jedoch sehr unterschiedlich sind, ist nicht garantiert, dass sie am besten funktionieren. Der Detektor ist ein schneller Weg, um Schritt-Ereignisse zu erkennen, während der Zähler nachträglich eine Analyse durchführt, um die Genauigkeit der tatsächlich zurückgelegten Schritte zu erhöhen.</string>
     <string name="dialog_permission_activity_recognition">Die Berechtigung zur Aktivitätserkennung ist für den Zugriff auf Schrittdaten erforderlich.</string>
     <string name="dialog_permission_activity_recognition_2">Die Berechtigung wurde mehrfach verweigert. Sie müssen die Berechtigung manuell in den Geräteeinstellungen aktivieren.</string>
+    <string name="a11y_options">Optionen</string>
+    <string name="a11y_add">Hinzufügen</string>
+    <string name="a11y_prev">Vorherige</string>
+    <string name="a11y_next">Nächste</string>
+    <string name="a11y_start_training">Training beginnen</string>
+    <string name="a11y_walking_modes">Laufmodi</string>
 </resources>

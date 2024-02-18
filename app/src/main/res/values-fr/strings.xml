@@ -268,4 +268,10 @@
     <string name="help_counting_hardware">De nombreux appareils Android prennent également en charge du matériel spécialisé pour les pas, comme un podomètre et un détecteur de pas. Ils peuvent être plus fiables que l\'accéléromètre, car ils sont spécialement conçus pour enregistrer les événements liés au pas. Cependant, comme les appareils Android sont très différents, il n\'est pas garanti qu\'ils fonctionnent le mieux. Le détecteur est un moyen rapide de détecter les événements de pas, tandis que le compteur effectue une analyse a posteriori afin d\'augmenter la précision des pas réellement parcourus.</string>
     <string name="dialog_permission_activity_recognition">L\'autorisation de reconnaissance d\'activité est nécessaire pour accéder aux données d\'étape.</string>
     <string name="dialog_permission_activity_recognition_2">L\'autorisation a été refusée plusieurs fois. Vous devez activer l\'autorisation manuellement dans les paramètres de l\'appareil.</string>
+    <string name="a11y_options">Options</string>
+    <string name="a11y_add">Ajouter</string>
+    <string name="a11y_prev">Précédent</string>
+    <string name="a11y_next">Suivant</string>
+    <string name="a11y_start_training">Commencer l\'entraînement</string>
+    <string name="a11y_walking_modes">Modes de marche</string>
 </resources>

@@ -33,7 +33,7 @@
     <string name="about_affiliation">I anslutning till</string>
     <string name="more_info">Mer information finns på:</string>
     <string name="about_third_party_libs">Appen använder <a href="https://github.com/PhilJay/MPAndroidChart"> MPAndroidChart från Philipp Jahoda </a> (Apache 2 -licens).</string>
-    <string name="privacy_friendly">Denna applikation tillhör gruppen Privacy Friendly Apps som utvecklats av Technische Universität Darmstadt. Källkod licensierad enligt GPLv3. Bilder upphovsrätt TU Darmstadt och Google Inc.</string>
+    <string name="privacy_friendly">Denna applikation tillhör gruppen Privacy Friendly Apps som utvecklats av Karlsruhe Institute of Technology. Källkod licensierad enligt GPLv3. Bilder upphovsrätt KIT och Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa"> SECUSO-webbplats </a></string>
 
     <!-- ReportFragment -->

@@ -46,9 +46,9 @@
     <string name="activity_chart_summary_subtitle">Detaljerad sammanfattning av dina aktiviteter</string>
     <string name="summary_card_kilocalories">kcal</string>
     <string name="summary_card_calories">cal</string>
-    <string name="correct_steps">Rätt steg</string>
-    <string name="correct_steps_dialog_title">Rätt steg</string>
-    <string name="correct_steps_dialog_message">Ange ett nytt antal steg du gick.</string>
+    <string name="correct_steps">Korrigera steg</string>
+    <string name="correct_steps_dialog_title">Korrigera steg</string>
+    <string name="correct_steps_dialog_message">Ange ett nytt värde för antal steg du gått.</string>
     <string name="hint_steps">Antal steg</string>
     <string name="pause_step_detection">Pausa stegdetektering</string>
     <string name="continue_step_detection">Fortsätt stegdetektering</string>

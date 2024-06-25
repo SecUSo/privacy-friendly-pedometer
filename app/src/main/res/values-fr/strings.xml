@@ -41,7 +41,7 @@
     <string name="help_functionality_motivation_alert">Alerte de motivation</string>
     <string name="help_functionality_motivation_alert_summary">L\'application peut vous montrer des alertes de motivation si la réalisation de votre objectif de pas quotidien est en danger. Vous pouvez définir le critère, l\'heure et les textes de ces notifications.</string>
     <string name="help_privacy_heading">Informations sur la Confidentialité</string>
-    <string name="help_permission_boot_heading">Autorisation : Receive Boot Completed</string>
+    <string name="help_permission_boot_heading">Autorisation : Détection de démarrage du téléphone</string>
     <string name="help_permission_boot_description">est utilisé pour démarrer le compteur de pas et définir les notifications au démarrage. Si l\'autorisation n\'est pas accordée, vous devez lancer l\'application manuellement après chaque démarrage pour l\'activer.</string>
     <string name="help_permissions_selection">Les autorisations de stockage et de GPS utilisées par le podomètre respectueux de la vie privée peuvent être gérées par l\'utilisateur dans les versions Android 6+.</string>
     <string name="help_permission_wake_heading">Autorisation : Wake Lock</string>
@@ -145,7 +145,7 @@
     <!-- /others -->
 
     <!-- welcome dialog -->
-    <string name="welcome">Bienvenue!</string>
+    <string name="welcome">Bienvenue !</string>
     <string name="welcome_text">Ce Podomètre Privacy Friendly peut compter vos pas en arrière-plan et fournir une vue d\'ensemble de vos pas effectués.</string>
     <string name="slide_2_title">Personnaliser</string>
     <string name="slide_2_desc">Pour améliorer le calcul des calories que vous avez brûlées en marchant, veuillez personnaliser vos paramètres personnels.</string>
@@ -158,12 +158,12 @@
 
     <!-- motivation alert -->
     <string-array name="pref_default_notification_motivation_alert_messages">
-        <item>Allez, il est temps de marcher!</item>
+        <item>Allez, il est temps de marcher !</item>
     </string-array>
     <string name="motivation_alert_empty">Définissez des messages d\'alerte personnalisés lorsque la réalisation de votre objectif de pas quotidien est en danger.\n\nIl n\'y aura pas d\'alerte si aucun message n\'existe.</string>
     <string name="motivation_alert_input_title">Définir un message de motivation</string>
     <string name="motivation_alert_input_message">Définissez votre alerte de motivation personnalisée. L\'application vous informe avec un de vos textes au hasard.</string>
-    <string name="motivation_alert_input_empty">Les messages de motivation vides sont inutiles, n\'est-ce pas?</string>
+    <string name="motivation_alert_input_empty">Les messages de motivation vides sont inutiles, n\'est-ce pas ?</string>
     <string name="activity_title_motivation_alerts">Alertes de motivation</string>
     <string name="motivation_alert_notification_title">Compteur de pas</string>
 
@@ -212,11 +212,11 @@
     <string name="export_csv_success">"CSV exportée sous "</string>
     <string name="export_csv_permission_needed">L\'autorisation de stockage est nécessaire pour exporter un fichier CSV.</string>
     <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
-    <string name="help_permission_foreground_heading">Permission: Service de premier plan</string>
+    <string name="help_permission_foreground_heading">Permission : Service de premier plan</string>
     <string name="help_permission_storage_description">est nécessaire pour exporter vos données collectées sous forme de fichier CSV. Cette autorisation n\'est demandée que lorsque vous souhaitez exporter vos données.</string>
     <string name="help_permission_storage_heading">Permission : Écriture du stockage externe</string>
-    <string name="correct_steps_dialog_title">Editer le nombre de pas</string>
-    <string name="correct_steps">Editer le nombre de pas</string>
+    <string name="correct_steps_dialog_title">Modifier le nombre de pas</string>
+    <string name="correct_steps">Modifier le nombre de pas</string>
     <string name="correct_steps_dialog_message">Entrez le nombre de pas corrigé.</string>
     <string name="hint_steps">Nombre de pas</string>
     <string name="pause_step_detection">Détection de l\'étape de la pause</string>
@@ -239,7 +239,7 @@
     <string name="joules">J</string>
     <string name="kilojoules">kJ</string>
     <string name="slide_5_title">Détection des étapes</string>
-    <string name="slide_5_desc">Votre appareil prend en charge les méthodes suivantes de reconnaissance des pas:</string>
+    <string name="slide_5_desc">Votre appareil prend en charge les méthodes suivantes de reconnaissance des pas :</string>
     <string name="slide_2_desc_three">Dans les paramètres, vous pouvez définir vos propres modes de marche avec différentes longueurs de pas.</string>
     <string name="help_walkingmodes_heading">Modes de marche</string>
     <string name="help_walkingmodes_selection">Vous pouvez définir vos propres modes de marche comme \"Course\" ou \"Marche\" dans les préférences. Chaque mode de marche a sa propre longueur de pas.</string>
@@ -252,7 +252,7 @@
     <string name="slide_5_desc_two">Cliquez sur \"Préférences\" pour définir votre taille de pas et personnaliser vos données personnelles.</string>
     <string name="pref_notification_permanent">La notification permanente s\'affiche lorsque l\'application compte vos pas en arrière-plan. Vous pouvez personnaliser ce que l\'application doit afficher.</string>
     <string name="pref_summary_use_step_hardware">Certains téléphones intègrent un système de comptage des pas. Cela peut réduire l\'utilisation de la batterie et augmenter la précision. Cependant, il ne fonctionne pas de manière fiable sur tous les appareils avec notre application. Désactiver si les pas ne sont pas comptés.</string>
-    <string name="pref_title_use_step_hardware">Utilizar el hardware de recuento de pasos del teléfono</string>
+    <string name="pref_title_use_step_hardware">Utiliser le dispositif de comptage des pas du téléphone</string>
     <string name="pref_use_step_hardware_not_available">Cet appareil ne prend pas en charge le comptage matériel des pas.</string>
     <string name="pref_counter_frequency_summary">Régler la fréquence du compteur de pas matériel en arrière-plan pour qu\'il renvoie une valeur.</string>
     <string name="pref_counter_frequency_title">Fréquence de retour du compteur de fond</string>

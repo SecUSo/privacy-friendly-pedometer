@@ -422,7 +422,7 @@ public class DailyReportFragment extends Fragment implements ReportAdapter.OnIte
             distance += s1.getDistance();
             calories += s1.getCalories(context);
             if (!stepData.containsKey(formatHourMinute.format(s1.getEndTime())) ||
-                    stepData.get(formatHourMinute.format(s1.getEndTime())).getStepCount().getStepCount() < stepCount) {
+                    (stepData.get(formatHourMinute.format(s1.getEndTime())) != null && stepData.get(formatHourMinute.format(s1.getEndTime())).getStepCount().getStepCount() < stepCount)) {
                 if (s1.getEndTime() > Calendar.getInstance().getTime().getTime()) {
                     stepData.put(formatHourMinute.format(s1.getEndTime()), null);
                     distanceData.put(formatHourMinute.format(s1.getEndTime()), null);

@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/secuso_logo_blau_blau" />
+            android:src="?attr/secusoLogoDrawable" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,0 +1,373 @@
+<!--
+    Privacy Friendly Pedometer is licensed under the GPLv3.
+    Copyright (C) 2017  Tobias Neidig
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="it" tools:ignore="MissingTranslation">
+    <string name="app_name">Contapassi</string>
+    <string name="app_name_long">Contapassi rispettoso della privacy</string>
+
+    <string name="navigation_drawer_open" translatable="false">Apri il menu di navigazione</string>
+    <string name="navigation_drawer_close" translatable="false">Chiudi il menu di navigazione</string>
+
+    <!-- Menu Items-->
+    <string name="action_help">Aiuto</string>
+    <string name="action_about">Informazioni</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_main">Contapassi</string>
+    <string name="action_training">Allenamento</string>
+
+    <!-- AboutActivity-->
+    <string name="version_number">Versione</string>
+    <string name="about_author">Autore: </string>
+    <string name="about_author_names" translatable="false">Noah Schlegel, Tobias Neidig </string>
+    <string name="about_author_contributors"> e collaboratori.</string>
+    <string name="about_affiliation">In collaborazione con</string>
+    <string name="more_info">Ulteriori informazioni sono disponibili su:</string>
+    <string name="about_third_party_libs">L\'app utilizza <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart di Philipp Jahoda</a> (Licenza Apache 2).</string>
+    <string name="privacy_friendly">Questa applicazione appartiene al gruppo Privacy Friendly Apps sviluppato dal gruppo di ricerca SECUSO. Codice sorgente concesso in licenza GPLv3. Immagini sotto copyright SECUSO e Google Inc.</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Repository Github</a></string>
+    <string name="url"><a href="https://www.secuso.org/pfa">Sito web SECUSO</a></string>
+
+    <!-- ReportFragment -->
+    <string name="month">Mese</string>
+    <string name="week">Settimana</string>
+    <string name="day">Giorno</string>
+    <string name="steps">Passi</string>
+    <string name="calories">calorie</string>
+    <string name="activity_summary_subtitle">Riepilogo delle attività</string>
+    <string name="activity_chart_summary_subtitle">Riepilogo dettagliato delle tue attività</string>
+    <string name="summary_card_kilocalories">kcal</string>
+    <string name="summary_card_calories">cal</string>
+    <string name="correct_steps">Correggi i passi</string>
+    <string name="correct_steps_dialog_title">Correggi i passi</string>
+    <string name="correct_steps_dialog_message">Inserisci il nuovo numero di passi che hai percorso.</string>
+    <string name="hint_steps">Numero di passi</string>
+    <string name="pause_step_detection">Metti in pausa il rilevamento passi</string>
+    <string name="continue_step_detection">Continua il rilevamento passi</string>
+
+    <!-- HelpActivity -->
+    <string name="help_overview_heading">Panoramica</string>
+    <string name="help_intro">Questa app può contare i tuoi passi in background, fornisce una panoramica dei passi percorsi e ti consente di definire modalità di camminata personalizzate e notifiche se rischi di non raggiungere il tuo obiettivo giornaliero di passi.</string>
+    <string name="help_functionality_step_counter_summary">Il contapassi conta i tuoi passi giornalieri in background e può essere disabilitato nelle impostazioni.</string>
+    <string name="help_functionality_notification_heading">Notifica permanente</string>
+    <string name="help_functionality_notification">Notifica</string>
+    <string name="help_functionality_notification_summary">La notifica permanente è necessaria per mantenere attivo il contapassi in background. Il contenuto della notifica può essere scelto nelle impostazioni.</string>
+    <string name="help_functionality_notification_delete">È possibile disabilitare tutte le notifiche nelle preferenze di sistema.</string>
+    <string name="help_functionality_motivation_alert">Avviso di motivazione</string>
+    <string name="help_functionality_motivation_alert_summary">L\'app può mostrarti avvisi di motivazione se il raggiungimento del tuo obiettivo giornaliero di passi è a rischio. È possibile definire il criterio, l\'ora del giorno e i messaggi di notifica.</string>
+    <string name="help_privacy_heading">Informativa sulla privacy</string>
+    <string name="help_permission_boot_heading">Autorizzazione: Esecuzione all'avvio</string>
+    <string name="help_permission_boot_description">viene utilizzato per avviare il contapassi e impostare le notifiche all\'avvio. Se l\'autorizzazione non viene concessa, è necessario avviare manualmente l\'app una volta dopo l\'avvio per attivare l\'app.</string>
+    <string name="help_permissions_selection">Le autorizzazioni di archiviazione e GPS utilizzate da Privacy Friendly Pedometer possono essere gestite dall\'utente nelle versioni Android 6+.</string>
+    <string name="help_permission_wake_heading">Autorizzazione: Disattivazione stand-by del telefono</string>
+    <string name="help_permission_wake_description">viene utilizzato per mantenere la CPU attiva per contare i passi in background.</string>
+    <string name="help_permission_gps_heading">Autorizzazione: Posizione esatta</string>
+    <string name="help_permission_gps_description">viene utilizzato per mostrare la velocità di camminata attuale sulla schermata iniziale. Se l\'autorizzazione non viene concessa, la velocità di camminata non verrà mostrata - non ci sono altre implicazioni.</string>
+
+    <!-- Preferences -->
+    <!-- general settings -->
+    <string name="pref_header_general">Generale</string>
+    <string name="pref_group_title_personal_settings">Personalizzazione</string>
+
+    <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.step_counter_enabled</string>
+    <string name="pref_title_step_counter_enabled">Contapassi permanente</string>
+    <string name="pref_summary_step_counter_enabled">L\'app conta i tuoi passi in background.</string>
+
+    <string name="pref_use_wake_lock" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock</string>
+    <string name="pref_title_use_wake_lock">Mantieni il processore attivo</string>
+    <string name="pref_summary_use_wake_lock">Su alcuni dispositivi il processore va in sospensione e impedisce il conteggio dei passi. Abilita questa opzione per mantenere il processore attivo durante il conteggio dei passi - questo potrebbe scaricare la batteria!</string>
+
+    <string name="pref_use_wake_lock_during_training" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock_during_training</string>
+    <string name="pref_title_use_wake_lock_during_training">Disattivazione stand-by del telefono durante l\'allenamento</string>
+    <string name="pref_summary_use_wake_lock_during_training">Per risultati migliori durante la modalità di allenamento, mantieni il processore attivo. Se l\'app deve già mantenere il processore attivo, questo avviene in automatico.</string>
+
+    <string name="pref_show_velocity" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.show_velocity</string>
+    <string name="pref_title_show_velocity">Mostra la velocità attuale</string>
+    <string name="pref_summary_show_velocity">L\'app mostra la tua velocità attuale nel rapporto giornaliero. L\'accesso alla tua posizione è richiesto per calcolare la velocità esatta.</string>
+
+    <string name="pref_default_daily_step_goal" translatable="false">10000</string>
+    <string name="pref_title_daily_step_goal">Obiettivo giornaliero personale di passi</string>
+    <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length</string>
+    <string name="pref_title_unit_of_length">Unità di lunghezza</string>
+    <string-array name="pref_keys_unit_of_length">
+        <item>chilometri</item>
+        <item>miglia</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_length" translatable="false">
+        <item>km</item>
+        <item>mi</item>
+    </string-array>
+    <string name="unit_of_length_km">1|km|chilometri|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miglia|mph|5280|ft</string><!-- 1km = 0.621371 miglia -->
+    <string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
+    <string name="pref_title_unit_of_energy">Unità di energia</string>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>calorie</item>
+        <item>joule</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_energy" translatable="false">
+        <item>cal</item>
+        <item>J</item>
+    </string-array>
+
+    <string name="pref_explanation_weight_and_gender">Per migliorare il calcolo delle calorie, imposta il tuo peso e sesso.</string>
+    <string name="pref_summary_notification_permanent">La notifica permanente viene visualizzata quando l\'app conta i tuoi passi in background. Puoi personalizzare ciò che l\'app dovrebbe mostrarti.</string>
+    <string name="pref_summary_accelerometer_threshold">L\'app utilizza l\'accelerometro del tuo dispositivo. Per ottimizzare il rilevamento dei passi, regola la sensibilità.</string>
+
+    <string name="pref_export_data" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.exportdata</string>
+    <string name="pref_title_export_data">Esporta dati</string>
+    <string name="pref_summary_export_data">Esporta il conteggio dei passi in un file csv.</string>
+
+    <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
+    <string name="pref_title_weight">Peso (kg)</string>
+    <string name="pref_default_weight" translatable="false">65.0</string>
+
+    <string name="pref_gender" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.gender</string>
+    <string name="pref_title_gender">Sesso</string>
+    <string-array name="pref_keys_gender">
+        <item>femmina</item>
+        <item>maschio</item>
+    </string-array>
+    <string-array name="pref_values_gender" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="pref_accelerometer_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_threshold</string>
+    <string name="pref_title_accelerometer_threshold">Sensibilità</string>
+    <string-array name="pref_keys_accelerometer_threshold">
+        <item>altissima</item>
+        <item>molto alta</item>
+        <item>alta</item>
+        <item>normale</item>
+        <item>bassa</item>
+        <item>molto bassa</item>
+        <item>bassissima</item>
+    </string-array>
+    <string-array name="pref_values_accelerometer_threshold" translatable="false">
+        <item>0.125</item>
+        <item>0.25</item>
+        <item>0.50</item>
+        <item>0.75</item>
+        <item>1.00</item>
+        <item>1.25</item>
+        <item>1.50</item>
+    </string-array>
+    <string-array name="pref_keys_counter_frequency">
+        <item>2 ore</item>
+        <item>1 ora</item>
+        <item>30 min</item>
+        <item>15 min</item>
+        <item>5 min</item>
+        <item>Nessun ritardo consentito</item>
+    </string-array>
+    <string-array name="pref_values_counter_frequency">
+        <item>7200000</item>
+        <item>3600000</item>
+        <item>1800000</item>
+        <item>900000</item>
+        <item>300000</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="pref_keys_which_step_hardware">
+        <item>Contapassi</item>
+        <item>Rilevatore di passi</item>
+    </string-array>
+    <string-array name="pref_values_which_step_hardware">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="pref_accelerometer_steps_threshold" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.accelerometer_step_threshold</string>
+    <string name="pref_title_accelerometer_steps_threshold">Passi prima dell\'inizio del conteggio</string>
+    <string name="pref_default_accelerometer_steps_threshold" translatable="false">10</string>
+    <!-- /general settings -->
+    <!-- notification settings -->
+    <string name="pref_header_notifications">Notifiche</string>
+    <string name="pref_group_title_permanent_notification">Notifica permanente</string>
+    <string name="pref_group_title_motivation_alert">Avviso di motivazione</string>
+    <string name="pref_notification_permanent_show_steps" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_steps</string>
+    <string name="pref_title_notification_permanent_show_steps">Mostra il numero di passi percorsi oggi</string>
+    <string name="pref_notification_permanent_show_distance" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_distance</string>
+    <string name="pref_title_notification_permanent_show_distance">Mostra la distanza percorsa oggi</string>
+    <string name="pref_notification_permanent_show_calories" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_calories</string>
+    <string name="pref_title_notification_permanent_show_calories">Mostra il numero di calorie</string>
+
+    <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_enabled</string>
+    <string name="pref_title_notification_motivation_alert_enabled">Abilita avviso motivazionale</string>
+    <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time</string>
+    <string name="pref_title_notification_motivation_alert_time">Orario avviso motivazionale</string>
+    <string name="pref_notification_motivation_alert_texts" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_texts</string>
+    <string name="pref_title_notification_motivation_alert_texts">Testi di notifica motivazionale</string>
+    <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
+    <string name="pref_title_notification_motivation_alert_criterion">Criterio di avviso motivazionale</string>
+    <string-array name="pref_keys_notification_motivation_alert_criterion">
+        <item>meno del 90% dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 70% dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 50% dell\'obiettivo giornaliero di passi</item>
+    </string-array>
+    <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
+        <item>90</item>
+        <item>70</item>
+        <item>50</item>
+    </string-array>
+    <!-- /notification settings -->
+    <string name="pref_header_walking_modes">Modalità di camminata</string>
+    <string name="pref_widget_data_set" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.widget_data_set_</string>
+    <string name="pref_distance_measurement_start_timestamp" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.distance_measurement_start_timestamp</string>
+    <string name="pref_hw_steps_on_last_save" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_steps_on_last_save</string>
+    <string name="pref_hw_background_counter_frequency" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.hw_background_counter_frequency</string>
+    <string name="pref_which_step_hardware" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.which_step_hardware</string>
+    <!-- /Preferences -->
+
+    <!-- Will be removed on next update -->
+    <string name="pref_daily_step_goal" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.daily_step_goal</string>
+    <string name="notification_text_steps">%1$d di %2$d passi percorsi oggi.</string>
+    <string name="notification_text_distance">%1$.2f %2$s percorsi oggi.</string>
+    <string name="notification_text_calories">Bruciate %.2f kcal oggi.</string>
+    <string name="notification_text_default">Contapassi è attivo.</string>
+    <!-- /Will be removed on next update -->
+
+    <!-- others -->
+    <string name="action_calories">Calorie</string>
+    <string name="action_distance">Distanza</string>
+    <string name="action_steps">Passi</string>
+    <string name="set">Imposta</string>
+    <string name="save">Salva</string>
+    <string name="edit">Modifica</string>
+    <string name="delete">Elimina</string>
+    <string name="operation_failed">Operazione fallita</string>
+    <string name="since">dal</string>
+    <string name="okay">OK</string>
+    <!-- /others -->
+
+    <!-- welcome dialog -->
+    <string name="welcome">Benvenuto!</string>
+    <string name="welcome_text">Il Contapassi Rispettoso della Privacy può contare i tuoi passi in background e fornisce una panoramica dei passi percorsi.</string>
+    <string name="slide_2_title">Personalizza</string>
+    <string name="slide_2_desc">Per migliorare il calcolo delle calorie bruciate camminando, personalizza le tue impostazioni personali.</string>
+    <string name="slide_2_desc_two">Puoi cambiare le tue modalità di camminata attuali utilizzando il menu contestuale nella barra degli strumenti.</string>
+    <string name="slide_3_title">Notifiche</string>
+    <string name="slide_4_title">Widget</string>
+    <string name="slide_4_desc">Aggiungi un widget alla schermata iniziale per rimanere aggiornato sui tuoi passi percorsi.</string>
+    <string name="next">Avanti</string>
+    <string name="skip">Salta</string>
+    <!-- /welcome dialog -->
+
+    <!-- motivation alert -->
+    <string-array name="pref_default_notification_motivation_alert_messages">
+        <item>Dai, è ora di camminare!</item>
+    </string-array>
+    <string name="motivation_alert_empty">Imposta messaggi di avviso personalizzati quando il raggiungimento del tuo obiettivo giornaliero di passi è a rischio.\n\nNon ci saranno avvisi se non esiste alcun messaggio.</string>
+    <string name="motivation_alert_input_title">Imposta messaggio di avviso motivazionale</string>
+    <string name="motivation_alert_input_message">Imposta il tuo avviso motivazionale personalizzato. L\'app ti avviserà con uno dei tuoi messaggi a caso.</string>
+    <string name="motivation_alert_input_empty">Gli avvisi di motivazione vuoti sono inutili, non è vero?</string>
+    <string name="activity_title_motivation_alerts">Avvisi motivazionali</string>
+    <string name="motivation_alert_notification_title">Contapassi</string>
+
+    <!-- walking modes -->
+    <string name="activity_title_walking_modes">Modalità di camminata</string>
+    <string name="walking_mode_input_title">Modalità di camminata</string>
+    <string name="walking_mode_input_message">Imposta la tua modalità di camminata personalizzata:</string>
+    <string name="walking_mode_at_least_one_is_required">È richiesta almeno una modalità di camminata.</string>
+    <string name="walking_mode_cannot_delete_active_one">Non è possibile eliminare una modalità di camminata attiva.</string>
+    <string name="walking_mode_set_active">Imposta come attiva</string>
+    <string name="walking_mode_menu_learn">Impara</string>
+    <string name="walking_mode_learning_distance_description">Distanza da percorrere:</string>
+    <string name="walking_mode_learning_steps_description">Passi percorsi:</string>
+    <string name="walking_mode_learning_stop">Termina la modalità di apprendimento</string>
+    <string name="walking_mode_learning_description">L\'applicazione può apprendere la distanza per passo. Per favore, cammina per la distanza indicata e premi fine quando hai finito.</string>
+    <string name="pref_walking_mode_learning_active" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.walking_mode_learning_active</string>
+    <string name="step_length">Lunghezza del passo:</string>
+    <string name="walking_mode_active_ext"> (attiva)</string>
+    <string name="walking_mode_input_empty">Nome e lunghezza del passo sono richiesti. Si prega di compilare!</string>
+    <string name="hint_walking_mode_name">Nome</string>
+    <string name="hint_walking_mode_step_length">Lunghezza del passo (Metri)</string>
+    <string-array name="pref_default_walking_mode_names">
+        <item>Camminata</item>
+        <item>Corsa</item>
+    </string-array>
+    <string-array name="pref_default_walking_mode_step_lenghts" translatable="false">
+        <item>0.5</item><!-- step length in meters -->
+        <item>0.7</item>
+    </string-array>
+
+    <string name="training_overview_empty">Sembra che tu non abbia ancora utilizzato la funzionalità di allenamento. È ora di iniziare il tuo allenamento!</string>
+    <string name="training_input_message" translatable="false" />
+    <string name="training_input_title">Sessione di allenamento</string>
+    <string name="activity_title_training">Allenamento</string>
+    <string name="hint_training_description">Descrizione</string>
+    <string name="hint_training_title">Titolo</string>
+    <string name="hint_training_feeling">Sensazione:</string>
+    <string name="training_card_calories">kcal</string>
+    <string name="training_card_distance_km">km</string>
+    <string name="training_card_duration">h</string>
+    <string name="training_velocity">km/h</string>
+    <string name="training_stop_button">Termina l\'allenamento ora</string>
+    <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
+    <string name="activity_summary_chart_legend_stepgoal">Obiettivo passi</string>
+    <string name="widget_config_data_set_title">Quali dati devono essere visualizzati?</string>
+    <string name="action_distance_measurement">Misurazione della distanza</string>
+    <string name="distance_measurement_stop_button">Interrompi la misurazione della distanza</string>
+    <string name="distance_measurement_start_button">Avvia la misurazione della distanza</string>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="slide_5_title">Rilevamento passi</string>
+    <string name="slide_5_desc">Il tuo dispositivo supporta i seguenti metodi per il rilevamento dei passi:</string>
+    <string name="slide_3_desc">Definisci modalità di camminata personalizzate e notifiche se il raggiungimento del tuo obiettivo giornaliero di passi è a rischio.</string>
+    <string name="slide_2_desc_three">Nelle impostazioni puoi definire le tue modalità di camminata con diverse lunghezze del passo.</string>
+    <string name="help_walkingmodes_heading">Modalità di camminata</string>
+    <string name="help_walkingmodes_selection">È possibile definire le proprie modalità di camminata come \'Corsa\' o \'Camminata\' nelle preferenze. Ogni modalità di camminata ha la sua lunghezza del passo.</string>
+    <string name="help_training_heading">Sessioni di allenamento</string>
+    <string name="help_training_selection">Le sessioni di allenamento possono essere utilizzate per monitorare le prestazioni di allenamento. Ogni sessione tiene traccia, ad esempio, della durata dell\'allenamento, dei passi percorsi e della distanza.</string>
+    <string name="help_distancemeasurement_heading">Misurazione della distanza</string>
+    <string name="help_distancemeasurement_selection">La funzione di misurazione della distanza consente di misurare la distanza tra la pressione del pulsante \'Avvia\' e \'Interrompi\'. I dati non verranno memorizzati dopo il riavvio dell\'app. Per salvare i dati è possibile utilizzare le sessioni di allenamento.</string>
+    <string name="help_correctsteps_heading">Correggi i passi manualmente</string>
+    <string name="help_correctsteps_selection">È possibile modificare i passi giornalieri rilevati nella vista del rapporto giornaliero. Ciò consente di aggiungere i passi percorsi senza l\'app o di correggere il numero di passi rilevati.</string>
+    <string name="slide_5_desc_two">Fai clic su \'Impostazioni\' per impostare la lunghezza del passo e personalizzare i tuoi dati personali.</string>
+    <string name="export_csv_header">Inizio;Fine;Passi;Modalità</string>
+    <string name="export_csv_begin">&lt;avvio&gt;</string>
+    <string name="export_csv_error">Si è verificato un errore durante l\'esportazione</string>
+    <string name="export_csv_success">CSV esportato come </string>
+    <string name="export_csv_permission_needed">L\'autorizzazione di archiviazione è necessaria per esportare un file CSV.</string>
+    <string name="help_permission_foreground_description">è necessario per il servizio continuo su Android 9 o versioni successive.</string>
+    <string name="help_permission_foreground_heading">Autorizzazione: Servizio in primo piano</string>
+    <string name="help_permission_storage_description">è necessario per esportare i dati raccolti come file CSV. Questa autorizzazione viene richiesta solo quando si desidera esportare i dati.</string>
+    <string name="help_permission_storage_heading">Autorizzazione: Scrittura memoria esterna</string>
+    <string name="pref_notification_permanent">La notifica permanente viene visualizzata quando l\'applicazione conta i passi in background. È possibile personalizzare ciò che l\'applicazione deve mostrare.</string>
+    <string name="pref_use_step_hardware" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_step_hardware</string>
+    <string name="pref_summary_use_step_hardware">Alcuni telefoni dispongono di hardware integrato per il conteggio dei passi. Ciò può ridurre il consumo della batteria e aumentare la precisione. Tuttavia, non funziona in modo affidabile su tutti i dispositivi con la nostra app. Disabilita se i passi non vengono rilevati.</string>
+    <string name="pref_title_use_step_hardware">Utilizza l\'hardware del telefono per il conteggio dei passi</string>
+    <string name="pref_use_step_hardware_not_available">Questo dispositivo non supporta il conteggio dei passi hardware.</string>
+    <string name="pref_counter_frequency_summary">Imposta la frequenza con cui il contapassi hardware in background deve restituire un valore.</string>
+    <string name="pref_counter_frequency_title">Frequenza di ritorno del contatore in background</string>
+    <string name="pref_which_step_hardware_summary">Scegli tra contapassi (più preciso) e rilevatore di passi (più veloce).</string>
+    <string name="pref_which_step_hardware_title">Scelta hardware per il rilevamento passi</string>
+    <string name="slide_5_desc2">Se riscontri incongruenze o problemi con il conteggio, prova metodi diversi se disponibili o modifica i parametri del conteggio dell\'accelerometro. Inoltre, puoi aggiungere i passi percorsi senza l\'app o correggere il conteggio dei passi nel grafico delle attività giornaliere. Ulteriori informazioni sui metodi di conteggio sono disponibili in \'Aiuto>Metodi\u00A0di\u00A0conteggio\'.</string>
+    <string name="accelerometer">Accelerometro</string>
+    <string name="step_detector">Rilevatore di passi</string>
+    <string name="step_counter">Contapassi</string>
+    <string name="help_counting_heading">Metodi di conteggio</string>
+    <string name="help_counting">Diversi dispositivi Android possiedono diverse capacità hardware. La nostra app è progettata per funzionare sulla maggior parte dei dispositivi utilizzando il rispettivo hardware disponibile. Sentiti libero di provare e confrontare metodi diversi se il tuo dispositivo li supporta.</string>
+    <string name="help_counting_accelerometer">Quasi ogni dispositivo Android ha un accelerometro integrato. Analizzando i suoi dati, l\'app cerca di rilevare gli eventi passo. Ci sono diversi parametri che puoi modificare nelle impostazioni quando utilizzi il metodo dell\'accelerometro.</string>
+    <string name="help_counting_hardware">Molti dispositivi Android supportano anche hardware specifico per i passi, come un contapassi e un rilevatore di passi. Possono essere più affidabili dell\'accelerometro perché sono progettati specificamente per registrare gli eventi passo. Tuttavia, poiché i dispositivi Android sono molto diversi, non è garantito che funzionino al meglio. Il rilevatore è un modo rapido per rilevare gli eventi passo, mentre il contatore esegue elaborazioni successive per aumentare la certezza sui passi effettivi compiuti.</string>
+    <string name="dialog_permission_activity_recognition">L\'autorizzazione Riconoscimento attività è necessaria per accedere ai dati dei passi.</string>
+    <string name="dialog_permission_activity_recognition_2">L\'autorizzazione è stata negata più volte. Dovrai abilitare l\'autorizzazione manualmente tramite le impostazioni del dispositivo.</string>
+    <string name="a11y_options">Opzioni</string>
+    <string name="a11y_add">Aggiungi</string>
+    <string name="a11y_prev">Precedente</string>
+    <string name="a11y_next">Successivo</string>
+    <string name="a11y_start_training">Inizia allenamento</string>
+    <string name="a11y_walking_modes">Modalità di camminata</string>
+</resources>

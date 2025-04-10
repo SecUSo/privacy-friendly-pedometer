@@ -71,6 +71,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/a11y_start_training"
         android:src="@drawable/ic_plus_white_24dp"
         app:layout_anchor="@id/training_overview_list"
         app:layout_anchorGravity="bottom|right|end" />

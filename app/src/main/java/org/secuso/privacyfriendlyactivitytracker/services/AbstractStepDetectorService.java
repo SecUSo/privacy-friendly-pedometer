@@ -453,4 +453,8 @@ public abstract class AbstractStepDetectorService extends JobIntentService imple
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+    public IBinder getmStepDetectorBinder() {
+        return mBinder;
+    }
 }

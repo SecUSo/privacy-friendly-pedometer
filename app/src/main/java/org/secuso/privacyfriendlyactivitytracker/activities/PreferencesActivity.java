@@ -85,7 +85,12 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
 
     private static final int CREATE_FILE = 4;
 
-    private GeneralPreferenceFragment generalPreferenceFragment;
+    // private GeneralPreferenceFragment generalPreferenceFragment;
+    public static GeneralPreferenceFragment getGeneralPreferenceFragment() {
+        return generalPreferenceFragment;
+    }
+
+    private static GeneralPreferenceFragment generalPreferenceFragment;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -497,7 +502,7 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
             return null;
         }
 
-        public void generateCSVToExport() {
+        public Object generateCSVToExport() {
             final Context context = getActivity().getApplicationContext();
             SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String csvFileName = "exportStepCount_" + fileDateFormat.format(System.currentTimeMillis());
@@ -512,17 +517,20 @@ public class PreferencesActivity extends AppCompatPreferenceActivity {
                     // the system file picker when your app creates the document.
                     // intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
                     getActivity().startActivityForResult(intent, CREATE_FILE);
+                    return intent;
                 } else {
                     List<StepCount> steps = StepCountPersistenceHelper.getStepCountsForever(getActivity());
                     File csvFile = new File(Environment.getExternalStoragePublicDirectory(context.getResources().getString(R.string.app_name)), csvFileName);
                     csvFile.getParentFile().mkdirs();
                     OutputStream out = new FileOutputStream(csvFile);
                     writeStepsToCSVOutputStream(this, out, steps, csvFileName + ".csv");
+                    return csvFile;
                 }
             } catch (IOException e) {
                 Toast.makeText(getActivity(), getString(R.string.export_csv_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+            return null;
         }
 
         @Override

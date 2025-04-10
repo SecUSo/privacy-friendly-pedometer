@@ -33,7 +33,7 @@
     <string name="about_affiliation">I anslutning till</string>
     <string name="more_info">Mer information finns på:</string>
     <string name="about_third_party_libs">Appen använder <a href="https://github.com/PhilJay/MPAndroidChart"> MPAndroidChart från Philipp Jahoda </a> (Apache 2 -licens).</string>
-    <string name="privacy_friendly">Denna applikation tillhör gruppen Privacy Friendly Apps som utvecklats av Technische Universität Darmstadt. Källkod licensierad enligt GPLv3. Bilder upphovsrätt TU Darmstadt och Google Inc.</string>
+    <string name="privacy_friendly">Denna applikation tillhör gruppen Privacy Friendly Apps som utvecklats av Karlsruhe Institute of Technology. Källkod licensierad enligt GPLv3. Bilder upphovsrätt KIT och Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa"> SECUSO-webbplats </a></string>
 
     <!-- ReportFragment -->
@@ -46,9 +46,9 @@
     <string name="activity_chart_summary_subtitle">Detaljerad sammanfattning av dina aktiviteter</string>
     <string name="summary_card_kilocalories">kcal</string>
     <string name="summary_card_calories">cal</string>
-    <string name="correct_steps">Rätt steg</string>
-    <string name="correct_steps_dialog_title">Rätt steg</string>
-    <string name="correct_steps_dialog_message">Ange ett nytt antal steg du gick.</string>
+    <string name="correct_steps">Korrigera steg</string>
+    <string name="correct_steps_dialog_title">Korrigera steg</string>
+    <string name="correct_steps_dialog_message">Ange ett nytt värde för antal steg du gått.</string>
     <string name="hint_steps">Antal steg</string>
     <string name="pause_step_detection">Pausa stegdetektering</string>
     <string name="continue_step_detection">Fortsätt stegdetektering</string>

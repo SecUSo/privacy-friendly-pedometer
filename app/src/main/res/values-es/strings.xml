@@ -268,4 +268,10 @@
     <string name="help_counting_hardware">Muchos dispositivos Android también admiten hardware especial para pasos, como un podómetro y un detector de pasos. Pueden ser más fiables que el acelerómetro porque están diseñados específicamente para registrar eventos de pasos. Sin embargo, como los dispositivos Android son muy diferentes, no está garantizado que funcionen mejor. El detector es una forma rápida de detectar eventos de pasos, mientras que el contador realiza un análisis posterior para aumentar la precisión de los pasos reales dados.</string>
     <string name="dialog_permission_activity_recognition">El permiso de Reconocimiento de Actividades es necesario para acceder a los datos de los pasos.</string>
     <string name="dialog_permission_activity_recognition_2">El permiso fue denegado varias veces. Deberá habilitar el permiso manualmente a través de la configuración del dispositivo.</string>
+    <string name="a11y_options">Opciones</string>
+    <string name="a11y_add">Añadir</string>
+    <string name="a11y_prev">Anterior</string>
+    <string name="a11y_next">Siguiente</string>
+    <string name="a11y_start_training">Empezar el entrenamiento</string>
+    <string name="a11y_walking_modes">Modos de andar</string>
 </resources>

@@ -27,6 +27,10 @@ Further development requires Android Studio, we recommend to use the latest vers
 Minimum SDK: 17
 Target SDK: 31
 
+## Data Backup
+
+You can use the [Privacy Friendly Backup app](https://github.com/SecUSo/privacy-friendly-backup) to backup and restore this application's data. This can also be used to migrate your data to a new phone.
+
 ## License
 
 Privacy Friendly Pedometer is licensed under the GPLv3.<br>
@@ -48,7 +52,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 The app is based on [Privacy Friendly Example App](https://github.com/SecUSo/privacy-friendly-app-example).
 The icons used in the navigation drawer are licensed under the [CC BY 2.5](http://creativecommons.org/licenses/by/2.5/).
-In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo, the splash screen logo and the app icons) copyright [Karlsruhe Institute of Technology](https://kit.edu/) (2022).
+In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo, the splash screen logo and the app icons) copyright [SECUSO](www.secuso.org) (2022).
 For showing charts the app uses [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) licensed under Apache License, Version 2.0.
 
 ## Contributors

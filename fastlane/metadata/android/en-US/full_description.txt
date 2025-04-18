@@ -16,6 +16,6 @@ Most of Pedometer Apps in the Google Play Store require additional permissions. 
 Many other free apps in the Google Play Store dazzle annoying advertising and also shortens battery life.
 
 You can reach us via
-Twitter - @SECUSOResearch https://twitter.com/secusoresearch
+Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
 Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
-Job opening - https://secuso.aifb.kit.edu/english/Job_Offers_1557.php
+Job opening - https://secuso.aifb.kit.edu/english/Job_Offers.php

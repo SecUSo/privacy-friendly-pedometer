@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_about">Rakenduse teave</string>
+    <string name="save">Salvesta</string>
+    <string name="about_affiliation">Loodud üheskoos organisatsiooniga</string>
+    <string name="privacy_friendly">See rakendus kuulub privaatsussõbralike rakenduste (Privacy Friendly Apps) hulka, mida arendab SECUSO uurimisgrupp. Lähtekood on litsentseeritud GPL versioon 3 alusel. Piltide autoriõigused kuuluvad SECUSO-le ja Google Inc\'ile.</string>
+    <string name="app_name">Sammulugeja</string>
+    <string name="app_name_long">Privaatsussõbralik sammulugeja</string>
+    <string name="action_help">Abiteave</string>
+    <string name="action_settings">Seadistused</string>
+    <string name="action_training">Treening</string>
+    <string name="version_number">Versioon</string>
+    <string name="about_author">Autorid:</string>
+    <string name="about_author_contributors">ja kaasautorid.</string>
+    <string name="more_info">Lisateavet leiad:</string>
+    <string name="url"><a href="https://www.secuso.org/pfa">SECUSO veebisait</a></string>
+    <string name="month">Kuu</string>
+    <string name="week">Nädal</string>
+    <string name="day">Päev</string>
+    <string name="steps">Sammude arv</string>
+    <string name="action_main">Sammulugeja</string>
+    <string name="about_third_party_libs">See rakendus kasutab <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart teeki, mille autoriks on Philipp Jahoda</a> (avaldatud Apache 2 litsentsi alusel).</string>
+</resources>

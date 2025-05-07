@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Privacy Friendly Pedometer is licensed under the GPLv3.
     Copyright (C) 2017  Tobias Neidig
@@ -14,21 +15,17 @@
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
--->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en" tools:ignore="MissingTranslation">
+--><resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en" tools:ignore="MissingTranslation">
     <string name="app_name">Pedometer</string>
     <string name="app_name_long">Privacy Friendly Pedometer</string>
-
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-
     <!-- Menu Items-->
     <string name="action_help">Help</string>
     <string name="action_about">About</string>
     <string name="action_settings">Settings</string>
     <string name="action_main">Pedometer</string>
     <string name="action_training">Training</string>
-
     <!-- AboutActivity-->
     <string name="version_number">Version</string>
     <string name="about_author">Author: </string>
@@ -40,11 +37,10 @@
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps group developed by the research group SECUSO. Sourcecode licensed under GPLv3. Images copyright SECUSO and Google Inc.</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-activity-tracker">Github-Repo</a></string>
     <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
-
     <!-- ReportFragment -->
-    <string name="month">Month</string>
-    <string name="week">Week</string>
-    <string name="day">Day</string>
+    <string name="month">Mois</string>
+    <string name="week">Semaine</string>
+    <string name="day">Jour</string>
     <string name="steps">Steps</string>
     <string name="calories">calories</string>
     <string name="activity_summary_subtitle">Summary of activities</string>
@@ -57,7 +53,6 @@
     <string name="hint_steps">Number of steps</string>
     <string name="pause_step_detection">Pause step detection</string>
     <string name="continue_step_detection">Continue step detection</string>
-
     <!-- HelpActivity -->
     <string name="help_overview_heading">Overview</string>
     <string name="help_intro">This app can count your steps in background, provides you an overview about your walked steps and allows you to define custom walking modes and notifications if the achievement of your daily step goal is in danger.</string>
@@ -76,28 +71,22 @@
     <string name="help_permission_wake_description">is used to keep the CPU awake to count the steps in background.</string>
     <string name="help_permission_gps_heading">Permission: Precise location</string>
     <string name="help_permission_gps_description">is used to show your current walking speed on home screen. If the permission is not granted the walking speed will not be showed - there are no other implications.</string>
-
     <!-- Preferences -->
     <!-- general settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_group_title_personal_settings">Personalization</string>
-
     <string name="pref_step_counter_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.step_counter_enabled</string>
     <string name="pref_title_step_counter_enabled">Permanent step counter</string>
     <string name="pref_summary_step_counter_enabled">The app counts your steps in background.</string>
-
     <string name="pref_use_wake_lock" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock</string>
     <string name="pref_title_use_wake_lock">Keep processor awake</string>
     <string name="pref_summary_use_wake_lock">On some devices the processor falls asleep and prevents counting steps. Enable this to keep the processor awake while counting steps - this may drain your battery!</string>
-
     <string name="pref_use_wake_lock_during_training" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.use_wake_lock_during_training</string>
     <string name="pref_title_use_wake_lock_during_training">Wake lock during training</string>
     <string name="pref_summary_use_wake_lock_during_training">For better results during training mode keep processor awake. If app should keep the processor awake at any time this is automatically the case.</string>
-
     <string name="pref_show_velocity" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.show_velocity</string>
     <string name="pref_title_show_velocity">Show current velocity</string>
     <string name="pref_summary_show_velocity">The app shows your current velocity in daily report. Access to your location is required to calculate the exact velocity.</string>
-
     <string name="pref_default_daily_step_goal" translatable="false">10000</string>
     <string name="pref_title_daily_step_goal">Personal daily step goal</string>
     <string name="pref_unit_of_length" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_length</string>
@@ -110,8 +99,10 @@
         <item>km</item>
         <item>mi</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string>
+    <!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string>
+    <!-- 1km = 0.621371 miles -->
     <string name="pref_unit_of_energy" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.unit_of_energy</string>
     <string name="pref_title_unit_of_energy">Unit of energy</string>
     <string-array name="pref_keys_unit_of_energy">
@@ -122,19 +113,15 @@
         <item>cal</item>
         <item>J</item>
     </string-array>
-
     <string name="pref_explanation_weight_and_gender">To improve the calculation of the calories please set your weight and gender.</string>
     <string name="pref_summary_notification_permanent">The permanent notification is shown when the app counts your steps in background. You can customize what the app should show you.</string>
     <string name="pref_summary_accelerometer_threshold">The app uses the accelerometer of your device. To optimize the step detection adjust the sensitivity, please.</string>
-
     <string name="pref_export_data" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.exportdata</string>
     <string name="pref_title_export_data">Export data</string>
     <string name="pref_summary_export_data">Export step count in csv file.</string>
-
     <string name="pref_weight" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.weight</string>
     <string name="pref_title_weight">Weight (kg)</string>
     <string name="pref_default_weight" translatable="false">65.0</string>
-
     <string name="pref_gender" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.gender</string>
     <string name="pref_title_gender">Gender</string>
     <string-array name="pref_keys_gender">
@@ -197,14 +184,12 @@
     <string name="pref_header_notifications">Notifications</string>
     <string name="pref_group_title_permanent_notification">Permanent Notification</string>
     <string name="pref_group_title_motivation_alert">Motivation Alert</string>
-
     <string name="pref_notification_permanent_show_steps" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_steps</string>
     <string name="pref_title_notification_permanent_show_steps">Show number of steps walked today</string>
     <string name="pref_notification_permanent_show_distance" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_distance</string>
     <string name="pref_title_notification_permanent_show_distance">Show distance walked today</string>
     <string name="pref_notification_permanent_show_calories" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.permanent_notification_show_calories</string>
     <string name="pref_title_notification_permanent_show_calories">Show number of calories</string>
-
     <string name="pref_notification_motivation_alert_enabled" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_enabled</string>
     <string name="pref_title_notification_motivation_alert_enabled">Enable motivation alert</string>
     <string name="pref_notification_motivation_alert_time" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_time</string>
@@ -214,9 +199,9 @@
     <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
     <string name="pref_title_notification_motivation_alert_criterion">Motivation alert criterion</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>less than 90&#65285; of daily step goal</item>
-        <item>less than 70&#65285; of daily step goal</item>
-        <item>less than 50&#65285; of daily step goal</item>
+        <item>less than 90％ of daily step goal</item>
+        <item>less than 70％ of daily step goal</item>
+        <item>less than 50％ of daily step goal</item>
     </string-array>
     <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
         <item>90</item>
@@ -276,7 +261,6 @@
     <string name="motivation_alert_input_empty">Empty motivation alerts are useless, aren\'t they?</string>
     <string name="activity_title_motivation_alerts">Motivation alerts</string>
     <string name="motivation_alert_notification_title">Step Counter</string>
-
     <!-- walking modes -->
     <string name="activity_title_walking_modes">Walking modes</string>
     <string name="walking_mode_input_title">Walking mode</string>
@@ -300,12 +284,12 @@
         <item>Running</item>
     </string-array>
     <string-array name="pref_default_walking_mode_step_lenghts" translatable="false">
-        <item>0.5</item><!-- step length in meters -->
+        <item>0.5</item>
+        <!-- step length in meters -->
         <item>0.7</item>
     </string-array>
-
     <string name="training_overview_empty">It seems like you didn\'t used the training functionality, yet. It\'s time to start your training!</string>
-    <string name="training_input_message" translatable="false" />
+    <string name="training_input_message" translatable="false"/>
     <string name="training_input_title">Training session</string>
     <string name="activity_title_training">Training</string>
     <string name="hint_training_description">Description</string>
@@ -355,7 +339,7 @@
     <string name="pref_counter_frequency_title">Background Counter Return Frequency</string>
     <string name="pref_which_step_hardware_summary">Choose between step counter (more accurate) and step detector (faster).</string>
     <string name="pref_which_step_hardware_title">Step Detection Hardware Choice</string>
-    <string name="slide_5_desc2">If you experience inconsistencies or problems with the counting try out different methods if available or tweak the parameters of accelerometer counting. In addition to that you can add steps you walked without the app or correct the stepcount on daily activity chart. More information on the counting methods can be found under \'Help>Counting\u00A0Methods\'.</string>
+    <string name="slide_5_desc2">If you experience inconsistencies or problems with the counting try out different methods if available or tweak the parameters of accelerometer counting. In addition to that you can add steps you walked without the app or correct the stepcount on daily activity chart. More information on the counting methods can be found under \'Help&gt;Counting\u00A0Methods\'.</string>
     <string name="accelerometer">Accelerometer</string>
     <string name="step_detector">Step Detector</string>
     <string name="step_counter">Step Counter</string>

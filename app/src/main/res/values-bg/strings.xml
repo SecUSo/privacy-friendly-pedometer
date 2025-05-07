@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="url"><a href="https://www.secuso.org/pfa">Страница на SECUSO</a></string>
+    <string name="about_third_party_libs">Приложението използва <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart от Филип Яхода</a> (лиценз Apache 2).</string>
+    <string name="app_name">Pedometer</string>
+    <string name="app_name_long">Privacy Friendly Pedometer</string>
+    <string name="action_help">Помощ</string>
+    <string name="action_about">Относно</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_main">Крачкомер</string>
+    <string name="action_training">Тренировка</string>
+    <string name="version_number">Издание</string>
+    <string name="about_author">Автори:</string>
+    <string name="about_author_contributors">и други участници.</string>
+    <string name="about_affiliation">Съвместно със</string>
+    <string name="more_info">Подробности можете да научите от:</string>
+    <string name="month">Месец</string>
+    <string name="week">Седмица</string>
+    <string name="calories">калории</string>
+    <string name="activity_chart_summary_subtitle">Подробни активности</string>
+    <string name="activity_summary_subtitle">Активности</string>
+    <string name="summary_card_kilocalories">килокалории</string>
+    <string name="summary_card_calories">калории</string>
+    <string name="correct_steps_dialog_title">Промяна на крачки</string>
+    <string name="correct_steps_dialog_message">Въведете броя направени крачки.</string>
+    <string name="hint_steps">Брой крачки</string>
+    <string name="pause_step_detection">Спиране броенето на крачки</string>
+    <string name="continue_step_detection">Продължаване броенето на крачки</string>
+    <string name="help_overview_heading">Общ преглед</string>
+    <string name="day">Ден</string>
+    <string name="steps">Крачки</string>
+    <string name="correct_steps">Промяна на крачките</string>
+    <string name="help_intro">Приложението брои във фонов режим крачките, които правите, предоставя общ преглед на направените крачки и да ви дава възможност да определяте собствени режими на ходене, показва известие ако дневната цел за брой крачки не е достигната.</string>
+    <string name="help_functionality_step_counter_summary">Броячът на крачки брои направените крачки във фонов режим и може да бъде изключен в настройките.</string>
+    <string name="help_functionality_notification_heading">Постоянно известие</string>
+    <string name="help_functionality_notification">Известие</string>
+    <string name="help_privacy_heading">Поверителност</string>
+</resources>

@@ -30,8 +30,8 @@
     <string name="version_number">Versione</string>
     <string name="about_author">Autore: </string>
     <string name="about_author_names" translatable="false">Noah Schlegel, Tobias Neidig </string>
-    <string name="about_author_contributors"> e collaboratori.</string>
-    <string name="about_affiliation">In collaborazione con</string>
+    <string name="about_author_contributors">e contributori.</string>
+    <string name="about_affiliation">In affiliazione con</string>
     <string name="more_info">Ulteriori informazioni sono disponibili su:</string>
     <string name="about_third_party_libs">L\'app utilizza <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart di Philipp Jahoda</a> (Licenza Apache 2).</string>
     <string name="privacy_friendly">Questa applicazione appartiene al gruppo Privacy Friendly Apps sviluppato dal gruppo di ricerca SECUSO. Codice sorgente concesso in licenza GPLv3. Immagini sotto copyright SECUSO e Google Inc.</string>

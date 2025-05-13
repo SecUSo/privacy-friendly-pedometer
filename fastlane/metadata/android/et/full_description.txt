@@ -1,0 +1,21 @@
+Privaatsussõbralik sammulugeja on mõeldud sinu tehtud sammude loendamiseks taustal, annab ülevaate tehtud sammudest, lubab kirjeldada sulle sobilikke kõndimisviise ning teavitab sind, kui päevane eesmärk võib jääda täitmata. Rakendus vajab minimaalselt õigusi (käivitumine nutiseadme sisselülitumisel ning rakenduse uinumise välistamine). Rakendus kuulub privaatsussõbralike rakenduste (Privacy Friendly Apps) kogumisse, mis on välja töötatud Karlsruhe Tehnoloogiainstituudi teadusgrupi SECUSO poolt. Lisateavet leiad aadressilt https://secuso.org/pfa
+
+Privaatsussõbralik sammulugeja võib loendada sinu igapäevaseid samme taustal. Ta annab sulle ülevaate sammude arvust, läbitud vahemaast ning kõndimisel kulutatud kaloritest. Kui soovid parandada vahemaa ja kalorite arvutamise andmetäpsust, siis saad valida ja seadistada erinevaid liikumisviise koos nende sammupikusega, sealhulgas kõndimine ja jooksmine.
+
+Treeningurežiimis saad pidada arvet oma trennide üle. Lisaks saad igale treeningule lisada vabas vormis kirjelduse oma kogemuse, meeleolu või muu kohta.
+
+Mis eristab privaatsussõbralikku sammulugejat teisetest sarnastest rakendustest?
+
+1. Minimaalselt vajalikud õigused:
+* käivitumine nutiseadme sisselülitumisel - lihtsalt selleks, et sammude lugemine kohe tööle hakkaks
+* rakenduse uinumise välistamine - operatsioonisüsteem võib taustal toimiva rakenduse töö peatada ning see seadistus lubab kogu aeg samme lugeda
+
+Enamus Google Play rakendustepoes leiduvaid sammulugejaid vajavad täiendavaid õigusi, nagu näiteks võrguühenduse kasutamine, mida siis pruugitakse reklaamide näitamiseks. Mõned rakendused eeldavad ligipääsu sinu asukohaandmetele või telefoniraamatule - kumbagi aga pole sammude lugemiseks vaja.
+
+2. Reklaamide puudumine
+Paljud Google Play rakendustepoes leiduvad tasuta rakendused uputavad sind reklaamidega ja kulutavad selleks asjatult sinu nutiseadme jõudlust ja akuressurssi.
+
+Meid võid leida:
+Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Tööpakkumised - https://secuso.aifb.kit.edu/english/Job_Offers.php

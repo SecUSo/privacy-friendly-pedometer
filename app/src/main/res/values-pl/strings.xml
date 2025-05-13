@@ -29,7 +29,7 @@
     <string name="about_author">Autor: </string>
     <string name="about_author_contributors">i współtwórcy.</string>
     <string name="about_affiliation">We współpracy z</string>
-    <string name="more_info">Więcej informacji można znaleźć na stronie:</string>
+    <string name="more_info">Więcej informacji można znaleźć na:</string>
     <string name="about_third_party_libs">Aplikacja używa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart od Philipp Jahoda</a> (Apache 2 License).</string>
     <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowanej przez Karlsruhe Institute of Technology. Kod źródłowy na licencji GPLv3. Prawa autorskie do zdjęć KIT i Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Strona internetowa</a></string>
@@ -178,7 +178,7 @@
     <string name="delete">Usuń</string>
     <string name="operation_failed">Operacja nie powiodła się</string>
     <string name="since">since</string>
-    <string name="okay">Ok</string>
+    <string name="okay">OK</string>
     <!-- /others -->
 
     <!-- welcome dialog -->

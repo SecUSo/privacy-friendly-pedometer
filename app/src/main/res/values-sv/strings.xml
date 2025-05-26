@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Privacy Friendly Pedometer is licensed under the GPLv3.
     Copyright (C) 2017  Tobias Neidig
@@ -14,18 +15,15 @@
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
--->
-<resources>
+--><resources>
     <string name="app_name">Stegräknare</string>
     <string name="app_name_long">Sekretessvänlig Stegräknare</string>
-
     <!-- Menu Items-->
     <string name="action_help">Hjälp</string>
     <string name="action_about">Om</string>
     <string name="action_settings">Inställningar</string>
     <string name="action_main">Stegräknare</string>
     <string name="action_training">Träning</string>
-
     <!-- AboutActivity-->
     <string name="version_number">Version</string>
     <string name="about_author">"Upphovsman: "</string>
@@ -35,7 +33,6 @@
     <string name="about_third_party_libs">Appen använder <a href="https://github.com/PhilJay/MPAndroidChart"> MPAndroidChart från Philipp Jahoda </a> (Apache 2 -licens).</string>
     <string name="privacy_friendly">Denna applikation tillhör gruppen Privacy Friendly Apps som utvecklats av Karlsruhe Institute of Technology. Källkod licensierad enligt GPLv3. Bilder upphovsrätt KIT och Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa"> SECUSO-webbplats </a></string>
-
     <!-- ReportFragment -->
     <string name="month">Månad</string>
     <string name="week">Vecka</string>
@@ -52,7 +49,6 @@
     <string name="hint_steps">Antal steg</string>
     <string name="pause_step_detection">Pausa stegdetektering</string>
     <string name="continue_step_detection">Fortsätt stegdetektering</string>
-
     <!-- HelpActivity -->
     <string name="help_overview_heading">Översikt</string>
     <string name="help_intro">Den här appen kan räkna dina steg i bakgrunden, ger dig en överblick över dina steg och låter dig definiera anpassade gånglägen och meddelanden om du inte uppnått ditt dagliga stegmål.</string>
@@ -71,24 +67,18 @@
     <string name="help_permission_wake_description">används för att hålla CPU: n vaken för att räkna stegen i bakgrunden.</string>
     <string name="help_permission_gps_heading">Behörighet: Exakt läge</string>
     <string name="help_permission_gps_description">används för att visa din nuvarande gånghastighet på startskärmen. Om tillståndet inte beviljas kommer gånghastigheten inte att visas - det finns inga andra konsekvenser.</string>
-
     <!-- Preferences -->
     <!-- general settings -->
     <string name="pref_header_general">Allmänt</string>
     <string name="pref_group_title_personal_settings">Anpassning</string>
-
     <string name="pref_title_step_counter_enabled">Permanent stegräknare</string>
     <string name="pref_summary_step_counter_enabled">Appen räknar dina steg i bakgrunden.</string>
-
     <string name="pref_title_use_wake_lock">Håll processorn vaken</string>
     <string name="pref_summary_use_wake_lock">På vissa enheter somnar processorn och förhindrar att räkna steg. Aktivera detta för att hålla processorn vaken medan du räknar steg - detta kan tömma batteriet!</string>
-
     <string name="pref_title_use_wake_lock_during_training">\"Wake lock\" under träning</string>
     <string name="pref_summary_use_wake_lock_during_training">För bättre resultat under träningsläge, håll processorn vaken. Om appen skulle hålla processorn vaken när som helst är detta det automatiskt fallet.</string>
-
     <string name="pref_title_show_velocity">Visa aktuell hastighet</string>
     <string name="pref_summary_show_velocity">Appen visar din nuvarande hastighet i den dagliga rapporten. Tillgång till din plats krävs för att beräkna den exakta hastigheten.</string>
-
     <string name="pref_title_daily_step_goal">Personligt dagligt stegmål</string>
     <string name="pref_title_unit_of_length">Enhet för längd</string>
     <string-array name="pref_keys_unit_of_length">
@@ -99,8 +89,10 @@
         <item>km</item>
         <item>mi</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string>
+    <!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string>
+    <!-- 1km = 0.621371 miles -->
     <string name="pref_title_unit_of_energy">Energienhet</string>
     <string-array name="pref_keys_unit_of_energy">
         <item>calories</item>
@@ -110,16 +102,12 @@
         <item>cal</item>
         <item>J</item>
     </string-array>
-
     <string name="pref_explanation_weight_and_gender">För att förbättra beräkningen av kalorierna, ställ in din vikt och kön.</string>
     <string name="pref_summary_notification_permanent">Det permanenta meddelandet visas när appen räknar dina steg i bakgrunden. Du kan anpassa vad appen ska visa dig.</string>
     <string name="pref_summary_accelerometer_threshold">Appen använder accelerometern på din enhet. För att optimera stegdetekteringen, justera känsligheten.</string>
-
     <string name="pref_title_export_data">Exportera data</string>
     <string name="pref_summary_export_data">Exportera stegräkning till csv -fil.</string>
-
     <string name="pref_title_weight">Vikt (kg)</string>
-
     <string name="pref_title_gender">Kön</string>
     <string-array name="pref_keys_gender">
         <item>female</item>
@@ -154,19 +142,17 @@
     <string name="pref_header_notifications">Meddelanden</string>
     <string name="pref_group_title_permanent_notification">Permanent Meddelande</string>
     <string name="pref_group_title_motivation_alert">Motiveringsvarning</string>
-
     <string name="pref_title_notification_permanent_show_steps">Visa antal steg som gicks idag</string>
     <string name="pref_title_notification_permanent_show_distance">Visa sträcka som gåtts idag</string>
     <string name="pref_title_notification_permanent_show_calories">Visa antal kalorier</string>
-
     <string name="pref_title_notification_motivation_alert_enabled">Aktivera motivationsvarning</string>
     <string name="pref_title_notification_motivation_alert_time">Varningstid för motivation</string>
     <string name="pref_title_notification_motivation_alert_texts">Motiveringsanmälan texter</string>
     <string name="pref_title_notification_motivation_alert_criterion">Kriterium för motiveringsvarning</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>less than 90&#65285; of daily step goal</item>
-        <item>less than 70&#65285; of daily step goal</item>
-        <item>less than 50&#65285; of daily step goal</item>
+        <item>less than 90％ of daily step goal</item>
+        <item>less than 70％ of daily step goal</item>
+        <item>less than 50％ of daily step goal</item>
     </string-array>
     <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
         <item>90</item>
@@ -220,7 +206,6 @@
     <string name="motivation_alert_input_empty">Tomma motivationsvarningar är värdelösa, eller hur?</string>
     <string name="activity_title_motivation_alerts">Motiveringsvarningar</string>
     <string name="motivation_alert_notification_title">Stegräknare</string>
-
     <!-- walking modes -->
     <string name="activity_title_walking_modes">Gånglägen</string>
     <string name="walking_mode_input_title">Gångläge</string>
@@ -243,12 +228,11 @@
         <item>Running</item>
     </string-array>
     <string-array name="pref_default_walking_mode_step_lenghts" translatable="false">
-        <item>0.5</item><!-- step length in meters -->
+        <item>0.5</item>
+        <!-- step length in meters -->
         <item>0.7</item>
     </string-array>
-
     <string name="training_overview_empty">Det verkar som om du inte använde träningsfunktionen ännu. Det är dags att börja träna!</string>
-    <string name="training_input_message" />
     <string name="training_input_title">Träningspass</string>
     <string name="activity_title_training">Utbildning</string>
     <string name="hint_training_description">Beskrivning</string>
@@ -297,7 +281,7 @@
     <string name="pref_counter_frequency_title">Bakgrundsräknare Returfrekvens</string>
     <string name="pref_which_step_hardware_summary">Välj mellan stegräknare (mer exakt) och stegdetektor (snabbare).</string>
     <string name="pref_which_step_hardware_title">Val av hårdvara för stegdetektering</string>
-    <string name="slide_5_desc2">Om du upplever inkonsekvenser eller problem med räkningen kan du prova andra metoder om sådana finns tillgängliga eller justera parametrarna för accelerometerräkningen. Dessutom kan du lägga till steg som du har gått utan appen eller korrigera stegräkningen i diagrammet över dagliga aktiviteter. Mer information om räknemetoderna finns under \"Hjälp>Räkning\\u00A0Metoder\".</string>
+    <string name="slide_5_desc2">Om du upplever inkonsekvenser eller problem med räkningen kan du prova andra metoder om sådana finns tillgängliga eller justera parametrarna för accelerometerräkningen. Dessutom kan du lägga till steg som du har gått utan appen eller korrigera stegräkningen i diagrammet över dagliga aktiviteter. Mer information om räknemetoderna finns under \"Hjälp&gt;Räkning\\u00A0Metoder\".</string>
     <string name="accelerometer">Accelerationssensor</string>
     <string name="step_detector">Stegdetektor</string>
     <string name="step_counter">Stegräknare</string>

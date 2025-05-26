@@ -8,15 +8,15 @@
     <string name="privacy_friendly">Это приложение является частью группы Privacy Friendly Apps разрабатываемых исследовательской группой SECUSO. Исходный код лицензирован под GNU GPLv3. Авторские права на изображения принадлежат SECUSO и Google Inc.</string>
     <string name="calories">калории</string>
     <string name="activity_chart_summary_subtitle">Подробная активность</string>
-    <string name="action_help">Помощь</string>
-    <string name="action_settings">Настройки</string>
+    <string name="action_help">Справка</string>
+    <string name="action_settings">Натсройки</string>
     <string name="app_name">Pedometer</string>
     <string name="correct_steps_dialog_message">Впишите число пройденных шагов.</string>
     <string name="app_name_long">Privacy Friendly Pedometer</string>
     <string name="action_about">О приложении</string>
     <string name="action_main">Шаги</string>
     <string name="action_training">Тренировка</string>
-    <string name="about_author_contributors">и помощники</string>
+    <string name="about_author_contributors">и другие участники.</string>
     <string name="more_info">Подробнее можно узнать на:</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Сайт SECUSO</a></string>
     <string name="month">Месяц</string>
@@ -59,7 +59,7 @@
     <string name="slide_2_title">Кастомизация</string>
     <string name="slide_3_title">Уведомления</string>
     <string name="slide_4_title">Виджет</string>
-    <string name="next">Дальше</string>
+    <string name="next">Далее</string>
     <string name="motivation_alert_input_message">Установите свое собственное мотивационное оповещение. Приложение отправит один из ваших текстов случайно.</string>
     <string name="motivation_alert_notification_title">Счетчик шагов</string>
     <string name="activity_title_walking_modes">Режимы ходьбы</string>
@@ -90,7 +90,7 @@
     <string name="a11y_walking_modes">Редимы ходьбы</string>
     <string name="continue_step_detection">Продолжить счет шагов</string>
     <string name="pref_title_notification_permanent_show_calories">Показывать число калорий</string>
-    <string name="skip">Пропуск</string>
+    <string name="skip">Пропустить</string>
     <string name="help_functionality_notification_heading">Длительное уведомление</string>
     <string name="pref_which_step_hardware_title">Выбор аппаратного счетчика</string>
     <string name="slide_5_desc2">Если вы испытываете несоответствия или проблемы с подсчетом, попробуйте различные методы, если таковые имеются, или настроить параметры подсчета акселерометра. В дополнение к этому вы можете добавить шаги, которые вы прошли без приложения или исправить степи на графике ежедневной активности. Более подробную информацию о методах подсчета можно найти в разделе «Help&gt;Counting Methods».</string>
@@ -102,11 +102,11 @@
     <string name="pref_title_step_counter_enabled">Постоянный счетчик</string>
     <string name="help_permission_wake_description">Это используется чтобы не давать ЦПУ спать чтобы считать шаги в фоне.</string>
     <string name="pref_summary_step_counter_enabled">Приложение будет считать шаги в фоне</string>
-    <string name="okay">Хорошо</string>
+    <string name="okay">Ладно</string>
     <string name="notification_text_steps">%1$d из %2$d шагов пройдено за сегодня.</string>
     <string name="notification_text_distance">%1$.2f%2$s пройдено сегодня.</string>
     <string name="help_functionality_motivation_alert">Мотивация</string>
-    <string name="pref_header_general">Главные</string>
+    <string name="pref_header_general">Общие</string>
     <string name="pref_title_use_wake_lock">Не давать процессору спать</string>
     <string name="pref_summary_use_wake_lock">На некоторых устройствах процессор может засыпать и останавливать счет шагов. Включите эту функцию чтобы не давать процессору спать - осторожно, может сильно расходовать батарею!</string>
     <string name="motivation_alert_input_title">Назначить мотивационное уведомление</string>

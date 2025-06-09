@@ -286,4 +286,10 @@
     <string name="a11y_next">Nächste</string>
     <string name="a11y_start_training">Training beginnen</string>
     <string name="a11y_walking_modes">Laufmodi</string>
+	<string name="dialog_goodbye_google_title">Wir verlassen Google Play __</string>
+	<string name="dialog_goodbye_google_desc">Unsere Apps m_ssen sich leider von Google Play verabschieden. Sie k_nnen die App weiterhin nutzen, erhalten jedoch keine Updates mehr.
+Weitere Informationen zu den Gr_nden und warum das nicht das Ende der Privacy Friendly Apps ist, finden Sie auf unserer Website:
+
+<a href="https://secuso.aifb.kit.edu/2809.php">Hier klicken, um mehr zu erfahren</a></string>
+	<string name="dialog_goodbye_google_deactivate_notice">Zeige diese Mitteilung nicht nochmal</string>
 </resources>

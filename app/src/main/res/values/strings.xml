@@ -371,11 +371,7 @@
     <string name="a11y_next">Next</string>
     <string name="a11y_start_training">Start training</string>
     <string name="a11y_walking_modes">Walking modes</string>
-	<string name="dialog_goodbye_google_title">Goodbye Google Play __</string>
-	<string name="dialog_goodbye_google_desc">Our apps will have to say goodbye to Google Play. You can continue to use the app but you will not receive any updates in the future.
-You can find more info about the reasons and why this isn_t the end of the Privacy Friendly Apps on our website:
-
-<a href="https://secuso.aifb.kit.edu/english/2809.php">Click here to learn more</a>
-	</string>
+	<string name="dialog_goodbye_google_title">Goodbye Google Play 😢</string>
+	<string name="dialog_goodbye_google_desc">Our apps will have to say goodbye to Google Play. You can continue to use the app but you will not receive any updates in the future.\nYou can find more info about the reasons and why this isn\'t the end of the Privacy Friendly Apps on our website:\n\n<a href="https://secuso.aifb.kit.edu/english/2809.php">Click here to learn more</a></string>
 	<string name="dialog_goodbye_google_deactivate_notice">Don\'t show this notice again.</string>
 </resources>

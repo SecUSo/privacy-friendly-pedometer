@@ -69,7 +69,7 @@
     <string name="help_functionality_motivation_alert">Avviso di motivazione</string>
     <string name="help_functionality_motivation_alert_summary">L\'app può mostrarti avvisi di motivazione se il raggiungimento del tuo obiettivo giornaliero di passi è a rischio. È possibile definire il criterio, l\'ora del giorno e i messaggi di notifica.</string>
     <string name="help_privacy_heading">Informativa sulla privacy</string>
-    <string name="help_permission_boot_heading">Autorizzazione: Esecuzione all'avvio</string>
+    <string name="help_permission_boot_heading">Autorizzazione: Esecuzione all\'avvio</string>
     <string name="help_permission_boot_description">viene utilizzato per avviare il contapassi e impostare le notifiche all\'avvio. Se l\'autorizzazione non viene concessa, è necessario avviare manualmente l\'app una volta dopo l\'avvio per attivare l\'app.</string>
     <string name="help_permissions_selection">Le autorizzazioni di archiviazione e GPS utilizzate da Privacy Friendly Pedometer possono essere gestite dall\'utente nelle versioni Android 6+.</string>
     <string name="help_permission_wake_heading">Autorizzazione: Disattivazione stand-by del telefono</string>

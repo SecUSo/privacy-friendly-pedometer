@@ -46,8 +46,8 @@ android {
         applicationId 'org.secuso.privacyfriendlyactivitytracker'
         minSdkVersion 17
         targetSdkVersion 34
-        versionCode 17
-        versionName "3.1.1"
+        versionCode 100
+        versionName "3.1.2-google"
         multiDexEnabled true
 
     def escapedLocales = getAvailableLocales().collect { "\"" + it + "\"" }

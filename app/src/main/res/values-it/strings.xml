@@ -213,9 +213,9 @@
     <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
     <string name="pref_title_notification_motivation_alert_criterion">Criterio di avviso motivazionale</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>meno del 90% dell\'obiettivo giornaliero di passi</item>
-        <item>meno del 70% dell\'obiettivo giornaliero di passi</item>
-        <item>meno del 50% dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 90&#65285; dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 70&#65285; dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 50&#65285; dell\'obiettivo giornaliero di passi</item>
     </string-array>
     <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
         <item>90</item>

@@ -47,7 +47,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 34
         versionCode 100
-        versionName "3.1.2-google"
+        versionName "3.1.2"
         multiDexEnabled true
 
     def escapedLocales = getAvailableLocales().collect { "\"" + it + "\"" }

@@ -4,15 +4,15 @@
     <string name="app_name_long">Podómetro con Privacidad</string>
     <!-- Menu Items-->
     <string name="action_help">Ayuda</string>
-    <string name="action_about">Sobre la aplicación</string>
+    <string name="action_about">Acerca de</string>
     <string name="action_settings">Ajustes</string>
     <string name="action_main">Podómetro</string>
     <string name="action_training">Entrenamiento</string>
     <!-- AboutFragment-->
     <string name="version_number">Versión</string>
     <string name="about_author">Autor:</string>
-    <string name="about_affiliation">En colaboración con:</string>
-    <string name="more_info">Puede encontrar más información en:</string>
+    <string name="about_affiliation">En colaboración con</string>
+    <string name="more_info">Más información en:</string>
     <string name="about_third_party_libs">La aplicación usa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licencia Apache 2).</string>
     <string name="privacy_friendly">Esta aplicación pertenece al grupo Aplicaciones con Privacidad desarolladas por grupo de investigación SECUSO. El código fuente está bajo la licencia GPLv3. Las imágenes tienen Copyright SECUSO y Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Página Web-SECUSO</a></string>
@@ -116,7 +116,7 @@
     <string name="delete">Eliminar</string>
     <string name="operation_failed">Operación fallida</string>
     <string name="since">desde</string>
-    <string name="okay">Aceptar</string>
+    <string name="okay">Ok</string>
     <!-- /others -->
 
     <!-- welcome dialog -->
@@ -180,9 +180,9 @@
     <string name="training_stop_button">Finalizar entrenamiento ahora</string>
     <string name="training_default_title">%1$s %4$02d.%3$02d.%2$04d</string>
     <string name="activity_summary_chart_legend_stepgoal">Meta de pasos</string>
-    <string name="about_author_contributors"> y contribuidores.</string>
+    <string name="about_author_contributors">y contribuyentes.</string>
     <string name="next">Siguiente</string>
-    <string name="skip">Saltar</string>
+    <string name="skip">Omitir</string>
     <string name="slide_2_desc">Para mejorar el cálculo de calorías quemadas por favor modifique sus datos personales.</string>
     <string name="slide_2_desc_two">Puede cambiar los modos de andado usando el menú contextual en la barra de herramientas.</string>
     <string name="slide_2_title">Personalizar</string>

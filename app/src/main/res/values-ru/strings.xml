@@ -9,7 +9,7 @@
     <string name="calories">калории</string>
     <string name="activity_chart_summary_subtitle">Подробная активность</string>
     <string name="action_help">Справка</string>
-    <string name="action_settings">Натсройки</string>
+    <string name="action_settings">Настройки</string>
     <string name="app_name">Pedometer</string>
     <string name="correct_steps_dialog_message">Впишите число пройденных шагов.</string>
     <string name="app_name_long">Privacy Friendly Pedometer</string>

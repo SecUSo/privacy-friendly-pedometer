@@ -291,4 +291,10 @@
     <string name="help_counting_hardware">Många Android-enheter har också stöd för specifik steghårdvara som stegräknare och stegdetektor. De kan vara mer tillförlitliga än accelerometern eftersom de är särskilt utformade för att registrera steghändelser. Eftersom Android-enheter är väldigt olika är det dock inte säkert att de fungerar bäst. Detektorn är ett snabbt sätt att upptäcka steghändelser medan räknaren gör viss efterbearbetning för att öka säkerheten om de faktiska steg som tagits.</string>
     <string name="dialog_permission_activity_recognition">Behörigheten Aktivitetsigenkänning krävs för åtkomst till stegdata.</string>
     <string name="dialog_permission_activity_recognition_2">Tillståndet nekades flera gånger. Du måste aktivera tillståndet manuellt via enhetens inställningar.</string>
+    <string name="a11y_options">Alternativ</string>
+    <string name="a11y_add">Lägg till</string>
+    <string name="a11y_prev">Föregående</string>
+    <string name="a11y_next">Nästa</string>
+    <string name="a11y_start_training">Starta träning</string>
+    <string name="a11y_walking_modes">Gånglägen</string>
 </resources>

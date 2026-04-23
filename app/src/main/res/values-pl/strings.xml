@@ -27,25 +27,25 @@
     <!-- AboutActivity-->
     <string name="version_number">Wersja</string>
     <string name="about_author">Autor: </string>
-    <string name="about_author_contributors">i współtwórcy.</string>
+    <string name="about_author_contributors">i współtwórcy.</string>
     <string name="about_affiliation">We współpracy z</string>
     <string name="more_info">Więcej informacji można znaleźć na:</string>
-    <string name="about_third_party_libs">Aplikacja używa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart od Philipp Jahoda</a> (Apache 2 License).</string>
-    <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowanej przez Karlsruhe Institute of Technology. Kod źródłowy na licencji GPLv3. Prawa autorskie do zdjęć KIT i Google Inc.</string>
-    <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Strona internetowa</a></string>
+    <string name="about_third_party_libs">Aplikacja używa <a href="https://github.com/PhilJay/MPAndroidChart">biblioteki MPAndroidChart od Philippa Jahody</a> (na licencji Apache 2).</string>
+    <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Aplikacji Przyjaznych Prywatności opracowanej przez grupę badawczą SECUSO. Kod źródłowy na licencji GPLv3. Prawa autorskie do zdjęć SECUSO i Google Inc.</string>
+    <string name="url"><a href="https://www.secuso.org/pfa">stronie internetowej SECUSO</a></string>
     <!-- ReportFragment -->
     <string name="month">Miesiąc</string>
     <string name="week">Tydzień</string>
     <string name="day">Dzień</string>
-    <string name="steps">Kroki</string>
+    <string name="steps">kroki</string>
     <string name="calories">kalorie</string>
     <string name="activity_summary_subtitle">Podsumowanie aktywności</string>
     <string name="activity_chart_summary_subtitle">Szczegółowe podsumowanie aktywności</string>
     <string name="summary_card_kilocalories">kcal</string>
     <string name="summary_card_calories">cal</string>
-    <string name="correct_steps">Edytuj liczbę kroków</string>
-    <string name="correct_steps_dialog_title">Prawidłowa liczba kroków</string>
-    <string name="correct_steps_dialog_message">Wpisz nową liczbę kroków, które przeszedłeś.</string>
+    <string name="correct_steps">Popraw liczbę kroków</string>
+    <string name="correct_steps_dialog_title">Poprawianie liczby kroków</string>
+    <string name="correct_steps_dialog_message">Podaj nową liczbę kroków, które przeszedłeś.</string>
     <string name="hint_steps">Liczba kroków</string>
     <string name="pause_step_detection">Zatrzymaj wykrywanie kroków</string>
     <string name="continue_step_detection">Kontynuuj wykrywanie kroków</string>
@@ -60,12 +60,12 @@
     <string name="help_functionality_motivation_alert">Alarm motywacyjny</string>
     <string name="help_functionality_motivation_alert_summary">Aplikacja może wyświetlać alerty motywacyjne, jeśli osiągnięcie Twojego codziennego celu jest zagrożone. Możesz zdefiniować kryterium, porę dnia i teksty powiadomień.</string>
     <string name="help_privacy_heading">Informacje o prywatności</string>
-    <string name="help_permission_boot_heading">Pozwolenie: Uruchom przy starcie systemu</string>
+    <string name="help_permission_boot_heading">Uprawnienie: uruchom przy starcie systemu</string>
     <string name="help_permission_boot_description">służy do uruchamiania licznika kroków i wyświetlania powiadomień podczas uruchamiania. Jeśli uprawnienie nie zostanie przyznane, musisz uruchomić aplikację ręcznie po uruchomieniu, aby aktywować aplikację.</string>
     <string name="help_permissions_selection">Uprawnienia używane przez krokomierz są przyjazne dla prywatności i nie mogą być zarządzane przez użytkownika w żadnej wersji Androida.</string>
-    <string name="help_permission_wake_heading">Pozwolenie: Obudź blokadę</string>
+    <string name="help_permission_wake_heading">Uprawnienie: blokada wybudzania</string>
     <string name="help_permission_wake_description">jest używany do utrzymywania czuwania CPU, aby policzyć kroki w tle.</string>
-    <string name="help_permission_gps_heading">Pozwolenie: Dokładna lokalizacja</string>
+    <string name="help_permission_gps_heading">Uprawnienie: dokładna lokalizacja</string>
     <string name="help_permission_gps_description">służy do pokazania aktualnej prędkości chodzenia na ekranie głównym. Jeśli pozwolenie nie zostanie udzielone, prędkość spaceru nie zostanie pokazana - nie ma innych konsekwencji.</string>
     <!-- Preferences -->
     <!-- general settings -->
@@ -177,7 +177,7 @@
     <string name="edit">Edytuj</string>
     <string name="delete">Usuń</string>
     <string name="operation_failed">Operacja nie powiodła się</string>
-    <string name="since">since</string>
+    <string name="since">od</string>
     <string name="okay">OK</string>
     <!-- /others -->
 
@@ -264,15 +264,15 @@
     <string name="slide_5_desc_two">Stuknij \'Preferencje\', aby ustawić rozmiar kroku i dostosować swoje dane osobowe.</string>
     <string name="pref_title_export_data">Eksport danych</string>
     <string name="pref_summary_export_data">Eksportuj liczbę kroków do pliku csv.</string>
-    <string name="export_csv_header">Start;End;Steps;Mode</string>
+    <string name="export_csv_header">Początek;Koniec;Kroki;Tryb</string>
     <string name="export_csv_begin">&lt;begin&gt;</string>
     <string name="export_csv_error">Wystąpił błąd podczas eksportu</string>
-    <string name="export_csv_success">CSV wyeksportowany jako</string>
+    <string name="export_csv_success">"CSV wyeksportowany jako "</string>
     <string name="export_csv_permission_needed">Uprawnienie do przechowywania jest wymagane do wyeksportowania pliku CSV.</string>
-    <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
-    <string name="help_permission_foreground_heading">Zezwolenie: Nowa wiedza</string>
+    <string name="help_permission_foreground_description">jest wymagane do ciągłego działania na Androidzie 9 i nowszych.</string>
+    <string name="help_permission_foreground_heading">Uprawnienie: usługa na pierwszym planie</string>
     <string name="help_permission_storage_description">jest wymagane, aby wyeksportować zebrane dane jako plik CSV. To uprawnienie jest wymagane tylko wtedy, gdy chcesz wyeksportować swoje dane.</string>
-    <string name="help_permission_storage_heading">"Uprawnienie: Zapis w pamięci zewnętrznej "</string>
+    <string name="help_permission_storage_heading">Uprawnienie: zapis w pamięci zewnętrznej</string>
     <string name="pref_notification_permanent">Stałe powiadomienie jest wyświetlane, gdy aplikacja zlicza kroki w tle. Możesz dostosować, co aplikacja ma wyświetlać.</string>
     <string name="pref_summary_use_step_hardware">Niektóre telefony mają wbudowaną funkcję liczenia kroków. Może to zmniejszyć zużycie baterii i zwiększyć precyzję. Nie działa to jednak niezawodnie na wszystkich urządzeniach z naszą aplikacją. Wyłącz, jeśli kroki nie są liczone.</string>
     <string name="pref_title_use_step_hardware">Korzystanie z funkcji liczenia kroków w telefonie</string>
@@ -290,7 +290,7 @@
     <string name="help_counting_accelerometer">Prawie każde urządzenie z Androidem ma wbudowany akcelerometr. Analizując jego dane, aplikacja próbuje wykryć zdarzenia kroków. Istnieje szereg parametrów, które możesz zmodyfikować w ustawieniach podczas korzystania z metody akcelerometru.</string>
     <string name="help_counting_hardware">Wiele urządzeń z systemem Android obsługuje również specjalny sprzęt do pomiaru kroków, taki jak licznik kroków i detektor kroków. Mogą one być bardziej niezawodne niż akcelerometr, ponieważ są specjalnie zaprojektowane do rejestrowania zdarzeń kroków. Ponieważ jednak urządzenia z Androidem są bardzo zróżnicowane, nie ma gwarancji, że będą działać najlepiej. Detektor jest szybkim sposobem wykrywania zdarzeń kroków, podczas gdy licznik wykonuje pewne przetwarzanie końcowe, aby zwiększyć pewność co do faktycznie wykonanych kroków.</string>
     <string name="dialog_permission_activity_recognition">Uprawnienie Rozpoznawanie aktywności jest wymagane, aby uzyskać dostęp do danych kroku.</string>
-    <string name="dialog_permission_activity_recognition_2">Uprawnienie zostało wielokrotnie odrzucone. Konieczne będzie ręczne włączenie uprawnienia w ustawieniach urządzenia.</string>
+    <string name="dialog_permission_activity_recognition_2">Uprawnienie zostało wielokrotnie odrzucone. Konieczne będzie ręczne włączenie uprawnienia w ustawieniach urządzenia.</string>
     <string name="a11y_prev">Poprzedni</string>
     <string name="a11y_next">Następny</string>
     <string name="a11y_start_training">Rozpoczęcie treningu</string>

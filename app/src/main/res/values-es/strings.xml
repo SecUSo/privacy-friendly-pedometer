@@ -1,14 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Podómetro</string>
     <string name="app_name_long">Podómetro con Privacidad</string>
-
     <!-- Menu Items-->
     <string name="action_help">Ayuda</string>
     <string name="action_about">Sobre la aplicación</string>
     <string name="action_settings">Ajustes</string>
     <string name="action_main">Podómetro</string>
     <string name="action_training">Entrenamiento</string>
-
     <!-- AboutFragment-->
     <string name="version_number">Versión</string>
     <string name="about_author">Autor:</string>
@@ -17,8 +16,6 @@
     <string name="about_third_party_libs">La aplicación usa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licencia Apache 2).</string>
     <string name="privacy_friendly">Esta aplicación pertenece al grupo Aplicaciones con Privacidad desarolladas por grupo de investigación SECUSO. El código fuente está bajo la licencia GPLv3. Las imágenes tienen Copyright SECUSO y Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Página Web-SECUSO</a></string>
-
-
     <!-- ReportFragment -->
     <string name="month">Mes</string>
     <string name="week">Semana</string>
@@ -28,7 +25,6 @@
     <string name="activity_summary_subtitle">Resumen de actividades</string>
     <string name="activity_chart_summary_subtitle">Resumen detallado de sus actividades</string>
     <string name="summary_card_kilocalories">kcal</string>
-
     <!-- HelpFragment -->
     <string name="help_overview_heading">Resumen</string>
     <string name="help_intro">Esta aplicación puede contar sus pasos en segundo plano, le proporciona un resumen sobre los pasos andados y le permite definir modos de andar personalizados, además de mostrar notificaciones si tu meta diaria está en peligro.</string>
@@ -45,33 +41,29 @@
     <string name="help_permissions_selection">Los permisos de almacenamiento y gps utilizados por Privacy Friendly Pedometer pueden ser gestionados por el usuario en las versiones de Android 6+.</string>
     <string name="help_permission_wake_heading">Permiso: Impedir que el teléfono entre en modo de suspensión</string>
     <string name="help_permission_wake_description">se usa para mantener la CPU "despierta" para contar los pasos en segundo plano.</string>
-
     <!-- Preferences -->
     <!-- general settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_group_title_personal_settings">Personalización</string>
-
     <string name="pref_title_step_counter_enabled">Contador de pasos permanente</string>
     <string name="pref_summary_step_counter_enabled">La aplicación cuenta sus pasos en segundo plano.</string>
-
     <string name="pref_title_use_wake_lock">Mantener el procesador despierto</string>
     <string name="pref_summary_use_wake_lock">En algunos dispositivos el procesador se duerme, lo que impide que se puedan contar los pasos. Active esto para mantener el procesador despierto mientras se cuentan los pasos - ¡esto puede hacer que la batería se agote más rápido!</string>
-
     <string name="pref_title_daily_step_goal">Meta de pasos diaria</string>
     <string name="pref_title_unit_of_length">Unidad de medida</string>
     <string-array name="pref_keys_unit_of_length">
         <item>kilómetros</item>
         <item>millas</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilómetro|km/h|1000|m</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|millas|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilómetro|km/h|1000|m</string>
+    <!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|millas|mph|5280|ft</string>
+    <!-- 1km = 0.621371 miles -->
 
     <string name="pref_explanation_weight_and_gender">Para mejorar los cálculos de las calorías por favor especifique su peso y género.</string>
     <string name="pref_notification_permanent">La notificación permanente se muestra cuando la aplicación cuenta sus pasos en segundo plano. Puede personalizar lo que la aplicación debería mostrar.</string>
     <string name="pref_summary_accelerometer_threshold">La aplicación usa el acelerómetro de su dispositivo. Para detectar mejor los pasos, por favor ajuste la sensibilidad.</string>
-
     <string name="pref_title_weight">Peso</string>
-
     <string name="pref_title_gender">Género</string>
     <string-array name="pref_keys_gender">
         <item>femenino</item>
@@ -87,25 +79,22 @@
         <item>más baja</item>
         <item>muy baja</item>
     </string-array>
-
     <!-- /general settings -->
     <!-- notification settings -->
     <string name="pref_header_notifications">Notificaciones</string>
     <string name="pref_group_title_permanent_notification">Notificaciones permanentes</string>
     <string name="pref_group_title_motivation_alert">Alerta de motivación</string>
-
     <string name="pref_title_notification_permanent_show_steps">Mostrar el número de pasos andados hoy</string>
     <string name="pref_title_notification_permanent_show_distance">Mostrar la distancia andada hoy</string>
     <string name="pref_title_notification_permanent_show_calories">Mostrar el número de calorías</string>
-
     <string name="pref_title_notification_motivation_alert_enabled">Activar alerta de motivación</string>
     <string name="pref_title_notification_motivation_alert_time">Hora de la alerta de motivación</string>
     <string name="pref_title_notification_motivation_alert_texts">Textos de la alerta de motivación</string>
     <string name="pref_title_notification_motivation_alert_criterion">Criterio de la alerta de motivación</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>menos del 90&#65285; de la meta diaria</item>
-        <item>menos del 70&#65285; de la meta diaria</item>
-        <item>menos del 50&#65285; de la meta diaria</item>
+        <item>menos del 90％ de la meta diaria</item>
+        <item>menos del 70％ de la meta diaria</item>
+        <item>menos del 50％ de la meta diaria</item>
     </string-array>
     <!-- /notification settings -->
     <string name="pref_header_walking_modes">Modos de andar</string>
@@ -145,7 +134,6 @@
     <string name="motivation_alert_input_empty">Las alertas de motivación vacías son un poco inútiles, ¿no cree?</string>
     <string name="activity_title_motivation_alerts">Alertas de motivación</string>
     <string name="motivation_alert_notification_title">Contador de pasos</string>
-
     <!-- walking modes -->
     <string name="activity_title_walking_modes">Modos de andar</string>
     <string name="walking_mode_input_title">Modo de andar</string>
@@ -175,14 +163,11 @@
         <item>5 minutos</item>
         <item>No se permite ningún retraso</item>
     </string-array>
-
     <string-array name="pref_keys_which_step_hardware">
         <item>Contador de pasos</item>
         <item>Detector de pasos</item>
     </string-array>
-
     <string name="training_overview_empty">Parece que no ha usado la funcionalidad de aprendizaje, aún. ¡Es hora de comenzar su entrenamiento!</string>
-    <string name="training_input_message" />
     <string name="training_input_title">Sesión de entrenamiento</string>
     <string name="activity_title_training">Entrenamiento</string>
     <string name="hint_training_description">Descripción</string>
@@ -258,7 +243,7 @@
     <string name="pref_counter_frequency_title">Frecuencia de actualización de contador de fondo</string>
     <string name="pref_which_step_hardware_summary">Elija entre el contador de pasos (más preciso) y el detector de pasos (más rápido).</string>
     <string name="pref_which_step_hardware_title">Elección del hardware de detección de pasos</string>
-    <string name="slide_5_desc2">Si observa incoherencias o problemas con el recuento, pruebe otros métodos si están disponibles o cambie los parámetros de recuento del acelerómetro. También puedes añadir los pasos que has caminado sin la aplicación o corregir el recuento de pasos en el resumen de la actividad diaria. Para más información sobre los métodos de recuento, consulte \'Ayuda>Métodos\\u00A0de\\u00A0recuento\'.</string>
+    <string name="slide_5_desc2">Si observa incoherencias o problemas con el recuento, pruebe otros métodos si están disponibles o cambie los parámetros de recuento del acelerómetro. También puedes añadir los pasos que has caminado sin la aplicación o corregir el recuento de pasos en el resumen de la actividad diaria. Para más información sobre los métodos de recuento, consulte \'Ayuda&gt;Métodos\\u00A0de\\u00A0recuento\'.</string>
     <string name="accelerometer">Acelerómetro</string>
     <string name="step_detector">Detector de pasos</string>
     <string name="step_counter">Contador de pasos</string>

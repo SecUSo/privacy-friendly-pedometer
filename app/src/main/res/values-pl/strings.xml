@@ -15,18 +15,15 @@
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
--->
-<resources>
+--><resources>
     <string name="app_name">Krokomierz</string>
     <string name="app_name_long">Krokomierz Przyjazny Prywatności</string>
-
     <!-- Menu Items-->
     <string name="action_help">Pomoc</string>
     <string name="action_about">O aplikacji</string>
     <string name="action_settings">Ustawienia</string>
     <string name="action_main">Krokomierz</string>
     <string name="action_training">Trening</string>
-
     <!-- AboutActivity-->
     <string name="version_number">Wersja</string>
     <string name="about_author">Autor: </string>
@@ -36,7 +33,6 @@
     <string name="about_third_party_libs">Aplikacja używa <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart od Philipp Jahoda</a> (Apache 2 License).</string>
     <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowanej przez Karlsruhe Institute of Technology. Kod źródłowy na licencji GPLv3. Prawa autorskie do zdjęć KIT i Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">SECUSO-Strona internetowa</a></string>
-
     <!-- ReportFragment -->
     <string name="month">Miesiąc</string>
     <string name="week">Tydzień</string>
@@ -53,7 +49,6 @@
     <string name="hint_steps">Liczba kroków</string>
     <string name="pause_step_detection">Zatrzymaj wykrywanie kroków</string>
     <string name="continue_step_detection">Kontynuuj wykrywanie kroków</string>
-
     <!-- HelpActivity -->
     <string name="help_overview_heading">Przegląd</string>
     <string name="help_intro">Ta aplikacja może liczyć Twoje kroki w tle, zapewnia przegląd kroków podzielonych na etapy i pozwala zdefiniować niestandardowe sposoby poruszania się i powiadomienie, jeśli osiągnięcie dziennego celu liczby kroków jest zagrożone.</string>
@@ -72,24 +67,18 @@
     <string name="help_permission_wake_description">jest używany do utrzymywania czuwania CPU, aby policzyć kroki w tle.</string>
     <string name="help_permission_gps_heading">Pozwolenie: Dokładna lokalizacja</string>
     <string name="help_permission_gps_description">służy do pokazania aktualnej prędkości chodzenia na ekranie głównym. Jeśli pozwolenie nie zostanie udzielone, prędkość spaceru nie zostanie pokazana - nie ma innych konsekwencji.</string>
-
     <!-- Preferences -->
     <!-- general settings -->
     <string name="pref_header_general">Ogólne</string>
     <string name="pref_group_title_personal_settings">Personalizacja</string>
-
     <string name="pref_title_step_counter_enabled">Ciągły licznik kroków</string>
     <string name="pref_summary_step_counter_enabled">Aplikacja zlicza Twoje kroki w tle.</string>
-
     <string name="pref_title_use_wake_lock">Utrzymuj procesor w stanie czuwania</string>
     <string name="pref_summary_use_wake_lock">Na niektórych urządzeniach procesor zasypia i zapobiega zliczaniu kroków. Włącz to, aby utrzymać procesor w stanie czuwania podczas liczenia kroków - może to spowodować wyczerpanie baterii!</string>
-
     <string name="pref_title_use_wake_lock_during_training">Czuwanie podczas treningu</string>
     <string name="pref_summary_use_wake_lock_during_training">Aby uzyskać lepsze wyniki w trybie treningu, należy pozostawić procesor w stanie czuwania. Jeśli aplikacja powinna zatrzymać procesor w dowolnym momencie, to robi to automatycznie.</string>
-
     <string name="pref_title_show_velocity">Pokaż aktualną prędkość</string>
     <string name="pref_summary_show_velocity">Aplikacja pokazuje aktualną prędkość w dziennym raporcie. Do obliczenia dokładnej prędkości wymagany jest dostęp do Twojej lokalizacji.</string>
-
     <string name="pref_title_daily_step_goal">Osobisty dzienny cel kroków</string>
     <string name="pref_title_unit_of_length">Jednostka długości</string>
     <string-array name="pref_keys_unit_of_length">
@@ -100,8 +89,10 @@
         <item>km</item>
         <item>mi</item>
     </string-array>
-    <string name="unit_of_length_km">1|km|kilometr|km/h|1000|m</string><!-- 1km = 1km -->
-    <string name="unit_of_length_mi">0.621371|mi|mila|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="unit_of_length_km">1|km|kilometr|km/h|1000|m</string>
+    <!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|mila|mph|5280|ft</string>
+    <!-- 1km = 0.621371 miles -->
     <string name="pref_title_unit_of_energy">Jednostka energii</string>
     <string-array name="pref_keys_unit_of_energy">
         <item>kaloria</item>
@@ -111,13 +102,10 @@
         <item>cal</item>
         <item>J</item>
     </string-array>
-
     <string name="pref_explanation_weight_and_gender">Aby poprawić obliczanie kalorii, ustaw swoją wagę i płeć.</string>
     <string name="pref_summary_notification_permanent">Stałe powiadomienia są wyświetlane, gdy aplikacja zlicza Twoje kroki w tle. Możesz dostosować, co aplikacja powinna Ci pokazać.</string>
     <string name="pref_summary_accelerometer_threshold">Aplikacja korzysta z akcelerometru urządzenia. Aby zoptymalizować wykrywanie kroków, wyreguluj czułość.</string>
-
     <string name="pref_title_weight">Waga (kg)</string>
-
     <string name="pref_title_gender">Płeć</string>
     <string-array name="pref_keys_gender">
         <item>żeńska</item>
@@ -152,19 +140,17 @@
     <string name="pref_header_notifications">Powiadomienia</string>
     <string name="pref_group_title_permanent_notification">Stałe powiadomienia</string>
     <string name="pref_group_title_motivation_alert">Alarm motywacyjny</string>
-
     <string name="pref_title_notification_permanent_show_steps">Pokaż liczbę kroków, które dzisiaj przeszedłeś</string>
     <string name="pref_title_notification_permanent_show_distance">Pokaż pokonaną dzisiaj odległość</string>
     <string name="pref_title_notification_permanent_show_calories">Pokaż liczbę kalorii</string>
-
     <string name="pref_title_notification_motivation_alert_enabled">Włącz alert motywacyjny</string>
     <string name="pref_title_notification_motivation_alert_time">Czas alertu motywacji</string>
     <string name="pref_title_notification_motivation_alert_texts">Teksty powiadomień motywacyjnych</string>
     <string name="pref_title_notification_motivation_alert_criterion">Kryterium alarmu motywacji</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>mniej niż 90&#65285; z dziennego celu kroków</item>
-        <item>mniej niż 70&#65285; z dziennego celu kroków</item>
-        <item>mniej niż 50&#65285; z dziennego celu kroków</item>
+        <item>mniej niż 90％ z dziennego celu kroków</item>
+        <item>mniej niż 70％ z dziennego celu kroków</item>
+        <item>mniej niż 50％ z dziennego celu kroków</item>
     </string-array>
     <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
         <item>90</item>
@@ -218,7 +204,6 @@
     <string name="motivation_alert_input_empty">Puste alerty motywacyjne są bezużyteczne, nieprawdaż?</string>
     <string name="activity_title_motivation_alerts">Alerty motywacyjne</string>
     <string name="motivation_alert_notification_title">Licznik kroków</string>
-
     <!-- walking modes -->
     <string name="activity_title_walking_modes">Sposoby poruszania się</string>
     <string name="walking_mode_input_title">Sposób poruszania się</string>
@@ -241,12 +226,11 @@
         <item>Bieganie</item>
     </string-array>
     <string-array name="pref_default_walking_mode_step_lenghts" translatable="false">
-        <item>0.5</item><!-- step length in meters -->
+        <item>0.5</item>
+        <!-- step length in meters -->
         <item>0.7</item>
     </string-array>
-
     <string name="training_overview_empty">Wygląda na to, że jeszcze nie użyłeś funkcji treningowej. Czas zacząć trening!</string>
-    <string name="training_input_message" />
     <string name="training_input_title">Sesja treningowa</string>
     <string name="activity_title_training">Trening</string>
     <string name="hint_training_description">Opis</string>
@@ -297,7 +281,7 @@
     <string name="pref_counter_frequency_title">Częstotliwość powrotu licznika tła</string>
     <string name="pref_which_step_hardware_summary">Wybierz pomiędzy licznikiem kroków (dokładniejszy) i detektorem kroków (szybszy).</string>
     <string name="pref_which_step_hardware_title">Wybór sprzętu do wykrywania kroków</string>
-    <string name="slide_5_desc2">Jeśli wystąpią niespójności lub problemy z liczeniem, wypróbuj inne metody, jeśli są dostępne, lub dostosuj parametry liczenia akcelerometru. Ponadto możesz dodać kroki, które przeszedłeś bez aplikacji lub skorygować liczbę kroków na wykresie dziennej aktywności. Więcej informacji na temat metod liczenia znajdziesz w sekcji \"Pomoc>Liczenie\\u00A0Metody\".</string>
+    <string name="slide_5_desc2">Jeśli wystąpią niespójności lub problemy z liczeniem, wypróbuj inne metody, jeśli są dostępne, lub dostosuj parametry liczenia akcelerometru. Ponadto możesz dodać kroki, które przeszedłeś bez aplikacji lub skorygować liczbę kroków na wykresie dziennej aktywności. Więcej informacji na temat metod liczenia znajdziesz w sekcji \"Pomoc&gt;Liczenie\\u00A0Metody\".</string>
     <string name="accelerometer">Czujnik przyspieszenia</string>
     <string name="step_detector">Detektor kroków</string>
     <string name="step_counter">Licznik kroków</string>

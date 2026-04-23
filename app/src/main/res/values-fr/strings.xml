@@ -5,15 +5,15 @@
     <!-- Menu Items-->
     <string name="action_help">Aide</string>
     <string name="action_about">À propos</string>
-    <string name="action_settings">Paramètres globaux</string>
+    <string name="action_settings">Paramètres</string>
     <string name="action_main">Podomètre</string>
     <string name="action_training">Entraînement</string>
     <!-- AboutActivity-->
     <string name="version_number">Version</string>
     <string name="about_author">Auteur :</string>
-    <string name="about_author_contributors">et les autres contributeurs.</string>
-    <string name="about_affiliation">En partenariat avec</string>
-    <string name="more_info">Des informations complémentaires sont disponibles sur :</string>
+    <string name="about_author_contributors">et contributeurs.</string>
+    <string name="about_affiliation">En collaboration avec</string>
+    <string name="more_info">Plus d\'informations :</string>
     <string name="about_third_party_libs">Cette application utilise <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licence Apache 2).</string>
     <string name="privacy_friendly">Cette application fait partie du groupe d\'applications Privacy Friendly Apps développées par  le groupe de recherche SECUSO. Le code source est sous licence GPLv3. Copyright des images : SECUSO et Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Site web de SECUSO</a></string>
@@ -36,7 +36,7 @@
     <string name="help_functionality_notification_delete">Vous pouvez désactiver toutes les notifications dans les réglages.</string>
     <string name="help_functionality_motivation_alert">Alerte de motivation</string>
     <string name="help_functionality_motivation_alert_summary">L\'application peut vous montrer des alertes de motivation si la réalisation de votre objectif de pas quotidien est en danger. Vous pouvez définir le critère, l\'heure et les textes de ces notifications.</string>
-    <string name="help_privacy_heading">Informations sur la Confidentialité</string>
+    <string name="help_privacy_heading">Vie privée</string>
     <string name="help_permission_boot_heading">Autorisation : Détection de démarrage du téléphone</string>
     <string name="help_permission_boot_description">est utilisé pour démarrer le compteur de pas et définir les notifications au démarrage. Si l\'autorisation n\'est pas accordée, vous devez lancer l\'application manuellement après chaque démarrage pour l\'activer.</string>
     <string name="help_permissions_selection">Les autorisations de stockage et de GPS utilisées par le podomètre respectueux de la vie privée peuvent être gérées par l\'utilisateur dans les versions Android 6+.</string>
@@ -129,7 +129,7 @@
     <string name="delete">Supprimer</string>
     <string name="operation_failed">L\'opération a échouée</string>
     <string name="since">depuis</string>
-    <string name="okay">D\'accord</string>
+    <string name="okay">Ok</string>
     <!-- /others -->
 
     <!-- welcome dialog -->

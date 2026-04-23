@@ -121,7 +121,7 @@
 
     <!-- welcome dialog -->
     <string name="welcome">Bienvenido</string>
-    <string name="welcome_text">Bienvenido al Podómetro con Privacidad. Esta aplicación puede contar sus pasos en segundo plano, le proporciona un resumen sobre los pasos andados y le permite definir modos de andado personalizados, además de notificaciones si tu meta diaria está en peligro.\n\nPuedes cambiar tu modo de andado actual usando el menú contextual en la barra de herramientas.\n\nPara mejorar el cálculo de calorías quemadas por favor modifique sus ajustes personales.</string>
+    <string name="welcome_text">Podómetro con Privacidad puede contar tus pasos en segundo plano y ofrece un resumen de los pasos caminados.</string>
     <!-- /welcome dialog -->
 
     <!-- motivation alert -->
@@ -190,7 +190,7 @@
     <string name="slide_3_title">Notificaciones</string>
     <string name="summary_card_calories">cal</string>
     <string name="export_csv_permission_needed">El permiso de almacenamiento es necesario para exportar un archivo CSV.</string>
-    <string name="help_permission_foreground_description">is needed for the continuous service on Android 9 or higher.</string>
+    <string name="help_permission_foreground_description">es necesario para el servicio continuo en Android 9 o superior.</string>
     <string name="help_permission_foreground_heading">Permiso: Servicio de primer plano</string>
     <string name="help_permission_storage_description">es necesario para exportar los datos recogidos como un archivo CSV. Este permiso sólo se solicita cuando se desea exportar los datos.</string>
     <string name="help_permission_storage_heading">Permiso: Escritura en el almacenamiento externo</string>

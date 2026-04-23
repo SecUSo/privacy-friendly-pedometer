@@ -4,16 +4,16 @@
     <string name="app_name_long">Podomètre Privacy Friendly</string>
     <!-- Menu Items-->
     <string name="action_help">Aide</string>
-    <string name="action_about">À Propos</string>
-    <string name="action_settings">Préférences</string>
+    <string name="action_about">À propos</string>
+    <string name="action_settings">Paramètres</string>
     <string name="action_main">Podomètre</string>
     <string name="action_training">Entraînement</string>
     <!-- AboutActivity-->
     <string name="version_number">Version</string>
     <string name="about_author">Auteur :</string>
-    <string name="about_author_contributors">et les contributeurs.</string>
-    <string name="about_affiliation">En lien avec</string>
-    <string name="more_info">Plus d\'informations sur :</string>
+    <string name="about_author_contributors">et contributeurs/-trices.</string>
+    <string name="about_affiliation">Affilié à</string>
+    <string name="more_info">Plus d\'informations peuvent être consultées depuis :</string>
     <string name="about_third_party_libs">Cette application utilise <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licence Apache 2).</string>
     <string name="privacy_friendly">Cette application fait partie du groupe d\'applications Privacy Friendly Apps développées par  le groupe de recherche SECUSO. Le code source est sous licence GPLv3. Copyright des images : SECUSO et Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Site web de SECUSO</a></string>

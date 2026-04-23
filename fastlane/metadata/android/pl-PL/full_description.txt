@@ -1,0 +1,21 @@
+Krokomierz Przyjazny dla Prywatności może liczyć Twoje kroki w tle, zapewnia przegląd Twoich kroków i pozwala Ci zdefiniować niestandardowe tryby chodzenia i powiadomienia, jeśli osiągnięcie dziennego celu kroków jest zagrożone. Aplikacja wymaga minimalnych uprawnień (uruchom przy starcie i zapobiegaj uśpieniu telefonu). Należy do grupy Przyjaznych dla prywatności aplikacji opracowanej przez grupę badawczą SECUSO w Karlsruhe Intitute of Technology. Więcej informacji można znaleźć na secuso.org/pfa
+
+Krokomierz Przyjazny dla Prywatności może liczyć Twoje codzienne kroki podczas działania w tle. Zapewnia przegląd Twoich kroków, odległości i kalorii spalonych podczas chodzenia. Możesz dodawać i wybierać różne tryby chodzenia z różnymi długościami kroków, takie jak chodzenie lub bieganie, aby usprawnić obliczanie odległości i kalorii.
+
+W specjalnym trybie treningowym możesz śledzić swoje sesje treningowe. Do każdej sesji treningowej można dodać dodatkowe informacje, takie jak odczucia lub opis.
+
+Czym wyróżnia się Krokomierz Przyjazny dla Prywatności od innych krokomierzy?
+
+1. Minimalna liczba uprawnień:
+* Uruchom przy starcie: To uprawnienie jest wymagane do ponownego uruchomienia liczenia kroków po uruchomieniu telefonu.
+* Zapobiegaj uśpieniu telefonu: Na niektórych urządzeniach procesor zasypia i uniemożliwia liczenie kroków. Dzięki temu uprawnieniu aplikacja może utrzymywać procesor w stanie czuwania podczas liczenia kroków.
+
+Większość aplikacji krokomierza w sklepie Google Play wymaga dodatkowych uprawnień. Np. dostępu do sieci lub Internetu, które są głównie wykorzystywane do wyświetlania reklam. Niektóre aplikacje mają dostęp do danych GPS lub telefonicznych.
+
+2. Brak reklam.
+Wiele innych bezpłatnych aplikacji w sklepie Google Play oślepia irytującymi reklamami, a także skraca żywotność baterii.
+
+Możesz się z nami skontaktować przez
+Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Oferta pracy - https://secuso.aifb.kit.edu/english/Job_Offers.php

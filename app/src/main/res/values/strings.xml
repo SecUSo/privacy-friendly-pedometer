@@ -235,7 +235,7 @@
     <string name="delete">Delete</string>
     <string name="operation_failed">Operation failed</string>
     <string name="since">since</string>
-    <string name="okay">Ok</string>
+    <string name="okay">Okay</string>
     <!-- /others -->
 
     <!-- welcome dialog -->
@@ -247,8 +247,8 @@
     <string name="slide_3_title">Notifications</string>
     <string name="slide_4_title">Widget</string>
     <string name="slide_4_desc">Add a widget to your homescreen to stay up to date about your walked steps.</string>
-    <string name="next">Suivant</string>
-    <string name="skip">Passer</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
     <!-- /welcome dialog -->
 
     <!-- motivation alert -->

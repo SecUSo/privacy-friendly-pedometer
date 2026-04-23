@@ -31,7 +31,7 @@
     <string name="about_author">Autore: </string>
     <string name="about_author_names" translatable="false">Noah Schlegel, Tobias Neidig </string>
     <string name="about_author_contributors">e contributori.</string>
-    <string name="about_affiliation">In affiliazione con</string>
+    <string name="about_affiliation">Affiliato a</string>
     <string name="more_info">Ulteriori informazioni sono disponibili su:</string>
     <string name="about_third_party_libs">L\'app utilizza <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart di Philipp Jahoda</a> (Licenza Apache 2).</string>
     <string name="privacy_friendly">Questa applicazione appartiene al gruppo Privacy Friendly Apps sviluppato dal gruppo di ricerca SECUSO. Codice sorgente concesso in licenza GPLv3. Immagini sotto copyright SECUSO e Google Inc.</string>
@@ -199,9 +199,9 @@
     <string name="pref_notification_motivation_alert_criterion" translatable="false">org.secuso.privacyfriendlyactivitytracker.pref.motivation_alert_criterion</string>
     <string name="pref_title_notification_motivation_alert_criterion">Criterio di avviso motivazionale</string>
     <string-array name="pref_keys_notification_motivation_alert_criterion">
-        <item>meno del 90&#65285; dell\'obiettivo giornaliero di passi</item>
-        <item>meno del 70&#65285; dell\'obiettivo giornaliero di passi</item>
-        <item>meno del 50&#65285; dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 90％ dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 70％ dell\'obiettivo giornaliero di passi</item>
+        <item>meno del 50％ dell\'obiettivo giornaliero di passi</item>
     </string-array>
     <string-array name="pref_values_notification_motivation_alert_criterion" translatable="false">
         <item>90</item>
@@ -323,7 +323,7 @@
     <string name="export_csv_header">Inizio;Fine;Passi;Modalità</string>
     <string name="export_csv_begin">&lt;avvio&gt;</string>
     <string name="export_csv_error">Si è verificato un errore durante l\'esportazione</string>
-    <string name="export_csv_success">CSV esportato come </string>
+    <string name="export_csv_success">"CSV esportato come "</string>
     <string name="export_csv_permission_needed">L\'autorizzazione di archiviazione è necessaria per esportare un file CSV.</string>
     <string name="help_permission_foreground_description">è necessario per il servizio continuo su Android 9 o versioni successive.</string>
     <string name="help_permission_foreground_heading">Autorizzazione: Servizio in primo piano</string>

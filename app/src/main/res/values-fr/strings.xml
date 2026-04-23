@@ -5,15 +5,15 @@
     <!-- Menu Items-->
     <string name="action_help">Aide</string>
     <string name="action_about">À propos</string>
-    <string name="action_settings">Paramètres</string>
+    <string name="action_settings">Paramètres globaux</string>
     <string name="action_main">Podomètre</string>
     <string name="action_training">Entraînement</string>
     <!-- AboutActivity-->
     <string name="version_number">Version</string>
     <string name="about_author">Auteur :</string>
-    <string name="about_author_contributors">et contributeurs/-trices.</string>
-    <string name="about_affiliation">Affilié à</string>
-    <string name="more_info">Plus d\'informations peuvent être consultées depuis :</string>
+    <string name="about_author_contributors">et les autres contributeurs.</string>
+    <string name="about_affiliation">En partenariat avec</string>
+    <string name="more_info">Des informations complémentaires sont disponibles sur :</string>
     <string name="about_third_party_libs">Cette application utilise <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart de Philipp Jahoda</a> (Licence Apache 2).</string>
     <string name="privacy_friendly">Cette application fait partie du groupe d\'applications Privacy Friendly Apps développées par  le groupe de recherche SECUSO. Le code source est sous licence GPLv3. Copyright des images : SECUSO et Google Inc.</string>
     <string name="url"><a href="https://www.secuso.org/pfa">Site web de SECUSO</a></string>
@@ -44,7 +44,7 @@
     <string name="help_permission_wake_description">est utilisé pour maintenir le CPU éveillé en arrière-plan pour compter les pas.</string>
     <!-- Preferences -->
     <!-- general settings -->
-    <string name="pref_header_general">Général</string>
+    <string name="pref_header_general">Principaux</string>
     <string name="pref_group_title_personal_settings">Personnalisation</string>
     <string name="pref_title_step_counter_enabled">Compteur de pas permanent</string>
     <string name="pref_summary_step_counter_enabled">L\'application compte vos pas en arrière-plan.</string>
@@ -129,7 +129,7 @@
     <string name="delete">Effacer</string>
     <string name="operation_failed">L\'opération a échouée</string>
     <string name="since">depuis</string>
-    <string name="okay">Okay</string>
+    <string name="okay">D\'accord</string>
     <!-- /others -->
 
     <!-- welcome dialog -->
@@ -141,7 +141,7 @@
     <string name="slide_3_title">Notifications</string>
     <string name="slide_3_desc">Définissez des modes de marche personnalisés et des notifications si la réalisation de votre objectif quotidien est en danger.</string>
     <string name="next">Suivant</string>
-    <string name="skip">Passer</string>
+    <string name="skip">Ignorer</string>
     <!-- /welcome dialog -->
 
     <!-- motivation alert -->

@@ -71,7 +71,7 @@ jobs:
             ./gradlew connectedAndroidTest --no-build-cache --no-daemon
       - name: Upload logs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-instrumentation-test-results
           path: |

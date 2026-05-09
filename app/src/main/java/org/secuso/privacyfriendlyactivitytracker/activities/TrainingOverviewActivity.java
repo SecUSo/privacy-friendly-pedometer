@@ -74,11 +74,7 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_overview);
 
-        if(TrainingPersistenceHelper.getActiveItem(this) != null){
-            // show current training session if there is one.
-            Log.w(LOG_CLASS, "Found active training session");
-            startTrainingActivity();
-        }
+        checkForActiveTrainingSession();
 
         mEmptyView = findViewById(R.id.empty_view);
 
@@ -119,8 +115,17 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Train
     @Override
     public void onResume() {
         super.onResume();
+        checkForActiveTrainingSession();
         // Force refresh of trainings.
         showTrainings();
+    }
+
+    private void checkForActiveTrainingSession() {
+        if (TrainingPersistenceHelper.getActiveItem(this) != null) {
+            // show current training session if there is one.
+            Log.w(LOG_CLASS, "Found active training session");
+            startTrainingActivity();
+        }
     }
 
     protected void startTrainingActivity(){

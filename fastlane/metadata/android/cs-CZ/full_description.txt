@@ -1,0 +1,21 @@
+Krokoměr s ochranou soukromí dokáže počítat vaše kroky na pozadí, poskytuje vám přehled o vašich ušlých krocích a umožňuje vám definovat vlastní režimy chůze a upozornění, pokud je dosažení vašeho denního cíle kroků ohroženo. Aplikace vyžaduje minimální oprávnění (spustit při spuštění a zabránit telefonu v uspávání). Patří do skupiny aplikací s ochranou soukromí, které vyvinula výzkumná skupina SECUSO na Technologickém institutu v Karlsruhe. Více informací naleznete na secuso.org/pfa
+
+Krokoměr s ochranou soukromí dokáže počítat vaše denní ušlé kroky, zatímco běží na pozadí. Poskytuje vám přehled o vašich ušlých krocích, vzdálenosti a kaloriích, které jste spálili při chůzi. Můžete přidat a vybrat různé režimy chůze s různými délkami kroků, jako je chůze nebo běh, pro zlepšení výpočtu vzdálenosti a kalorií.
+
+Ve speciálním tréninkovém režimu můžete sledovat své tréninky. Ke každému tréninku lze přidat další informace, jako je pocit nebo popis.
+
+Čím se krokoměr s ochranou soukromí liší od ostatních krokoměrů?
+
+1. Minimální počet oprávnění:
+* Spustit při spuštění: Toto oprávnění je vyžadováno pro restartování počítání kroků po spuštění telefonu.
+* zabránit telefonu v režimu spánku: Na některých zařízeních procesor uspí a zabrání počítání kroků. S tímto oprávněním může aplikace udržovat procesor vzhůru během počítání kroků.
+
+Většina aplikací krokoměru v Obchodě Google Play vyžaduje další oprávnění. Např. přístup k síti nebo internetu, což se většinou používá k zobrazování reklamy. Některé aplikace mají přístup k GPS nebo telefonním datům.
+
+2. Žádná reklama.
+Mnoho dalších bezplatných aplikací v Obchodě Google Play oslňuje otravnou reklamou a také zkracuje výdrž baterie.
+
+Můžete nás kontaktovat prostřednictvím
+Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Volná pracovní místa - https://secuso.aifb.kit.edu/english/Job_Offers.php

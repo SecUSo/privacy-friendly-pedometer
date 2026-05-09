@@ -85,10 +85,10 @@
         <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.TrainingActivity"
             android:label="@string/activity_title_training"
-            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity">
+            android:parentActivityName="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity" />
+                android:value="org.secuso.privacyfriendlyactivitytracker.activities.MainActivity" />
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlyactivitytracker.activities.TrainingOverviewActivity"
